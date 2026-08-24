@@ -77,7 +77,7 @@ ax.set_xticklabels(["intensity-max\n(as shipped)", "uniform random\n(same frame)
 ax.set_xlim(-0.35, 1.35)
 ax.set_ylabel("sheet separability", fontsize=9)
 ax.set_title("(c) The ROI picker samples the wrong material\n"
-             "2.95× median, higher in 14/14 scrolls, p = 5.4e-25", fontsize=10)
+             "3.00× median, higher in 14/14 scrolls, p = 3.6e-28", fontsize=10)
 ax.grid(axis="y", alpha=0.25)
 ax.legend(fontsize=8, loc="upper left", framealpha=0.9)
 

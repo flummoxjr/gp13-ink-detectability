@@ -194,10 +194,7 @@ k2c = json.load(open(os.path.join(T, "out", "k2c_separability", "k2c_analysis.js
 sc = k2c["scrolls"]
 if len(sc) != 14:
     problems.append(f"K2C COVERAGE: report 14 scrolls vs {len(sc)}")
-expect_sep = {"PHerc0139": 0.748, "PHerc0358": 0.713, "PHerc0813": 0.665, "PHerc0826": 0.634,
-              "PHerc1447": 0.605, "PHerc1203": 0.570, "PHerc0800": 0.563, "PHerc1545": 0.541,
-              "PHerc0211": 0.530, "PHerc0191": 0.506, "PHerc0125": 0.415, "PHerc1218": 0.389,
-              "PHerc0257": 0.374, "PHerc0268": 0.337}
+expect_sep = {"PHerc0139": 0.744, "PHerc0358": 0.713, "PHerc0813": 0.662, "PHerc0826": 0.640, "PHerc1447": 0.610, "PHerc0800": 0.563, "PHerc1203": 0.555, "PHerc1545": 0.549, "PHerc0211": 0.543, "PHerc1218": 0.526, "PHerc0191": 0.525, "PHerc0125": 0.424, "PHerc0257": 0.385, "PHerc0268": 0.317}
 for k, v in expect_sep.items():
     got = sc.get(k, {}).get("sep_med")
     if got is None or abs(got - v) > 0.0006:
@@ -206,12 +203,12 @@ for k, v in expect_sep.items():
 rank = sorted(sc, key=lambda k: -sc[k]["sep_med"])
 if rank[0] != "PHerc0139":
     problems.append(f"SEPARABILITY ANCHOR: report PHerc0139 ranks 1st vs {rank[0]}")
-if abs(k2c["sep_vs_snr_spearman"]["rho"] - 0.336) > 0.002:
-    problems.append(f"SEP-vs-SNR rho: report +0.336 vs {k2c['sep_vs_snr_spearman']['rho']:+.3f}")
+if abs(k2c["sep_vs_snr_spearman"]["rho"] - 0.266) > 0.002:
+    problems.append(f"SEP-vs-SNR rho: report +0.266 vs {k2c['sep_vs_snr_spearman']['rho']:+.3f}")
 pb = k2c["picker_bias"]
-if (pb["n_scrolls_random_higher"] != 14 or abs(pb["median_ratio"] - 2.95) > 0.02
+if (pb["n_scrolls_random_higher"] != 14 or abs(pb["median_ratio"] - 3.00) > 0.02
         or pb["mannwhitney_p"] > 1e-20):
-    problems.append(f"PICKER BIAS: report 14/14, 2.95x, p=5.4e-25 vs "
+    problems.append(f"PICKER BIAS: report 14/14, 3.00x, p<1e-20 vs "
                     f"{pb['n_scrolls_random_higher']}/14, {pb['median_ratio']:.2f}x, p={pb['mannwhitney_p']:.2g}")
 if abs(pb["random_med"] - 0.564) > 0.002 or abs(pb["picked_med"] - 0.168) > 0.002:
     problems.append(f"PICKER BIAS MEDIANS: report 0.564 / 0.168 vs "
@@ -254,6 +251,19 @@ if abs(al["median_angle_deg"] - 68.1) > 0.1 or al["n_within_30deg"] != 0 or len(
 if abs(pu["median_angle_deg"] - 13.1) > 0.1 or pu["n_within_30deg"] != 7 or len(pu["meshes"]) != 9:
     problems.append(f"PUBLISHED ALIGNMENT: report 9 meshes, 13.1 deg, 7 within 30 vs "
                     f"{len(pu['meshes'])}, {pu['median_angle_deg']:.1f}, {pu['n_within_30deg']}")
+cal = json.load(open(os.path.join(T, "out", "k2c_separability", "corpus_alignment_local.json")))
+cs = cal["summary"]
+if (cs["n_locally_measured"] != 35 or abs(cs["median_local_deg"] - 5.47) > 0.05
+        or cs["n_local_ge_45"] != 5):
+    problems.append(f"LOCAL ALIGNMENT: report 35 measured / median 5.5 / 5 at >=45 vs "
+                    f"{cs['n_locally_measured']} / {cs['median_local_deg']:.1f} / {cs['n_local_ge_45']}")
+exon = [r for r in cal["segments"] if r.get("status") == "ok"
+        and r["angle_global_deg"] >= 45 and r["angle_local_deg"] < 45]
+if len(exon) != 1 or exon[0]["scroll"] != "PHerc1203":
+    problems.append(f"LOCAL ALIGNMENT EXONERATION: report 1 (PHerc1203) vs {[(r['scroll']) for r in exon]}")
+checks.append(f"local alignment recompute: {cs['n_locally_measured']} measured, median "
+              f"{cs['median_local_deg']:.1f} deg, 5 confirmed >=45, 1 exonerated (PHerc1203)")
+
 checks.append(f"PHerc0813 mesh alignment: ours {al['median_angle_deg']:.1f}° ({al['n_within_30deg']}/8 "
               f"within 30°) vs published {pu['median_angle_deg']:.1f}° ({pu['n_within_30deg']}/9)")
 

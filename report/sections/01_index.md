@@ -137,49 +137,49 @@ Scan quality is not the quantity that decides whether a scroll can be read. A vo
 
 ### 1.8.1 The ROI rule samples the wrong material
 
-§1.1's papyrus rule scores candidates `np.where(fill > 0.98, inten, 0)` and takes the highest — the **brightest** dense windows in each scroll. Testing that choice required changing exactly one thing: same central-z band, same `fill > 0.98` gate, same 256³ size, same non-max separation, candidates drawn **uniformly at random** instead of by intensity. Twelve ROIs per scroll, all 14 volumes, 168 cubes, seed 20260818.
+§1.1's papyrus rule scores candidates `np.where(fill > 0.98, inten, 0)` and takes the highest — the **brightest** dense windows in each scroll. Testing that choice required changing exactly one thing: same central-z band, same `fill > 0.98` gate, same 256³ size, same non-max separation, candidates drawn **uniformly at random** instead of by intensity. Twenty-four uniformly-random ROIs per scroll (the PHerc0800 frame yields 16), 328 cubes across all 14 volumes, seed 20260818; the earlier 12-ROI pass is a deterministic prefix of these draws.
 
 | across all 14 scrolls | intensity-max (as shipped) | uniform random (same frame) |
 |---|---|---|
 | separability, pooled median | **0.168** | **0.564** |
-| separability, per-scroll median: range | 0.118 – 0.456 | 0.337 – 0.748 |
+| separability, per-scroll median: range | 0.118 – 0.456 | 0.317 – 0.744 |
 | ROI mean DN, per-scroll median: range | 127 – 174 | 80 – 122 |
 | ROI saturation (DN ≥ 255), per-scroll median | 0.039 (up to 0.20) | 0.0004 (up to 0.0015) |
 
-**The random frame scores higher in 14 of 14 scrolls; median ratio 2.95×; Mann-Whitney p = 5.4 × 10⁻²⁵.** **Twelve of the 14 scrolls' intensity-picked medians fall below 0.22**, against an air floor of 0.105 — barely above structureless — while randomly-sampled material from the *same scrolls* runs 0.337–0.748. The picked ROIs are also 24–68 DN brighter than typical papyrus in every scroll. The two exceptions prove the mechanism rather than break it: PHerc0139 (picked 0.456) and PHerc0358 (0.360) are the two scrolls whose picked windows happened to be almost unsaturated, and they are exactly the two with the *smallest* bias ratios (1.64× and 1.98×). Rendered slices make the mechanism plain: the picked cubes are bright granular conglomerate with large mineral inclusions and cracks; the random cubes are laminated papyrus. The picker takes the extreme upper tail of a 29–122 million-location candidate frame, and in a carbonised scroll that tail is incrustation.
+**The random frame scores higher in 14 of 14 scrolls; median ratio 3.00×; Mann-Whitney p = 3.6 × 10⁻²⁸.** **Twelve of the 14 scrolls' intensity-picked medians fall below 0.22**, against an air floor of 0.105 — barely above structureless — while randomly-sampled material from the *same scrolls* runs 0.337–0.748. The picked ROIs are also 24–68 DN brighter than typical papyrus in every scroll. The two exceptions prove the mechanism rather than break it: PHerc0139 (picked 0.456) and PHerc0358 (0.360) are the two scrolls whose picked windows happened to be almost unsaturated, and they are exactly the two with the *smallest* bias ratios (1.63× and 1.98×). Rendered slices make the mechanism plain: the picked cubes are bright granular conglomerate with large mineral inclusions and cracks; the random cubes are laminated papyrus. The picker takes the extreme upper tail of a 29–122 million-location candidate frame, and in a carbonised scroll that tail is incrustation.
 
 This is the failure mode this project's corrections ledger names most often (§4.3): *a reference class that silently contains something other than what it names.* §1.1 already flagged that "papyrus-rich" under-specifies the rule; the measurement above is what the under-specification costs.
 
-**What this does and does not invalidate.** The three §1.1 metrics are computed against each scroll's own noise, and every scroll's ROIs are biased the same way, so the **tier split and the campaign correlation are not overturned** — the ordering is a comparison of like with like, and the bias ratio does not track the tier boundary (it runs 1.64–4.30 across both tiers). What is affected is the **interpretation of any individual ROI value**: §1.1's numbers describe the densest material in each scroll, not its typical papyrus. That distinction was not stated in §1.1 and should have been.
+**What this does and does not invalidate.** The three §1.1 metrics are computed against each scroll's own noise, and every scroll's ROIs are biased the same way, so the **tier split and the campaign correlation are not overturned** — the ordering is a comparison of like with like, and the bias ratio does not track the tier boundary (it runs 1.63–4.46 across both tiers). What is affected is the **interpretation of any individual ROI value**: §1.1's numbers describe the densest material in each scroll, not its typical papyrus. That distinction was not stated in §1.1 and should have been.
 
 ### 1.8.2 The ranked separability axis
 
-| rank | scroll | separability [95 % CI] | K2b SNR rank | published segments |
-|---|---|---|---|---|
-| 1 | **PHerc0139** (calibrator) | **0.748** [0.738–0.775] | 2 | — |
-| 2 | **PHerc0358** | 0.713 [0.689–0.749] | 7 | — |
-| 3 | PHerc0813 | 0.665 [0.600–0.735] | 1 | — |
-| 4 | PHerc0826 | 0.634 [0.505–0.704] | 9 | — |
-| 5 | PHerc1447 | 0.605 [0.566–0.681] | **14** | **52** |
-| 6 | PHerc1203 | 0.570 [0.532–0.603] | 8 | 22 |
-| 7 | PHerc0800 | 0.563 [0.511–0.674] | 13 | 6 |
-| 8 | PHerc1545 | 0.541 [0.455–0.608] | 4 | — |
-| 9 | PHerc0211 | 0.530 [0.468–0.599] | 5 | — |
-| 10 | PHerc0191 | 0.506 [0.418–0.643] | 6 | — |
-| 11 | PHerc0125 | 0.415 [0.360–0.516] | 3 | — |
-| 12 | PHerc1218 | 0.389 [0.334–0.611] | 10 | — |
-| 13 | PHerc0257 | 0.374 [0.295–0.483] | 12 | — |
-| 14 | PHerc0268 | 0.337 [0.291–0.397] | 11 | — |
+| rank | scroll | n | separability [95 % CI] | K2b SNR rank | published segments |
+|---|---|---|---|---|---|
+| 1 | **PHerc0139** (calibrator) | 24 | 0.744 [0.719–0.760] | 2 | — |
+| 2 | **PHerc0358** | 24 | 0.713 [0.699–0.743] | 7 | — |
+| 3 | PHerc0813 | 24 | 0.662 [0.615–0.697] | 1 | — |
+| 4 | PHerc0826 | 24 | 0.640 [0.548–0.682] | 9 | — |
+| 5 | PHerc1447 | 24 | 0.610 [0.580–0.686] | **14** | **52** |
+| 6 | PHerc0800 | 16 | 0.563 [0.506–0.648] | 13 | 6 |
+| 7 | PHerc1203 | 24 | 0.555 [0.534–0.581] | 8 | 22 |
+| 8 | PHerc1545 | 24 | 0.549 [0.487–0.607] | 4 | — |
+| 9 | PHerc0211 | 24 | 0.543 [0.471–0.593] | 5 | — |
+| 10 | PHerc1218 | 24 | 0.526 [0.402–0.607] | 10 | — |
+| 11 | PHerc0191 | 24 | 0.525 [0.447–0.618] | 6 | — |
+| 12 | PHerc0125 | 24 | 0.424 [0.366–0.494] | 3 | — |
+| 13 | PHerc0257 | 24 | 0.385 [0.315–0.479] | 12 | — |
+| 14 | PHerc0268 | 24 | 0.317 [0.274–0.376] | 11 | — |
 
-CIs are bootstrap over the 12 ROIs (4,000 resamples). Many overlap: as with §1.3 this is **tiers plus a rough order, not a strict ranking**.
+CIs are bootstrap over each scroll's ROIs (4,000 resamples). Many still overlap — as with §1.3 this is **tiers plus a rough order, not a strict ranking** — though doubling n from the original 12-ROI pass moved only one scroll more than a single rank: PHerc1218 (0.389 → 0.526), exactly the scroll whose 12-ROI interval [0.33–0.61] had flagged it as the least determined.
 
 ![The sheet-separability axis. (a) 14 volumes ranked, with bootstrap CIs and the measured isotropic floor; the PHerc0139 calibrator ranks first. (b) Separability against K2b structural SNR — the two axes are near-orthogonal. (c) The ROI-picker bias, paired per scroll: the intensity-max rule scores lower in all 14.](../figures/separability_axis.png)
 
 Three things validate the axis, none of which it was tuned on:
 
-1. **The calibrator ranks first.** PHerc0139 — the one volume where letter recovery at native 9 µm is proven (§1.5) — scores highest of all 14 and has the tightest CI of any scroll. Nothing in the statistic knows which scroll has letters.
-2. **It is not a restatement of scan quality.** Spearman ρ against §1.2's SNR is **+0.336 (p = 0.24, n = 14)**. The inversions are the substance: PHerc0813 is SNR rank 1 but separability rank 3; PHerc0125 is SNR rank 3 but separability rank 11; PHerc1447 is SNR rank **14** and separability rank **5**.
-3. **It survives its own parameters.** Recomputing at block 16/32/64 and smoothing σ 0.5/1.0/2.0, holding the ROIs fixed, leaves the ordering essentially unchanged: Spearman ρ against the shipped setting runs **+0.978 to +0.996** across all 14 scrolls (`out/k2c_separability/sensitivity.json`; the sweep uses 8 of each scroll's 12 ROIs for speed, so its absolute values differ slightly from the table above — the claim it supports is stability under parameter change, not the levels).
+1. **The calibrator ranks first.** PHerc0139 — the one volume where letter recovery at native 9 µm is proven (§1.5) — scores highest of all 14 — 0.744 [0.719–0.760], the tightest CI of any scroll. Nothing in the statistic knows which scroll has letters.
+2. **It is not a restatement of scan quality.** Spearman ρ against §1.2's SNR is **+0.266 (p = 0.36, n = 14)**. The inversions are the substance: PHerc0813 is SNR rank 1 but separability rank 3; PHerc0125 is SNR rank 3 but separability rank 11; PHerc1447 is SNR rank **14** and separability rank **5**.
+3. **It survives its own parameters.** Recomputing at block 16/32/64 and smoothing σ 0.5/1.0/2.0, holding the ROIs fixed, leaves the ordering essentially unchanged: Spearman ρ against the shipped setting runs **+0.978 to +0.996** across all 14 scrolls (`out/k2c_separability/sensitivity.json`; the sweep uses 8 of each scroll's ROIs for speed, so its absolute values differ slightly from the table above — the claim it supports is stability under parameter change, not the levels).
 
 A clipping confound was tested directly and refuted, in the conservative direction: artificially clipping the PHerc0139 cubes to drive saturation from 0.001 to 0.37 — worse than any real scroll in §1.6 — moves separability **up**, 0.456 → 0.525, 0.565 → 0.594, 0.412 → 0.483. Low-separability scrolls are therefore not low because they are clipped.
 

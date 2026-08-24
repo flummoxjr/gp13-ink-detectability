@@ -41,10 +41,10 @@ META_DIR = r"C:\Users\benbl\Desktop\Vsuvious\trackD\meta"
 OUT = r"C:\Users\benbl\Desktop\Vsuvious\trackD\out\k2c_separability"
 CACHE = r"D:\vesuvius-data\trackD\k2c"
 ROI = 256
-N_RANDOM = 24          # 12 reproduces the shipped Section 1.8 numbers exactly. An n=24
-                       # expansion is in progress (cubes cached, deterministic first-12 draws
-                       # unchanged) — raise this only when finishing that sweep and updating
-                       # the report + verifier together. See NEXT_SESSION.md 3b.
+N_RANDOM = 24          # ROIs per scroll; the shipped Section 1.8 sampling. The original
+                       # n=12 pass is a deterministic prefix of these draws (fixed seed,
+                       # deterministic shuffle), so raising n only appends.
+MIN_SEP_L3 = 32        # level-3 voxels between ROI centres (= one full ROI at L0)
 BLOCK = 32             # structure-tensor block edge, voxels (~0.3 mm)
 SIGMA = 1.0            # pre-smoothing before the gradient
 FILL_GATE = 0.98       # identical to K2b
