@@ -251,6 +251,16 @@ if abs(al["median_angle_deg"] - 68.1) > 0.1 or al["n_within_30deg"] != 0 or len(
 if abs(pu["median_angle_deg"] - 13.1) > 0.1 or pu["n_within_30deg"] != 7 or len(pu["meshes"]) != 9:
     problems.append(f"PUBLISHED ALIGNMENT: report 9 meshes, 13.1 deg, 7 within 30 vs "
                     f"{len(pu['meshes'])}, {pu['median_angle_deg']:.1f}, {pu['n_within_30deg']}")
+mt = json.load(open(os.path.join(T, "out", "k2c_separability", "modetest_nz.json")))
+import statistics as _stt
+rv = list(mt["R_random_seed"].values()); ev = list(mt["E_explicit_seed"].values())
+if (len(rv) != 8 or len(ev) != 8 or abs(_stt.median(rv) - 0.979) > 0.01
+        or abs(_stt.median(ev) - 0.989) > 0.01 or min(rv + ev) <= 0.7):
+    problems.append(f"MODETEST: report 8+8, medians 0.979/0.989, 16/16 > 0.7 vs "
+                    f"{len(rv)}+{len(ev)}, {_stt.median(rv):.3f}/{_stt.median(ev):.3f}, min {min(rv+ev):.3f}")
+checks.append(f"mode A/B: random_seed {_stt.median(rv):.3f} vs explicit {_stt.median(ev):.3f}, "
+              f"16/16 flat — seeding exonerated")
+
 cal = json.load(open(os.path.join(T, "out", "k2c_separability", "corpus_alignment_local.json")))
 cs = cal["summary"]
 if (cs["n_locally_measured"] != 35 or abs(cs["median_local_deg"] - 5.47) > 0.05
