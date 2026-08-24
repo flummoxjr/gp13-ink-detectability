@@ -1,0 +1,30 @@
+{
+    "bbox": [
+        [
+            2362.029296875,
+            2345.25390625,
+            9719.1015625
+        ],
+        [
+            4550.64111328125,
+            5645.23486328125,
+            16243.5146484375
+        ]
+    ],
+    "format": "tifxyz",
+    "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+    ],
+    "type": "seg",
+    "uuid": "z_dbg_gen_00357",
+    "vc_grow_seg_from_segments_params": {
+        "consensus_default_th": 6,
+        "consensus_limit_th": 2,
+        "flip_x": false,
+        "global_steps_per_window": 1,
+        "step": 6,
+        "straight_weight_3D": 0.5,
+        "tgt_dir": "/opt/dlami/nvme/volumes/PHerc1447_dbg.volpkg/paths/"
+    }
+}

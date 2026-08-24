@@ -1,0 +1,433 @@
+{
+ "context": {
+  "map": "trackD/out/ink9um_w035/w035_seed42-075000.tif (ink_9um ckpt step 75000, seed42)",
+  "cross_seed": "w035_seed43-075000.tif, IoU>0.3 on matched components",
+  "scroll": "PHerc0139 segment w035 (9.362 um/px) \u2014 ink_9um model is trained-adjacent to this corpus",
+  "framing": "MODEL detections beyond the human-labeled letters; value = report figure + community interest (PHerc0139 not GP-eligible). NOT a prize claim. Mundane alternative for any single component: a model trained on letter shapes can hallucinate letter-like blobs on salient papyrus texture, and both seeds share training data, so seed agreement does not rule out shared inductive bias.",
+  "letter_class_gate": "area>=1e4 px AND width(area/skel)>=30 px AND component v_p90>=195 (control blank p99), at per-map in-mask p80 threshold; gate recalls 11/13 labeled letter components"
+ },
+ "grid_fit_on_labels_only": {
+  "tilt_rad": -0.009999999999999926,
+  "tilt_deg": -0.572957795130819,
+  "period_px": 500.5,
+  "phase_px": 489.8740026163272,
+  "rms_px": 27.24916001235616,
+  "period_mm": 4.685681000000001
+ },
+ "summary": {
+  "n_letter_class_beyond_seed42": 18,
+  "n_crossseed_confirmed": 14,
+  "n_in_top_gallery": 12,
+  "vtest_alignment_letter_class": {
+   "n": 18,
+   "mean_cos": 0.3831898148904197,
+   "u": 2.299138889342518,
+   "p_one_sided": 0.010748526904255935
+  },
+  "vtest_alignment_crossseed": {
+   "n": 14,
+   "mean_cos": 0.2900488547161567,
+   "u": 1.5347942752761092,
+   "p_one_sided": 0.062417184724660825
+  },
+  "vtest_alignment_texture_comps_CONTROL": {
+   "n": 306,
+   "mean_cos": 0.16997282566187086,
+   "u": 4.204895482131538,
+   "p_one_sided": 1.3060141679136524e-05
+  },
+  "median_abs_row_offset_letter_class": 0.14270089441300016,
+  "median_abs_row_offset_texture": 0.19967082582386952,
+  "rev_over_fwd": {
+   "labeled_letters": 0.4142644566140658,
+   "beyond_candidates": 0.4941256973621567,
+   "texture_comps": 0.6041441749697013
+  },
+  "ruling_aligned_tol0p15": {
+   "n_of_crossseed": 6,
+   "of": 14,
+   "ids": [
+    4234,
+    1675,
+    2907,
+    2300,
+    672,
+    4323
+   ],
+   "uniform_expectation": 4.2,
+   "note": "strict single rigid grid extrapolated up to ~10 row-periods from the labels; labels own offsets all within +/-0.097. Bottom cluster (ids 4105/4134/4234, cy 4858-4904, cx 943-3758) is internally row-coherent (tilt-corrected row coord spread 59 px over 28 mm) but offset -0.13..-0.27 from the extrapolated grid \u2014 consistent with slow phase drift or with non-text row-organized response."
+  },
+  "detection_strength_vs_labels": {
+   "labeled_letters_frac195_med": 0.694,
+   "labeled_letters_v_p50_med": 199.0,
+   "candidates_frac195_med": 0.188,
+   "candidates_v_p50_med": 158.5,
+   "note": "beyond-label detections are systematically WEAKER than labeled letters. Consistent with fainter/degraded real ink, but ALSO with the model having been trained on (or adjacent to) these exact labels \u2014 memorized labels saturate, everything else responds weakly."
+  },
+  "certified_blank_control": {
+   "letter_class_comps_in_sup_background": 0,
+   "sup_background_px": 737093,
+   "largest_patch_px": 181423,
+   "expected_if_uniform_at_beyond_density": 0.56,
+   "note": "zero letter-class components inside human-certified blank supervision regions \u2014 consistent with no hallucination on certified blank papyrus, but UNDERPOWERED (expected count only ~0.6 under the null), so this control is suggestive, not probative."
+  }
+ },
+ "candidates_ranked": [
+  {
+   "id": 4105,
+   "area": 59791,
+   "bbox": [
+    4633,
+    789,
+    5034,
+    1155
+   ],
+   "cy": 4857.5142747236205,
+   "cx": 942.7917914067334,
+   "width": 32.389490790899245,
+   "elong": 1.3582780570352742,
+   "v_p50": 156.0,
+   "v_p90": 199.0,
+   "v_max": 207,
+   "frac195": 0.19772206519375826,
+   "row_offset": -0.2546083830212549,
+   "iou43_best": 0.5566519321260516,
+   "iou43_union": 0.43278175175759065,
+   "rev_p90": 117.0,
+   "rev_over_fwd_mean": 0.5339802021898945
+  },
+  {
+   "id": 1645,
+   "area": 32809,
+   "bbox": [
+    1921,
+    3731,
+    2157,
+    3958
+   ],
+   "cy": 2027.9647048066079,
+   "cx": 3856.8003596574113,
+   "width": 36.74020156774916,
+   "elong": 1.3446304024856084,
+   "v_p50": 175.0,
+   "v_p90": 200.0,
+   "v_max": 210,
+   "frac195": 0.26876771617543965,
+   "row_offset": 0.15016981306373722,
+   "iou43_best": 0.4141525276507036,
+   "iou43_union": 0.41418148126701027,
+   "rev_p90": 113.0,
+   "rev_over_fwd_mean": 0.499939598036116
+  },
+  {
+   "id": 4234,
+   "area": 29091,
+   "bbox": [
+    4787,
+    2150,
+    5030,
+    2338
+   ],
+   "cy": 4904.240349248908,
+   "cx": 2244.930115843388,
+   "width": 34.92316926770708,
+   "elong": 1.574094781940744,
+   "v_p50": 180.0,
+   "v_p90": 200.0,
+   "v_max": 210,
+   "frac195": 0.2990959403251865,
+   "row_offset": -0.1352319757622631,
+   "iou43_best": 0.7284821608546664,
+   "iou43_union": 0.7285920650384654,
+   "rev_p90": 114.0,
+   "rev_over_fwd_mean": 0.47270704160074095
+  },
+  {
+   "id": 4584,
+   "area": 33088,
+   "bbox": [
+    5207,
+    1484,
+    5481,
+    1787
+   ],
+   "cy": 5345.231836315281,
+   "cx": 1656.0106080754351,
+   "width": 36.64230343300111,
+   "elong": 2.449753684141031,
+   "v_p50": 165.0,
+   "v_p90": 199.0,
+   "v_max": 211,
+   "frac195": 0.2285722920696325,
+   "row_offset": -0.265897119270079,
+   "iou43_best": 0.5498151784682915,
+   "iou43_union": 0.6711453264579853,
+   "rev_p90": 127.0,
+   "rev_over_fwd_mean": 0.5164950704045846
+  },
+  {
+   "id": 1675,
+   "area": 16298,
+   "bbox": [
+    1957,
+    1807,
+    2106,
+    1970
+   ],
+   "cy": 2031.427598478341,
+   "cx": 1879.8902319302981,
+   "width": 59.265454545454546,
+   "elong": 1.4809797751400557,
+   "v_p50": 191.0,
+   "v_p90": 202.0,
+   "v_max": 209,
+   "frac195": 0.42502147502761073,
+   "row_offset": 0.11758866101190835,
+   "iou43_best": 0.4743478679372413,
+   "iou43_union": 0.4743478679372413,
+   "rev_p90": 80.0,
+   "rev_over_fwd_mean": 0.40770021816987256
+  },
+  {
+   "id": 4134,
+   "area": 44342,
+   "bbox": [
+    4684,
+    3652,
+    5011,
+    3873
+   ],
+   "cy": 4868.227707365478,
+   "cx": 3757.9704343511794,
+   "width": 30.205722070844686,
+   "elong": 1.6305610937164594,
+   "v_p50": 153.0,
+   "v_p90": 197.0,
+   "v_max": 208,
+   "frac195": 0.1489558432186189,
+   "row_offset": -0.17695372267815657,
+   "iou43_best": 0.7398207768882435,
+   "iou43_union": 0.7398207768882435,
+   "rev_p90": 104.0,
+   "rev_over_fwd_mean": 0.5103495589569129
+  },
+  {
+   "id": 1820,
+   "area": 35154,
+   "bbox": [
+    2202,
+    3128,
+    2451,
+    3415
+   ],
+   "cy": 2305.194856915287,
+   "cx": 3259.9175627240143,
+   "width": 31.556552962298024,
+   "elong": 1.029026823728061,
+   "v_p50": 158.0,
+   "v_p90": 199.0,
+   "v_max": 211,
+   "frac195": 0.15929908403026682,
+   "row_offset": -0.30784991686542584,
+   "iou43_best": 0.7319265438954464,
+   "iou43_union": 0.7320556861327066,
+   "rev_p90": 71.0,
+   "rev_over_fwd_mean": 0.4405368856167843
+  },
+  {
+   "id": 2907,
+   "area": 15955,
+   "bbox": [
+    3409,
+    1881,
+    3578,
+    2041
+   ],
+   "cy": 3484.619680350987,
+   "cx": 1967.5518646192415,
+   "width": 37.45305164319249,
+   "elong": 1.3600640061353202,
+   "v_p50": 172.0,
+   "v_p90": 200.0,
+   "v_max": 208,
+   "frac195": 0.24619241617047946,
+   "row_offset": 0.022820883631784916,
+   "iou43_best": 0.3703582299227347,
+   "iou43_union": 0.3703582299227347,
+   "rev_p90": 170.0,
+   "rev_over_fwd_mean": 0.6206226157865768
+  },
+  {
+   "id": 2300,
+   "area": 18877,
+   "bbox": [
+    2886,
+    1058,
+    2999,
+    1327
+   ],
+   "cy": 2944.3957726333633,
+   "cx": 1196.9085130052445,
+   "width": 48.27877237851662,
+   "elong": 3.0937817001953656,
+   "v_p50": 158.0,
+   "v_p90": 199.0,
+   "v_max": 209,
+   "frac195": 0.16766435344599248,
+   "row_offset": -0.07194554618870708,
+   "iou43_best": 0.5461162768855077,
+   "iou43_union": 0.5461162768855077,
+   "rev_p90": 73.0,
+   "rev_over_fwd_mean": 0.42584744244394035
+  },
+  {
+   "id": 3160,
+   "area": 11074,
+   "bbox": [
+    3647,
+    4118,
+    3823,
+    4200
+   ],
+   "cy": 3738.5515622178073,
+   "cx": 4156.052555535489,
+   "width": 46.141666666666666,
+   "elong": 2.429517404901406,
+   "v_p50": 171.0,
+   "v_p90": 201.0,
+   "v_max": 208,
+   "frac195": 0.2808379989163807,
+   "row_offset": -0.42609496390988433,
+   "iou43_best": 0.6944107977158678,
+   "iou43_union": 0.6945838380342619,
+   "rev_p90": 89.0,
+   "rev_over_fwd_mean": 0.46418722357427544
+  },
+  {
+   "id": 4535,
+   "area": 17549,
+   "bbox": [
+    5157,
+    806,
+    5280,
+    1003
+   ],
+   "cy": 5221.881588694512,
+   "cx": 914.2945466978175,
+   "width": 50.86666666666667,
+   "elong": 1.7507203266174889,
+   "v_p50": 161.0,
+   "v_p90": 198.0,
+   "v_max": 210,
+   "frac195": 0.15248732121488404,
+   "row_offset": 0.4728288438006061,
+   "iou43_best": 0.7208815958815958,
+   "iou43_union": 0.7208815958815958,
+   "rev_p90": 118.0,
+   "rev_over_fwd_mean": 0.5024921990354104
+  },
+  {
+   "id": 672,
+   "area": 19110,
+   "bbox": [
+    824,
+    856,
+    1066,
+    1017
+   ],
+   "cy": 944.3858189429618,
+   "cx": 933.9979068550497,
+   "width": 37.17898832684825,
+   "elong": 2.3469478065828278,
+   "v_p50": 154.0,
+   "v_p90": 196.0,
+   "v_max": 209,
+   "frac195": 0.11601255886970173,
+   "row_offset": -0.07322256395549553,
+   "iou43_best": 0.4539053331594732,
+   "iou43_union": 0.45419872212804796,
+   "rev_p90": 118.0,
+   "rev_over_fwd_mean": 0.579114173587598
+  },
+  {
+   "id": 4323,
+   "area": 11829,
+   "bbox": [
+    4866,
+    4093,
+    5011,
+    4240
+   ],
+   "cy": 4942.662017076676,
+   "cx": 4160.611209738778,
+   "width": 37.55238095238095,
+   "elong": 1.5135984388992147,
+   "v_p50": 139.0,
+   "v_p90": 200.0,
+   "v_max": 210,
+   "frac195": 0.1760926536478147,
+   "row_offset": -0.020188784248517777,
+   "iou43_best": 0.29703814191348815,
+   "iou43_union": 0.3004048582995951,
+   "rev_p90": 73.0,
+   "rev_over_fwd_mean": 0.4287420200378107
+  },
+  {
+   "id": 4419,
+   "area": 10089,
+   "bbox": [
+    5014,
+    2346,
+    5159,
+    2460
+   ],
+   "cy": 5078.019823570225,
+   "cx": 2399.1956586381207,
+   "width": 33.07868852459016,
+   "elong": 1.4438818767377632,
+   "v_p50": 148.0,
+   "v_p90": 202.0,
+   "v_max": 212,
+   "frac195": 0.1823768460699772,
+   "row_offset": 0.21506209251579556,
+   "iou43_best": 0.6264468315430094,
+   "iou43_union": 0.6266133733033559,
+   "rev_p90": 73.0,
+   "rev_over_fwd_mean": 0.45422961478769863
+  }
+ ],
+ "not_confirmed_seed43": [
+  {
+   "id": 4256,
+   "area": 20963,
+   "cy": 4866.195201068549,
+   "cx": 2755.471688212565,
+   "iou43_best": 0.23445439720167333,
+   "iou43_union": 0.23445439720167333
+  },
+  {
+   "id": 689,
+   "area": 12305,
+   "cy": 918.8524989841528,
+   "cx": 2110.155221454693,
+   "iou43_best": 0.2424700217165518,
+   "iou43_union": 0.2424700217165518
+  },
+  {
+   "id": 1153,
+   "area": 11208,
+   "cy": 1443.9620806566738,
+   "cx": 704.4989293361884,
+   "iou43_best": 0.2334608695652174,
+   "iou43_union": 0.2334608695652174
+  },
+  {
+   "id": 2032,
+   "area": 10837,
+   "cy": 2522.339577373812,
+   "cx": 1367.831226354157,
+   "iou43_best": 0.23088716505343126,
+   "iou43_union": 0.23088716505343126
+  }
+ ]
+}

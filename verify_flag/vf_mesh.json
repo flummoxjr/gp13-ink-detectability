@@ -1,0 +1,24 @@
+{
+ "grid_shape": [
+  216,
+  186
+ ],
+ "render_canvas_implied": [
+  4320,
+  3720
+ ],
+ "mesh_defined_frac": 1.0,
+ "mesh_step_u_vox_p50": 19.88743478823076,
+ "mesh_step_u_mm_p50": 0.17182743657031377,
+ "mesh_step_v_vox_p50": 20.30587785393876,
+ "mesh_step_v_mm_p50": 0.1754427846580309,
+ "z_range_mm": 216.80174812500002,
+ "canvas_mm": [
+  37.31616,
+  32.132160000000006
+ ],
+ "mesh_mask_iou": 0.44552767821585026,
+ "mask_frac_of_mesh": 0.44552767821585026,
+ "mesh_rows_gcd": 0,
+ "mesh_cols_gcd": 0
+}

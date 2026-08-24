@@ -1,0 +1,44 @@
+{
+    "area_cm2": 0.5895360091877232,
+    "area_vx2": 672625.0238114638,
+    "bbox": [
+        [
+            2594.11865234375,
+            4616.15771484375,
+            6454.837890625
+        ],
+        [
+            3672.258544921875,
+            5018.3701171875,
+            7345.86474609375
+        ]
+    ],
+    "elapsed_time_s": 6.655842641,
+    "format": "tifxyz",
+    "max_gen": 30,
+    "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+    ],
+    "seed": [
+        3133.969970703125,
+        4931.169921875,
+        6890.27978515625
+    ],
+    "source": "vc_grow_seg_from_seed",
+    "type": "seg",
+    "uuid": "auto_grown_20251005230830030",
+    "vc_gsfs_mode": "explicit_seed",
+    "vc_gsfs_params": {
+        "cache_root": "/mnt/raid_nvme/volpkgs/caches/1203_cache",
+        "generations": 30,
+        "grow_mode": "right",
+        "grow_steps": 10,
+        "min_area_cm": 0.2,
+        "mode": "random_seed",
+        "normal_grid_path": "/mnt/raid_nvme/volpkgs/PHerc1203.volpkg/normal_grids",
+        "thread_limit": 1,
+        "use_cuda": false
+    },
+    "vc_gsfs_version": "dev"
+}

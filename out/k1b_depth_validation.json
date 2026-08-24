@@ -1,0 +1,33 @@
+{
+ "w035": {
+  "pos_px": 334024,
+  "neg_px": 737091,
+  "n_slices": 28,
+  "auc_depth_contrast": 0.5717,
+  "auc_zstd_texture": 0.514
+ },
+ "w039": {
+  "pos_px": 182426,
+  "neg_px": 393793,
+  "n_slices": 28,
+  "auc_depth_contrast": 0.5132,
+  "auc_zstd_texture": 0.4764
+ },
+ "w040": {
+  "pos_px": 716497,
+  "neg_px": 913115,
+  "n_slices": 28,
+  "auc_depth_contrast": 0.5012,
+  "auc_zstd_texture": 0.5482
+ },
+ "w041": {
+  "pos_px": 229883,
+  "neg_px": 325746,
+  "n_slices": 28,
+  "auc_depth_contrast": 0.4657,
+  "auc_zstd_texture": 0.5409
+ },
+ "w044": {
+  "error": "429, message='Too Many Requests', url='https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_inklabels.zarr/0/0.2.0'"
+ }
+}

@@ -1,0 +1,562 @@
+[
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163217042/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163217042/",
+  "name": "auto_grown_20250923163217042"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163219195/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163219195/",
+  "name": "auto_grown_20250923163219195"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163223390/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163223390/",
+  "name": "auto_grown_20250923163223390"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163227956/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163227956/",
+  "name": "auto_grown_20250923163227956"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163230146/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163230146/",
+  "name": "auto_grown_20250923163230146"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163231537/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163231537/",
+  "name": "auto_grown_20250923163231537"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923163331524/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923163331524/",
+  "name": "auto_grown_20250923163331524"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923164241632/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923164241632/",
+  "name": "auto_grown_20250923164241632"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923164608661/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923164608661/",
+  "name": "auto_grown_20250923164608661"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923164615417/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923164615417/",
+  "name": "auto_grown_20250923164615417"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250923164713356/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250923164713356/",
+  "name": "auto_grown_20250923164713356"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250925165041633/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250925165041633/",
+  "name": "auto_grown_20250925165041633"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250925223153537/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250925223153537/",
+  "name": "auto_grown_20250925223153537"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250929222256117/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250929222256117/versions/0/",
+  "name": "auto_grown_20250929222256117"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250930000321811/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250930000321811/versions/0/",
+  "name": "auto_grown_20250930000321811"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20250930104534929/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20250930104534929/versions/0/",
+  "name": "auto_grown_20250930104534929"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005221856743/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005221856743/versions/0/",
+  "name": "auto_grown_20251005221856743"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005230118636/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005230118636/versions/0/",
+  "name": "auto_grown_20251005230118636"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005230830030/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005230830030/versions/0/",
+  "name": "auto_grown_20251005230830030"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005230830031/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005230830031/versions/0/",
+  "name": "auto_grown_20251005230830031"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005231446963/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005231446963/versions/0/",
+  "name": "auto_grown_20251005231446963"
+ },
+ {
+  "scroll": "PHerc1203",
+  "volume": "20250820131727-9.362um-1.2m-113keV-masked.zarr",
+  "seg_dir": "PHerc1203/segments/raw/auto_grown_20251005231446965/",
+  "tifxyz": "PHerc1203/segments/raw/auto_grown_20251005231446965/versions/0/",
+  "name": "auto_grown_20251005231446965"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502180708-auto_grown_20250502160708188/",
+  "tifxyz": "PHerc1447/segments/20250502180708-auto_grown_20250502160708188/mesh/intermediate/tifxyz_original/",
+  "name": "20250502180708-auto_grown_20250502160708188"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502180748-auto_grown_20250502160748721/",
+  "tifxyz": "PHerc1447/segments/20250502180748-auto_grown_20250502160748721/mesh/intermediate/tifxyz_original/",
+  "name": "20250502180748-auto_grown_20250502160748721"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502182142-auto_grown_20250502161324419/",
+  "tifxyz": "PHerc1447/segments/20250502182142-auto_grown_20250502161324419/mesh/intermediate/tifxyz_original/",
+  "name": "20250502182142-auto_grown_20250502161324419"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502182456-auto_grown_20250502161202782/",
+  "tifxyz": "PHerc1447/segments/20250502182456-auto_grown_20250502161202782/mesh/intermediate/tifxyz_original/",
+  "name": "20250502182456-auto_grown_20250502161202782"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502183138-auto_grown_20250502162038685/",
+  "tifxyz": "PHerc1447/segments/20250502183138-auto_grown_20250502162038685/mesh/intermediate/tifxyz_original/",
+  "name": "20250502183138-auto_grown_20250502162038685"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502183421-auto_grown_20250502161744358/",
+  "tifxyz": "PHerc1447/segments/20250502183421-auto_grown_20250502161744358/mesh/intermediate/tifxyz_original/",
+  "name": "20250502183421-auto_grown_20250502161744358"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502184201-auto_grown_20250502163549332/",
+  "tifxyz": "PHerc1447/segments/20250502184201-auto_grown_20250502163549332/mesh/intermediate/tifxyz_original/",
+  "name": "20250502184201-auto_grown_20250502163549332"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502184658-auto_grown_20250502163923577/",
+  "tifxyz": "PHerc1447/segments/20250502184658-auto_grown_20250502163923577/mesh/intermediate/tifxyz_original/",
+  "name": "20250502184658-auto_grown_20250502163923577"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502184845-auto_grown_20250502164121265/",
+  "tifxyz": "PHerc1447/segments/20250502184845-auto_grown_20250502164121265/mesh/intermediate/tifxyz_original/",
+  "name": "20250502184845-auto_grown_20250502164121265"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502185519-auto_grown_20250502164303733/",
+  "tifxyz": "PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original/",
+  "name": "20250502185519-auto_grown_20250502164303733"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250502205333-auto_grown_20250502181030065/",
+  "tifxyz": "PHerc1447/segments/20250502205333-auto_grown_20250502181030065/mesh/intermediate/tifxyz_original/",
+  "name": "20250502205333-auto_grown_20250502181030065"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250702235910-auto_grown_20250702235910292/",
+  "tifxyz": "PHerc1447/segments/20250702235910-auto_grown_20250702235910292/mesh/intermediate/tifxyz_normalized/",
+  "name": "20250702235910-auto_grown_20250702235910292"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250703025628-auto_grown_20250703025628283/",
+  "tifxyz": "PHerc1447/segments/20250703025628-auto_grown_20250703025628283/mesh/intermediate/tifxyz_normalized/",
+  "name": "20250703025628-auto_grown_20250703025628283"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20250703034159-auto_grown_20250703034159599/",
+  "tifxyz": "PHerc1447/segments/20250703034159-auto_grown_20250703034159599/mesh/intermediate/tifxyz_normalized/",
+  "name": "20250703034159-auto_grown_20250703034159599"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/20251105093211-z_dbg_gen_00320/",
+  "tifxyz": "PHerc1447/segments/20251105093211-z_dbg_gen_00320/mesh/intermediate/tifxyz_normalized/",
+  "name": "20251105093211-z_dbg_gen_00320"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502160708188/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502160708188/",
+  "name": "auto_grown_20250502160708188"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502160748721/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502160748721/",
+  "name": "auto_grown_20250502160748721"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502161202782/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502161202782/",
+  "name": "auto_grown_20250502161202782"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502161324419/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502161324419/",
+  "name": "auto_grown_20250502161324419"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502161744358/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502161744358/",
+  "name": "auto_grown_20250502161744358"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502162038685/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502162038685/",
+  "name": "auto_grown_20250502162038685"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502163549332/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502163549332/",
+  "name": "auto_grown_20250502163549332"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502163923577/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502163923577/",
+  "name": "auto_grown_20250502163923577"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502164121265/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502164121265/",
+  "name": "auto_grown_20250502164121265"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502164303733/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502164303733/",
+  "name": "auto_grown_20250502164303733"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250502181030065/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250502181030065/",
+  "name": "auto_grown_20250502181030065"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250702235910292/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250702235910292/",
+  "name": "auto_grown_20250702235910292"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250703025628283/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250703025628283/",
+  "name": "auto_grown_20250703025628283"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/auto_grown_20250703034159599/",
+  "tifxyz": "PHerc1447/segments/raw/auto_grown_20250703034159599/",
+  "name": "auto_grown_20250703034159599"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00070_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00070_inp_hr/",
+  "name": "z_dbg_gen_00070_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00078_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00078_inp_hr/",
+  "name": "z_dbg_gen_00078_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00113_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00113_inp_hr/",
+  "name": "z_dbg_gen_00113_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00137_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00137_inp_hr/",
+  "name": "z_dbg_gen_00137_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00166_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00166_inp_hr/",
+  "name": "z_dbg_gen_00166_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00169_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00169_inp_hr/",
+  "name": "z_dbg_gen_00169_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00184/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00184/",
+  "name": "z_dbg_gen_00184"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00215/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00215/",
+  "name": "z_dbg_gen_00215"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00231/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00231/",
+  "name": "z_dbg_gen_00231"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00232/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00232/",
+  "name": "z_dbg_gen_00232"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00257/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00257/",
+  "name": "z_dbg_gen_00257"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00260/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00260/",
+  "name": "z_dbg_gen_00260"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00283_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00283_inp_hr/",
+  "name": "z_dbg_gen_00283_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00289/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00289/",
+  "name": "z_dbg_gen_00289"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00316/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00316/",
+  "name": "z_dbg_gen_00316"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00316_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00316_inp_hr/",
+  "name": "z_dbg_gen_00316_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00320/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00320/",
+  "name": "z_dbg_gen_00320"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00321/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00321/",
+  "name": "z_dbg_gen_00321"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00325_inp_hr/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00325_inp_hr/",
+  "name": "z_dbg_gen_00325_inp_hr"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00329/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00329/",
+  "name": "z_dbg_gen_00329"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00357/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00357/",
+  "name": "z_dbg_gen_00357"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00469/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00469/",
+  "name": "z_dbg_gen_00469"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00701/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00701/",
+  "name": "z_dbg_gen_00701"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/",
+  "tifxyz": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/mesh/intermediate/tifxyz_original/",
+  "name": "20251028213516-auto_grown_20251028213516907"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028220042-auto_grown_20251028220042762/",
+  "tifxyz": "PHerc0800/segments/20251028220042-auto_grown_20251028220042762/mesh/intermediate/tifxyz_original/",
+  "name": "20251028220042-auto_grown_20251028220042762"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028220955-auto_grown_20251028220955262/",
+  "tifxyz": "PHerc0800/segments/20251028220955-auto_grown_20251028220955262/mesh/intermediate/tifxyz_original/",
+  "name": "20251028220955-auto_grown_20251028220955262"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/",
+  "tifxyz": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/mesh/intermediate/tifxyz_original/",
+  "name": "20251028222030-auto_grown_20251028222030940"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/",
+  "tifxyz": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/mesh/intermediate/tifxyz_original/",
+  "name": "20251028225813-auto_grown_20251028225813045"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251029010146-auto_grown_20251029010146642/",
+  "tifxyz": "PHerc0800/segments/20251029010146-auto_grown_20251029010146642/mesh/intermediate/tifxyz_original/",
+  "name": "20251029010146-auto_grown_20251029010146642"
+ }
+]

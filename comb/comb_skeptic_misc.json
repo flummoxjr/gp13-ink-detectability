@@ -1,0 +1,51 @@
+{
+ "F7_sat_recompute": {
+  "PHerc0191_pap0": {
+   "recomputed_sat_frac_ge250": 0.34045,
+   "hunter_sat_frac": 0.34045,
+   "shape": [
+    256,
+    256,
+    256
+   ]
+  },
+  "PHerc1203_pap0": {
+   "recomputed_sat_frac_ge250": 0.26724,
+   "hunter_sat_frac": 0.26724,
+   "shape": [
+    256,
+    256,
+    256
+   ]
+  },
+  "PHerc0139_pap0": {
+   "recomputed_sat_frac_ge250": 0.0019,
+   "hunter_sat_frac": 0.0019,
+   "shape": [
+    256,
+    256,
+    256
+   ]
+  }
+ },
+ "F8_residuals": {
+  "R2_M1": 0.6207,
+  "R2_M1_plus_meanct_sq_cube": 0.6543,
+  "familyA_rim": {
+   "n": 7,
+   "resid_M1_med": 0.06219249032665936,
+   "resid_M1nl_med": 0.05280767746401191,
+   "shrink_frac_med": 0.15089945447359854
+  },
+  "familyB_damage": {
+   "n": 13,
+   "resid_M1_med": 0.05428330143183717,
+   "resid_M1nl_med": 0.052506921437609974,
+   "shrink_frac_med": 0.032724243871898095
+  },
+  "note": "familyA = meanct<60 picks (near-empty rim), familyB = rest (frothy damage). Shrink_frac = how much of the median pick residual a meanct nonlinearity alone absorbs.",
+  "familyA_f05_obs_med": 0.07296,
+  "familyA_f05_M1pred_med": 0.010551373412322939,
+  "familyA_f05_M1nlpred_med": 0.020305681554054135
+ }
+}

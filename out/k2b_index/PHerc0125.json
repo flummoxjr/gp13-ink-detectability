@@ -1,0 +1,40 @@
+{
+ "n_pap_rois": 2,
+ "rois": [
+  {
+   "origin": [
+    3704,
+    2928,
+    4352
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 116.1,
+   "dn_headroom": 219.0
+  },
+  {
+   "origin": [
+    3952,
+    3368,
+    4136
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 112.35,
+   "dn_headroom": 223.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.4958,
+  0.4958,
+  0.4958
+ ],
+ "snr_q025_med_iqr": [
+  114.225,
+  113.2875,
+  115.1625
+ ],
+ "dn_headroom_med_iqr": [
+  221.0,
+  220.0,
+  222.0
+ ]
+}

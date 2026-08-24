@@ -1,0 +1,63 @@
+{
+ "forward": {
+  "best_prom": 47.274745617181914,
+  "best_theta": 15,
+  "best_period_mm": 7.2403200000000005,
+  "theta15_prom": 47.274745617181914,
+  "theta15_period_mm": 7.2403200000000005
+ },
+ "reverse": {
+  "best_prom": 12.566621894332613,
+  "best_theta": 150,
+  "best_period_mm": 4.147199999999999,
+  "theta15_prom": 6.13397045804793,
+  "theta15_period_mm": 7.2403200000000005
+ },
+ "mask_support_profile_len": 838,
+ "mask_support_prom": 7.988199686730125,
+ "mask_support_period_mm": 7.2403200000000005,
+ "fwd_2d_peaks": [
+  {
+   "period_mm": 2.666,
+   "angle_deg": 90.0,
+   "snr_vs_radial_median": 39.52
+  },
+  {
+   "period_mm": 2.666,
+   "angle_deg": 90.0,
+   "snr_vs_radial_median": 39.52
+  },
+  {
+   "period_mm": 1.777,
+   "angle_deg": 90.0,
+   "snr_vs_radial_median": 11.07
+  },
+  {
+   "period_mm": 1.777,
+   "angle_deg": 90.0,
+   "snr_vs_radial_median": 11.07
+  },
+  {
+   "period_mm": 6.335,
+   "angle_deg": 170.23,
+   "snr_vs_radial_median": 8.21
+  },
+  {
+   "period_mm": 6.335,
+   "angle_deg": 170.23,
+   "snr_vs_radial_median": 8.21
+  },
+  {
+   "period_mm": 1.935,
+   "angle_deg": 38.48,
+   "snr_vs_radial_median": 7.21
+  },
+  {
+   "period_mm": 1.935,
+   "angle_deg": 38.48,
+   "snr_vs_radial_median": 7.21
+  }
+ ],
+ "peak_bin_snr_fwd": 39.52425153933816,
+ "peak_bin_snr_rev": 16.939548737982232
+}

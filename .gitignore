@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.runpod_key
+*.log
+nohup*

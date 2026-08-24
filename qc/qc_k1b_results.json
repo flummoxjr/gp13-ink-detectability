@@ -1,0 +1,48 @@
+{
+ "depth_contrast_auc": 0.5715,
+ "depth_contrast_det50_auc": 0.5473,
+ "per_patch": {
+  "1": {
+   "n_pos": 68799,
+   "n_neg": 194993,
+   "auc_contrast": 0.6277,
+   "auc_z12": 0.5922
+  },
+  "2": {
+   "n_pos": 39116,
+   "n_neg": 51345,
+   "auc_contrast": 0.5617,
+   "auc_z12": 0.5874
+  },
+  "3": {
+   "n_pos": 57455,
+   "n_neg": 172727,
+   "auc_contrast": 0.5008,
+   "auc_z12": 0.497
+  },
+  "4": {
+   "n_pos": 57987,
+   "n_neg": 95024,
+   "auc_contrast": 0.6374,
+   "auc_z12": 0.5888
+  },
+  "5": {
+   "n_pos": 26745,
+   "n_neg": 58635,
+   "auc_contrast": 0.4831,
+   "auc_z12": 0.4535
+  },
+  "6": {
+   "n_pos": 50945,
+   "n_neg": 77224,
+   "auc_contrast": 0.5594,
+   "auc_z12": 0.5793
+  },
+  "7": {
+   "n_pos": 32261,
+   "n_neg": 86323,
+   "auc_contrast": 0.5037,
+   "auc_z12": 0.4989
+  }
+ }
+}

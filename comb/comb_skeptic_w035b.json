@@ -1,0 +1,65 @@
+{
+ "a_spearman_texture_rf_vs_fwdmean": {
+  "rho": -0.592971875566054,
+  "p": 1.9190089703191197e-30
+ },
+ "b_matched": {
+  "cand_fwdmean_med": 155.26448018667702,
+  "matched_tex_fwdmean_med": 143.267626804376,
+  "all_tex_fwdmean_med": 126.60036640942394,
+  "cand_rf_med": 0.4941256973621567,
+  "matched_tex_rf_med": 0.5337473035549178,
+  "mw_cand_lt_matched_rf_p": 0.007257802069986279,
+  "cand_revmean_med": 77.51105769673507,
+  "matched_tex_revmean_med": 77.32071123052465,
+  "mw_cand_lt_matched_revmean_p": 0.3817478732787789
+ },
+ "labeled_context": {
+  "labeled_fwdmean_med": 187.03089960578808,
+  "labeled_rf_med": 0.4351720630144145,
+  "labeled_revmean_med": 74.71918590564536
+ },
+ "N1_scale": {
+  "fwd_inmask_frac195": 0.021157702065761494
+ },
+ "N1_rev_cross": {
+  "rev42_beyond_cross_iou": [
+   0.5217047521151261,
+   0.5596160405398821
+  ],
+  "rev42_comps": [
+   {
+    "id": 5692,
+    "area": 11506,
+    "cy": 3635.8350425864764,
+    "cx": 1431.7343994437686,
+    "width": 48.54852320675106,
+    "v_p90": 204.0,
+    "frac195": 0.28081001216756474,
+    "zone": "beyond"
+   },
+   {
+    "id": 6511,
+    "area": 16663,
+    "cy": 4181.560763367941,
+    "cx": 4920.200384084498,
+    "width": 35.22832980972516,
+    "v_p90": 196.0,
+    "frac195": 0.11348496669267238,
+    "zone": "beyond"
+   }
+  ],
+  "rev43_comps": [
+   {
+    "id": 6389,
+    "area": 15926,
+    "cy": 5267.702750219766,
+    "cx": 1265.3296496295366,
+    "width": 30.393129770992367,
+    "v_p90": 199.0,
+    "frac195": 0.21072460128092427,
+    "zone": "beyond"
+   }
+  ]
+ }
+}

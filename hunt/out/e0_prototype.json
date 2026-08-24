@@ -1,0 +1,45 @@
+{
+ "ref_shape": [
+  864
+ ],
+ "ref_dtype": "float32",
+ "ref_norm": 1.0,
+ "files_byte_identical": true,
+ "n_rows_total": 256,
+ "n_unique_rows": 128,
+ "readme_claims_256": true,
+ "cos_mean128_vs_avgref": 1.0,
+ "pairwise_cos": {
+  "min": -0.03659183531999588,
+  "p05": 0.14444120228290558,
+  "median": 0.3335680365562439,
+  "p95": 0.5799813866615295,
+  "max": 0.8889989852905273
+ },
+ "cos_token_vs_ref": {
+  "min": 0.2547706365585327,
+  "p05": 0.41577231884002686,
+  "median": 0.6000467538833618,
+  "p95": 0.7214612364768982,
+  "max": 0.7600678205490112
+ },
+ "norm_of_mean_unit_token": 0.5906919836997986,
+ "energy_in_mean_direction": 0.34891700744628906,
+ "pca": {
+  "pc1": 0.09443049132823944,
+  "pc1_3": 0.2457130253314972,
+  "pc1_10": 0.4833853840827942,
+  "n_pcs_for_90pct": 56
+ },
+ "centred_pairwise_cos_median": -0.028490973636507988,
+ "self_recall_vs_tau": {
+  "0.40": 0.9609375,
+  "0.45": 0.8828125,
+  "0.50": 0.828125,
+  "0.55": 0.71875,
+  "0.60": 0.5,
+  "0.65": 0.296875,
+  "0.70": 0.109375
+ },
+ "scorers_saved": "out/e0_scorers.npz (ref, tokens[128,864], token_mean, precision, shrinkage)"
+}

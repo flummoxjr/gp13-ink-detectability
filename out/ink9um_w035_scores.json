@@ -1,0 +1,34 @@
+{
+ "w035_seed42-075000.tif": {
+  "auc": 0.9991,
+  "pred_range": [
+   0.0,
+   222.0
+  ],
+  "frac_gt_half": 0.122
+ },
+ "w035_seed42-075000_reverse.tif": {
+  "auc": 0.5123,
+  "pred_range": [
+   0.0,
+   222.0
+  ],
+  "frac_gt_half": 0.0885
+ },
+ "w035_seed43-075000.tif": {
+  "auc": 0.9982,
+  "pred_range": [
+   0.0,
+   234.0
+  ],
+  "frac_gt_half": 0.1186
+ },
+ "w035_seed43-075000_reverse.tif": {
+  "auc": 0.5844,
+  "pred_range": [
+   0.0,
+   230.0
+  ],
+  "frac_gt_half": 0.0785
+ }
+}

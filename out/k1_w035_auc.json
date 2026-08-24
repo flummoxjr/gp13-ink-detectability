@@ -1,0 +1,15 @@
+{
+ "segment": "w035",
+ "z_slices": [
+  5,
+  22
+ ],
+ "valid_px": 1071082,
+ "ink_px": 334002,
+ "aucs": {
+  "raw_zmean": 0.4956,
+  "detrend_s25": 0.5059,
+  "detrend_s50": 0.5016,
+  "detrend_s100": 0.4986
+ }
+}

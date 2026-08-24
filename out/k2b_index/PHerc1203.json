@@ -1,0 +1,50 @@
+{
+ "n_pap_rois": 3,
+ "rois": [
+  {
+   "origin": [
+    4480,
+    3432,
+    1488
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 112.66,
+   "dn_headroom": 236.0
+  },
+  {
+   "origin": [
+    15344,
+    3224,
+    1512
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 87.24,
+   "dn_headroom": 194.0
+  },
+  {
+   "origin": [
+    15560,
+    1880,
+    3160
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 70.11,
+   "dn_headroom": 212.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.4958,
+  0.4958,
+  0.4958
+ ],
+ "snr_q025_med_iqr": [
+  87.24,
+  78.675,
+  99.95
+ ],
+ "dn_headroom_med_iqr": [
+  212.0,
+  203.0,
+  224.0
+ ]
+}

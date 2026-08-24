@@ -1,0 +1,628 @@
+{
+ "n_tiles_used": 34,
+ "sheet_fill_of_interior_median": 0.16465249204085192,
+ "signed_hist_bins_centers": [
+  -15.0,
+  -14.0,
+  -13.0,
+  -12.0,
+  -11.0,
+  -10.0,
+  -9.0,
+  -8.0,
+  -7.0,
+  -6.0,
+  -5.0,
+  -4.0,
+  -3.0,
+  -2.0,
+  -1.0,
+  0.0,
+  1.0,
+  2.0,
+  3.0,
+  4.0,
+  5.0,
+  6.0,
+  7.0,
+  8.0,
+  9.0,
+  10.0,
+  11.0,
+  12.0,
+  13.0,
+  14.0,
+  15.0
+ ],
+ "signed_hist_fired": [
+  1252,
+  1443,
+  1719,
+  1762,
+  2195,
+  3330,
+  6321,
+  8815,
+  12609,
+  18821,
+  28444,
+  43672,
+  46976,
+  64161,
+  87836,
+  0,
+  94659,
+  50466,
+  4755,
+  1070,
+  290,
+  122,
+  59,
+  8,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "signed_hist_interior": [
+  35370,
+  45160,
+  57245,
+  66374,
+  83246,
+  104829,
+  153713,
+  188617,
+  250731,
+  370948,
+  564715,
+  745422,
+  742914,
+  906997,
+  1097062,
+  0,
+  1041536,
+  540149,
+  79714,
+  27663,
+  9807,
+  4561,
+  2588,
+  1599,
+  918,
+  315,
+  55,
+  3,
+  0,
+  0,
+  0
+ ],
+ "fired_frac_surface_band_mean": 0.5057722501119051,
+ "null_frac_surface_band": {
+  "mean": 0.3723261393055081,
+  "sd": 0.0009893279947596045,
+  "p_emp": 0.0
+ },
+ "fired_frac_inside_mean": 0.3141383462493498,
+ "null_frac_inside": {
+  "mean": 0.21596679544352348,
+  "sd": 0.0008530287957396442,
+  "p_emp_greater": 0.0,
+  "p_emp_less": 1.0
+ },
+ "per_tile": [
+  {
+   "tile": [
+    0,
+    9472,
+    12288
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -7.0,
+   "fired_frac_surface_band": 0.4917550058892815,
+   "interior_frac_surface_band": 0.19533644293267774,
+   "fired_frac_inside": 0.39320769532783667,
+   "interior_frac_inside": 0.11722459839019297,
+   "fired_frac_deep_out": 0.32351786415390654,
+   "interior_frac_deep_out": 0.7163220287609874
+  },
+  {
+   "tile": [
+    0,
+    11776,
+    9984
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -2.449489742783178,
+   "fired_frac_surface_band": 0.7529291900152827,
+   "interior_frac_surface_band": 0.445058090587641,
+   "fired_frac_inside": 0.49596099264973437,
+   "interior_frac_inside": 0.22218807880114497,
+   "fired_frac_deep_out": 0.12167964485845281,
+   "interior_frac_deep_out": 0.42130830106078465
+  },
+  {
+   "tile": [
+    0,
+    12032,
+    19456
+   ],
+   "fired_med_signed": -3.7416573867739413,
+   "interior_med_signed": -3.1622776601683795,
+   "fired_frac_surface_band": 0.2673681762688216,
+   "interior_frac_surface_band": 0.313535190146422,
+   "fired_frac_inside": 0.1598744259054706,
+   "interior_frac_inside": 0.174114138401658,
+   "fired_frac_deep_out": 0.5739201209232021,
+   "interior_frac_deep_out": 0.5151813846905592
+  },
+  {
+   "tile": [
+    0,
+    12288,
+    20992
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -1.0,
+   "fired_frac_surface_band": 0.4350668647845468,
+   "interior_frac_surface_band": 0.4234860160177863,
+   "fired_frac_inside": 0.34977711738484396,
+   "interior_frac_inside": 0.4183109741205797,
+   "fired_frac_deep_out": 0.2815007429420505,
+   "interior_frac_deep_out": 0.26034376763261835
+  },
+  {
+   "tile": [
+    256,
+    8448,
+    10496
+   ],
+   "fired_med_signed": 1.0,
+   "interior_med_signed": -6.082762530298219,
+   "fired_frac_surface_band": 0.7643818849449204,
+   "interior_frac_surface_band": 0.21794608948637592,
+   "fired_frac_inside": 0.602203182374541,
+   "interior_frac_inside": 0.12864520790010642,
+   "fired_frac_deep_out": 0.06772745818033456,
+   "interior_frac_deep_out": 0.6937195520799774
+  },
+  {
+   "tile": [
+    256,
+    13056,
+    11520
+   ],
+   "fired_med_signed": -2.0,
+   "interior_med_signed": -2.0,
+   "fired_frac_surface_band": 0.5523342335887119,
+   "interior_frac_surface_band": 0.5375099182128906,
+   "fired_frac_inside": 0.26478531665105,
+   "interior_frac_inside": 0.2668800354003906,
+   "fired_frac_deep_out": 0.2971393926032079,
+   "interior_frac_deep_out": 0.3202972412109375
+  },
+  {
+   "tile": [
+    256,
+    14080,
+    12800
+   ],
+   "fired_med_signed": -2.23606797749979,
+   "interior_med_signed": -1.7320508075688772,
+   "fired_frac_surface_band": 0.4589538848017226,
+   "interior_frac_surface_band": 0.5457954406738281,
+   "fired_frac_inside": 0.23443387762425982,
+   "interior_frac_inside": 0.29671478271484375,
+   "fired_frac_deep_out": 0.3431724385429751,
+   "interior_frac_deep_out": 0.2708015441894531
+  },
+  {
+   "tile": [
+    256,
+    14336,
+    6144
+   ],
+   "fired_med_signed": -2.0,
+   "interior_med_signed": -2.0,
+   "fired_frac_surface_band": 0.5282745591939546,
+   "interior_frac_surface_band": 0.481940258650288,
+   "fired_frac_inside": 0.26316120906801005,
+   "interior_frac_inside": 0.24522565139434632,
+   "fired_frac_deep_out": 0.26341309823677583,
+   "interior_frac_deep_out": 0.336108037996414
+  },
+  {
+   "tile": [
+    512,
+    8448,
+    10752
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -13.2664991614216,
+   "fired_frac_surface_band": 0.5193488123832399,
+   "interior_frac_surface_band": 0.10189777773657324,
+   "fired_frac_inside": 0.40272217774219377,
+   "interior_frac_inside": 0.0662321648758147,
+   "fired_frac_deep_out": 0.26607953029089937,
+   "interior_frac_deep_out": 0.8507087694575526
+  },
+  {
+   "tile": [
+    512,
+    8704,
+    15616
+   ],
+   "fired_med_signed": -5.0,
+   "interior_med_signed": -4.58257569495584,
+   "fired_frac_surface_band": 0.1488041719115267,
+   "interior_frac_surface_band": 0.24051849760816657,
+   "fired_frac_inside": 0.06096025894623269,
+   "interior_frac_inside": 0.16287355707975068,
+   "fired_frac_deep_out": 0.7395252652400648,
+   "interior_frac_deep_out": 0.6134614064133179
+  },
+  {
+   "tile": [
+    512,
+    9472,
+    13568
+   ],
+   "fired_med_signed": -2.23606797749979,
+   "interior_med_signed": -2.449489742783178,
+   "fired_frac_surface_band": 0.468135593220339,
+   "interior_frac_surface_band": 0.4573098388985744,
+   "fired_frac_inside": 0.272271186440678,
+   "interior_frac_inside": 0.2355865152422625,
+   "fired_frac_deep_out": 0.42589830508474574,
+   "interior_frac_deep_out": 0.410947877604117
+  },
+  {
+   "tile": [
+    512,
+    11776,
+    10752
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -2.0,
+   "fired_frac_surface_band": 0.7418735168932916,
+   "interior_frac_surface_band": 0.53656005859375,
+   "fired_frac_inside": 0.47003653621605335,
+   "interior_frac_inside": 0.2741889953613281,
+   "fired_frac_deep_out": 0.12576744886813063,
+   "interior_frac_deep_out": 0.3145027160644531
+  },
+  {
+   "tile": [
+    768,
+    8704,
+    16384
+   ],
+   "fired_med_signed": -2.8284271247461903,
+   "interior_med_signed": -19.924858845171276,
+   "fired_frac_surface_band": 0.38596019365250134,
+   "interior_frac_surface_band": 0.06064390785456564,
+   "fired_frac_inside": 0.11941904249596558,
+   "interior_frac_inside": 0.03895827551114812,
+   "fired_frac_deep_out": 0.39591178052716514,
+   "interior_frac_deep_out": 0.9142011286890555
+  },
+  {
+   "tile": [
+    768,
+    9728,
+    18432
+   ],
+   "fired_med_signed": 1.0,
+   "interior_med_signed": -1.7320508075688772,
+   "fired_frac_surface_band": 0.634839349136863,
+   "interior_frac_surface_band": 0.45911964080673523,
+   "fired_frac_inside": 0.5416701082018667,
+   "interior_frac_inside": 0.3114025550939754,
+   "fired_frac_deep_out": 0.07210704551086149,
+   "interior_frac_deep_out": 0.31851317792197387
+  },
+  {
+   "tile": [
+    768,
+    10240,
+    6912
+   ],
+   "fired_med_signed": -1.7320508075688772,
+   "interior_med_signed": -8.306623862918075,
+   "fired_frac_surface_band": 0.3787878787878788,
+   "interior_frac_surface_band": 0.17350204399454935,
+   "fired_frac_inside": 0.3577075098814229,
+   "interior_frac_inside": 0.1354058789176562,
+   "fired_frac_deep_out": 0.3814229249011858,
+   "interior_frac_deep_out": 0.710967490753358
+  },
+  {
+   "tile": [
+    768,
+    10240,
+    19712
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -1.4142135623730951,
+   "fired_frac_surface_band": 0.6995875017780095,
+   "interior_frac_surface_band": 0.5344500692396608,
+   "fired_frac_inside": 0.49864871272106587,
+   "interior_frac_inside": 0.3103081260276272,
+   "fired_frac_deep_out": 0.07097814233559338,
+   "interior_frac_deep_out": 0.22383675462456082
+  },
+  {
+   "tile": [
+    768,
+    11264,
+    14336
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -1.7320508075688772,
+   "fired_frac_surface_band": 0.644460998190912,
+   "interior_frac_surface_band": 0.44902801513671875,
+   "fired_frac_inside": 0.4470575715653932,
+   "interior_frac_inside": 0.2862892150878906,
+   "fired_frac_deep_out": 0.17998652052073358,
+   "interior_frac_deep_out": 0.3274345397949219
+  },
+  {
+   "tile": [
+    1024,
+    7936,
+    12800
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -2.0,
+   "fired_frac_surface_band": 0.5699708454810496,
+   "interior_frac_surface_band": 0.5671224961479199,
+   "fired_frac_inside": 0.380466472303207,
+   "interior_frac_inside": 0.30254879301489473,
+   "fired_frac_deep_out": 0.37099125364431484,
+   "interior_frac_deep_out": 0.31715459681561375
+  },
+  {
+   "tile": [
+    1024,
+    10240,
+    6400
+   ],
+   "fired_med_signed": -2.23606797749979,
+   "interior_med_signed": -7.0,
+   "fired_frac_surface_band": 0.4223404255319149,
+   "interior_frac_surface_band": 0.13083525225036635,
+   "fired_frac_inside": 0.10638297872340426,
+   "interior_frac_inside": 0.03370316097969437,
+   "fired_frac_deep_out": 0.35106382978723405,
+   "interior_frac_deep_out": 0.7849068453003978
+  },
+  {
+   "tile": [
+    1024,
+    11264,
+    13568
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -2.449489742783178,
+   "fired_frac_surface_band": 0.5913492119584423,
+   "interior_frac_surface_band": 0.3896331787109375,
+   "fired_frac_inside": 0.2912573326736872,
+   "interior_frac_inside": 0.22029876708984375,
+   "fired_frac_deep_out": 0.21132235493674464,
+   "interior_frac_deep_out": 0.41738128662109375
+  },
+  {
+   "tile": [
+    1024,
+    11520,
+    7936
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -2.449489742783178,
+   "fired_frac_surface_band": 0.5591219610206952,
+   "interior_frac_surface_band": 0.4331248831521635,
+   "fired_frac_inside": 0.3102270444042596,
+   "interior_frac_inside": 0.21701075572411319,
+   "fired_frac_deep_out": 0.30389793048020897,
+   "interior_frac_deep_out": 0.416962681185686
+  },
+  {
+   "tile": [
+    1024,
+    12800,
+    13312
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -3.7416573867739413,
+   "fired_frac_surface_band": 0.5898817191708631,
+   "interior_frac_surface_band": 0.32315826416015625,
+   "fired_frac_inside": 0.33868134441972125,
+   "interior_frac_inside": 0.16643142700195312,
+   "fired_frac_deep_out": 0.24716008900339617,
+   "interior_frac_deep_out": 0.5491752624511719
+  },
+  {
+   "tile": [
+    1024,
+    14592,
+    18688
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -2.449489742783178,
+   "fired_frac_surface_band": 0.5760230037602301,
+   "interior_frac_surface_band": 0.4217157941718388,
+   "fired_frac_inside": 0.31851360318513605,
+   "interior_frac_inside": 0.23139074009788624,
+   "fired_frac_deep_out": 0.28064587480645875,
+   "interior_frac_deep_out": 0.4230891009037121
+  },
+  {
+   "tile": [
+    1280,
+    7936,
+    12032
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -4.123105625617661,
+   "fired_frac_surface_band": 0.5937584073177293,
+   "interior_frac_surface_band": 0.33055879402434724,
+   "fired_frac_inside": 0.2736077481840194,
+   "interior_frac_inside": 0.18954531898164467,
+   "fired_frac_deep_out": 0.33871401668011836,
+   "interior_frac_deep_out": 0.5717810373342732
+  },
+  {
+   "tile": [
+    1280,
+    8192,
+    11264
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -4.123105625617661,
+   "fired_frac_surface_band": 0.6215621562156216,
+   "interior_frac_surface_band": 0.28941929461964133,
+   "fired_frac_inside": 0.49174917491749176,
+   "interior_frac_inside": 0.14327621841456098,
+   "fired_frac_deep_out": 0.18866886688668866,
+   "interior_frac_deep_out": 0.5854390292686179
+  },
+  {
+   "tile": [
+    1280,
+    8448,
+    12544
+   ],
+   "fired_med_signed": -4.898979485566356,
+   "interior_med_signed": -2.8284271247461903,
+   "fired_frac_surface_band": 0.2852233676975945,
+   "interior_frac_surface_band": 0.3724365234375,
+   "fired_frac_inside": 0.15582556046473572,
+   "interior_frac_inside": 0.22376632690429688,
+   "fired_frac_deep_out": 0.6084928816887579,
+   "interior_frac_deep_out": 0.4567108154296875
+  },
+  {
+   "tile": [
+    1280,
+    9984,
+    12032
+   ],
+   "fired_med_signed": -1.4142135623730951,
+   "interior_med_signed": -2.23606797749979,
+   "fired_frac_surface_band": 0.5528685049860713,
+   "interior_frac_surface_band": 0.42444981059522313,
+   "fired_frac_inside": 0.3110339537324882,
+   "interior_frac_inside": 0.2250998523672736,
+   "fired_frac_deep_out": 0.2742944810044814,
+   "interior_frac_deep_out": 0.38814055245921025
+  },
+  {
+   "tile": [
+    1280,
+    12544,
+    17152
+   ],
+   "fired_med_signed": -2.23606797749979,
+   "interior_med_signed": -2.23606797749979,
+   "fired_frac_surface_band": 0.4068537137442754,
+   "interior_frac_surface_band": 0.4038503359315089,
+   "fired_frac_inside": 0.23903774280149498,
+   "interior_frac_inside": 0.25470895473985816,
+   "fired_frac_deep_out": 0.3760593777964942,
+   "interior_frac_deep_out": 0.38794843327343415
+  },
+  {
+   "tile": [
+    1536,
+    10496,
+    9216
+   ],
+   "fired_med_signed": -1.7320508075688772,
+   "interior_med_signed": -2.0,
+   "fired_frac_surface_band": 0.47941603191875226,
+   "interior_frac_surface_band": 0.44147278393853734,
+   "fired_frac_inside": 0.25943054044250996,
+   "interior_frac_inside": 0.2779933089954719,
+   "fired_frac_deep_out": 0.304044250997461,
+   "interior_frac_deep_out": 0.32302216729037203
+  },
+  {
+   "tile": [
+    1536,
+    14080,
+    9984
+   ],
+   "fired_med_signed": -1.0,
+   "interior_med_signed": -3.3166247903554,
+   "fired_frac_surface_band": 0.47692996864267584,
+   "interior_frac_surface_band": 0.3335787502050439,
+   "fired_frac_inside": 0.4642377183813648,
+   "interior_frac_inside": 0.19269929312311407,
+   "fired_frac_deep_out": 0.2901299089144393,
+   "interior_frac_deep_out": 0.5127050915735545
+  },
+  {
+   "tile": [
+    2560,
+    11264,
+    17664
+   ],
+   "fired_med_signed": -2.8284271247461903,
+   "interior_med_signed": -2.23606797749979,
+   "fired_frac_surface_band": 0.40577988915281077,
+   "interior_frac_surface_band": 0.41506195068359375,
+   "fired_frac_inside": 0.2196159936658749,
+   "interior_frac_inside": 0.24592208862304688,
+   "fired_frac_deep_out": 0.4632818685669042,
+   "interior_frac_deep_out": 0.3787841796875
+  },
+  {
+   "tile": [
+    2816,
+    13056,
+    19712
+   ],
+   "fired_med_signed": -3.0,
+   "interior_med_signed": -2.23606797749979,
+   "fired_frac_surface_band": 0.32945465441470234,
+   "interior_frac_surface_band": 0.34766288114321026,
+   "fired_frac_inside": 0.19866160607271274,
+   "interior_frac_inside": 0.2631962432144778,
+   "fired_frac_deep_out": 0.47872552936476226,
+   "interior_frac_deep_out": 0.4151309038334624
+  },
+  {
+   "tile": [
+    2816,
+    17408,
+    17152
+   ],
+   "fired_med_signed": -2.0,
+   "interior_med_signed": -2.23606797749979,
+   "fired_frac_surface_band": 0.5380255077940482,
+   "interior_frac_surface_band": 0.4442024230957031,
+   "fired_frac_inside": 0.25024930457145855,
+   "interior_frac_inside": 0.24323272705078125,
+   "fired_frac_deep_out": 0.2534509001207159,
+   "interior_frac_deep_out": 0.3997383117675781
+  },
+  {
+   "tile": [
+    2816,
+    18176,
+    11264
+   ],
+   "fired_med_signed": -4.0,
+   "interior_med_signed": -3.0,
+   "fired_frac_surface_band": 0.3248353195554885,
+   "interior_frac_surface_band": 0.42038726806640625,
+   "fired_frac_inside": 0.13782873233770804,
+   "interior_frac_inside": 0.22290802001953125,
+   "fired_frac_deep_out": 0.5636848192286418,
+   "interior_frac_deep_out": 0.4500732421875
+  }
+ ]
+}

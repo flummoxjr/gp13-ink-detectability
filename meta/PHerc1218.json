@@ -1,0 +1,515 @@
+{
+ "sample": {
+  "id": "PHerc1218",
+  "properties": {
+   "type": "scroll",
+   "volume_transforms": null
+  },
+  "data": [
+   {
+    "type": "photo",
+    "origins": [
+     {
+      "path": "PHerc1218/photos/PHerc1218_photo.jpg",
+      "access_roots": [
+       {
+        "type": "s3",
+        "url": "s3://vesuvius-challenge-open-data",
+        "usage": "public-read"
+       }
+      ],
+      "copy_info": {
+       "source_path": "s3://philodemos/photogrammetry/srwr/1218/single-rotation-with-ruler/DSC03773.jpg",
+       "date": "2026-02-18T16:04:35.814247Z",
+       "workflow_execution": "s3copy-pherc1218-c4877d11"
+      }
+     }
+    ],
+    "properties": null,
+    "parameters": null,
+    "creation_info": null
+   },
+   {
+    "type": "photo-mask",
+    "origins": [
+     {
+      "path": "PHerc1218/photos/PHerc1218_mask.png",
+      "access_roots": [
+       {
+        "type": "s3",
+        "url": "s3://vesuvius-challenge-open-data",
+        "usage": "public-read"
+       }
+      ],
+      "copy_info": {
+       "source_path": "s3://philodemos/photogrammetry/srwr/1218/single-rotation-with-ruler/DSC03773_mask.png",
+       "date": "2026-02-18T16:04:36.036921Z",
+       "workflow_execution": "s3copy-pherc1218-8e2b3ec4"
+      }
+     }
+    ],
+    "properties": null,
+    "parameters": null,
+    "creation_info": null
+   }
+  ]
+ },
+ "scans": {
+  "20250510170249": {
+   "id": "20250510170249",
+   "sample_id": "PHerc1218",
+   "long_id": "20250510170249-8.640um-1.2m-116keV",
+   "creation": {
+    "date": "2025-05-10T19:02:49.361469+02:00",
+    "process": "xray tomography",
+    "metadata": {
+     "location": "ESRF Grenoble",
+     "beamline": "bm18",
+     "energy_keV": 116.0,
+     "detector_distance_mm": 1200.02,
+     "pixel_size_um": 8.64,
+     "metadata": {
+      "tomo": {
+       "acquisition": {
+        "scanRadix": "SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_HA",
+        "scanType": "helical",
+        "nb_scans": 1,
+        "date": "2025-05-10T19:02:49.361469+02:00",
+        "beamline": "bm18",
+        "machineMode": "16 bunch",
+        "machineCurrentStart": 81.174956,
+        "machineCurrentStop": 89.82,
+        "sampleDetectorDistance": 1200.02,
+        "sourceSampleDistance": 178000.0,
+        "xray_magnification": 1.006742,
+        "energy": 116.0,
+        "scanRange": 360.0,
+        "rotationMode": "continuous",
+        "half_acquisition": false,
+        "tomo_N": 11000,
+        "ref_N": 401,
+        "dark_N": 400,
+        "z_start": -33.0,
+        "z_end": -223.512,
+        "z_step": 0,
+        "detector": {
+         "sensor": "IRIS_15",
+         "sensorPixelSize": 0.00425,
+         "roi_size": "[2528, 1200]",
+         "sensorBinning": 2,
+         "opticsName": "Fixed_X1",
+         "opticsType": "FixedmagOptic",
+         "optical_magnification": 1.0,
+         "samplePixelSize": 0.00864,
+         "scintillator": "GAGG_100_reflective"
+        },
+        "acq_mode": "SINGLE",
+        "expo_time": 0.03,
+        "subframe": 0.03,
+        "latency_time": 0.003,
+        "accumulation": 1,
+        "scan_time": 363.146476,
+        "comment": "wba11 = Mo 1.3mm, wba12 = sapphire 5mm, wba33 = SiO2 block 25mm",
+        "attenuators": {
+         "wba11": {
+          "thickness": 1.3,
+          "type": "molybdenum"
+         },
+         "wba12": {
+          "thickness": 5.0,
+          "type": "sapphire"
+         },
+         "wba13": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba14": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba15": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba21": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba22": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba23": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba24": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba25": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba31": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba32": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba33": {
+          "thickness": 25.0,
+          "type": "SiO2_block"
+         }
+        },
+        "motors": {
+         "att11": 119.5,
+         "att12": 79.5,
+         "att13": 1.0,
+         "att14": 1.0,
+         "att15": 198.0,
+         "att21": 198.0,
+         "att22": 198.0,
+         "att23": 198.0,
+         "att24": 198.0,
+         "att25": 198.0,
+         "att31": 198.0,
+         "att32": 198.0,
+         "att33": 125.7,
+         "dzfocus": -42.77,
+         "dzmag": 16.19,
+         "dzrotc": -0.01,
+         "dzz": 257.05,
+         "foc1twin": 4.68,
+         "foc2twin": "error",
+         "focus10x": "error",
+         "focus2": -0.48,
+         "focus3": 0.13,
+         "focus4": -42.77,
+         "focus5": -2.21,
+         "focus6": "error",
+         "focus7": -2.67,
+         "focusrefl": -3.07,
+         "focusx2": 0.54,
+         "focusx4": -0.02,
+         "fsd": 3.3,
+         "fshg": 22.08,
+         "fsho": -64.08,
+         "fshut_axis": 0.0,
+         "fsl": 75.12,
+         "fsr": -53.04,
+         "fsu": 7.05,
+         "fsvg": 10.35,
+         "fsvo": 1.88,
+         "fur1": 0.0,
+         "girderx": 399.98,
+         "kore": "error",
+         "lfddiaph": 0.0,
+         "lfdfocus": 13.67,
+         "lfdrotc": 0.01,
+         "lfdz": -0.0,
+         "lthx1": -0.9,
+         "lthx2": 0.0,
+         "lthy1": 0.0,
+         "lthy2": 0.0,
+         "lz1": 0.0,
+         "lz2": 0.0,
+         "ostwin": -56.0,
+         "psh1": -11.83,
+         "psh2": 3.5,
+         "pshg": 3.5,
+         "psho": -10.0,
+         "psv1": 1.15,
+         "psv2": -1.8,
+         "psvg": 1.9,
+         "psvo": 0.24,
+         "psx": 0.0,
+         "psy": 0.0,
+         "qsh1": -47.5,
+         "qsh2": 95.0,
+         "qshg": 95.0,
+         "qsho": 0.0,
+         "qsv1": 2.0,
+         "qsv2": -4.0,
+         "qsvg": 4.0,
+         "qsvo": 0.0,
+         "rotc10x": "error",
+         "rotc2": "error",
+         "rotc3": -0.02,
+         "rotc4": -4.37,
+         "rotc5": -45.59,
+         "rotc6": "error",
+         "rotc7": -0.01,
+         "rotc9": -1.87,
+         "rotcrefl": 1.4,
+         "rotctwin": "error",
+         "rotcx2": 0.91,
+         "rotcx4": 0.0,
+         "srot": 0.0,
+         "ssh1": -47.29,
+         "ssh2": 94.59,
+         "sshg": 94.59,
+         "ssho": -0.0,
+         "ssv1": 1.88,
+         "ssv2": -3.76,
+         "ssvg": 3.96,
+         "ssvo": -0.0,
+         "sx": 0.0,
+         "sy": 0.0,
+         "sz": -33.0,
+         "tsh1": -46.49,
+         "tsh2": 92.97,
+         "tshg": 92.97,
+         "tsho": 0.0,
+         "tsv1": 1.8,
+         "tsv2": -3.6,
+         "tsvg": 4.0,
+         "tsvo": 0.0,
+         "yc12": 398.66,
+         "yc3": 350.0,
+         "yc4": 350.0,
+         "yc5": 350.0,
+         "yc6": 350.0,
+         "yc7": 350.0,
+         "yc8": -80.45,
+         "yc9": -39.42,
+         "ycBT": 315.96,
+         "yrot": 7.28,
+         "zc1": 1.2,
+         "zc2": 3.71,
+         "zc3": 0.0,
+         "zc4": 3.75,
+         "zc5": 25.0,
+         "zc6": 524.81,
+         "zc7": 2.63,
+         "zc8": 300.0,
+         "zc9": 272.29,
+         "zcBT": -113.71,
+         "zfocus": "error",
+         "zmag": "error",
+         "zrotc": "error",
+         "zyscint": "error",
+         "zz": "error"
+        },
+        "motors_dial": {
+         "yrot_dial": 213.33
+        }
+       },
+       "processing": {
+        "general": {
+         "WorkFlowScheme": "nabu",
+         "BlissFirstScan": "/data/visitor/in1215/bm18/20250506/RAW_DATA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA_0001/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA_0001.h5",
+         "BlissLastScan": "/data/visitor/in1215/bm18/20250506/RAW_DATA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA_0001/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA_0001.h5",
+         "FlatField": "Standard",
+         "DoubleFlatsScheme": false,
+         "DetectorDistortionCorrection": false
+        },
+        "preprocessing": {
+         "phase": {
+          "method": "Paganin",
+          "delta_beta": 1000.0,
+          "unsharp_coeff": 4.0,
+          "unsharp_sigma": 1.2,
+          "unsharp_method": "gaussian",
+          "padding_type": "edge"
+         }
+        },
+        "reconstruction": {
+         "method": "GHBP",
+         "prefix": "SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc1218_TA_0001",
+         "rotation_axis_position": "3795.75"
+        },
+        "postprocessing": {
+         "32BitsConversion": {
+          "data_min": -0.03683394193649292,
+          "data_max": 0.22433412075042725
+         }
+        }
+       }
+      }
+     }
+    },
+    "derived_from": null
+   },
+   "properties": {
+    "energy_keV": 116.0,
+    "detector_distance_mm": 1200.02,
+    "pixel_size_um": 8.64
+   }
+  }
+ },
+ "volumes": {
+  "20250521120456": {
+   "id": "20250521120456",
+   "sample_id": "PHerc1218",
+   "scan_id": "20250510170249",
+   "long_id": "20250521120456-8.640um-1.2m-116keV-masked.zarr",
+   "suffix": "masked.zarr",
+   "creation": {
+    "date": "2025-05-21T12:04:56Z",
+    "process": "mask_layers_zarr_export",
+    "metadata": {
+     "target_window_f32_min": -0.03,
+     "target_window_f32_max": 0.145,
+     "window_u16_min": 1715,
+     "window_u16_max": 45628,
+     "workflow_name": "export-esrf-pherc1218",
+     "workflow_creation": "2025-05-21T12:04:56Z"
+    },
+    "derived_from": {
+     "type": "scan",
+     "id": "20250510170249"
+    }
+   },
+   "properties": {
+    "energy_keV": 116.0,
+    "detector_distance_mm": 1200.02,
+    "pixel_size_um": 8.64,
+    "data_format": "uint8",
+    "transforms": null,
+    "shape": [
+     23247,
+     7593,
+     7593
+    ],
+    "z_direction_is_top_to_bottom": false,
+    "left_handed_coordinates": false,
+    "text_side": null,
+    "license": {
+     "name": "CC BY-NC 4.0",
+     "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+    }
+   },
+   "data": [
+    {
+     "type": "ome-zarr",
+     "origins": [
+      {
+       "path": "PHerc1218/volumes/20250521120456-8.640um-1.2m-116keV-masked.zarr/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": null
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "surface-prediction-zarr",
+     "origins": [
+      {
+       "path": "PHerc1218/representations/predictions/surfaces/20250521120456-surface-20260413222639-surface-m7-L0-th0.2.zarr/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://scrollprize-reconstruction/surfaces/m7/PHerc1218/20250521120456/20250521120456-8.640um-1.2m-116keV-masked.zarr.ome.zarr/",
+        "date": "2026-05-13T17:09:15.361602Z",
+        "workflow_execution": "s3sync-pherc1218-e157810c"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260413222639",
+      "level": 0,
+      "threshold_value": 0.2,
+      "tta": "none"
+     },
+     "creation_info": {
+      "workflow_name": "surface-inference-9um-pherc1218-20250521120456",
+      "workflow_namespace": "wf-inference",
+      "workflow_uid": "f3373bde-ddba-4604-bc8c-608e900a3f79",
+      "workflow_creation_timestamp": "2026-04-30T07:26:39Z",
+      "inference_cache_key": "surface-inference-9um-pherc1218-20250521120456",
+      "blend_key": "surface-inference-9um-pherc1218-20250521120456",
+      "generated_at": "2026-05-06T08:32:42Z",
+      "model_type": "auto",
+      "batch_size": 4,
+      "ome_num_levels": 6,
+      "ome_downsampling_algorithm": "nearest",
+      "zarr_compressor": "lz4",
+      "zarr_compression_level": 7
+     }
+    },
+    {
+     "type": "normal-grids",
+     "origins": [
+      {
+       "path": "PHerc1218/representations/predictions/surfaces/20250521120456-surface-20260413222639-surface-m7-L0-th0.2.normal-grids/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://scrollprize-reconstruction/surfaces/m7/PHerc1218/20250521120456/20250521120456-8.640um-1.2m-116keV-masked.zarr.ome.zarr/normal_grids/",
+        "date": "2026-07-07T10:00:11.280772Z",
+        "workflow_execution": "s3sync-pherc1218-1114ad05"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260413222639",
+      "level": 0,
+      "threshold_value": 0.2
+     },
+     "creation_info": {
+      "grid_step": 64,
+      "input_level": 0,
+      "prune_min_length_px": 20.0,
+      "sparse_volume": 1,
+      "spiral_step": 20.0
+     }
+    },
+    {
+     "type": "lasagna",
+     "origins": [
+      {
+       "path": "PHerc1218/representations/predictions/lasagna/20250521120456-lasagna-20260419180421/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/hendrik/las_volumes/PHerc1218/volumes/",
+        "date": "2026-07-17T08:51:55.719370Z",
+        "workflow_execution": "s3sync-pherc1218-87f716b5"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260419180421",
+      "level": 0
+     },
+     "creation_info": {
+      "lasagna_version": 2,
+      "source_to_base": 1.0,
+      "grad_mag_encode_scale": 1000.0,
+      "grad_mag_factor": 1.0
+     }
+    }
+   ]
+  }
+ },
+ "segments": {}
+}

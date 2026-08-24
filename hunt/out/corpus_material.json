@@ -1,0 +1,90 @@
+[
+ {
+  "name": "z_dbg_gen_00325_inp_hr",
+  "scroll": "PHerc1447",
+  "n_vertices": 63750,
+  "frac_out_of_array": 0.0797,
+  "frac_no_material": 0.5942,
+  "vertex_lv3_med": 0.0
+ },
+ {
+  "name": "z_dbg_gen_00070_inp_hr",
+  "scroll": "PHerc1447",
+  "n_vertices": 12584,
+  "frac_out_of_array": 0.0,
+  "frac_no_material": 0.9568,
+  "vertex_lv3_med": 0.0
+ },
+ {
+  "name": "z_dbg_gen_00283_inp_hr",
+  "scroll": "PHerc1447",
+  "n_vertices": 60666,
+  "frac_out_of_array": 0.0946,
+  "frac_no_material": 0.3335,
+  "vertex_lv3_med": 100.7
+ },
+ {
+  "name": "z_dbg_gen_00316_inp_hr",
+  "scroll": "PHerc1447",
+  "n_vertices": 60587,
+  "frac_out_of_array": 0.0693,
+  "frac_no_material": 0.2706,
+  "vertex_lv3_med": 104.6
+ },
+ {
+  "name": "auto_grown_20250502161744358",
+  "scroll": "PHerc1447",
+  "n_vertices": 18970,
+  "frac_out_of_array": 0.0207,
+  "frac_no_material": 0.6269,
+  "vertex_lv3_med": 0.0
+ },
+ {
+  "name": "auto_grown_20250502163549332",
+  "scroll": "PHerc1447",
+  "n_vertices": 15165,
+  "frac_out_of_array": 0.1895,
+  "frac_no_material": 0.6321,
+  "vertex_lv3_med": 0.0
+ },
+ {
+  "name": "z_dbg_gen_00166_inp_hr",
+  "scroll": "PHerc1447",
+  "n_vertices": 28135,
+  "frac_out_of_array": 0.2125,
+  "frac_no_material": 0.5663,
+  "vertex_lv3_med": 0.0
+ },
+ {
+  "name": "auto_grown_20250703034159599",
+  "scroll": "PHerc1447",
+  "n_vertices": 28189,
+  "frac_out_of_array": 0.0,
+  "frac_no_material": 0.0,
+  "vertex_lv3_med": 101.8
+ },
+ {
+  "name": "z_dbg_gen_00320",
+  "scroll": "PHerc1447",
+  "n_vertices": 23557,
+  "frac_out_of_array": 0.0,
+  "frac_no_material": 0.0003,
+  "vertex_lv3_med": 95.2
+ },
+ {
+  "name": "auto_grown_20250929222256117",
+  "scroll": "PHerc1203",
+  "n_vertices": 760,
+  "frac_out_of_array": 0.0,
+  "frac_no_material": 0.0,
+  "vertex_lv3_med": 118.4
+ },
+ {
+  "name": "20251028220042-auto_grown_20251028220042762",
+  "scroll": "PHerc0800",
+  "n_vertices": 5772,
+  "frac_out_of_array": 0.0,
+  "frac_no_material": 0.0,
+  "vertex_lv3_med": 100.8
+ }
+]

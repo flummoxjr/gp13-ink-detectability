@@ -1,0 +1,577 @@
+{
+ "_STATUS": "INVALID TEST \u2014 retained as evidence for corrections-ledger row 15, not as a result.",
+ "_why": "Phase randomisation cannot test this statistic. By Parseval J_ij = sum_q q_i q_j |F(q)|^2, so the structure tensor depends only on the power spectrum and is phase-blind BY CONSTRUCTION; the test could not have failed. Verified on a single block: observed 0.9968 vs phase-randomised 0.977-0.994. Superseded by the measured isotropic floor in isotropy_floor.json (28 in-scan air windows, 0.105 median). Do not cite the ratios below as evidence of anything.",
+ "_superseded_by": "isotropy_floor.json",
+ "partial_run_rows": [
+  {
+   "cube": "PHerc0125",
+   "frame": "pap",
+   "observed": 0.15782791613179076,
+   "phase_randomised": 0.10405970465573325
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "pap",
+   "observed": 0.11779803353779389,
+   "phase_randomised": 0.044550228326199585
+  },
+  {
+   "cube": "PHerc0139",
+   "frame": "pap",
+   "observed": 0.45601109839162457,
+   "phase_randomised": 0.45150686360809406
+  },
+  {
+   "cube": "PHerc0139",
+   "frame": "pap",
+   "observed": 0.5646969627103167,
+   "phase_randomised": 0.5554907678455467
+  },
+  {
+   "cube": "PHerc0139",
+   "frame": "pap",
+   "observed": 0.41249261197354486,
+   "phase_randomised": 0.4354186315586336
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "pap",
+   "observed": 0.16606130195698,
+   "phase_randomised": 0.05057592314888844
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "pap",
+   "observed": 0.112559498180491,
+   "phase_randomised": 0.05866142482593598
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "pap",
+   "observed": 0.12048303562595378,
+   "phase_randomised": 0.0556675990018232
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "pap",
+   "observed": 0.11509167348615999,
+   "phase_randomised": 0.04031437119246602
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "pap",
+   "observed": 0.17589282846072385,
+   "phase_randomised": 0.11870930262096754
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "pap",
+   "observed": 0.1582028905239503,
+   "phase_randomised": 0.11748310919389246
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "pap",
+   "observed": 0.13975142948266822,
+   "phase_randomised": 0.08419989186593332
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "pap",
+   "observed": 0.12527556274870977,
+   "phase_randomised": 0.09208805350547569
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "pap",
+   "observed": 0.1758393359878953,
+   "phase_randomised": 0.12631264318865137
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "pap",
+   "observed": 0.197916403292518,
+   "phase_randomised": 0.16291122665930174
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "pap",
+   "observed": 0.17419724126218922,
+   "phase_randomised": 0.09322634453730123
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "pap",
+   "observed": 0.1079860268676386,
+   "phase_randomised": 0.11306078648833286
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "pap",
+   "observed": 0.2101126821964332,
+   "phase_randomised": 0.09651740233420601
+  },
+  {
+   "cube": "PHerc0268",
+   "frame": "pap",
+   "observed": 0.14200939204943405,
+   "phase_randomised": 0.09448314909675765
+  },
+  {
+   "cube": "PHerc0268",
+   "frame": "pap",
+   "observed": 0.16187916890746923,
+   "phase_randomised": 0.09012342558872785
+  },
+  {
+   "cube": "PHerc0268",
+   "frame": "pap",
+   "observed": 0.21679940056918745,
+   "phase_randomised": 0.1960957730515411
+  },
+  {
+   "cube": "PHerc0268",
+   "frame": "pap",
+   "observed": 0.1468485642461248,
+   "phase_randomised": 0.09615496592792819
+  },
+  {
+   "cube": "PHerc0268",
+   "frame": "pap",
+   "observed": 0.1552121438389642,
+   "phase_randomised": 0.084044691647256
+  },
+  {
+   "cube": "PHerc0358",
+   "frame": "pap",
+   "observed": 0.115498767071378,
+   "phase_randomised": 0.04541187169730336
+  },
+  {
+   "cube": "PHerc0358",
+   "frame": "pap",
+   "observed": 0.35971448570173736,
+   "phase_randomised": 0.21185842269504412
+  },
+  {
+   "cube": "PHerc0358",
+   "frame": "pap",
+   "observed": 0.45226469731901153,
+   "phase_randomised": 0.2533466193839935
+  },
+  {
+   "cube": "PHerc0358",
+   "frame": "pap",
+   "observed": 0.4835517066152161,
+   "phase_randomised": 0.29794513927898847
+  },
+  {
+   "cube": "PHerc0358",
+   "frame": "pap",
+   "observed": 0.12965666442561863,
+   "phase_randomised": 0.04512553137419522
+  },
+  {
+   "cube": "PHerc0800",
+   "frame": "pap",
+   "observed": 0.18027683969834823,
+   "phase_randomised": 0.09148158425457156
+  },
+  {
+   "cube": "PHerc0800",
+   "frame": "pap",
+   "observed": 0.2206158629485253,
+   "phase_randomised": 0.2058474768252999
+  },
+  {
+   "cube": "PHerc0800",
+   "frame": "pap",
+   "observed": 0.21837984080357625,
+   "phase_randomised": 0.1293050110647322
+  },
+  {
+   "cube": "PHerc0813",
+   "frame": "pap",
+   "observed": 0.15745919333129887,
+   "phase_randomised": 0.054068907150751
+  },
+  {
+   "cube": "PHerc0813",
+   "frame": "pap",
+   "observed": 0.261577813405943,
+   "phase_randomised": 0.08275103768676267
+  },
+  {
+   "cube": "PHerc0826",
+   "frame": "pap",
+   "observed": 0.24883921938931353,
+   "phase_randomised": 0.22149144584813002
+  },
+  {
+   "cube": "PHerc0826",
+   "frame": "pap",
+   "observed": 0.15255829881888605,
+   "phase_randomised": 0.16957499210950716
+  },
+  {
+   "cube": "PHerc0826",
+   "frame": "pap",
+   "observed": 0.2243025108140456,
+   "phase_randomised": 0.06644742378262336
+  },
+  {
+   "cube": "PHerc0826",
+   "frame": "pap",
+   "observed": 0.18385570119208594,
+   "phase_randomised": 0.19183238013203407
+  },
+  {
+   "cube": "PHerc0826",
+   "frame": "pap",
+   "observed": 0.17537882990876003,
+   "phase_randomised": 0.06147374158028862
+  },
+  {
+   "cube": "PHerc1203",
+   "frame": "pap",
+   "observed": 0.29279110586546675,
+   "phase_randomised": 0.06815546183777012
+  },
+  {
+   "cube": "PHerc1203",
+   "frame": "pap",
+   "observed": 0.1402225706390287,
+   "phase_randomised": 0.100539562328323
+  },
+  {
+   "cube": "PHerc1203",
+   "frame": "pap",
+   "observed": 0.20645233207606697,
+   "phase_randomised": 0.08318437566539902
+  },
+  {
+   "cube": "PHerc1218",
+   "frame": "pap",
+   "observed": 0.11787707129507154,
+   "phase_randomised": 0.05749740429475513
+  },
+  {
+   "cube": "PHerc1218",
+   "frame": "pap",
+   "observed": 0.14853813883897454,
+   "phase_randomised": 0.09036865298009047
+  },
+  {
+   "cube": "PHerc1218",
+   "frame": "pap",
+   "observed": 0.13081903743451806,
+   "phase_randomised": 0.06422169021808335
+  },
+  {
+   "cube": "PHerc1218",
+   "frame": "pap",
+   "observed": 0.1269091867123739,
+   "phase_randomised": 0.10198312192065123
+  },
+  {
+   "cube": "PHerc1447",
+   "frame": "pap",
+   "observed": 0.16292639705371786,
+   "phase_randomised": 0.1289377028300983
+  },
+  {
+   "cube": "PHerc1447",
+   "frame": "pap",
+   "observed": 0.14627497187544952,
+   "phase_randomised": 0.1278081589343375
+  },
+  {
+   "cube": "PHerc1447",
+   "frame": "pap",
+   "observed": 0.16786401472159188,
+   "phase_randomised": 0.06678752264828117
+  },
+  {
+   "cube": "PHerc1447",
+   "frame": "pap",
+   "observed": 0.116596769360312,
+   "phase_randomised": 0.08886495953073853
+  },
+  {
+   "cube": "PHerc1447",
+   "frame": "pap",
+   "observed": 0.18587055827839247,
+   "phase_randomised": 0.22586278207363047
+  },
+  {
+   "cube": "PHerc1545",
+   "frame": "pap",
+   "observed": 0.15019270972889043,
+   "phase_randomised": 0.10749679851848903
+  },
+  {
+   "cube": "PHerc1545",
+   "frame": "pap",
+   "observed": 0.23953938089677557,
+   "phase_randomised": 0.19476851155127764
+  },
+  {
+   "cube": "PHerc1545",
+   "frame": "pap",
+   "observed": 0.17879056986813582,
+   "phase_randomised": 0.0846045238906433
+  },
+  {
+   "cube": "PHerc1545",
+   "frame": "pap",
+   "observed": 0.18728429756753806,
+   "phase_randomised": 0.12646062386626192
+  },
+  {
+   "cube": "PHerc1545",
+   "frame": "pap",
+   "observed": 0.2663716601466809,
+   "phase_randomised": 0.10323683130130239
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.5905100184122016,
+   "phase_randomised": 0.36557431930723555
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.3302921896676635,
+   "phase_randomised": 0.0857721681642335
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.38953622457790105,
+   "phase_randomised": 0.39758589363707864
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.19350871322992189,
+   "phase_randomised": 0.1905953632185295
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.36016885083613925,
+   "phase_randomised": 0.2087272464706548
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.4630823276738115,
+   "phase_randomised": 0.3426296241592185
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.5379253531637764,
+   "phase_randomised": 0.3298213822412309
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.35994427063064327,
+   "phase_randomised": 0.0703860664496217
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.5510770321731946,
+   "phase_randomised": 0.4741398868709341
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.3790464135338134,
+   "phase_randomised": 0.20645836708519466
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.43986193806248564,
+   "phase_randomised": 0.34692429653714485
+  },
+  {
+   "cube": "PHerc0125",
+   "frame": "rnd",
+   "observed": 0.49398291450288345,
+   "phase_randomised": 0.2406789884995672
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.6686350536218884,
+   "phase_randomised": 0.6752764049521435
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.6818910921810863,
+   "phase_randomised": 0.4140113413039588
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.3962109647577967,
+   "phase_randomised": 0.24751822173581883
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.4015097155420992,
+   "phase_randomised": 0.09289407852823874
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.43482939671456994,
+   "phase_randomised": 0.32670268791316226
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.46924307620028094,
+   "phase_randomised": 0.46637022086555796
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.6180369887604362,
+   "phase_randomised": 0.3375770299812671
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.5431173003132043,
+   "phase_randomised": 0.30638871824664426
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.4658259419609027,
+   "phase_randomised": 0.5027360052192407
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.6958964239655163,
+   "phase_randomised": 0.5844716597308786
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.3581949026077621,
+   "phase_randomised": 0.212830575189214
+  },
+  {
+   "cube": "PHerc0191",
+   "frame": "rnd",
+   "observed": 0.6043855383618868,
+   "phase_randomised": 0.44734974855630505
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.49255925975308507,
+   "phase_randomised": 0.3494147918729097
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.31692190486385874,
+   "phase_randomised": 0.17193957687553202
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.5184246209798387,
+   "phase_randomised": 0.46024921068383007
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.24443264106086893,
+   "phase_randomised": 0.06120965558079676
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.5758477250125389,
+   "phase_randomised": 0.2240371040478139
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.6128806754622975,
+   "phase_randomised": 0.4155114037681144
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.7317156657287206,
+   "phase_randomised": 0.4509092926601565
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.4971544812992088,
+   "phase_randomised": 0.1619527931897821
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.5411390034716712,
+   "phase_randomised": 0.17298021008006897
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.6909141933093637,
+   "phase_randomised": 0.26839739554936604
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.44318226695467894,
+   "phase_randomised": 0.45626036916882273
+  },
+  {
+   "cube": "PHerc0211",
+   "frame": "rnd",
+   "observed": 0.585896167395958,
+   "phase_randomised": 0.55026772321109
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "rnd",
+   "observed": 0.3045051082617357,
+   "phase_randomised": 0.1525551090638534
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "rnd",
+   "observed": 0.5320700538275307,
+   "phase_randomised": 0.45877928447441385
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "rnd",
+   "observed": 0.4985151537760422,
+   "phase_randomised": 0.43696373966821156
+  },
+  {
+   "cube": "PHerc0257",
+   "frame": "rnd",
+   "observed": 0.4856914180375953,
+   "phase_randomised": 0.47043102691799665
+  }
+ ]
+}

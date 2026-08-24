@@ -1,0 +1,70 @@
+{
+ "n_pap_rois": 3,
+ "rois": [
+  {
+   "origin": [
+    4768,
+    6096,
+    3296
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 69.94,
+   "dn_headroom": 192.0
+  },
+  {
+   "origin": [
+    19424,
+    2416,
+    3664
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 20.08,
+   "dn_headroom": 146.0
+  },
+  {
+   "origin": [
+    19056,
+    2656,
+    2896
+   ],
+   "bandwidth_cyc_px": 0.4195,
+   "snr_q025": 17.25,
+   "dn_headroom": 130.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.4958,
+  0.4577,
+  0.4958
+ ],
+ "snr_q025_med_iqr": [
+  20.08,
+  18.665,
+  45.01
+ ],
+ "dn_headroom_med_iqr": [
+  146.0,
+  138.0,
+  169.0
+ ],
+ "noise_ref": "air",
+ "pap_mean_dn": 137.5,
+ "air_rois": [
+  {
+   "origin": [
+    23504,
+    4896,
+    9680
+   ],
+   "roi": 128,
+   "sub_origin": [
+    0,
+    4,
+    56
+   ],
+   "sub_n": 64,
+   "mean_dn": 43.4,
+   "psd_flatness": 11.7
+  }
+ ]
+}

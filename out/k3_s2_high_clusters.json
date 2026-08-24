@@ -1,0 +1,202 @@
+[
+ {
+  "size_vox": 248,
+  "centroid_zyx_L0": [
+   1248,
+   1308,
+   1609
+  ]
+ },
+ {
+  "size_vox": 85,
+  "centroid_zyx_L0": [
+   1239,
+   1322,
+   1601
+  ]
+ },
+ {
+  "size_vox": 68,
+  "centroid_zyx_L0": [
+   3925,
+   1058,
+   989
+  ]
+ },
+ {
+  "size_vox": 60,
+  "centroid_zyx_L0": [
+   2259,
+   1072,
+   1732
+  ]
+ },
+ {
+  "size_vox": 57,
+  "centroid_zyx_L0": [
+   4022,
+   1237,
+   914
+  ]
+ },
+ {
+  "size_vox": 55,
+  "centroid_zyx_L0": [
+   2232,
+   1157,
+   1829
+  ]
+ },
+ {
+  "size_vox": 46,
+  "centroid_zyx_L0": [
+   3928,
+   1416,
+   1021
+  ]
+ },
+ {
+  "size_vox": 41,
+  "centroid_zyx_L0": [
+   3862,
+   995,
+   901
+  ]
+ },
+ {
+  "size_vox": 35,
+  "centroid_zyx_L0": [
+   1281,
+   1279,
+   1643
+  ]
+ },
+ {
+  "size_vox": 35,
+  "centroid_zyx_L0": [
+   2007,
+   562,
+   1062
+  ]
+ },
+ {
+  "size_vox": 33,
+  "centroid_zyx_L0": [
+   3253,
+   1094,
+   1676
+  ]
+ },
+ {
+  "size_vox": 31,
+  "centroid_zyx_L0": [
+   947,
+   1151,
+   625
+  ]
+ },
+ {
+  "size_vox": 30,
+  "centroid_zyx_L0": [
+   2208,
+   718,
+   840
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   3101,
+   1083,
+   1669
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   953,
+   622,
+   1041
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   3934,
+   1357,
+   1056
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   1234,
+   1345,
+   1607
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   578,
+   1538,
+   1458
+  ]
+ },
+ {
+  "size_vox": 26,
+  "centroid_zyx_L0": [
+   681,
+   1435,
+   1507
+  ]
+ },
+ {
+  "size_vox": 25,
+  "centroid_zyx_L0": [
+   1830,
+   655,
+   785
+  ]
+ },
+ {
+  "size_vox": 25,
+  "centroid_zyx_L0": [
+   3204,
+   1098,
+   1673
+  ]
+ },
+ {
+  "size_vox": 25,
+  "centroid_zyx_L0": [
+   2228,
+   1132,
+   1819
+  ]
+ },
+ {
+  "size_vox": 24,
+  "centroid_zyx_L0": [
+   3943,
+   1350,
+   1070
+  ]
+ },
+ {
+  "size_vox": 24,
+  "centroid_zyx_L0": [
+   2098,
+   558,
+   1041
+  ]
+ },
+ {
+  "size_vox": 23,
+  "centroid_zyx_L0": [
+   1768,
+   1282,
+   1411
+  ]
+ }
+]

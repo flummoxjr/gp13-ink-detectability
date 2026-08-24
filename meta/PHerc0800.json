@@ -1,0 +1,1110 @@
+{
+ "sample": {
+  "id": "PHerc0800",
+  "properties": {
+   "type": "scroll",
+   "volume_transforms": null
+  },
+  "data": [
+   {
+    "type": "photo",
+    "origins": [
+     {
+      "path": "PHerc0800/photos/PHerc0800_photo.jpg",
+      "access_roots": [
+       {
+        "type": "s3",
+        "url": "s3://vesuvius-challenge-open-data",
+        "usage": "public-read"
+       }
+      ],
+      "copy_info": {
+       "source_path": "s3://philodemos/photogrammetry/srwr/800/single-rotation-with-ruler/DSC09827.jpg",
+       "date": "2026-02-18T16:05:06.434989Z",
+       "workflow_execution": "s3copy-pherc0800-40a62cd1"
+      }
+     }
+    ],
+    "properties": null,
+    "parameters": null,
+    "creation_info": null
+   },
+   {
+    "type": "photo-mask",
+    "origins": [
+     {
+      "path": "PHerc0800/photos/PHerc0800_mask.png",
+      "access_roots": [
+       {
+        "type": "s3",
+        "url": "s3://vesuvius-challenge-open-data",
+        "usage": "public-read"
+       }
+      ],
+      "copy_info": {
+       "source_path": "s3://philodemos/photogrammetry/srwr/800/single-rotation-with-ruler/DSC09827_mask.png",
+       "date": "2026-02-18T16:05:06.661859Z",
+       "workflow_execution": "s3copy-pherc0800-05ad5bbc"
+      }
+     }
+    ],
+    "properties": null,
+    "parameters": null,
+    "creation_info": null
+   }
+  ]
+ },
+ "scans": {
+  "20250510225703": {
+   "id": "20250510225703",
+   "sample_id": "PHerc0800",
+   "long_id": "20250510225703-8.640um-1.2m-116keV",
+   "creation": {
+    "date": "2025-05-11T00:57:03.118600+02:00",
+    "process": "xray tomography",
+    "metadata": {
+     "location": "ESRF Grenoble",
+     "beamline": "bm18",
+     "energy_keV": 116.0,
+     "detector_distance_mm": 1200.02,
+     "pixel_size_um": 8.64,
+     "metadata": {
+      "tomo": {
+       "acquisition": {
+        "scanRadix": "SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_HA",
+        "scanType": "helical",
+        "nb_scans": 1,
+        "date": "2025-05-11T00:57:03.118600+02:00",
+        "beamline": "bm18",
+        "machineMode": "16 bunch",
+        "machineCurrentStart": 82.197505,
+        "machineCurrentStop": 78.02,
+        "sampleDetectorDistance": 1200.02,
+        "sourceSampleDistance": 178000.0,
+        "xray_magnification": 1.006742,
+        "energy": 116.0,
+        "scanRange": 360.0,
+        "rotationMode": "continuous",
+        "half_acquisition": false,
+        "tomo_N": 15000,
+        "ref_N": 401,
+        "dark_N": 400,
+        "z_start": -33.0,
+        "z_end": -232.584,
+        "z_step": 0,
+        "detector": {
+         "sensor": "IRIS_15",
+         "sensorPixelSize": 0.00425,
+         "roi_size": "[2528, 1200]",
+         "sensorBinning": 2,
+         "opticsName": "Fixed_X1",
+         "opticsType": "FixedmagOptic",
+         "optical_magnification": 1.0,
+         "samplePixelSize": 0.00864,
+         "scintillator": "GAGG_100_reflective"
+        },
+        "acq_mode": "SINGLE",
+        "expo_time": 0.03,
+        "subframe": 0.03,
+        "latency_time": 0.003,
+        "accumulation": 1,
+        "scan_time": 495.125463,
+        "comment": "wba11 = Mo 1.3mm, wba12 = sapphire 5mm, wba33 = SiO2 block 25mm",
+        "attenuators": {
+         "wba11": {
+          "thickness": 1.3,
+          "type": "molybdenum"
+         },
+         "wba12": {
+          "thickness": 5.0,
+          "type": "sapphire"
+         },
+         "wba13": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba14": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba15": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba21": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba22": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba23": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba24": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba25": {
+          "thickness": 0.0,
+          "type": "empty"
+         },
+         "wba31": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba32": {
+          "thickness": 0.0,
+          "type": "free pass"
+         },
+         "wba33": {
+          "thickness": 25.0,
+          "type": "SiO2_block"
+         }
+        },
+        "motors": {
+         "att11": 119.5,
+         "att12": 79.5,
+         "att13": 1.0,
+         "att14": 1.0,
+         "att15": 198.0,
+         "att21": 198.0,
+         "att22": 198.0,
+         "att23": 198.0,
+         "att24": 198.0,
+         "att25": 198.0,
+         "att31": 198.0,
+         "att32": 198.0,
+         "att33": 125.7,
+         "dzfocus": -42.77,
+         "dzmag": 16.19,
+         "dzrotc": -0.01,
+         "dzz": 257.05,
+         "foc1twin": 4.68,
+         "foc2twin": "error",
+         "focus10x": "error",
+         "focus2": -0.48,
+         "focus3": 0.13,
+         "focus4": -42.77,
+         "focus5": -2.21,
+         "focus6": "error",
+         "focus7": -2.67,
+         "focusrefl": -3.07,
+         "focusx2": 0.54,
+         "focusx4": -0.02,
+         "fsd": 3.3,
+         "fshg": 22.08,
+         "fsho": -64.08,
+         "fshut_axis": 0.0,
+         "fsl": 75.12,
+         "fsr": -53.04,
+         "fsu": 7.05,
+         "fsvg": 10.35,
+         "fsvo": 1.88,
+         "fur1": 0.0,
+         "girderx": 399.98,
+         "kore": "error",
+         "lfddiaph": 0.0,
+         "lfdfocus": 13.67,
+         "lfdrotc": 0.01,
+         "lfdz": -0.0,
+         "lthx1": -0.9,
+         "lthx2": 0.0,
+         "lthy1": 0.0,
+         "lthy2": 0.0,
+         "lz1": 0.0,
+         "lz2": 0.0,
+         "ostwin": -56.0,
+         "psh1": -11.83,
+         "psh2": 3.5,
+         "pshg": 3.5,
+         "psho": -10.0,
+         "psv1": 1.15,
+         "psv2": -1.8,
+         "psvg": 1.9,
+         "psvo": 0.24,
+         "psx": 0.0,
+         "psy": 0.0,
+         "qsh1": -47.5,
+         "qsh2": 95.0,
+         "qshg": 95.0,
+         "qsho": 0.0,
+         "qsv1": 2.0,
+         "qsv2": -4.0,
+         "qsvg": 4.0,
+         "qsvo": 0.0,
+         "rotc10x": "error",
+         "rotc2": "error",
+         "rotc3": -0.02,
+         "rotc4": -4.37,
+         "rotc5": -45.59,
+         "rotc6": "error",
+         "rotc7": -0.01,
+         "rotc9": -1.87,
+         "rotcrefl": 1.4,
+         "rotctwin": "error",
+         "rotcx2": 0.91,
+         "rotcx4": 0.0,
+         "srot": 0.0,
+         "ssh1": -47.29,
+         "ssh2": 94.59,
+         "sshg": 94.59,
+         "ssho": -0.0,
+         "ssv1": 1.88,
+         "ssv2": -3.76,
+         "ssvg": 3.96,
+         "ssvo": -0.0,
+         "sx": 0.0,
+         "sy": 0.0,
+         "sz": -33.0,
+         "tsh1": -46.49,
+         "tsh2": 92.97,
+         "tshg": 92.97,
+         "tsho": 0.0,
+         "tsv1": 1.8,
+         "tsv2": -3.6,
+         "tsvg": 4.0,
+         "tsvo": 0.0,
+         "yc12": 398.66,
+         "yc3": 350.0,
+         "yc4": 350.0,
+         "yc5": 350.0,
+         "yc6": 350.0,
+         "yc7": 350.0,
+         "yc8": -80.45,
+         "yc9": -39.42,
+         "ycBT": 315.96,
+         "yrot": 10.56,
+         "zc1": 1.2,
+         "zc2": 3.71,
+         "zc3": 0.0,
+         "zc4": 3.75,
+         "zc5": 25.0,
+         "zc6": 524.81,
+         "zc7": 2.63,
+         "zc8": 300.0,
+         "zc9": 272.29,
+         "zcBT": -113.71,
+         "zfocus": "error",
+         "zmag": "error",
+         "zrotc": "error",
+         "zyscint": "error",
+         "zz": "error"
+        },
+        "motors_dial": {
+         "yrot_dial": 210.06
+        }
+       },
+       "processing": {
+        "general": {
+         "WorkFlowScheme": "nabu",
+         "BlissFirstScan": "/data/visitor/in1215/bm18/20250506/RAW_DATA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B_0001/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B_0001.h5",
+         "BlissLastScan": "/data/visitor/in1215/bm18/20250506/RAW_DATA/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B_0001/SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B_0001.h5",
+         "FlatField": "Standard",
+         "DoubleFlatsScheme": false,
+         "DetectorDistortionCorrection": false
+        },
+        "preprocessing": {
+         "phase": {
+          "method": "Paganin",
+          "delta_beta": 1000.0,
+          "unsharp_coeff": 4.0,
+          "unsharp_sigma": 1.2,
+          "unsharp_method": "gaussian",
+          "padding_type": "edge"
+         }
+        },
+        "reconstruction": {
+         "method": "GHBP",
+         "prefix": "SCROLLS_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0800_TA_B_0001",
+         "rotation_axis_position": "4932.75"
+        },
+        "postprocessing": {
+         "32BitsConversion": {
+          "data_min": -0.06196172535419464,
+          "data_max": 0.20435048639774323
+         }
+        }
+       }
+      }
+     }
+    },
+    "derived_from": null
+   },
+   "properties": {
+    "energy_keV": 116.0,
+    "detector_distance_mm": 1200.02,
+    "pixel_size_um": 8.64
+   }
+  }
+ },
+ "volumes": {
+  "20250521135224": {
+   "id": "20250521135224",
+   "sample_id": "PHerc0800",
+   "scan_id": "20250510225703",
+   "long_id": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+   "suffix": "masked.zarr",
+   "creation": {
+    "date": "2025-05-21T13:52:24Z",
+    "process": "mask_layers_zarr_export",
+    "metadata": {
+     "target_window_f32_min": -0.03,
+     "target_window_f32_max": 0.145,
+     "window_u16_min": 7865,
+     "window_u16_max": 50930,
+     "workflow_name": "mask-layers-xgm37",
+     "workflow_creation": "2025-05-21T13:52:24Z"
+    },
+    "derived_from": {
+     "type": "scan",
+     "id": "20250510225703"
+    }
+   },
+   "properties": {
+    "energy_keV": 116.0,
+    "detector_distance_mm": 1200.02,
+    "pixel_size_um": 8.64,
+    "data_format": "uint8",
+    "transforms": null,
+    "shape": [
+     24298,
+     9867,
+     9867
+    ],
+    "z_direction_is_top_to_bottom": false,
+    "left_handed_coordinates": false,
+    "text_side": null,
+    "license": {
+     "name": "CC BY-NC 4.0",
+     "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+    }
+   },
+   "data": [
+    {
+     "type": "ome-zarr",
+     "origins": [
+      {
+       "path": "PHerc0800/volumes/20250521135224-8.640um-1.2m-116keV-masked.zarr/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": null
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "surface-prediction-zarr",
+     "origins": [
+      {
+       "path": "PHerc0800/representations/predictions/surfaces/20250521135224-surface-20260413222639-surface-m7-L0-th0.2.zarr/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://scrollprize-reconstruction/surfaces/m7/PHerc0800/20250521135224/20250521135224-8.640um-1.2m-116keV-masked.zarr.ome.zarr/",
+        "date": "2026-05-13T17:27:46.027429Z",
+        "workflow_execution": "s3sync-pherc0800-0199188d"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260413222639",
+      "level": 0,
+      "threshold_value": 0.2,
+      "tta": "none"
+     },
+     "creation_info": {
+      "workflow_name": "surface-inference-9um-pherc0800-20250521135224",
+      "workflow_namespace": "wf-inference",
+      "workflow_uid": "682d5554-cf99-45ef-bd90-886806e8598a",
+      "workflow_creation_timestamp": "2026-04-29T08:28:44Z",
+      "inference_cache_key": "surface-inference-9um-pherc0800-20250521135224",
+      "blend_key": "surface-inference-9um-pherc0800-20250521135224",
+      "generated_at": "2026-05-06T08:32:07Z",
+      "model_type": "auto",
+      "batch_size": 4,
+      "ome_num_levels": 6,
+      "ome_downsampling_algorithm": "nearest",
+      "zarr_compressor": "lz4",
+      "zarr_compression_level": 7
+     }
+    },
+    {
+     "type": "normal-grids",
+     "origins": [
+      {
+       "path": "PHerc0800/representations/predictions/surfaces/20250521135224-surface-20260413222639-surface-m7-L0-th0.2.normal-grids/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://scrollprize-reconstruction/surfaces/m7/PHerc0800/20250521135224/20250521135224-8.640um-1.2m-116keV-masked.zarr.ome.zarr/normal_grids/",
+        "date": "2026-07-07T10:00:19.465209Z",
+        "workflow_execution": "s3sync-pherc0800-583a58ed"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260413222639",
+      "level": 0,
+      "threshold_value": 0.2
+     },
+     "creation_info": {
+      "grid_step": 64,
+      "input_level": 0,
+      "prune_min_length_px": 20.0,
+      "sparse_volume": 1,
+      "spiral_step": 20.0
+     }
+    },
+    {
+     "type": "lasagna",
+     "origins": [
+      {
+       "path": "PHerc0800/representations/predictions/lasagna/20250521135224-lasagna-20260419180421/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/hendrik/las_volumes/PHerc0800/volumes/",
+        "date": "2026-07-17T08:51:55.967594Z",
+        "workflow_execution": "s3sync-pherc0800-f5c35d0d"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": {
+      "model_id": "20260419180421",
+      "level": 0
+     },
+     "creation_info": {
+      "lasagna_version": 2,
+      "source_to_base": 1.0,
+      "grad_mag_encode_scale": 1000.0,
+      "grad_mag_factor": 1.0
+     }
+    }
+   ]
+  }
+ },
+ "segments": {
+  "20251028220955": {
+   "id": "20251028220955",
+   "sample_id": "PHerc0800",
+   "long_id": "20251028220955-auto_grown_20251028220955262",
+   "suffix": "auto_grown_20251028220955262",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-28T22:09:55Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       3075.578857421875,
+       5374.171875,
+       10970.2685546875
+      ],
+      [
+       4332.32861328125,
+       6921.359375,
+       12922.4404296875
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251028220955262",
+     "tiff_dimensions": [
+      84,
+      90
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 1679,
+    "height": 1799,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028220955-auto_grown_20251028220955262/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028220955262/",
+        "date": "2026-07-08T16:18:06.893239Z",
+        "workflow_execution": "s3copy-pherc0800-e8a249c9"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028220955-auto_grown_20251028220955262/mesh/intermediate/20251028220955-auto_grown_20251028220955262_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028220955262/auto_grown_20251028220955262.obj",
+        "date": "2026-07-08T16:17:02.672169Z",
+        "workflow_execution": "s3copy-pherc0800-aa5c231b"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  },
+  "20251028213516": {
+   "id": "20251028213516",
+   "sample_id": "PHerc0800",
+   "long_id": "20251028213516-auto_grown_20251028213516907",
+   "suffix": "auto_grown_20251028213516907",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-28T21:35:16Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       2962.272216796875,
+       5291.10546875,
+       11066.5302734375
+      ],
+      [
+       4266.9248046875,
+       6953.8857421875,
+       13096.7158203125
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251028213516907",
+     "tiff_dimensions": [
+      96,
+      122
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 1919,
+    "height": 2439,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028213516907/",
+        "date": "2026-07-08T16:17:02.166960Z",
+        "workflow_execution": "s3copy-pherc0800-0c2be3ab"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/mesh/intermediate/20251028213516-auto_grown_20251028213516907_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028213516907/auto_grown_20251028213516907.obj",
+        "date": "2026-07-08T16:17:03.230225Z",
+        "workflow_execution": "s3copy-pherc0800-5273918b"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  },
+  "20251028220042": {
+   "id": "20251028220042",
+   "sample_id": "PHerc0800",
+   "long_id": "20251028220042-auto_grown_20251028220042762",
+   "suffix": "auto_grown_20251028220042762",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-28T22:00:42Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       2953.123291015625,
+       5471.521484375,
+       11132.9638671875
+      ],
+      [
+       4298.40771484375,
+       6850.39306640625,
+       13054.068359375
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251028220042762",
+     "tiff_dimensions": [
+      95,
+      93
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 1899,
+    "height": 1859,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028220042-auto_grown_20251028220042762/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028220042762/",
+        "date": "2026-07-08T16:18:06.784498Z",
+        "workflow_execution": "s3copy-pherc0800-20e7e593"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028220042-auto_grown_20251028220042762/mesh/intermediate/20251028220042-auto_grown_20251028220042762_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028220042762/auto_grown_20251028220042762.obj",
+        "date": "2026-07-08T16:17:02.439436Z",
+        "workflow_execution": "s3copy-pherc0800-f9aea6a8"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  },
+  "20251029010146": {
+   "id": "20251029010146",
+   "sample_id": "PHerc0800",
+   "long_id": "20251029010146-auto_grown_20251029010146642",
+   "suffix": "auto_grown_20251029010146642",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-29T01:01:46Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       3085.297119140625,
+       5890.88525390625,
+       11598.3212890625
+      ],
+      [
+       3718.211669921875,
+       6623.1015625,
+       12516.8623046875
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251029010146642",
+     "tiff_dimensions": [
+      42,
+      42
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 839,
+    "height": 839,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251029010146-auto_grown_20251029010146642/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251029010146642/",
+        "date": "2026-07-08T16:18:07.441464Z",
+        "workflow_execution": "s3copy-pherc0800-03f62d9e"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251029010146-auto_grown_20251029010146642/mesh/intermediate/20251029010146-auto_grown_20251029010146642_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251029010146642/auto_grown_20251029010146642.obj",
+        "date": "2026-07-08T16:18:07.258637Z",
+        "workflow_execution": "s3copy-pherc0800-e8b27d15"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  },
+  "20251028222030": {
+   "id": "20251028222030",
+   "sample_id": "PHerc0800",
+   "long_id": "20251028222030-auto_grown_20251028222030940",
+   "suffix": "auto_grown_20251028222030940",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-28T22:20:30Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       2924.14697265625,
+       5132.8115234375,
+       10852.6298828125
+      ],
+      [
+       4441.12939453125,
+       7038.697265625,
+       13208.4287109375
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251028222030940",
+     "tiff_dimensions": [
+      156,
+      156
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 3119,
+    "height": 3119,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028222030940/",
+        "date": "2026-07-08T16:18:06.503965Z",
+        "workflow_execution": "s3copy-pherc0800-f05abb05"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/mesh/intermediate/20251028222030-auto_grown_20251028222030940_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028222030940/auto_grown_20251028222030940.obj",
+        "date": "2026-07-08T16:17:01.894910Z",
+        "workflow_execution": "s3copy-pherc0800-ca55d19b"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  },
+  "20251028225813": {
+   "id": "20251028225813",
+   "sample_id": "PHerc0800",
+   "long_id": "20251028225813-auto_grown_20251028225813045",
+   "suffix": "auto_grown_20251028225813045",
+   "original_volume_id": "20250521135224",
+   "creation": {
+    "date": "2025-10-28T22:58:13Z",
+    "process": "surface_tracing",
+    "metadata": {
+     "bbox": [
+      [
+       2890.05517578125,
+       5345.958984375,
+       11086.57421875
+      ],
+      [
+       4270.7880859375,
+       6982.63037109375,
+       13262.7451171875
+      ]
+     ],
+     "format": "tifxyz",
+     "scale": [
+      0.05000000074505806,
+      0.05000000074505806
+     ],
+     "type": "seg",
+     "uuid": "auto_grown_20251028225813045",
+     "tiff_dimensions": [
+      151,
+      138
+     ],
+     "coordinate_files": [
+      "x.tif",
+      "y.tif",
+      "z.tif"
+     ]
+    },
+    "derived_from": {
+     "type": "volume",
+     "id": "20250521135224"
+    }
+   },
+   "properties": {
+    "width": 3019,
+    "height": 2759,
+    "original_volume_downscale": 1,
+    "volume_coverage": null
+   },
+   "data": [
+    {
+     "type": "tifxyz",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/mesh/intermediate/tifxyz_original/",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028225813045/",
+        "date": "2026-07-08T16:18:06.595856Z",
+        "workflow_execution": "s3copy-pherc0800-edb34a6e"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    },
+    {
+     "type": "obj",
+     "origins": [
+      {
+       "path": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/mesh/intermediate/20251028225813-auto_grown_20251028225813045_original.obj",
+       "access_roots": [
+        {
+         "type": "s3",
+         "url": "s3://vesuvius-challenge-open-data",
+         "usage": "public-read"
+        }
+       ],
+       "copy_info": {
+        "source_path": "s3://philodemos/sean/tmp/0800_segments/auto_grown_20251028225813045/auto_grown_20251028225813045.obj",
+        "date": "2026-07-08T16:17:02.088489Z",
+        "workflow_execution": "s3copy-pherc0800-6fe9ffb6"
+       }
+      }
+     ],
+     "properties": null,
+     "parameters": null,
+     "creation_info": null
+    }
+   ]
+  }
+ }
+}

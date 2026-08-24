@@ -1,0 +1,37 @@
+[
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00329/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00329/",
+  "name": "z_dbg_gen_00329"
+ },
+ {
+  "scroll": "PHerc1447",
+  "volume": "20250521151220-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc1447/segments/raw/z_dbg_gen_00701/",
+  "tifxyz": "PHerc1447/segments/raw/z_dbg_gen_00701/",
+  "name": "z_dbg_gen_00701"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/",
+  "tifxyz": "PHerc0800/segments/20251028213516-auto_grown_20251028213516907/mesh/intermediate/tifxyz_original/",
+  "name": "20251028213516-auto_grown_20251028213516907"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/",
+  "tifxyz": "PHerc0800/segments/20251028222030-auto_grown_20251028222030940/mesh/intermediate/tifxyz_original/",
+  "name": "20251028222030-auto_grown_20251028222030940"
+ },
+ {
+  "scroll": "PHerc0800",
+  "volume": "20250521135224-8.640um-1.2m-116keV-masked.zarr",
+  "seg_dir": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/",
+  "tifxyz": "PHerc0800/segments/20251028225813-auto_grown_20251028225813045/mesh/intermediate/tifxyz_original/",
+  "name": "20251028225813-auto_grown_20251028225813045"
+ }
+]

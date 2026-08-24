@@ -1,0 +1,50 @@
+{
+ "PHerc0813": {
+  "meta": {
+   "px_um": 9.362,
+   "energy_keV": 113.0,
+   "delta_beta": 1000.0,
+   "unsharp_coeff": 4.0,
+   "unsharp_sigma": 1.2,
+   "win": [
+    -0.03,
+    0.145
+   ]
+  },
+  "roi_papyrus_frac": 0.9998512268066406,
+  "crossover_cyc_per_px": 0.6741843333258604,
+  "smallest_recoverable_halfperiod_um": 6.943204949465185
+ },
+ "PHerc1203": {
+  "meta": {
+   "px_um": 9.362,
+   "energy_keV": 113.0,
+   "delta_beta": 1000.0,
+   "unsharp_coeff": 4.0,
+   "unsharp_sigma": 1.2,
+   "win": [
+    -0.03,
+    0.145
+   ]
+  },
+  "roi_papyrus_frac": 0.9995276927947998,
+  "crossover_cyc_per_px": 0.7070713739759024,
+  "smallest_recoverable_halfperiod_um": 6.620265184373781
+ },
+ "PHerc0139": {
+  "meta": {
+   "px_um": 9.362,
+   "energy_keV": 113.0,
+   "delta_beta": 1000.0,
+   "unsharp_coeff": 4.0,
+   "unsharp_sigma": 1.2,
+   "win": [
+    -0.03,
+    0.145
+   ]
+  },
+  "roi_papyrus_frac": 0.9996746778488159,
+  "crossover_cyc_per_px": 0.6851466802092078,
+  "smallest_recoverable_halfperiod_um": 6.832113670273742
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "air_offset_74keV": -0.030988231301307678,
+ "air_offset_110keV": -0.026823528110980988,
+ "p75_74": 0.11705099046230316,
+ "p75_110": 0.09976470470428467,
+ "ratio_detrended_sigma": 0.12591,
+ "low_channel_voxels": 2,
+ "high_channel_voxels": 51343
+}

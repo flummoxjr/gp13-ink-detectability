@@ -1,0 +1,53 @@
+{
+ "n_pap_rois": 3,
+ "rois": [
+  {
+   "origin": [
+    13184,
+    3200,
+    2272
+   ],
+   "bandwidth_cyc_px": 0.3856,
+   "snr_q025": 115.54,
+   "dn_headroom": 151.0
+  },
+  {
+   "origin": [
+    12704,
+    3168,
+    3760
+   ],
+   "bandwidth_cyc_px": 0.3856,
+   "snr_q025": 148.14,
+   "dn_headroom": 155.0
+  },
+  {
+   "origin": [
+    13728,
+    3440,
+    2480
+   ],
+   "bandwidth_cyc_px": 0.3856,
+   "snr_q025": 100.06,
+   "dn_headroom": 143.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.3856,
+  0.3856,
+  0.3856
+ ],
+ "snr_q025_med_iqr": [
+  115.54,
+  107.8,
+  131.84
+ ],
+ "dn_headroom_med_iqr": [
+  151.0,
+  147.0,
+  153.0
+ ],
+ "noise_ref": "residual",
+ "pap_mean_dn": 126.7,
+ "noise_note": "no genuine air window passed validation; noise ref is the PSD of (papyrus ROI - its 3x3x3 uniform smooth), |1-U|^2-corrected white floor \u2014 SNR and bandwidth are conservative estimates"
+}

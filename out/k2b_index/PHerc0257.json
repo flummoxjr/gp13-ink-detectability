@@ -1,0 +1,60 @@
+{
+ "n_pap_rois": 4,
+ "rois": [
+  {
+   "origin": [
+    3144,
+    7296,
+    4456
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 34.26,
+   "dn_headroom": 217.0
+  },
+  {
+   "origin": [
+    3160,
+    4024,
+    5856
+   ],
+   "bandwidth_cyc_px": 0.4449,
+   "snr_q025": 24.83,
+   "dn_headroom": 150.0
+  },
+  {
+   "origin": [
+    6504,
+    4240,
+    2840
+   ],
+   "bandwidth_cyc_px": 0.4449,
+   "snr_q025": 20.23,
+   "dn_headroom": 135.0
+  },
+  {
+   "origin": [
+    4160,
+    3472,
+    5240
+   ],
+   "bandwidth_cyc_px": 0.4449,
+   "snr_q025": 20.59,
+   "dn_headroom": 137.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.4449,
+  0.4449,
+  0.4576
+ ],
+ "snr_q025_med_iqr": [
+  22.71,
+  20.5,
+  27.1875
+ ],
+ "dn_headroom_med_iqr": [
+  143.5,
+  136.5,
+  166.75
+ ]
+}

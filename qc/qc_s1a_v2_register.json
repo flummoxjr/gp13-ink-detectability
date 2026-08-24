@@ -1,0 +1,106 @@
+{
+ "ink24_nonzero_pct": {
+  "0.1": 30.0,
+  "1": 30.0,
+  "5": 31.0,
+  "25": 32.0,
+  "50": 34.0,
+  "75": 43.0
+ },
+ "ink11a_nonzero_pct": {
+  "0.1": 7.0,
+  "1": 28.0,
+  "5": 29.0,
+  "25": 31.0,
+  "50": 32.0,
+  "75": 36.0
+ },
+ "region_frac_ink11a_zero": 0.12960120609828404,
+ "region_frac_ink24_zero": 0.08510160446166992,
+ "ncc_at_00": 0.2184,
+ "best_shift_dy_dx": [
+  -36,
+  39
+ ],
+ "ncc_at_best": 0.4067,
+ "tiles": {
+  "12_11": {
+   "letters_px": 18182,
+   "letters_corr_px": 30666,
+   "dice_letters_orig_vs_corr": 0.729,
+   "frac_letters_lose_dual_conf": 0.02,
+   "frac_corr_letters_new": 0.419,
+   "bg_px": 159424,
+   "frac_bg_actually_ink11_gt60": 0.082,
+   "frac_bg_no_ink11_coverage": 0.0004,
+   "frac_letters_no_ink11_cov_after_corr": 0.0
+  },
+  "11_12": {
+   "letters_px": 8479,
+   "letters_corr_px": 19970,
+   "dice_letters_orig_vs_corr": 0.594,
+   "frac_letters_lose_dual_conf": 0.004,
+   "frac_corr_letters_new": 0.577,
+   "bg_px": 156323,
+   "frac_bg_actually_ink11_gt60": 0.164,
+   "frac_bg_no_ink11_coverage": 0.0,
+   "frac_letters_no_ink11_cov_after_corr": 0.0
+  },
+  "8_10": {
+   "letters_px": 8005,
+   "letters_corr_px": 19047,
+   "dice_letters_orig_vs_corr": 0.505,
+   "frac_letters_lose_dual_conf": 0.146,
+   "frac_corr_letters_new": 0.641,
+   "bg_px": 180758,
+   "frac_bg_actually_ink11_gt60": 0.0112,
+   "frac_bg_no_ink11_coverage": 0.0199,
+   "frac_letters_no_ink11_cov_after_corr": 0.0
+  },
+  "9_9": {
+   "letters_px": 5895,
+   "letters_corr_px": 9305,
+   "dice_letters_orig_vs_corr": 0.611,
+   "frac_letters_lose_dual_conf": 0.212,
+   "frac_corr_letters_new": 0.501,
+   "bg_px": 170201,
+   "frac_bg_actually_ink11_gt60": 0.0523,
+   "frac_bg_no_ink11_coverage": 0.0492,
+   "frac_letters_no_ink11_cov_after_corr": 0.0
+  }
+ },
+ "local_registration": {
+  "12_11": {
+   "dy_dx": [
+    -31,
+    44
+   ],
+   "ncc": 0.8465,
+   "ncc_00": 0.4659
+  },
+  "11_12": {
+   "dy_dx": [
+    -40,
+    42
+   ],
+   "ncc": 0.6859,
+   "ncc_00": 0.2051
+  },
+  "8_10": {
+   "dy_dx": [
+    -32,
+    36
+   ],
+   "ncc": 0.8379,
+   "ncc_00": 0.3736
+  },
+  "9_9": {
+   "dy_dx": [
+    -45,
+    -8
+   ],
+   "ncc": 0.5841,
+   "ncc_00": 0.2769
+  }
+ }
+}

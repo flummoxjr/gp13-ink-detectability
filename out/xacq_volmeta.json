@@ -1,0 +1,61 @@
+{
+ "PHerc0139": {
+  "20250728140407-9.362um-1.2m-113keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20250820105138-2.403um-0.2m-77keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20250822062710-2.403um-0.2m-77keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260102150214-2.399um-0.2m-78keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260319133050-2.403um-0.2m-77keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260319133554-2.403um-0.2m-77keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260413113053-1.129um-0.2m-59keV-masked.zarr": {
+   "meta": "unreadable"
+  }
+ },
+ "PHerc1667": {
+  "20251217075048-2.399um-0.2m-78keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260323082859-1.129um-0.2m-59keV-masked.zarr": {
+   "meta": "unreadable"
+  }
+ },
+ "PHerc0814": {
+  "20250804134230-9.362um-1.2m-113keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260309142202-2.399um-0.2m-78keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260521123630-1.129um-0.2m-59keV-masked.zarr": {
+   "meta": "unreadable"
+  }
+ },
+ "PHercParis4": {
+  "20260310170716-45.532um-11.0m-74keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260310173927-45.532um-11.0m-110keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260323153942-2.400um-0.2m-137keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260411134726-2.400um-0.2m-78keV-masked.zarr": {
+   "meta": "unreadable"
+  },
+  "20260608103018-1.129um-0.2m-78keV-masked.zarr": {
+   "meta": "unreadable"
+  }
+ }
+}

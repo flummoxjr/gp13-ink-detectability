@@ -1,0 +1,77 @@
+{
+ "F3_symmetry": {
+  "w035_s42": {
+   "n_letter": 31,
+   "n_blank": 352,
+   "letter_r_med": 0.10175924003124237,
+   "blank_r_med": 0.009844965301454067,
+   "mw_letter_lt_blank_p": 0.8148905634880066,
+   "mw_two_sided_p": 0.3711232841014862,
+   "ks_p": 0.2293802946805954
+  },
+  "w035_s43": {
+   "n_letter": 31,
+   "n_blank": 352,
+   "letter_r_med": 0.12257613986730576,
+   "blank_r_med": 0.039281927049160004,
+   "mw_letter_lt_blank_p": 0.9653658270835876,
+   "mw_two_sided_p": 0.06952808052301407,
+   "ks_p": 0.08346658945083618
+  },
+  "pooled": {
+   "n": [
+    62,
+    704
+   ],
+   "letter_r_med": 0.1095203086733818,
+   "blank_r_med": 0.02315284125506878,
+   "mw_letter_lt_blank_p": 0.9725545129194869,
+   "mw_two_sided_p": 0.054966679600696046,
+   "ks_p": 0.018014989076466387,
+   "note": "ink-detector direction would need letter r << blank r"
+  },
+  "1203A_s42_spearman_r_vs_std": {
+   "rho": 0.4302147554360869,
+   "p": 1.0994986377181462e-12
+  },
+  "1203A_s43_spearman_r_vs_std": {
+   "rho": 0.40248567177074823,
+   "p": 3.745909673709314e-11
+  },
+  "1203B_s42_spearman_r_vs_std": {
+   "rho": 0.5081482249354536,
+   "p": 3.4640472030816954e-15
+  },
+  "1203B_s43_spearman_r_vs_std": {
+   "rho": 0.5249260592238891,
+   "p": 2.8711069187313693e-16
+  }
+ },
+ "F4_tripwire_nearmiss": {
+  "thr_p80": 111.0,
+  "n_comp": 4003,
+  "biggest_area": 434714,
+  "comp_val_p50": 142.0,
+  "comp_val_p90": 178.0,
+  "comp_val_max": 228.0,
+  "comp_n_px_ge195": 1248,
+  "comp_n_px_ge196": 724,
+  "suprathr_frac_ge195": 0.002974328144206086,
+  "suprathr_frac_ge196": 0.0021131898667366643,
+  "expected_ge195_in_comp": 1292.9820848804045,
+  "expected_ge196_in_comp": 918.6332197285623,
+  "poisson_p_ge1_at195": 1.0,
+  "map_hot195_clusters": 431
+ },
+ "F5_patch8": {
+  "candidate_overlaps": [
+   {
+    "id": 4535,
+    "area": 17549,
+    "frac_inside_patch8": 1.0,
+    "iou43": 0.7208815958815958
+   }
+  ],
+  "note": "patch8 s42 area_max=17549 == candidate 4535 area -> same object"
+ }
+}

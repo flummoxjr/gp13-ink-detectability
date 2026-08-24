@@ -1,0 +1,22 @@
+{
+ "_comment": "DERIVED (not published by the Vesuvius open-data catalogue). Maps PHerc1203 volume 20260319130212 (2.403um/77keV, 15137x26493x26493) into volume 20250820131727 (9.362um/113keV, 18977x6844x6844). Row order is (x, y, z), matching the transformation_matrix convention used by PHerc0139/0814/1667/Paris4 in the same catalogue, so it can be fed directly to volume-cartographer's vc_transform_geom. Derived 2026-08-17 by trackD/hunt/derive_transform.py + refine_transform.py: level-5 brute-force NCC (0.793, z-flip hypothesis rejected at 0.146) then 15-block level-2/level-4 phase correlation (NCC 0.800-0.886). Residual RMS 22/15/11 um in z/y/x. Cross-checked against the beamline stage coordinates (agrees to 0.27 mm) and visually (volumetric NCC 0.829, trackD/hunt/qc_transform.png).",
+ "from_volume_id": "20260319130212",
+ "to_volume_id": "20250820131727",
+ "sample_id": "PHerc1203",
+ "axis_order": "xyz",
+ "transformation_matrix": [
+  [0.256676, 0.0, 0.0, -18.8],
+  [0.0, 0.256676, 0.0, 19.2],
+  [0.0, 0.0, 0.256676, 7940.1]
+ ],
+ "alternative_similarity_fit": {
+  "_comment": "free-scale least squares over the same 15 blocks; scale differs from the nominal pixel-size ratio 2.403/9.362 by 0.024%",
+  "scale": 0.2567403,
+  "translation_xyz": [-19.8, 18.4, 7939.6]
+ },
+ "band_extent_in_9362um_voxel_z": [7940, 11825],
+ "residual_rms_um_zyx": [22.1, 15.5, 10.1],
+ "n_probe_blocks": 15,
+ "probe_ncc_range": [0.800, 0.886],
+ "derived_by": "trackD/hunt/derive_transform.py, trackD/hunt/refine_transform.py"
+}

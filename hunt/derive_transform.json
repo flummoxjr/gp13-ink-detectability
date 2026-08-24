@@ -1,0 +1,22 @@
+{
+ "level": 5,
+ "voxel_mm_lvl": 0.299584,
+ "flip": false,
+ "best_lvl5": {
+  "dz": 248,
+  "dy": 0,
+  "dx": -1,
+  "ncc": 0.793303906917572
+ },
+ "best_lvl0_zoffset": 7936,
+ "runner_up_far_ncc": 0.43165624141693115,
+ "occupied_z_9um_lvl0": [
+  736,
+  19007
+ ],
+ "occupied_z_2um_column_lvl0": [
+  0,
+  15167
+ ],
+ "note": "dz is the 9um lvl5 index where the (rescaled) 2.4um column starts"
+}

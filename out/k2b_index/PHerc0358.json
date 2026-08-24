@@ -1,0 +1,70 @@
+{
+ "n_pap_rois": 5,
+ "rois": [
+  {
+   "origin": [
+    3592,
+    4096,
+    3248
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 143.65,
+   "dn_headroom": 248.0
+  },
+  {
+   "origin": [
+    7768,
+    3520,
+    4680
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 57.91,
+   "dn_headroom": 219.0
+  },
+  {
+   "origin": [
+    6728,
+    3400,
+    4320
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 91.82,
+   "dn_headroom": 225.0
+  },
+  {
+   "origin": [
+    7256,
+    3496,
+    4560
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 85.77,
+   "dn_headroom": 232.0
+  },
+  {
+   "origin": [
+    2456,
+    3952,
+    3200
+   ],
+   "bandwidth_cyc_px": 0.4958,
+   "snr_q025": 163.37,
+   "dn_headroom": 244.0
+  }
+ ],
+ "bandwidth_med_iqr": [
+  0.4958,
+  0.4958,
+  0.4958
+ ],
+ "snr_q025_med_iqr": [
+  91.82,
+  85.77,
+  143.65
+ ],
+ "dn_headroom_med_iqr": [
+  232.0,
+  225.0,
+  244.0
+ ]
+}

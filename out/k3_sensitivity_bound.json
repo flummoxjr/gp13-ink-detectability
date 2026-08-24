@@ -1,0 +1,241 @@
+{
+ "inputs": {
+  "sigma_detrended_aggregated_ratio": 0.12591,
+  "threshold_sigma": 4,
+  "required_shift_4sigma": 0.50364,
+  "voxel_um_L1": 91.064,
+  "aggregation": "3x3x3, den>=14 papyrus voxels",
+  "low_channel_voxels": 2,
+  "n_tested_approx": 268000000.0,
+  "air_offsets": [
+   -0.030988,
+   -0.026824
+  ],
+  "cobright_gate_p75": [
+   0.117051,
+   0.099765
+  ],
+  "windows_raw": {
+   "74": [
+    -0.058,
+    0.27
+   ],
+   "110": [
+    -0.04,
+    0.2
+   ]
+  }
+ },
+ "mass_attenuation_cm2_g": {
+  "C_74": 0.1648,
+  "C_110": 0.1473,
+  "cell_74": 0.1785,
+  "cell_110": 0.1576,
+  "Pb_74": 2.9484,
+  "Pb_110": 4.3727,
+  "Pb_53": 6.9175,
+  "Pb_70": 3.3951,
+  "C_53": 0.1832,
+  "C_70": 0.1675,
+  "cell_53": 0.2036,
+  "cell_70": 0.182
+ },
+ "ratios": {
+  "Pb_74_110": 0.6743,
+  "C_74_110": 1.1185,
+  "cellulose_74_110": 1.1321,
+  "Pb_53_70": 2.0375,
+  "C_53_70": 1.0941,
+  "cellulose_53_70": 1.1188
+ },
+ "frames": {
+  "raw": {
+   "R0": 1.2475,
+   "slope_dR_dx_linearized": -49.64,
+   "x_4sigma_unclipped_g_cm3": 0.08355,
+   "x_4sigma_areal_ug_cm2": 760.9,
+   "x_sat_g_cm3": 0.03419,
+   "areal_sat_ug_cm2": 311.3,
+   "t_pb_equiv_sat_um": 0.274,
+   "ratio_at_sat": 0.819,
+   "max_ratio_drop": 0.4285,
+   "max_sigma_level_d1": 3.4,
+   "reachable_4sigma": false,
+   "areal_recross_baseline_ug_cm2": 576.0,
+   "areal_both_clip_ug_cm2": 639.3,
+   "window_3.0sigma": {
+    "x_g_cm3": [
+     0.02231,
+     0.03763
+    ],
+    "areal_ug_cm2": [
+     203.2,
+     342.7
+    ],
+    "min_neighborhood_ink_fraction": 0.88
+   },
+   "window_2.5sigma": {
+    "x_g_cm3": [
+     0.01406,
+     0.0419
+    ],
+    "areal_ug_cm2": [
+     128.1,
+     381.6
+    ],
+    "min_neighborhood_ink_fraction": 0.73
+   },
+   "window_2.0sigma": {
+    "x_g_cm3": [
+     0.00905,
+     0.04617
+    ],
+    "areal_ug_cm2": [
+     82.4,
+     420.5
+    ],
+    "min_neighborhood_ink_fraction": 0.59
+   }
+  },
+  "corrected": {
+   "R0": 1.216,
+   "slope_dR_dx_linearized": -30.65,
+   "x_4sigma_unclipped_g_cm3": 0.23349,
+   "x_4sigma_areal_ug_cm2": 2126.3,
+   "x_sat_g_cm3": 0.03419,
+   "areal_sat_ug_cm2": 311.3,
+   "t_pb_equiv_sat_um": 0.274,
+   "ratio_at_sat": 0.8589,
+   "max_ratio_drop": 0.3571,
+   "max_sigma_level_d1": 2.84,
+   "reachable_4sigma": false,
+   "areal_recross_baseline_ug_cm2": 561.5,
+   "areal_both_clip_ug_cm2": 639.3,
+   "window_3.0sigma": null,
+   "window_2.5sigma": {
+    "x_g_cm3": [
+     0.02451,
+     0.03745
+    ],
+    "areal_ug_cm2": [
+     223.2,
+     341.0
+    ],
+    "min_neighborhood_ink_fraction": 0.88
+   },
+   "window_2.0sigma": {
+    "x_g_cm3": [
+     0.01535,
+     0.04229
+    ],
+    "areal_ug_cm2": [
+     139.8,
+     385.1
+    ],
+    "min_neighborhood_ink_fraction": 0.71
+   }
+  },
+  "physical": {
+   "R0": 1.13,
+   "slope_dR_dx_linearized": -39.86,
+   "x_4sigma_unclipped_g_cm3": null,
+   "x_4sigma_areal_ug_cm2": null,
+   "reachable_4sigma": false,
+   "max_ratio_drop_unclipped": 0.4557,
+   "max_sigma_level_unclipped": 3.62
+  }
+ },
+ "scenarios_raw_frame": {
+  "Tack_large_84ug": {
+   "areal_ug_cm2": 84.0,
+   "x_g_cm3": 0.00922,
+   "per_voxel_shift": 0.2546,
+   "sigma_d1.0": 2.02,
+   "sigma_d0.5": 1.01,
+   "sigma_d0.33": 0.67
+  },
+  "Tack_small_16ug": {
+   "areal_ug_cm2": 16.0,
+   "x_g_cm3": 0.00176,
+   "per_voxel_shift": 0.0757,
+   "sigma_d1.0": 0.6,
+   "sigma_d0.5": 0.3,
+   "sigma_d0.33": 0.2
+  },
+  "dense_300ug": {
+   "areal_ug_cm2": 300.0,
+   "x_g_cm3": 0.03294,
+   "per_voxel_shift": 0.4245,
+   "sigma_d1.0": 3.37,
+   "sigma_d0.5": 1.69,
+   "sigma_d0.33": 1.11
+  },
+  "saturating_311ug": {
+   "areal_ug_cm2": 311.3,
+   "x_g_cm3": 0.03419,
+   "per_voxel_shift": 0.4285,
+   "sigma_d1.0": 3.4,
+   "sigma_d0.5": 1.7,
+   "sigma_d0.33": 1.12
+  },
+  "extreme_1000ug": {
+   "areal_ug_cm2": 1000.0,
+   "x_g_cm3": 0.10981,
+   "per_voxel_shift": -0.1025,
+   "sigma_d1.0": -0.81,
+   "sigma_d0.5": -0.41,
+   "sigma_d0.33": -0.27
+  }
+ },
+ "cobright_gate_floor": {
+  "median_papyrus": {
+   "x_gate_g_cm3": 0.00782,
+   "areal_gate_ug_cm2": 71.2
+  },
+  "pv_dimmed_surface": {
+   "x_gate_g_cm3": 0.01901,
+   "areal_gate_ug_cm2": 173.1
+  }
+ },
+ "L0_clip_surface_layer": {
+  "areal_at_L0_clip_ug_cm2": 155.7,
+  "L1_ratio_after_binning": 0.9054,
+  "max_sigma_level": 2.72
+ },
+ "fw_translation": {
+  "3sigma_floor_d1": {
+   "x_g_cm3": 0.02231,
+   "fw_product_rho1.5": 0.0149,
+   "w_pct_layer10um_rho1.5": 13.5,
+   "w_pct_layer15um_rho1.5": 9.0,
+   "w_pct_layer20um_rho1.5": 6.8
+  },
+  "saturation_ceiling": {
+   "x_g_cm3": 0.03419,
+   "fw_product_rho1.5": 0.0228,
+   "w_pct_layer10um_rho1.5": 20.8,
+   "w_pct_layer15um_rho1.5": 13.8,
+   "w_pct_layer20um_rho1.5": 10.4
+  }
+ },
+ "fpr": {
+  "gaussian_expected_at_4sigma": 8488,
+  "observed": 2
+ },
+ "literature": {
+  "tack2016_srep20763": {
+   "Pb_areal_letters_ug_cm2": [
+    84,
+    16
+   ],
+   "err": 5,
+   "Pb_wt_pct_in_probed_matrix": [
+    0.78,
+    0.15
+   ],
+   "mc_model": "homogeneous papyrus+ink layer, 300 um thick, rho 0.36 g/cm3, 3.5 keV beam (ESRF ID21); wt% is Pb in the probed papyrus+ink mixture, NOT an ink-layer concentration (0.0078*0.36*300um = 84 ug/cm2, consistent)",
+   "speciation": "Pb-L3 XANES closest to lead(II)acetate-like carboxylate; galena disfavored by S-K XANES; minium absent"
+  },
+  "brun2016_pnas": "same two Institut-de-France fragments, XRF at ESRF ID21 (2.48/3 keV, Pb M-edges) + ID11 XRD (50 keV); reports the same 84+/-5 and 16+/-5 ug/cm2; Pb intentional (pigment or drier) argued"
+ }
+}

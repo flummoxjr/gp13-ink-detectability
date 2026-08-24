@@ -1,0 +1,76 @@
+{
+ "listing": {
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions": [
+   "fibers",
+   "ink-3d",
+   "surfaces"
+  ],
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/fibers": [
+   "20260411134726-fibers-20260801084232-L1"
+  ],
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/fibers/20260411134726-fibers-20260801084232-L1": [
+   "PHercParis4-20260411134726-las-sd1-d74cca79.lasagna.json",
+   "PHercParis4-20260411134726-las-sd1-d74cca79_nx.ome.zarr",
+   "PHercParis4-20260411134726-las-sd1-d74cca79_ny.ome.zarr",
+   "PHercParis4-20260411134726-las-sd1-d74cca79_presence.ome.zarr",
+   "inference.json"
+  ],
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/ink-3d": [
+   "20260411134726-ink3d-20260428123845-v3-78k-fullsup.zarr"
+  ],
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/surfaces": [
+   "20260411134726-surface-20260413141734-surface-recto-2um-ps256-L0-th0.45.normal-grids",
+   "20260411134726-surface-20260413141734-surface-recto-2um-ps256-L0-th0.45.zarr",
+   "20260411134726-surface-20260413222639-surface-m7-L2-th0.2.zarr"
+  ]
+ },
+ "ink_zarrs": [
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/ink-3d/20260411134726-ink3d-20260428123845-v3-78k-fullsup.zarr"
+ ],
+ "samples": {
+  "vesuvius-challenge-open-data/PHercParis4/representations/predictions/ink-3d/20260411134726-ink3d-20260428123845-v3-78k-fullsup.zarr": {
+   "shape": [
+    75784,
+    32693,
+    32693
+   ],
+   "dtype": "uint8",
+   "pct": {
+    "50": 0.0078,
+    "90": 0.0118,
+    "99": 0.549,
+    "99.9": 0.9608
+   },
+   "block_f05": [
+    0.0,
+    0.0,
+    0.0817,
+    0.0,
+    0.0042,
+    0.0226,
+    0.0,
+    0.0
+   ],
+   "block_f08": [
+    0.0,
+    0.0,
+    0.0692,
+    0.0,
+    0.0015,
+    0.0165,
+    0.0,
+    0.0
+   ],
+   "block_pmax": [
+    0.016,
+    0.008,
+    0.976,
+    0.012,
+    0.953,
+    0.969,
+    0.0,
+    0.337
+   ]
+  }
+ }
+}
