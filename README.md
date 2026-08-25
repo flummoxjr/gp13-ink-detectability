@@ -7,6 +7,9 @@ Nobody had published a measurement of which Grand-Prize scrolls can actually be 
 and by what. This repository supplies one. No ink was found and none is claimed; what
 is claimed is the measurement — and the machinery that kept it honest.
 
+> **Mirror note:** this research also exists at [`measure-before-you-hunt`](https://github.com/flummoxjr/measure-before-you-hunt);
+> the two repositories are kept content-identical. Whichever URL brought you here, you are reading the same work.
+
 **Start here → [`report/REPORT.md`](report/REPORT.md)** (executive summary, five-minute
 table, limitations). Then the sections: [index & separability](report/sections/01_index.md) ·
 [instrument & corpus screen](report/sections/02_instrument.md) ·
