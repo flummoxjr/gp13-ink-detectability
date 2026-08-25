@@ -251,6 +251,13 @@ if abs(al["median_angle_deg"] - 68.1) > 0.1 or al["n_within_30deg"] != 0 or len(
 if abs(pu["median_angle_deg"] - 13.1) > 0.1 or pu["n_within_30deg"] != 7 or len(pu["meshes"]) != 9:
     problems.append(f"PUBLISHED ALIGNMENT: report 9 meshes, 13.1 deg, 7 within 30 vs "
                     f"{len(pu['meshes'])}, {pu['median_angle_deg']:.1f}, {pu['n_within_30deg']}")
+mb = json.load(open(os.path.join(T, "out", "k2c_separability", "mainbuild_nz.json")))["mainbuild_abs_nz"]
+import statistics as _stb
+if len(mb) != 8 or abs(_stb.median(list(mb.values())) - 0.236) > 0.01 or max(mb.values()) > 0.7:
+    problems.append(f"MAINBUILD: report 8 meshes, median 0.236, 0 flat vs "
+                    f"{len(mb)}, {_stb.median(list(mb.values())):.3f}, max {max(mb.values()):.3f}")
+checks.append(f"current-build re-grow: |n_z| median {_stb.median(list(mb.values())):.3f} (published 0.223) — cause resolved: stale image")
+
 mt = json.load(open(os.path.join(T, "out", "k2c_separability", "modetest_nz.json")))
 import statistics as _stt
 rv = list(mt["R_random_seed"].values()); ev = list(mt["E_explicit_seed"].values())
@@ -315,6 +322,29 @@ if sum(1 for r in meas if r["angle_deg"] >= 45) != 19:
 checks.append(f"corpus alignment audit: {len(meas)}/80 measured, median "
               f"{_st.median([r['angle_deg'] for r in meas]):.1f} deg, "
               f"dumps {_st.median(dbg):.1f} vs curated {_st.median(cur):.1f}")
+
+
+# --- addendum checks (A1-A4) ---
+import json as _j
+from pathlib import Path as _P
+_TD = _P(R).parent
+_g = _j.dumps(_j.load(open(_TD/'out'/'g1v2'/'G1V2_RESULTS.json', encoding='utf-8')))
+for _needle in ('0.5775', '0.6907', '1.806'):
+    if _needle not in _g: problems.append(f"ADDENDUM A1: {_needle} not in G1V2_RESULTS.json")
+checks.append("addendum A1: ceiling 0.578/0.691 vox-equiv, max z 1.81 in g1v2 artifact")
+_x = open(_TD/'out'/'xacq'/'corpus_summary.json', encoding='utf-8').read()
+_c = open(_TD/'out'/'xacq'/'calibration_rows.json', encoding='utf-8').read()
+if '25.09' not in _x and '25.1' not in _x: problems.append("ADDENDUM A3: L99 median 25.09 not in corpus_summary.json")
+if '0.008' not in (_x + _c): problems.append("ADDENDUM A3: median gain 0.0080 not in xacq artifacts")
+checks.append("addendum A3: L99 median ~25 and gain ~0.0080 in xacq artifacts")
+_b = _j.load(open(_TD/'out'/'curve_audit'/'expA_baseline.json', encoding='utf-8'))
+if abs(_b['auc_forward']-0.6925)>0.0005 or abs(_b['auc_reverse']-0.4477)>0.0005 or _b['gate_passed'] is not False:
+    problems.append("ADDENDUM A4: expA_baseline.json does not match 0.6925/0.4477/gate-failed")
+checks.append("addendum A4: fragment transfer 0.6925/0.4477, gate failed")
+_n = open(_TD/'out'/'null_scaling'/'NULL_SCALING.md', encoding='utf-8').read()
+for _needle in ('566', '2755'):
+    if _needle not in _n: problems.append(f"ADDENDUM A2: {_needle} not in NULL_SCALING.md")
+checks.append("addendum A2: n_eff 566 and sd 2755 in null-scaling writeup")
 
 print("CHECKS RUN:")
 for c in checks:
