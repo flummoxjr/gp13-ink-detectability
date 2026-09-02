@@ -1,0 +1,4561 @@
+{
+ "manifest": "Bet C corpus manifest - native ~8 um human-labelled ink corpus (RESEARCH_PLAN_2026-27 s2 Bet C)",
+ "version": "0.1",
+ "written": "2026-09-02",
+ "model_pitch_um": 9.36,
+ "measured_from": "live listings/headers on 2026-09-02 (dl.ash2txt.org, HF bucket API, S3 REST, GitHub API); labels and masks downloaded to the session scratchpad only (nothing vendored into the project); Aug-18 GROUND_TRUTH_AUDIT.json reused for the S3 PHerc0172 zarr shapes and the alignment proof",
+ "grand_totals": {
+  "scroll1_44_ink_cm2": 153.67,
+  "scroll1_recto_verso_ink_cm2": 4.42,
+  "scroll5_13_ink_cm2": 23.06,
+  "frag5_ink_cm2": 0.201,
+  "frag6_ink_cm2": 0.449,
+  "new_native_7p91_ink_cm2_total": 181.15,
+  "new_native_7p91_ink_cm2_clean_vs_ink9um": 92.4,
+  "labelled_surface_cm2": 2361.9,
+  "raw_download_GiB_all_new": 606.1,
+  "download_GiB_bbox_and_layers20_44": 139.1,
+  "method_note": "cm2 = pixel count x (pitch in cm)^2 on the label canvas; ink = label >= 128 (Scroll 1, antialiased) or > 0 (binary); surface = mask > 0; cross-check: sum of area_cm2.txt over 43 Scroll 1 segments = 2073.8 vs mask-derived 2052.8"
+ },
+ "sources": [
+  {
+   "id": "scroll1_gp_legacy_7p91",
+   "scroll": "PHerc. Paris 4 (Scroll 1 / PHercParis4)",
+   "pitch_um": 7.91,
+   "energy_keV": 54,
+   "source_volume": {
+    "uuid": "20230205180739",
+    "name": "PHercParis4 54keV stitched_part_1, cropped 8096x7888+1184+1040",
+    "shape_zyx": [
+     14376,
+     7888,
+     8096
+    ],
+    "dtype": "uint16",
+    "meta_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/volumes/20230205180739/meta.json",
+    "part_2": {
+     "uuid": "20230206171837",
+     "shape_zyx": [
+      10532,
+      7812,
+      8316
+     ],
+     "meta_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/volumes/20230206171837/meta.json"
+    }
+   },
+   "urls": {
+    "paths_root": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/",
+    "labels_repo": "https://github.com/younader/Vesuvius-Grandprize-Winner/tree/main/all_labels",
+    "download_script": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/download.sh",
+    "gp_train_code": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/train_timesformer_og.py",
+    "data_agreement": "https://dl.ash2txt.org/LICENSE.txt"
+   },
+   "layout": "65-layer TIFF stack per segment (layers/00.tif..64.tif), uint16, uncompressed (compression=1), little-endian, IFD at end of file; canvas = flattened UV, same WxH as <seg>_mask.png; layer 32 = the segmented surface (VC convention); per-pixel geometry in <seg>.ppm; mesh <seg>.obj; area_cm2.txt + author.txt present",
+   "label_format": "all_labels/<seg>_inklabels.png (8-bit L, antialiased 0..255 for 41 files; binary 0/255 for 2; RGB for 2) + one .tiff; canvas = layers padded UP to the next multiple of 256 (GP prepare.py: pad = 256 - dim % 256, so an exact multiple gets +256); top-left aligned; threshold >= 128",
+   "counts": {
+    "label_files_in_repo": 46,
+    "numbered_segments": 44,
+    "recto_verso": 2,
+    "segments_via_superseded_dir": 9,
+    "layers_per_segment": 65,
+    "total_layer_files": 2860,
+    "segments_in_gp_final_train_list": 17,
+    "segments_z_reversed_by_gp_code": 10
+   },
+   "totals": {
+    "stack_GiB_44": 561.1,
+    "stack_GiB_bbox_cropped_44": 316.5,
+    "canvas_Mpx": 4634.4,
+    "mask_cm2": 2052.8,
+    "area_cm2_txt_sum_43": 2073.8,
+    "ink_cm2_44": 153.67,
+    "ink_px_44": 245602312,
+    "ink_cm2_by_ink9um_status": {
+     "clean_32": 64.92,
+     "partial_sibling_8": 47.01,
+     "exact_4": 41.74
+    },
+    "stack_GiB_by_status": {
+     "clean_32": 276.8,
+     "partial_sibling_8": 183.6,
+     "exact_4": 100.7
+    },
+    "stack_GiB_bbox_cropped_by_status": {
+     "clean_32": 137.9,
+     "partial_sibling_8": 113.7,
+     "exact_4": 64.9
+    }
+   },
+   "in_ink9um_training": "partial: 4 labelled segments are ink_9um training segments (via the 2.4 um rescan pooled to 9.6 um, representations phercparis4-w01/w09/w03/w06 = 20230702185753/20230929220926/20231106155351/20231210121321); 8 more are superseded siblings of ink_9um segments (same segmentation lineage, overlapping surface); 32 are clean by segment id. NOTE the 7.91 um acquisition itself was never seen by ink_9um.",
+   "ink9um_status_lists": {
+    "exact": [
+     "20230702185753",
+     "20230929220926",
+     "20231106155351",
+     "20231210121321"
+    ],
+    "partial-sibling": [
+     "20230929220924",
+     "20231007101615",
+     "20231012184420",
+     "20231012184421",
+     "20231012184423",
+     "20231016151000",
+     "20231031143850",
+     "20231106155350"
+    ],
+    "clean": [
+     "20230520175435",
+     "20230522181603",
+     "20230522215721",
+     "20230530164535",
+     "20230530172803",
+     "20230530212931",
+     "20230531121653",
+     "20230531193658",
+     "20230601193301",
+     "20230611014200",
+     "20230620230617",
+     "20230620230619",
+     "20230701020044",
+     "20230813_real_1",
+     "20230820203112",
+     "20230826170124",
+     "20230827161847",
+     "20230901184804",
+     "20230902141231",
+     "20230903193206",
+     "20230904020426",
+     "20230904135535",
+     "20230905134255",
+     "20230909121925",
+     "20231001164029",
+     "20231004222109",
+     "20231005123333",
+     "20231005123336",
+     "20231012085431",
+     "20231012173610",
+     "20231022170900",
+     "20231022170901"
+    ]
+   },
+   "verified_live": {
+    "scroll1_paths": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:34Z"
+    },
+    "scroll1_vol_meta": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/volumes/20230205180739/meta.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:34Z"
+    },
+    "scroll1_example_layer": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123336/layers/32.tif",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:34Z"
+    },
+    "scroll1_superseded_example": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231016151000_superseded/layers/32.tif",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:35Z"
+    },
+    "younader_repo": {
+     "url": "https://github.com/younader/Vesuvius-Grandprize-Winner",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:35Z"
+    },
+    "younader_label_example": {
+     "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231005123336_inklabels.png",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:36Z"
+    },
+    "younader_label_tiff": {
+     "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231022170901_inklabels.tiff",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:37Z"
+    },
+    "younader_download_sh": {
+     "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/download.sh",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:37Z"
+    },
+    "volumetric_labels": {
+     "url": "https://dl.ash2txt.org/community-uploads/youssef/volumetric_labels/20231016151000/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:38Z"
+    },
+    "dl_root_license": {
+     "url": "https://dl.ash2txt.org/LICENSE.txt",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:33Z"
+    }
+   },
+   "license": "Vesuvius Challenge Data Agreement (dl.ash2txt.org/LICENSE.txt): no redistribution; no public disclosure of hidden text or ink-label images without written consent; Scrolls 1-4 + Fragments 1-6 are EduceLab-Scrolls (Univ. of Kentucky) with mandatory citation. Label repo itself: MIT (younader/Vesuvius-Grandprize-Winner, (c) 2024 Julian Schilliger).",
+   "pool_to_9.36": {
+    "factor_inplane": 1.1833,
+    "direction": "downsample (anti-aliased resample, non-integer 1.1833)",
+    "z": "legacy layers are 1 voxel = 7.91 um apart along the surface normal; 65 layers = 514 um. The ink_9um window is 21 slices x 9.36 um = 197 um = 24.9 legacy layers: take layers 20..44 (centre 32) and resample z by the same 1.1833 (or 25->21 slices). No integer z-pooling applies.",
+    "alternative": "train at native 7.91 (15.5% pitch mismatch to 9.36); ink_9um itself tolerates 9.596 vs 9.36 (2.5%) - prefer resampling so the comparison with ink_9um is clean"
+   },
+   "segments": [
+    {
+     "segment_id": "20230520175435",
+     "dir": "20230520175435",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "8.22231",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230520175435/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 7914,
+      "height": 2936,
+      "bytes_per_layer": 46471193,
+      "stack_GiB": 2.81
+     },
+     "mask": {
+      "file": "20230520175435_mask.png",
+      "wh": [
+       7914,
+       2936
+      ],
+      "px": 13018442,
+      "cm2": 8.15,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230520175435/20230520175435_mask.png"
+     },
+     "label": {
+      "file": "20230520175435_inklabels.png",
+      "bytes": 313637,
+      "canvas_hw": [
+       3072,
+       7936
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       7936,
+       3072
+      ],
+      "ink_px_ge128": 1751666,
+      "ink_cm2": 1.096,
+      "ink_frac_of_mask": 0.1346,
+      "bbox_yyxx": [
+       148,
+       2209,
+       3058,
+       7481
+      ],
+      "bbox_frac": 0.3739,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230520175435_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230522181603",
+     "dir": "20230522181603",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "30.1544",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230522181603/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 14560,
+      "height": 5304,
+      "bytes_per_layer": 154452665,
+      "stack_GiB": 9.35
+     },
+     "mask": {
+      "file": "20230522181603_mask.png",
+      "wh": [
+       14560,
+       5304
+      ],
+      "px": 48089161,
+      "cm2": 30.09,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230522181603/20230522181603_mask.png"
+     },
+     "label": {
+      "file": "20230522181603_inklabels.png",
+      "bytes": 381922,
+      "canvas_hw": [
+       5376,
+       14592
+      ],
+      "mode": "L",
+      "n_unique": 243,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       14592,
+       5376
+      ],
+      "ink_px_ge128": 4139867,
+      "ink_cm2": 2.59,
+      "ink_frac_of_mask": 0.0861,
+      "bbox_yyxx": [
+       864,
+       4919,
+       2183,
+       14299
+      ],
+      "bbox_frac": 0.6263,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230522181603_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230522215721",
+     "dir": "20230522215721",
+     "superseded_dir": false,
+     "author": "noemi",
+     "area_cm2_txt": "9.32137",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230522215721/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 4404,
+      "height": 5599,
+      "bytes_per_layer": 49316177,
+      "stack_GiB": 2.99
+     },
+     "mask": {
+      "file": "20230522215721_mask.png",
+      "wh": [
+       4404,
+       5599
+      ],
+      "px": 14967231,
+      "cm2": 9.36,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230522215721/20230522215721_mask.png"
+     },
+     "label": {
+      "file": "20230522215721_inklabels.png",
+      "bytes": 258416,
+      "canvas_hw": [
+       5632,
+       4608
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4608,
+       5632
+      ],
+      "ink_px_ge128": 2167104,
+      "ink_cm2": 1.356,
+      "ink_frac_of_mask": 0.1448,
+      "bbox_yyxx": [
+       65,
+       4047,
+       556,
+       3742
+      ],
+      "bbox_frac": 0.4888,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230522215721_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20230530164535",
+     "dir": "20230530164535",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "4.46485",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530164535/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2228,
+      "height": 3656,
+      "bytes_per_layer": 16291321,
+      "stack_GiB": 0.99
+     },
+     "mask": {
+      "file": "20230530164535_mask.png",
+      "wh": [
+       2228,
+       3656
+      ],
+      "px": 7049689,
+      "cm2": 4.41,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530164535/20230530164535_mask.png"
+     },
+     "label": {
+      "file": "20230530164535_inklabels.png",
+      "bytes": 48896,
+      "canvas_hw": [
+       3840,
+       2304
+      ],
+      "mode": "L",
+      "n_unique": 255,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2304,
+       3840
+      ],
+      "ink_px_ge128": 379678,
+      "ink_cm2": 0.238,
+      "ink_frac_of_mask": 0.0539,
+      "bbox_yyxx": [
+       224,
+       2364,
+       742,
+       1341
+      ],
+      "bbox_frac": 0.1449,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230530164535_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230530172803",
+     "dir": "20230530172803",
+     "superseded_dir": false,
+     "author": "konrad",
+     "area_cm2_txt": "7.19929",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530172803/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3296,
+      "height": 4660,
+      "bytes_per_layer": 30718905,
+      "stack_GiB": 1.86
+     },
+     "mask": {
+      "file": "20230530172803_mask.png",
+      "wh": [
+       3296,
+       4660
+      ],
+      "px": 11286327,
+      "cm2": 7.06,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530172803/20230530172803_mask.png"
+     },
+     "label": {
+      "file": "20230530172803_inklabels.png",
+      "bytes": 56966,
+      "canvas_hw": [
+       4864,
+       3328
+      ],
+      "mode": "L",
+      "n_unique": 254,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       3328,
+       4864
+      ],
+      "ink_px_ge128": 323955,
+      "ink_cm2": 0.203,
+      "ink_frac_of_mask": 0.0287,
+      "bbox_yyxx": [
+       1684,
+       4190,
+       1282,
+       1917
+      ],
+      "bbox_frac": 0.0983,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230530172803_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230530212931",
+     "dir": "20230530212931",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "4.87903",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530212931/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2342,
+      "height": 3833,
+      "bytes_per_layer": 17953957,
+      "stack_GiB": 1.09
+     },
+     "mask": {
+      "file": "20230530212931_mask.png",
+      "wh": [
+       2342,
+       3833
+      ],
+      "px": 7721444,
+      "cm2": 4.83,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230530212931/20230530212931_mask.png"
+     },
+     "label": {
+      "file": "20230530212931_inklabels.png",
+      "bytes": 169211,
+      "canvas_hw": [
+       3840,
+       2560
+      ],
+      "mode": "L",
+      "n_unique": 236,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2560,
+       3840
+      ],
+      "ink_px_ge128": 750578,
+      "ink_cm2": 0.47,
+      "ink_frac_of_mask": 0.0972,
+      "bbox_yyxx": [
+       330,
+       2871,
+       342,
+       2027
+      ],
+      "bbox_frac": 0.4355,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230530212931_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230531121653",
+     "dir": "20230531121653",
+     "superseded_dir": false,
+     "author": "noemi",
+     "area_cm2_txt": "2.9602",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230531121653/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2348,
+      "height": 2343,
+      "bytes_per_layer": 11002913,
+      "stack_GiB": 0.67
+     },
+     "mask": {
+      "file": "20230531121653_mask.png",
+      "wh": [
+       2348,
+       2343
+      ],
+      "px": 4639981,
+      "cm2": 2.9,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230531121653/20230531121653_mask.png"
+     },
+     "label": {
+      "file": "20230531121653_inklabels.png",
+      "bytes": 28683,
+      "canvas_hw": [
+       2560,
+       2560
+      ],
+      "mode": "L",
+      "n_unique": 103,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2560,
+       2560
+      ],
+      "ink_px_ge128": 477080,
+      "ink_cm2": 0.298,
+      "ink_frac_of_mask": 0.1028,
+      "bbox_yyxx": [
+       64,
+       2112,
+       409,
+       2204
+      ],
+      "bbox_frac": 0.5609,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230531121653_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230531193658",
+     "dir": "20230531193658",
+     "superseded_dir": false,
+     "author": "konrad",
+     "area_cm2_txt": "8.36487",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230531193658/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 5875,
+      "height": 2594,
+      "bytes_per_layer": 30479685,
+      "stack_GiB": 1.85
+     },
+     "mask": {
+      "file": "20230531193658_mask.png",
+      "wh": [
+       5875,
+       2594
+      ],
+      "px": 13094188,
+      "cm2": 8.19,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230531193658/20230531193658_mask.png"
+     },
+     "label": {
+      "file": "20230531193658_inklabels.png",
+      "bytes": 255102,
+      "canvas_hw": [
+       2816,
+       5888
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       5888,
+       2816
+      ],
+      "ink_px_ge128": 1355366,
+      "ink_cm2": 0.848,
+      "ink_frac_of_mask": 0.1035,
+      "bbox_yyxx": [
+       678,
+       2132,
+       1661,
+       5710
+      ],
+      "bbox_frac": 0.3551,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230531193658_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20230601193301",
+     "dir": "20230601193301",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "10.3957",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230601193301/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 6870,
+      "height": 3913,
+      "bytes_per_layer": 53764805,
+      "stack_GiB": 3.25
+     },
+     "mask": {
+      "file": "20230601193301_mask.png",
+      "wh": [
+       6870,
+       3913
+      ],
+      "px": 16685751,
+      "cm2": 10.44,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230601193301/20230601193301_mask.png"
+     },
+     "label": {
+      "file": "20230601193301_inklabels.png",
+      "bytes": 62205,
+      "canvas_hw": [
+       4096,
+       6912
+      ],
+      "mode": "L",
+      "n_unique": 171,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       6912,
+       4096
+      ],
+      "ink_px_ge128": 366111,
+      "ink_cm2": 0.229,
+      "ink_frac_of_mask": 0.0219,
+      "bbox_yyxx": [
+       1163,
+       2486,
+       1135,
+       2538
+      ],
+      "bbox_frac": 0.0656,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230601193301_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230611014200",
+     "dir": "20230611014200",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "4.70502",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230611014200/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2715,
+      "height": 3230,
+      "bytes_per_layer": 17539085,
+      "stack_GiB": 1.06
+     },
+     "mask": {
+      "file": "20230608222722_mask.png",
+      "wh": [
+       1586,
+       3674
+      ],
+      "px": 4643212,
+      "cm2": 2.91,
+      "mismatch_vs_layers": true,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230611014200/20230608222722_mask.png"
+     },
+     "label": {
+      "file": "20230611014200_inklabels.png",
+      "bytes": 39648,
+      "canvas_hw": [
+       3328,
+       2816
+      ],
+      "mode": "L",
+      "n_unique": 174,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2816,
+       3328
+      ],
+      "ink_px_ge128": 360751,
+      "ink_cm2": 0.226,
+      "ink_frac_of_mask": 0.0777,
+      "bbox_yyxx": [
+       1683,
+       2910,
+       98,
+       1726
+      ],
+      "bbox_frac": 0.2131,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230611014200_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "dir contains files of a different segment id (20230608222722_*); the mask (1586x3674) does not match the layers (2715x3230) - regenerate the mask from layer 32 > 0; the label (2816x3328) does match pad256(layers)"
+     ]
+    },
+    {
+     "segment_id": "20230620230617",
+     "dir": "20230620230617",
+     "superseded_dir": false,
+     "author": "konrad",
+     "area_cm2_txt": "9.53972",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230620230617/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3555,
+      "height": 6544,
+      "bytes_per_layer": 46528025,
+      "stack_GiB": 2.82
+     },
+     "mask": {
+      "file": "20230620230617_mask.png",
+      "wh": [
+       3555,
+       6544
+      ],
+      "px": 14260570,
+      "cm2": 8.92,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230620230617/20230620230617_mask.png"
+     },
+     "label": {
+      "file": "20230620230617_inklabels.png",
+      "bytes": 361723,
+      "canvas_hw": [
+       6656,
+       3584
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       3584,
+       6656
+      ],
+      "ink_px_ge128": 1614255,
+      "ink_cm2": 1.01,
+      "ink_frac_of_mask": 0.1132,
+      "bbox_yyxx": [
+       1209,
+       6410,
+       739,
+       3322
+      ],
+      "bbox_frac": 0.5632,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230620230617_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230620230619",
+     "dir": "20230620230619",
+     "superseded_dir": false,
+     "author": "konrad",
+     "area_cm2_txt": "9.26412",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230620230619/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 5394,
+      "height": 6469,
+      "bytes_per_layer": 69787757,
+      "stack_GiB": 4.22
+     },
+     "mask": {
+      "file": "20230620230619_mask.png",
+      "wh": [
+       5394,
+       6469
+      ],
+      "px": 14098390,
+      "cm2": 8.82,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230620230619/20230620230619_mask.png"
+     },
+     "label": {
+      "file": "20230620230619_inklabels.png",
+      "bytes": 396720,
+      "canvas_hw": [
+       6656,
+       5632
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       5632,
+       6656
+      ],
+      "ink_px_ge128": 1604357,
+      "ink_cm2": 1.004,
+      "ink_frac_of_mask": 0.1138,
+      "bbox_yyxx": [
+       2139,
+       5749,
+       1732,
+       4949
+      ],
+      "bbox_frac": 0.3098,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230620230619_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230701020044",
+     "dir": "20230701020044",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "58.9143",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230701020044/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 18933,
+      "height": 6265,
+      "bytes_per_layer": 237230675,
+      "stack_GiB": 14.36
+     },
+     "mask": {
+      "file": "20230701020044_mask.png",
+      "wh": [
+       18933,
+       6265
+      ],
+      "px": 92803973,
+      "cm2": 58.07,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230701020044/20230701020044_mask.png"
+     },
+     "label": {
+      "file": "20230701020044_inklabels.png",
+      "bytes": 706428,
+      "canvas_hw": [
+       6400,
+       18944
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       18944,
+       6400
+      ],
+      "ink_px_ge128": 3607518,
+      "ink_cm2": 2.257,
+      "ink_frac_of_mask": 0.0389,
+      "bbox_yyxx": [
+       940,
+       5052,
+       11058,
+       18480
+      ],
+      "bbox_frac": 0.2517,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230701020044_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20230702185753",
+     "dir": "20230702185753",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "97.9346",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230702185753/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 17381,
+      "height": 13513,
+      "bytes_per_layer": 469739091,
+      "stack_GiB": 28.44
+     },
+     "mask": {
+      "file": "20230702185753_mask.png",
+      "wh": [
+       17381,
+       13513
+      ],
+      "px": 154655295,
+      "cm2": 96.76,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230702185753/20230702185753_mask.png"
+     },
+     "label": {
+      "file": "20230702185753_inklabels.png",
+      "bytes": 3298099,
+      "canvas_hw": [
+       13568,
+       17408
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       17408,
+       13568
+      ],
+      "ink_px_ge128": 17321600,
+      "ink_cm2": 10.838,
+      "ink_frac_of_mask": 0.112,
+      "bbox_yyxx": [
+       1904,
+       12315,
+       1118,
+       17131
+      ],
+      "bbox_frac": 0.7058,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230702185753_inklabels.png"
+     },
+     "in_ink9um_training": "exact",
+     "ink9um_representation": "phercparis4-w01",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230813_real_1",
+     "dir": "20230813_real_1",
+     "superseded_dir": false,
+     "author": "Hari",
+     "area_cm2_txt": null,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230813_real_1/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2387,
+      "height": 2835,
+      "bytes_per_layer": 13534475,
+      "stack_GiB": 0.82
+     },
+     "mask": {
+      "file": "20230813_real_1_mask.png",
+      "wh": [
+       2387,
+       2835
+      ],
+      "px": 3233789,
+      "cm2": 2.02,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230813_real_1/20230813_real_1_mask.png"
+     },
+     "label": {
+      "file": "20230813_real_1_inklabels.png",
+      "bytes": 66449,
+      "canvas_hw": [
+       3072,
+       2560
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2560,
+       3072
+      ],
+      "ink_px_ge128": 438972,
+      "ink_cm2": 0.275,
+      "ink_frac_of_mask": 0.1357,
+      "bbox_yyxx": [
+       706,
+       2728,
+       622,
+       2111
+      ],
+      "bbox_frac": 0.3828,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230813_real_1_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230820203112",
+     "dir": "20230820203112",
+     "superseded_dir": false,
+     "author": "konrad",
+     "area_cm2_txt": "9.3584",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230820203112/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 2666,
+      "height": 7181,
+      "bytes_per_layer": 38289277,
+      "stack_GiB": 2.32
+     },
+     "mask": {
+      "file": "20230820203112_mask.png",
+      "wh": [
+       2666,
+       7181
+      ],
+      "px": 14239347,
+      "cm2": 8.91,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230820203112/20230820203112_mask.png"
+     },
+     "label": {
+      "file": "20230820203112_inklabels.png",
+      "bytes": 104741,
+      "canvas_hw": [
+       7424,
+       2816
+      ],
+      "mode": "L",
+      "n_unique": 189,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       2816,
+       7424
+      ],
+      "ink_px_ge128": 1132556,
+      "ink_cm2": 0.709,
+      "ink_frac_of_mask": 0.0795,
+      "bbox_yyxx": [
+       229,
+       4170,
+       294,
+       2050
+      ],
+      "bbox_frac": 0.331,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230820203112_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230826170124",
+     "dir": "20230826170124",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "8.95796",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230826170124/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3754,
+      "height": 5161,
+      "bytes_per_layer": 38748973,
+      "stack_GiB": 2.35
+     },
+     "mask": {
+      "file": "20230826170124_mask.png",
+      "wh": [
+       3754,
+       5161
+      ],
+      "px": 14113588,
+      "cm2": 8.83,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230826170124/20230826170124_mask.png"
+     },
+     "label": {
+      "file": "20230826170124_inklabels.png",
+      "bytes": 250231,
+      "canvas_hw": [
+       5376,
+       3840
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       3840,
+       5376
+      ],
+      "ink_px_ge128": 1076955,
+      "ink_cm2": 0.674,
+      "ink_frac_of_mask": 0.0763,
+      "bbox_yyxx": [
+       583,
+       4474,
+       486,
+       2613
+      ],
+      "bbox_frac": 0.4009,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230826170124_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230827161847",
+     "dir": "20230827161847",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "20.8294",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230827161847/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 5048,
+      "height": 9163,
+      "bytes_per_layer": 92509833,
+      "stack_GiB": 5.6
+     },
+     "mask": {
+      "file": "20230827161847_mask.png",
+      "wh": [
+       5048,
+       9163
+      ],
+      "px": 32756642,
+      "cm2": 20.5,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230827161847/20230827161847_mask.png"
+     },
+     "label": {
+      "file": "20230827161847_inklabels.png",
+      "bytes": 308391,
+      "canvas_hw": [
+       9216,
+       5120
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       5120,
+       9216
+      ],
+      "ink_px_ge128": 3697707,
+      "ink_cm2": 2.314,
+      "ink_frac_of_mask": 0.1129,
+      "bbox_yyxx": [
+       167,
+       5538,
+       1064,
+       5014
+      ],
+      "bbox_frac": 0.4496,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230827161847_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "2023 First Letters segment (PORPHYRAS); read and confirmed before any GP model existed"
+     ]
+    },
+    {
+     "segment_id": "20230901184804",
+     "dir": "20230901184804",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "11.3168",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230901184804/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 4351,
+      "height": 6693,
+      "bytes_per_layer": 58242671,
+      "stack_GiB": 3.53
+     },
+     "mask": {
+      "file": "20230901184804_mask.png",
+      "wh": [
+       4351,
+       6693
+      ],
+      "px": 17789614,
+      "cm2": 11.13,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230901184804/20230901184804_mask.png"
+     },
+     "label": {
+      "file": "20230901184804_inklabels.png",
+      "bytes": 152657,
+      "canvas_hw": [
+       6912,
+       4352
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4352,
+       6912
+      ],
+      "ink_px_ge128": 1554809,
+      "ink_cm2": 0.973,
+      "ink_frac_of_mask": 0.0874,
+      "bbox_yyxx": [
+       1446,
+       6266,
+       266,
+       3850
+      ],
+      "bbox_frac": 0.5743,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230901184804_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20230902141231",
+     "dir": "20230902141231",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "7.78899",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230902141231/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3902,
+      "height": 4834,
+      "bytes_per_layer": 37724721,
+      "stack_GiB": 2.28
+     },
+     "mask": {
+      "file": "20230902141231_mask.png",
+      "wh": [
+       3902,
+       4834
+      ],
+      "px": 12186662,
+      "cm2": 7.62,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230902141231/20230902141231_mask.png"
+     },
+     "label": {
+      "file": "20230902141231_inklabels.png",
+      "bytes": 210422,
+      "canvas_hw": [
+       4864,
+       4096
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4096,
+       4864
+      ],
+      "ink_px_ge128": 1031198,
+      "ink_cm2": 0.645,
+      "ink_frac_of_mask": 0.0846,
+      "bbox_yyxx": [
+       402,
+       4748,
+       37,
+       3582
+      ],
+      "bbox_frac": 0.7733,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230902141231_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230903193206",
+     "dir": "20230903193206",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "18.0043",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230903193206/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3970,
+      "height": 10399,
+      "bytes_per_layer": 82568245,
+      "stack_GiB": 5.0
+     },
+     "mask": {
+      "file": "20230903193206_mask.png",
+      "wh": [
+       3970,
+       10399
+      ],
+      "px": 28227144,
+      "cm2": 17.66,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230903193206/20230903193206_mask.png"
+     },
+     "label": {
+      "file": "20230903193206_inklabels.png",
+      "bytes": 291480,
+      "canvas_hw": [
+       10496,
+       4096
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4096,
+       10496
+      ],
+      "ink_px_ge128": 1665918,
+      "ink_cm2": 1.042,
+      "ink_frac_of_mask": 0.059,
+      "bbox_yyxx": [
+       467,
+       9937,
+       599,
+       3080
+      ],
+      "bbox_frac": 0.5465,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230903193206_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230904020426",
+     "dir": "20230904020426",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "15.0285",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230904020426/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 9283,
+      "height": 4989,
+      "bytes_per_layer": 92625959,
+      "stack_GiB": 5.61
+     },
+     "mask": {
+      "file": "20230904020426_mask.png",
+      "wh": [
+       9283,
+       4989
+      ],
+      "px": 23590973,
+      "cm2": 14.76,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230904020426/20230904020426_mask.png"
+     },
+     "label": {
+      "file": "20230904020426_inklabels.png",
+      "bytes": 145823,
+      "canvas_hw": [
+       5120,
+       9472
+      ],
+      "mode": "L",
+      "n_unique": 206,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       9472,
+       5120
+      ],
+      "ink_px_ge128": 1221788,
+      "ink_cm2": 0.764,
+      "ink_frac_of_mask": 0.0518,
+      "bbox_yyxx": [
+       143,
+       4436,
+       510,
+       8955
+      ],
+      "bbox_frac": 0.7476,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230904020426_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230904135535",
+     "dir": "20230904135535",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "10.6666",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230904135535/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 4538,
+      "height": 7101,
+      "bytes_per_layer": 64448861,
+      "stack_GiB": 3.9
+     },
+     "mask": {
+      "file": "20230904135535_mask.png",
+      "wh": [
+       4538,
+       7101
+      ],
+      "px": 16762253,
+      "cm2": 10.49,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230904135535/20230904135535_mask.png"
+     },
+     "label": {
+      "file": "20230904135535_inklabels.png",
+      "bytes": 256626,
+      "canvas_hw": [
+       7168,
+       4608
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4608,
+       7168
+      ],
+      "ink_px_ge128": 1782338,
+      "ink_cm2": 1.115,
+      "ink_frac_of_mask": 0.1063,
+      "bbox_yyxx": [
+       162,
+       6741,
+       461,
+       4466
+      ],
+      "bbox_frac": 0.7977,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230904135535_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230905134255",
+     "dir": "20230905134255",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "13.7954",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230905134255/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 4196,
+      "height": 10803,
+      "bytes_per_layer": 90658961,
+      "stack_GiB": 5.49
+     },
+     "mask": {
+      "file": "20230905134255_mask.png",
+      "wh": [
+       4196,
+       10803
+      ],
+      "px": 21600207,
+      "cm2": 13.51,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230905134255/20230905134255_mask.png"
+     },
+     "label": {
+      "file": "20230905134255_inklabels.png",
+      "bytes": 247846,
+      "canvas_hw": [
+       11008,
+       4352
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4352,
+       11008
+      ],
+      "ink_px_ge128": 1882318,
+      "ink_cm2": 1.178,
+      "ink_frac_of_mask": 0.0871,
+      "bbox_yyxx": [
+       582,
+       10289,
+       488,
+       3776
+      ],
+      "bbox_frac": 0.6662,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230905134255_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230909121925",
+     "dir": "20230909121925",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "13.5005",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230909121925/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3882,
+      "height": 11591,
+      "bytes_per_layer": 89992709,
+      "stack_GiB": 5.45
+     },
+     "mask": {
+      "file": "20230909121925_mask.png",
+      "wh": [
+       3882,
+       11591
+      ],
+      "px": 21162394,
+      "cm2": 13.24,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230909121925/20230909121925_mask.png"
+     },
+     "label": {
+      "file": "20230909121925_inklabels.png",
+      "bytes": 200786,
+      "canvas_hw": [
+       11776,
+       4096
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       4096,
+       11776
+      ],
+      "ink_px_ge128": 1439510,
+      "ink_cm2": 0.901,
+      "ink_frac_of_mask": 0.068,
+      "bbox_yyxx": [
+       989,
+       11063,
+       240,
+       3556
+      ],
+      "bbox_frac": 0.6926,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230909121925_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230929220924",
+     "dir": "20230929220924_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "63.055",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230929220924_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 10088,
+      "height": 21289,
+      "bytes_per_layer": 429527049,
+      "stack_GiB": 26.0
+     },
+     "mask": {
+      "file": "20230929220924_mask.png",
+      "wh": [
+       10088,
+       21289
+      ],
+      "px": 99470566,
+      "cm2": 62.24,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230929220924_superseded/20230929220924_mask.png"
+     },
+     "label": {
+      "file": "20230929220924_inklabels.png",
+      "bytes": 2677598,
+      "canvas_hw": [
+       21504,
+       10240
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       10240,
+       21504
+      ],
+      "ink_px_ge128": 12419138,
+      "ink_cm2": 7.77,
+      "ink_frac_of_mask": 0.1249,
+      "bbox_yyxx": [
+       291,
+       18478,
+       47,
+       8382
+      ],
+      "bbox_frac": 0.6884,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230929220924_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w09",
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20230929220926",
+     "dir": "20230929220926",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "127.448",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230929220926/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 23357,
+      "height": 9919,
+      "bytes_per_layer": 463356351,
+      "stack_GiB": 28.05
+     },
+     "mask": {
+      "file": "20230929220926_mask.png",
+      "wh": [
+       23357,
+       9919
+      ],
+      "px": 202063680,
+      "cm2": 126.43,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20230929220926/20230929220926_mask.png"
+     },
+     "label": {
+      "file": "20230929220926_inklabels.png",
+      "bytes": 5037938,
+      "canvas_hw": [
+       9984,
+       23552
+      ],
+      "mode": "RGB",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       23552,
+       9984
+      ],
+      "ink_px_ge128": 11999427,
+      "ink_cm2": 7.508,
+      "ink_frac_of_mask": 0.0594,
+      "bbox_yyxx": [
+       1366,
+       5832,
+       4666,
+       23045
+      ],
+      "bbox_frac": 0.3491,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20230929220926_inklabels.png"
+     },
+     "in_ink9um_training": "exact",
+     "ink9um_representation": "phercparis4-w09",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "RGB PNG; all three channels identical - read one channel"
+     ]
+    },
+    {
+     "segment_id": "20231001164029",
+     "dir": "20231001164029",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "21.641",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231001164029/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 13506,
+      "height": 3341,
+      "bytes_per_layer": 90247277,
+      "stack_GiB": 5.46
+     },
+     "mask": {
+      "file": "20231001164029_mask.png",
+      "wh": [
+       13506,
+       3341
+      ],
+      "px": 34034710,
+      "cm2": 21.29,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231001164029/20231001164029_mask.png"
+     },
+     "label": {
+      "file": "20231001164029_inklabels.png",
+      "bytes": 376758,
+      "canvas_hw": [
+       3584,
+       13568
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       13568,
+       3584
+      ],
+      "ink_px_ge128": 3193430,
+      "ink_cm2": 1.998,
+      "ink_frac_of_mask": 0.0938,
+      "bbox_yyxx": [
+       219,
+       2770,
+       354,
+       12751
+      ],
+      "bbox_frac": 0.6503,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231001164029_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231004222109",
+     "dir": "20231004222109",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "16.6214",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231004222109/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 3510,
+      "height": 11903,
+      "bytes_per_layer": 83559245,
+      "stack_GiB": 5.06
+     },
+     "mask": {
+      "file": "20231004222109_mask.png",
+      "wh": [
+       3510,
+       11903
+      ],
+      "px": 26149930,
+      "cm2": 16.36,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231004222109/20231004222109_mask.png"
+     },
+     "label": {
+      "file": "20231004222109_inklabels.png",
+      "bytes": 172262,
+      "canvas_hw": [
+       12032,
+       3584
+      ],
+      "mode": "L",
+      "n_unique": 190,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       3584,
+       12032
+      ],
+      "ink_px_ge128": 1559772,
+      "ink_cm2": 0.976,
+      "ink_frac_of_mask": 0.0596,
+      "bbox_yyxx": [
+       1163,
+       11594,
+       815,
+       2967
+      ],
+      "bbox_frac": 0.5205,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231004222109_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231005123333",
+     "dir": "20231005123333_superseded",
+     "superseded_dir": true,
+     "author": "david",
+     "area_cm2_txt": "84.5099",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123333_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 7680,
+      "height": 28967,
+      "bytes_per_layer": 444933305,
+      "stack_GiB": 26.93
+     },
+     "mask": {
+      "file": "20231005123333_mask.png",
+      "wh": [
+       7680,
+       28967
+      ],
+      "px": 133620840,
+      "cm2": 83.6,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123333_superseded/20231005123333_mask.png"
+     },
+     "label": {
+      "file": "20231005123333_inklabels.png",
+      "bytes": 1826132,
+      "canvas_hw": [
+       29184,
+       7936
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": false,
+      "expected_pad256_wh": [
+       7680,
+       29184
+      ],
+      "ink_px_ge128": 9177318,
+      "ink_cm2": 5.742,
+      "ink_frac_of_mask": 0.0687,
+      "bbox_yyxx": [
+       4682,
+       22445,
+       1402,
+       6665
+      ],
+      "bbox_frac": 0.4036,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231005123333_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": true,
+     "notes": [
+      "pad-256 quirk of the GP code: width 7680 is an exact multiple of 256, so the label canvas is 7936 (an extra 256 columns of padding)"
+     ]
+    },
+    {
+     "segment_id": "20231005123336",
+     "dir": "20231005123336",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "178.712",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123336/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 29872,
+      "height": 10939,
+      "bytes_per_layer": 653539801,
+      "stack_GiB": 39.56
+     },
+     "mask": {
+      "file": "20231005123336_mask.png",
+      "wh": [
+       29872,
+       10939
+      ],
+      "px": 284211565,
+      "cm2": 177.83,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123336/20231005123336_mask.png"
+     },
+     "label": {
+      "file": "20231005123336_inklabels.png",
+      "bytes": 1516813,
+      "canvas_hw": [
+       11008,
+       29952
+      ],
+      "mode": "L",
+      "n_unique": 2,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       29952,
+       11008
+      ],
+      "ink_px_ge128": 22957085,
+      "ink_cm2": 14.364,
+      "ink_frac_of_mask": 0.0808,
+      "bbox_yyxx": [
+       280,
+       10577,
+       1055,
+       28737
+      ],
+      "bbox_frac": 0.8645,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231005123336_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "binary 0/255 label (only two values)"
+     ]
+    },
+    {
+     "segment_id": "20231007101615",
+     "dir": "20231007101615_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "77.7451",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231007101615_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 6342,
+      "height": 27678,
+      "bytes_per_layer": 351067937,
+      "stack_GiB": 21.25
+     },
+     "mask": {
+      "file": "20231007101615_mask.png",
+      "wh": [
+       6342,
+       27678
+      ],
+      "px": 122850642,
+      "cm2": 76.87,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231007101615_superseded/20231007101615_mask.png"
+     },
+     "label": {
+      "file": "20231007101615_inklabels.png",
+      "bytes": 1596628,
+      "canvas_hw": [
+       27904,
+       6400
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       6400,
+       27904
+      ],
+      "ink_px_ge128": 6405663,
+      "ink_cm2": 4.008,
+      "ink_frac_of_mask": 0.0521,
+      "bbox_yyxx": [
+       105,
+       26055,
+       378,
+       4945
+      ],
+      "bbox_frac": 0.6636,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231007101615_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w07",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20231012085431",
+     "dir": "20231012085431",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "38.5996",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012085431/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 8565,
+      "height": 10187,
+      "bytes_per_layer": 174503495,
+      "stack_GiB": 10.56
+     },
+     "mask": {
+      "file": "20231012085431_mask.png",
+      "wh": [
+       8565,
+       10187
+      ],
+      "px": 60924486,
+      "cm2": 38.12,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012085431/20231012085431_mask.png"
+     },
+     "label": {
+      "file": "20231012085431_inklabels.png",
+      "bytes": 252627,
+      "canvas_hw": [
+       10240,
+       8704
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       8704,
+       10240
+      ],
+      "ink_px_ge128": 1475248,
+      "ink_cm2": 0.923,
+      "ink_frac_of_mask": 0.0242,
+      "bbox_yyxx": [
+       4961,
+       9542,
+       797,
+       4405
+      ],
+      "bbox_frac": 0.1854,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231012085431_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231012173610",
+     "dir": "20231012173610",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "90.0848",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012173610/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 10250,
+      "height": 31209,
+      "bytes_per_layer": 639784685,
+      "stack_GiB": 38.73
+     },
+     "mask": {
+      "file": "20231012173610_mask.png",
+      "wh": [
+       10250,
+       31209
+      ],
+      "px": 142216004,
+      "cm2": 88.98,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012173610/20231012173610_mask.png"
+     },
+     "label": {
+      "file": "20231012173610_inklabels.png",
+      "bytes": 1066017,
+      "canvas_hw": [
+       31232,
+       10496
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       10496,
+       31232
+      ],
+      "ink_px_ge128": 3958195,
+      "ink_cm2": 2.477,
+      "ink_frac_of_mask": 0.0278,
+      "bbox_yyxx": [
+       5934,
+       13497,
+       1318,
+       5621
+      ],
+      "bbox_frac": 0.0993,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231012173610_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": true,
+     "notes": []
+    },
+    {
+     "segment_id": "20231012184420",
+     "dir": "20231012184420",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "52.9124",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184420/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 8151,
+      "height": 19666,
+      "bytes_per_layer": 320595317,
+      "stack_GiB": 19.41
+     },
+     "mask": {
+      "file": "20231012184420_mask.png",
+      "wh": [
+       8151,
+       19666
+      ],
+      "px": 83176145,
+      "cm2": 52.04,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184420/20231012184420_mask.png"
+     },
+     "label": {
+      "file": "20231012184420_inklabels.png",
+      "bytes": 1052879,
+      "canvas_hw": [
+       19712,
+       8192
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       8192,
+       19712
+      ],
+      "ink_px_ge128": 8491926,
+      "ink_cm2": 5.313,
+      "ink_frac_of_mask": 0.1021,
+      "bbox_yyxx": [
+       593,
+       19533,
+       286,
+       6871
+      ],
+      "bbox_frac": 0.7724,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231012184420_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w05",
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231012184421",
+     "dir": "20231012184421_superseded",
+     "superseded_dir": true,
+     "author": "konrad",
+     "area_cm2_txt": "109.343",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184421_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 20824,
+      "height": 10110,
+      "bytes_per_layer": 421061465,
+      "stack_GiB": 25.49
+     },
+     "mask": {
+      "file": "20231012184421_mask.png",
+      "wh": [
+       20824,
+       10110
+      ],
+      "px": 173536283,
+      "cm2": 108.58,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184421_superseded/20231012184421_mask.png"
+     },
+     "label": {
+      "file": "20231012184421_inklabels.png",
+      "bytes": 2835103,
+      "canvas_hw": [
+       10240,
+       20992
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       20992,
+       10240
+      ],
+      "ink_px_ge128": 12787344,
+      "ink_cm2": 8.001,
+      "ink_frac_of_mask": 0.0737,
+      "bbox_yyxx": [
+       583,
+       5656,
+       4080,
+       20716
+      ],
+      "bbox_frac": 0.3926,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231012184421_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w05",
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231012184423",
+     "dir": "20231012184423_superseded",
+     "superseded_dir": true,
+     "author": "david",
+     "area_cm2_txt": "206.834",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184423_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 23350,
+      "height": 15798,
+      "bytes_per_layer": 737766785,
+      "stack_GiB": 44.66
+     },
+     "mask": {
+      "file": "20231012184423_mask.png",
+      "wh": [
+       23350,
+       15798
+      ],
+      "px": 329011793,
+      "cm2": 205.86,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231012184423_superseded/20231012184423_mask.png"
+     },
+     "label": {
+      "file": "20231012184423_inklabels.png",
+      "bytes": 1002249,
+      "canvas_hw": [
+       15872,
+       23552
+      ],
+      "mode": "L",
+      "n_unique": 2,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       23552,
+       15872
+      ],
+      "ink_px_ge128": 23772452,
+      "ink_cm2": 14.874,
+      "ink_frac_of_mask": 0.0723,
+      "bbox_yyxx": [
+       190,
+       15649,
+       253,
+       22599
+      ],
+      "bbox_frac": 0.9241,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231012184423_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w05",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "binary 0/255 label (only two values)"
+     ]
+    },
+    {
+     "segment_id": "20231016151000",
+     "dir": "20231016151000_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "48.0407",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231016151000_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 6261,
+      "height": 15024,
+      "bytes_per_layer": 188130713,
+      "stack_GiB": 11.39
+     },
+     "mask": {
+      "file": "20231016151000_mask.png",
+      "wh": [
+       6261,
+       15024
+      ],
+      "px": 75733178,
+      "cm2": 47.38,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231016151000_superseded/20231016151000_mask.png"
+     },
+     "label": {
+      "file": "20231016151000_inklabels.png",
+      "bytes": 1120389,
+      "canvas_hw": [
+       15104,
+       6400
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       6400,
+       15104
+      ],
+      "ink_px_ge128": 6685256,
+      "ink_cm2": 4.183,
+      "ink_frac_of_mask": 0.0883,
+      "bbox_yyxx": [
+       4411,
+       12283,
+       357,
+       5115
+      ],
+      "bbox_frac": 0.3875,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231016151000_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w00",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": true,
+     "notes": [
+      "depth-resolved human labels exist for this segment: https://dl.ash2txt.org/community-uploads/youssef/volumetric_labels/20231016151000/15.png..44.png (30 PNGs, 6400x15104)"
+     ]
+    },
+    {
+     "segment_id": "20231022170900",
+     "dir": "20231022170900_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "98.4234",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231022170900_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 7676,
+      "height": 34588,
+      "bytes_per_layer": 530995161,
+      "stack_GiB": 32.14
+     },
+     "mask": {
+      "file": "20231022170900_mask.png",
+      "wh": [
+       7676,
+       34588
+      ],
+      "px": 155257294,
+      "cm2": 97.14,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231022170900_superseded/20231022170900_mask.png"
+     },
+     "label": {
+      "file": "20231022170900_inklabels.png",
+      "bytes": 1673981,
+      "canvas_hw": [
+       32767,
+       7228
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": false,
+      "expected_pad256_wh": [
+       7680,
+       34816
+      ],
+      "ink_px_ge128": 9048128,
+      "ink_cm2": 5.661,
+      "ink_frac_of_mask": 0.0583,
+      "bbox_yyxx": [
+       314,
+       30721,
+       283,
+       5178
+      ],
+      "bbox_frac": 0.6285,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231022170900_inklabels.png"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": true,
+     "notes": [
+      "label canvas is NOT pad256(layers): 7228x32767 vs layers 7676x34588 - truncated at 32767 rows (PNG writer limit); assume top-left alignment and verify by overlay"
+     ]
+    },
+    {
+     "segment_id": "20231022170901",
+     "dir": "20231022170901",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "134.591",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231022170901/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 35653,
+      "height": 6655,
+      "bytes_per_layer": 474541615,
+      "stack_GiB": 28.73
+     },
+     "mask": {
+      "file": "20231022170901_mask.png",
+      "wh": [
+       35653,
+       6655
+      ],
+      "px": 213827259,
+      "cm2": 133.79,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231022170901/20231022170901_mask.png"
+     },
+     "label": {
+      "file": "20231022170901_inklabels.tiff",
+      "bytes": 4294144,
+      "canvas_hw": [
+       6656,
+       35840
+      ],
+      "mode": "L",
+      "n_unique": 246,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       35840,
+       6656
+      ],
+      "ink_px_ge128": 16568201,
+      "ink_cm2": 10.366,
+      "ink_frac_of_mask": 0.0775,
+      "bbox_yyxx": [
+       734,
+       6000,
+       6153,
+       34084
+      ],
+      "bbox_frac": 0.6166,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231022170901_inklabels.tiff"
+     },
+     "in_ink9um_training": "clean",
+     "ink9um_representation": null,
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "TIFF label, antialiased 0..255 - threshold at 128"
+     ]
+    },
+    {
+     "segment_id": "20231031143850",
+     "dir": "20231031143850_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "66.8234",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231031143850_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 12901,
+      "height": 10253,
+      "bytes_per_layer": 264548091,
+      "stack_GiB": 16.01
+     },
+     "mask": {
+      "file": "20231031143850_mask.png",
+      "wh": [
+       12901,
+       10253
+      ],
+      "px": 105306688,
+      "cm2": 65.89,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231031143850_superseded/20231031143850_mask.png"
+     },
+     "label": {
+      "file": "20231031143850_inklabels.png",
+      "bytes": 335984,
+      "canvas_hw": [
+       10496,
+       13056
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       13056,
+       10496
+      ],
+      "ink_px_ge128": 2455519,
+      "ink_cm2": 1.536,
+      "ink_frac_of_mask": 0.0233,
+      "bbox_yyxx": [
+       1848,
+       8145,
+       3498,
+       11798
+      ],
+      "bbox_frac": 0.3814,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231031143850_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w02",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231106155350",
+     "dir": "20231106155350_superseded",
+     "superseded_dir": true,
+     "author": "hari",
+     "area_cm2_txt": "60.0075",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231106155350_superseded/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 10003,
+      "height": 15972,
+      "bytes_per_layer": 319536017,
+      "stack_GiB": 19.34
+     },
+     "mask": {
+      "file": "20231106155350_mask.png",
+      "wh": [
+       10003,
+       15972
+      ],
+      "px": 94523708,
+      "cm2": 59.14,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231106155350_superseded/20231106155350_mask.png"
+     },
+     "label": {
+      "file": "20231106155350_inklabels.png",
+      "bytes": 661861,
+      "canvas_hw": [
+       16128,
+       10240
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       10240,
+       16128
+      ],
+      "ink_px_ge128": 2115710,
+      "ink_cm2": 1.324,
+      "ink_frac_of_mask": 0.0224,
+      "bbox_yyxx": [
+       2917,
+       9991,
+       769,
+       6695
+      ],
+      "bbox_frac": 0.2538,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231106155350_inklabels.png"
+     },
+     "in_ink9um_training": "partial-sibling",
+     "ink9um_representation": "phercparis4-w03",
+     "gp_final_train_list_17": false,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231106155351",
+     "dir": "20231106155351",
+     "superseded_dir": false,
+     "author": "hari",
+     "area_cm2_txt": "95.2165",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231106155351/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 15738,
+      "height": 10636,
+      "bytes_per_layer": 334778921,
+      "stack_GiB": 20.27
+     },
+     "mask": {
+      "file": "20231106155351_mask.png",
+      "wh": [
+       15738,
+       10636
+      ],
+      "px": 151206297,
+      "cm2": 94.61,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231106155351/20231106155351_mask.png"
+     },
+     "label": {
+      "file": "20231106155351_inklabels.png",
+      "bytes": 1054370,
+      "canvas_hw": [
+       10752,
+       15872
+      ],
+      "mode": "L",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       15872,
+       10752
+      ],
+      "ink_px_ge128": 19623036,
+      "ink_cm2": 12.278,
+      "ink_frac_of_mask": 0.1298,
+      "bbox_yyxx": [
+       109,
+       10672,
+       208,
+       15582
+      ],
+      "bbox_frac": 0.9516,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231106155351_inklabels.png"
+     },
+     "in_ink9um_training": "exact",
+     "ink9um_representation": "phercparis4-w03",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": []
+    },
+    {
+     "segment_id": "20231210121321",
+     "dir": "20231210121321",
+     "superseded_dir": false,
+     "author": "david",
+     "area_cm2_txt": "107.61",
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231210121321/layers/",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".tif"
+      ],
+      "dtype": "uint16",
+      "width": 12489,
+      "height": 15839,
+      "bytes_per_layer": 395626727,
+      "stack_GiB": 23.95
+     },
+     "mask": {
+      "file": "20231210121321_mask.png",
+      "wh": [
+       12489,
+       15839
+      ],
+      "px": 171051022,
+      "cm2": 107.02,
+      "mismatch_vs_layers": false,
+      "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231210121321/20231210121321_mask.png"
+     },
+     "label": {
+      "file": "20231210121321_inklabels.png",
+      "bytes": 7454992,
+      "canvas_hw": [
+       15872,
+       12544
+      ],
+      "mode": "RGB",
+      "n_unique": 256,
+      "canvas_is_pad256_of_layers": true,
+      "expected_pad256_wh": [
+       12544,
+       15872
+      ],
+      "ink_px_ge128": 17765509,
+      "ink_cm2": 11.116,
+      "ink_frac_of_mask": 0.1039,
+      "bbox_yyxx": [
+       648,
+       15574,
+       2457,
+       11217
+      ],
+      "bbox_frac": 0.6567,
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231210121321_inklabels.png"
+     },
+     "in_ink9um_training": "exact",
+     "ink9um_representation": "phercparis4-w06",
+     "gp_final_train_list_17": true,
+     "gp_code_reversed_z": false,
+     "notes": [
+      "RGB PNG; all three channels identical - read one channel"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "scroll1_gp_recto_verso_7p91",
+   "scroll": "PHerc. Paris 4 (Scroll 1) - outermost wrap (\"Scroll1_part_1_wrap\"), Stephen Parsons upload",
+   "pitch_um": 7.91,
+   "energy_keV": 54,
+   "urls": {
+    "recto": "https://dl.ash2txt.org/community-uploads/stephen/recto/",
+    "verso": "https://dl.ash2txt.org/community-uploads/stephen/verso/"
+   },
+   "note": "download.sh points at dl.ash2txt.org/stephen-parsons-uploads/{recto,verso}/ which is now 404; the data moved to community-uploads/stephen/{recto,verso}/",
+   "layout": "65-layer uint16 TIFF stack (Scroll1_part_1_wrap_<side>_surface_volume/00..64.tif + a .json), mask PNG, 5.6-5.8 GiB .ppm, extras/ with obj/ply",
+   "items": {
+    "recto": {
+     "layers_url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_surface_volume/",
+     "layers_n": 65,
+     "per_layer": "238.3 MiB",
+     "stack_GiB": 15.1,
+     "mask": {
+      "url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_mask.png",
+      "wh": [
+       15252,
+       8191
+      ]
+     },
+     "label": {
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/recto_inklabels.png",
+      "canvas_hw": [
+       8192,
+       15360
+      ],
+      "ink_px_ge128": 4187435,
+      "ink_cm2": 2.62,
+      "bbox_yyxx": [
+       145,
+       7141,
+       5390,
+       11979
+      ],
+      "bbox_frac": 0.3663
+     },
+     "gp_code_reversed_z": false,
+     "gp_final_train_list_17": true
+    },
+    "verso": {
+     "layers_url": "https://dl.ash2txt.org/community-uploads/stephen/verso/Scroll1_part_1_wrap_verso_surface_volume/",
+     "layers_n": 65,
+     "per_layer": "248.0 MiB",
+     "stack_GiB": 15.7,
+     "mask": {
+      "url": "https://dl.ash2txt.org/community-uploads/stephen/verso/Scroll1_part_1_wrap_verso_mask.png",
+      "wh": [
+       15545,
+       8364
+      ]
+     },
+     "label": {
+      "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/verso_inklabels.png",
+      "canvas_hw": [
+       8448,
+       15616
+      ],
+      "ink_px_ge128": 2884390,
+      "ink_cm2": 1.805,
+      "bbox_yyxx": [
+       1214,
+       5690,
+       3598,
+       8853
+      ],
+      "bbox_frac": 0.1783
+     },
+     "gp_code_reversed_z": true,
+     "gp_final_train_list_17": false
+    }
+   },
+   "totals": {
+    "ink_cm2": 4.42,
+    "stack_GiB": 30.8
+   },
+   "in_ink9um_training": false,
+   "verified_live": {
+    "stephen_recto_sv": {
+     "url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_surface_volume/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:37Z"
+    },
+    "stephen_verso_sv": {
+     "url": "https://dl.ash2txt.org/community-uploads/stephen/verso/Scroll1_part_1_wrap_verso_surface_volume/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:38Z"
+    },
+    "stephen_recto_mask": {
+     "url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_mask.png",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:38Z"
+    },
+    "stephen_parsons_uploads_old": {
+     "url": "https://dl.ash2txt.org/stephen-parsons-uploads/recto/",
+     "status": 404,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:38Z"
+    }
+   },
+   "license": "Vesuvius Challenge Data Agreement (community upload)",
+   "pool_to_9.36": {
+    "factor_inplane": 1.1833,
+    "direction": "downsample (anti-aliased resample, non-integer 1.1833)",
+    "z": "legacy layers are 1 voxel = 7.91 um apart along the surface normal; 65 layers = 514 um. The ink_9um window is 21 slices x 9.36 um = 197 um = 24.9 legacy layers: take layers 20..44 (centre 32) and resample z by the same 1.1833 (or 25->21 slices). No integer z-pooling applies.",
+    "alternative": "train at native 7.91 (15.5% pitch mismatch to 9.36); ink_9um itself tolerates 9.596 vs 9.36 (2.5%) - prefer resampling so the comparison with ink_9um is clean"
+   }
+  },
+  {
+   "id": "pherc0172_scroll5_legacy_7p91",
+   "scroll": "PHerc. 172 (Scroll 5, Bodleian)",
+   "pitch_um": 7.91,
+   "energy_keV": 53,
+   "source_volume": {
+    "uuid": "20241024131838",
+    "name": "P.Herc. 172, 53keV, 7.91um",
+    "shape_zyx": [
+     21000,
+     6700,
+     9100
+    ],
+    "dtype": "uint16",
+    "meta_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/volumes/20241024131838/meta.json",
+    "s3_zarr": "s3://vesuvius-challenge-open-data/PHerc0172/volumes/20241024131838-7.910um-53keV-masked.zarr (second scan: 20241024131839-...)"
+   },
+   "urls": {
+    "paths_root": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/",
+    "labels_repo": "https://github.com/Bodillium/Herculaneum-Scroll-Labels",
+    "license": "https://dl.ash2txt.org/full-scrolls/Scroll5/LICENSE.txt",
+    "s3_modern_segments": "https://vesuvius-challenge-open-data.s3.amazonaws.com/?list-type=2&prefix=PHerc0172/segments/&delimiter=/"
+   },
+   "layout": "23 legacy paths: 21 with 65-layer 8-bit JPEG stacks (layers/00.jpg..64.jpg, lossy) + <seg>_flat_mask.png + <seg>_flat.obj + pointset.vcps + a GP-TimeSformer prediction PNG; 2 (20241028121112, 20241127171800) with 65-layer uint16 TIFF stacks. Modern S3 tree: 53 flatboi segments, each a 33-slice uint8 OME-Zarr surface volume at 7.91 um + tifxyz mesh + 2 model predictions (no human labels).",
+   "label_format": "Bodillium/Herculaneum-Scroll-Labels: 13 PNGs, 8-bit L, binary 0/255, canvas = flat_mask padded up to a multiple of 256 (top-left aligned; verified pixel-aligned in the Aug-18 audit for 20241108120732); hand-drawn \"hypotheses\" traced from GP-TimeSformer prediction images - NOT from IR. Transcriptions PDF for 10 segments.",
+   "counts": {
+    "legacy_segments": 23,
+    "legacy_jpeg_segments": 21,
+    "legacy_tiff_segments": 2,
+    "labelled_segments": 13,
+    "modern_s3_segments_no_labels": 53
+   },
+   "totals": {
+    "ink_cm2_13": 23.06,
+    "ink_px_13": 36858465,
+    "mask_cm2_13": 302.9,
+    "stack_GiB_13_jpeg": 3.49,
+    "stack_GiB_all_23": 24.9,
+    "modern_s3_level0_GB_53": 449.5
+   },
+   "in_ink9um_training": false,
+   "in_ink9um_note": "PHerc0172 is absent from ink_9um (4 scrolls: 0139/1667/Paris4/0814) and from the HF ink/ bucket (children: 0009b, 0139, 0500p2, 1667, 814, 841, man5, phercparis4, unused). The labels WERE used to train scrollprize/timesformer_scroll5_27112024 (per the label repo README) - that family is contaminated on these 13 segments.",
+   "verified_live": {
+    "scroll5_paths": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:39Z"
+    },
+    "scroll5_vol_meta": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/volumes/20241024131838/meta.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:39Z"
+    },
+    "scroll5_license": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/LICENSE.txt",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:39Z"
+    },
+    "scroll5_example_layer": {
+     "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108120732/layers/32.jpg",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:40Z"
+    },
+    "bodillium_repo": {
+     "url": "https://github.com/Bodillium/Herculaneum-Scroll-Labels",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:40Z"
+    },
+    "bodillium_label_example": {
+     "url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241108120732_inklabels.png",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:41Z"
+    },
+    "s3_pherc0172_segments": {
+     "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/?list-type=2&prefix=PHerc0172/segments/&delimiter=/&max-keys=5",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:41Z"
+    },
+    "s3_pherc0172_volume": {
+     "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0172/volumes/20241024131838-7.910um-53keV-masked.zarr/.zattrs",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:42Z"
+    },
+    "hf_model_timesformer_scroll5": {
+     "url": "https://huggingface.co/scrollprize/timesformer_scroll5_27112024",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:47Z"
+    }
+   },
+   "license": "Scroll 5 dataset: CC BY-NC 4.0 (Scroll5/LICENSE.txt; substack 2024-11-27). Labels: CC BY-NC-SA 4.0 (c) 2024 Nicola Bodill - ShareAlike; README asks for credit to the repo when using the labels or derivatives.",
+   "pool_to_9.36": {
+    "factor_inplane": 1.1833,
+    "direction": "downsample (anti-aliased resample, non-integer 1.1833)",
+    "z": "legacy layers are 1 voxel = 7.91 um apart along the surface normal; 65 layers = 514 um. The ink_9um window is 21 slices x 9.36 um = 197 um = 24.9 legacy layers: take layers 20..44 (centre 32) and resample z by the same 1.1833 (or 25->21 slices). No integer z-pooling applies.",
+    "alternative": "train at native 7.91 (15.5% pitch mismatch to 9.36); ink_9um itself tolerates 9.596 vs 9.36 (2.5%) - prefer resampling so the comparison with ink_9um is clean",
+    "jpeg_caveat": "the 21 JPEG stacks are 8-bit lossy; 8x8 JPEG blocks = 63 um at 7.91 um, comparable to a stroke width. Prefer re-rendering uint16 from the S3 volume zarr through <seg>_flat.obj / pointset.vcps (same volume 20241024131838) if the JPEG artefacts show up in the first run."
+   },
+   "unlabelled_legacy_segments": [
+    "20241025062040",
+    "20241025101030",
+    "20241028121112",
+    "20241030083650",
+    "20241030152030",
+    "20241101163240",
+    "20241105112301",
+    "20241108120730",
+    "20241108120731",
+    "20241127171800"
+   ],
+   "segments": [
+    {
+     "segment_id": "20241025145341",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       7598,
+       1302
+      ],
+      "per_layer_size": [
+       "1.0 MiB",
+       "1.1 MiB"
+      ],
+      "stack_MiB": 72
+     },
+     "mask": {
+      "file": "20241025145341_flat_mask.png",
+      "wh": [
+       7598,
+       1302
+      ],
+      "px": 9200006,
+      "cm2": 5.76
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241025145341_inklabels.png",
+      "canvas_hw": [
+       1536,
+       7680
+      ],
+      "n_unique": 2,
+      "ink_px": 519005,
+      "ink_cm2": 0.325,
+      "ink_frac_of_mask": 0.0564,
+      "bbox_yyxx": [
+       80,
+       854,
+       3696,
+       7451
+      ],
+      "bbox_frac": 0.2464
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025145341/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241025145341_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025145341/20241025145341_flat_mask.png"
+    },
+    {
+     "segment_id": "20241025145701",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       7485,
+       1301
+      ],
+      "per_layer_size": [
+       "1.0 MiB",
+       "1.1 MiB"
+      ],
+      "stack_MiB": 72
+     },
+     "mask": {
+      "file": "20241025145701_flat_mask.png",
+      "wh": [
+       7485,
+       1301
+      ],
+      "px": 9056191,
+      "cm2": 5.67
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241025145701_inklabels.png",
+      "canvas_hw": [
+       1536,
+       7680
+      ],
+      "n_unique": 2,
+      "ink_px": 883992,
+      "ink_cm2": 0.553,
+      "ink_frac_of_mask": 0.0976,
+      "bbox_yyxx": [
+       20,
+       1202,
+       66,
+       6514
+      ],
+      "bbox_frac": 0.6461
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025145701/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241025145701_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025145701/20241025145701_flat_mask.png"
+    },
+    {
+     "segment_id": "20241025150211",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       7454,
+       1657
+      ],
+      "per_layer_size": [
+       "1.3 MiB"
+      ],
+      "stack_MiB": 84
+     },
+     "mask": {
+      "file": "20241025150211_flat_mask.png",
+      "wh": [
+       7454,
+       1657
+      ],
+      "px": 11360484,
+      "cm2": 7.11
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241025150211_inklabels.png",
+      "canvas_hw": [
+       1792,
+       7680
+      ],
+      "n_unique": 2,
+      "ink_px": 988316,
+      "ink_cm2": 0.618,
+      "ink_frac_of_mask": 0.087,
+      "bbox_yyxx": [
+       231,
+       1573,
+       24,
+       7423
+      ],
+      "bbox_frac": 0.7215
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025150211/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241025150211_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241025150211/20241025150211_flat_mask.png"
+    },
+    {
+     "segment_id": "20241028121111",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       29469,
+       2486
+      ],
+      "per_layer_size": [
+       "6.8 MiB",
+       "6.9 MiB",
+       "7.0 MiB"
+      ],
+      "stack_MiB": 455
+     },
+     "mask": {
+      "file": "20241028121111_flat_mask.png",
+      "wh": [
+       29469,
+       2486
+      ],
+      "px": 59572975,
+      "cm2": 37.27
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241028121111_inklabels.png",
+      "canvas_hw": [
+       2560,
+       29696
+      ],
+      "n_unique": 2,
+      "ink_px": 2114725,
+      "ink_cm2": 1.323,
+      "ink_frac_of_mask": 0.0355,
+      "bbox_yyxx": [
+       105,
+       2107,
+       1412,
+       29467
+      ],
+      "bbox_frac": 0.7388
+     },
+     "volume": "20241024131838",
+     "meta_json_present": false,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241028121111/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241028121111_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241028121111/20241028121111_flat_mask.png"
+    },
+    {
+     "segment_id": "20241030152031",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       21987,
+       10562
+      ],
+      "per_layer_size": [
+       "22.6 MiB",
+       "22.7 MiB",
+       "22.8 MiB"
+      ],
+      "stack_MiB": 1482
+     },
+     "mask": {
+      "file": "20241030152031_flat_mask.png",
+      "wh": [
+       21987,
+       10562
+      ],
+      "px": 210849695,
+      "cm2": 131.92
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241030152031_inklabels.png",
+      "canvas_hw": [
+       10752,
+       22016
+      ],
+      "n_unique": 2,
+      "ink_px": 12607213,
+      "ink_cm2": 7.888,
+      "ink_frac_of_mask": 0.0598,
+      "bbox_yyxx": [
+       610,
+       9992,
+       3544,
+       16256
+      ],
+      "bbox_frac": 0.5038
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241030152031/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241030152031_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241030152031/20241030152031_flat_mask.png"
+    },
+    {
+     "segment_id": "20241102125650",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       13853,
+       2539
+      ],
+      "per_layer_size": [
+       "3.1 MiB",
+       "3.2 MiB",
+       "3.3 MiB"
+      ],
+      "stack_MiB": 214
+     },
+     "mask": {
+      "file": "20241102125650_flat_mask.png",
+      "wh": [
+       13853,
+       2539
+      ],
+      "px": 30274893,
+      "cm2": 18.94
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241102125650_inklabels.png",
+      "canvas_hw": [
+       2560,
+       14080
+      ],
+      "n_unique": 2,
+      "ink_px": 432334,
+      "ink_cm2": 0.271,
+      "ink_frac_of_mask": 0.0143,
+      "bbox_yyxx": [
+       317,
+       2293,
+       2675,
+       13404
+      ],
+      "bbox_frac": 0.5882
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241102125650/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241102125650_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241102125650/20241102125650_flat_mask.png"
+    },
+    {
+     "segment_id": "20241102160330",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       13182,
+       1233
+      ],
+      "per_layer_size": [
+       "1.5 MiB",
+       "1.6 MiB",
+       "1.7 MiB"
+      ],
+      "stack_MiB": 110
+     },
+     "mask": {
+      "file": "20241102160330_flat_mask.png",
+      "wh": [
+       13182,
+       1233
+      ],
+      "px": 13566976,
+      "cm2": 8.49
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241102160330_inklabels.png",
+      "canvas_hw": [
+       1280,
+       13312
+      ],
+      "n_unique": 2,
+      "ink_px": 217840,
+      "ink_cm2": 0.136,
+      "ink_frac_of_mask": 0.0161,
+      "bbox_yyxx": [
+       69,
+       1113,
+       624,
+       12460
+      ],
+      "bbox_frac": 0.7252
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241102160330/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241102160330_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241102160330/20241102160330_flat_mask.png"
+    },
+    {
+     "segment_id": "20241108111522",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       4799,
+       7394
+      ],
+      "per_layer_size": [
+       "3.7 MiB",
+       "3.8 MiB",
+       "3.9 MiB"
+      ],
+      "stack_MiB": 254
+     },
+     "mask": {
+      "file": "20241108111522_flat_mask.png",
+      "wh": [
+       4799,
+       7394
+      ],
+      "px": 32973936,
+      "cm2": 20.63
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241108111522_inklabels.png",
+      "canvas_hw": [
+       7424,
+       4864
+      ],
+      "n_unique": 2,
+      "ink_px": 5251820,
+      "ink_cm2": 3.286,
+      "ink_frac_of_mask": 0.1593,
+      "bbox_yyxx": [
+       723,
+       7089,
+       45,
+       4712
+      ],
+      "bbox_frac": 0.8228
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108111522/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241108111522_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108111522/20241108111522_flat_mask.png"
+    },
+    {
+     "segment_id": "20241108115232",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       4379,
+       7349
+      ],
+      "per_layer_size": [
+       "3.4 MiB",
+       "3.5 MiB"
+      ],
+      "stack_MiB": 228
+     },
+     "mask": {
+      "file": "20241108115232_flat_mask.png",
+      "wh": [
+       4379,
+       7349
+      ],
+      "px": 29612827,
+      "cm2": 18.53
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241108115232_inklabels.png",
+      "canvas_hw": [
+       7424,
+       4608
+      ],
+      "n_unique": 2,
+      "ink_px": 2358816,
+      "ink_cm2": 1.476,
+      "ink_frac_of_mask": 0.0797,
+      "bbox_yyxx": [
+       595,
+       7089,
+       124,
+       4217
+      ],
+      "bbox_frac": 0.777
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108115232/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241108115232_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108115232/20241108115232_flat_mask.png"
+    },
+    {
+     "segment_id": "20241108120732",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       4771,
+       7414
+      ],
+      "per_layer_size": [
+       "3.7 MiB",
+       "3.8 MiB",
+       "3.9 MiB"
+      ],
+      "stack_MiB": 254
+     },
+     "mask": {
+      "file": "20241108120732_flat_mask.png",
+      "wh": [
+       4771,
+       7414
+      ],
+      "px": 32474084,
+      "cm2": 20.32
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241108120732_inklabels.png",
+      "canvas_hw": [
+       7424,
+       4864
+      ],
+      "n_unique": 2,
+      "ink_px": 4360598,
+      "ink_cm2": 2.728,
+      "ink_frac_of_mask": 0.1343,
+      "bbox_yyxx": [
+       214,
+       7369,
+       146,
+       4742
+      ],
+      "bbox_frac": 0.9107
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108120732/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241108120732_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108120732/20241108120732_flat_mask.png"
+    },
+    {
+     "segment_id": "20241113070770",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       11330,
+       1556
+      ],
+      "per_layer_size": [
+       "1.7 MiB",
+       "1.8 MiB"
+      ],
+      "stack_MiB": 117
+     },
+     "mask": {
+      "file": "20241113070770_flat_mask.png",
+      "wh": [
+       11330,
+       1556
+      ],
+      "px": 14979925,
+      "cm2": 9.37
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241113070770_inklabels.png",
+      "canvas_hw": [
+       1792,
+       11520
+      ],
+      "n_unique": 2,
+      "ink_px": 2006293,
+      "ink_cm2": 1.255,
+      "ink_frac_of_mask": 0.1339,
+      "bbox_yyxx": [
+       127,
+       1485,
+       1040,
+       10847
+      ],
+      "bbox_frac": 0.6451
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113070770/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241113070770_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113070770/20241113070770_flat_mask.png"
+    },
+    {
+     "segment_id": "20241113080880",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       11367,
+       1579
+      ],
+      "per_layer_size": [
+       "1.7 MiB",
+       "1.8 MiB"
+      ],
+      "stack_MiB": 117
+     },
+     "mask": {
+      "file": "20241113080880_flat_mask.png",
+      "wh": [
+       11367,
+       1579
+      ],
+      "px": 15072348,
+      "cm2": 9.43
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241113080880_inklabels.png",
+      "canvas_hw": [
+       1792,
+       11520
+      ],
+      "n_unique": 2,
+      "ink_px": 2766560,
+      "ink_cm2": 1.731,
+      "ink_frac_of_mask": 0.1836,
+      "bbox_yyxx": [
+       172,
+       1539,
+       1041,
+       10627
+      ],
+      "bbox_frac": 0.6348
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113080880/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241113080880_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113080880/20241113080880_flat_mask.png"
+    },
+    {
+     "segment_id": "20241113090990",
+     "layers": {
+      "n": 65,
+      "ext": [
+       ".jpg"
+      ],
+      "dtype": "uint8 (JPEG)",
+      "wh": [
+       11445,
+       1583
+      ],
+      "per_layer_size": [
+       "1.8 MiB"
+      ],
+      "stack_MiB": 117
+     },
+     "mask": {
+      "file": "20241113090990_flat_mask.png",
+      "wh": [
+       11445,
+       1583
+      ],
+      "px": 15161983,
+      "cm2": 9.49
+     },
+     "label": {
+      "file": "P.Herc. 172 (Scroll 5) Ink Labels/20241113090990_inklabels.png",
+      "canvas_hw": [
+       1792,
+       11520
+      ],
+      "n_unique": 2,
+      "ink_px": 2350953,
+      "ink_cm2": 1.471,
+      "ink_frac_of_mask": 0.1551,
+      "bbox_yyxx": [
+       142,
+       1576,
+       1256,
+       10770
+      ],
+      "bbox_frac": 0.6609
+     },
+     "volume": "20241024131838",
+     "meta_json_present": true,
+     "layers_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113090990/layers/",
+     "label_url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241113090990_inklabels.png",
+     "mask_url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241113090990/20241113090990_flat_mask.png"
+    }
+   ]
+  },
+  {
+   "id": "frag5_PHerc1667Cr01Fr03",
+   "scroll": "PHerc1667Cr01Fr03 (detached fragment Frag5)",
+   "pitch_um": [
+    3.24,
+    7.91
+   ],
+   "energy_keV": [
+    70
+   ],
+   "urls": {
+    "volpkg": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/",
+    "working": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/",
+    "labels_3p24": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/inklabels.png",
+    "mask_3p24": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/mask.png",
+    "ir_3p24": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/ir.png",
+    "surface_volume_3p24": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/surface_volume/",
+    "volumes_zarr": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/volumes_zarr/",
+    "transforms": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/transforms/"
+   },
+   "acquisitions": {
+    "PHerc1667Cr01Fr03_70keV_3.24um": "labelled (surface_processing present)",
+    "PHerc1667Cr01Fr03_70keV_7.91um": "raw only (merged_hdf_slabs 4.2+4.3+4.3+0.56 GiB, mp4 290 MiB)"
+   },
+   "volumes_meta": {
+    "20231121133215": {
+     "height": 1400,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc1667Cr1Fr3, 70 keV, 3.24 um, merged",
+     "slices": 7010,
+     "type": "vol",
+     "uuid": "20231121133215",
+     "voxelsize": 3.24,
+     "width": 4420
+    },
+    "20231130111236": {
+     "height": 668,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc1667Cr1Fr3, 70 keV, 7.91 um, merged",
+     "slices": 3131,
+     "type": "vol",
+     "uuid": "20231130111236",
+     "voxelsize": 7.91,
+     "width": 2046
+    }
+   },
+   "transforms": {
+    "20231121133215-to-20231130111236.json": "AffineTransform 3.24 um -> 7.91 um frame (scale 0.4142)"
+   },
+   "layout_3p24_labelled": "working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/: surface_volume/00..64.tif (65 x uint16 TIFF, 63.6 MiB per layer), inklabels.png (binary 0/1, traced from ir.png), mask.png, ir.png, result.obj/.ppm/.tif, cellmap.tif",
+   "layout_7p91": "working/<name>_<E>keV_7.91um/: merged_hdf_slabs/ (raw reconstruction HDF), metadata/, an .mp4 and one yz slice PNG. NO surface_processing, NO surface_volume, NO inklabels at 7.91 um. volumes_zarr/<E>keV_7.91um_.zarr = OME-Zarr uint16, chunks 128^3, blosc-zstd, 6 levels.",
+   "label_canvas_hw": [
+    7309,
+    4560
+   ],
+   "ink_px": 1915777,
+   "ink_cm2": 0.201,
+   "mask_px": 22513249,
+   "mask_cm2": 2.363,
+   "ink_frac_of_mask": 0.0851,
+   "bbox_yyxx": [
+    483,
+    6848,
+    258,
+    3802
+   ],
+   "bbox_frac": 0.6768,
+   "surface_volume_3p24": {
+    "layers": 65,
+    "ext": [
+     ".tif"
+    ],
+    "per_layer": "63.6 MiB",
+    "stack_GiB": 4.04,
+    "canvas_wh": [
+     4560,
+     7309
+    ]
+   },
+   "paths": {
+    "note": "8 segments on the 7.91 um volume 20231130111236 (paths/20241017164948 .. 20241023104629), each 65 x uint16 TIFF layers (~2100-2740 x 1040-1410 px, 4-7 MiB/layer) + mask + ppm; NO ink labels",
+    "count": 8
+   },
+   "in_ink9um_training": false,
+   "in_ink9um_note": "no fragments in ink_9um; but scrollprize/resnet50_7.9um_scroll1_frags was trained on frag1-6 (that model is contaminated here)",
+   "verified_live": {
+    "frag5_working": {
+     "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:42Z"
+    },
+    "frag5_labels": {
+     "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/inklabels.png",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:42Z"
+    },
+    "frag5_7p91_zarr": {
+     "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/volumes_zarr/70keV_7.91um_.zarr/0/.zarray",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:43Z"
+    },
+    "frag5_transform": {
+     "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/transforms/20231121133215-to-20231130111236.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:43Z"
+    }
+   },
+   "license": "Vesuvius Challenge Data Agreement; EduceLab-Scrolls (Univ. of Kentucky) citation required (dl.ash2txt.org/LICENSE.txt: \"Scrolls 1-4 and Fragments 1-6\")",
+   "pool_to_9.36": {
+    "from_3.24": {
+     "factor_inplane": 2.8889,
+     "direction": "downsample 2.889 (non-integer; e.g. 3x box mean then x0.963 resample, or one anti-aliased resample)",
+     "z": "65 x 3.24 um = 211 um deep -> 22.5 slices at 9.36 um: the whole stack becomes ~21-22 slices, i.e. it matches the 21-slice window with no z-crop; pool z by the same 2.889 (no integer pooling)."
+    },
+    "from_7.91": {
+     "factor_inplane": 1.1833,
+     "direction": "downsample (anti-aliased resample, non-integer 1.1833)",
+     "z": "legacy layers are 1 voxel = 7.91 um apart along the surface normal; 65 layers = 514 um. The ink_9um window is 21 slices x 9.36 um = 197 um = 24.9 legacy layers: take layers 20..44 (centre 32) and resample z by the same 1.1833 (or 25->21 slices). No integer z-pooling applies.",
+     "alternative": "train at native 7.91 (15.5% pitch mismatch to 9.36); ink_9um itself tolerates 9.596 vs 9.36 (2.5%) - prefer resampling so the comparison with ink_9um is clean",
+     "availability": "no released 7.91 um surface volume: to use it, map result.obj (3.24 frame) into the 7.91 volume with the affine in transforms/ (scale ~0.414 = 3.24/7.91) and re-render 21 x 9.36 um slices from the 7.91 zarr; the IR label transfers through the same UV canvas"
+    }
+   }
+  },
+  {
+   "id": "frag6_PHerc0051Cr04Fr08",
+   "scroll": "PHerc0051Cr04Fr08 (detached fragment Frag6)",
+   "pitch_um": [
+    3.24,
+    7.91
+   ],
+   "energy_keV": [
+    53,
+    70,
+    88
+   ],
+   "urls": {
+    "volpkg": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/",
+    "working": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/",
+    "labels_3p24": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/inklabels.png",
+    "mask_3p24": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/mask.png",
+    "ir_3p24": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/ir.png",
+    "surface_volume_3p24": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/surface_volume/",
+    "volumes_zarr": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/volumes_zarr/",
+    "transforms": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/transforms/"
+   },
+   "acquisitions": {
+    "PHerc0051Cr04Fr08_53keV_3.24um": "labelled (surface_processing present)",
+    "PHerc0051Cr04Fr08_53keV_7.91um": "raw only (merged_hdf_slabs 9.0+9.0+9.0+6.2 GiB, mp4 202 MiB)",
+    "PHerc0051Cr04Fr08_70keV_3.24um": "raw only (mp4 383 MiB)",
+    "PHerc0051Cr04Fr08_88keV_3.24um": "raw only (mp4 720 MiB)"
+   },
+   "volumes_meta": {
+    "20231121152933": {
+     "height": 2260,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc51Cr4Fr8, 53 keV, 3.24 um, merged",
+     "slices": 8855,
+     "type": "vol",
+     "uuid": "20231121152933",
+     "voxelsize": 3.24,
+     "width": 6300
+    },
+    "20231130112027": {
+     "height": 1068,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc51Cr4Fr8, 53 keV, 7.91 um, merged",
+     "slices": 3683,
+     "type": "vol",
+     "uuid": "20231130112027",
+     "voxelsize": 7.91,
+     "width": 2724
+    },
+    "20231201112849": {
+     "height": 2260,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc51Cr4Fr8, 88 keV, 3.24 um, merged",
+     "slices": 8855,
+     "type": "vol",
+     "uuid": "20231201112849",
+     "voxelsize": 3.24,
+     "width": 6300
+    },
+    "20231201120546": {
+     "height": 2260,
+     "max": 65535.0,
+     "min": 0.0,
+     "name": "PHerc51Cr4Fr8, 70 keV, 3.24 um, merged",
+     "slices": 8855,
+     "type": "vol",
+     "uuid": "20231201120546",
+     "voxelsize": 3.24,
+     "width": 6300
+    }
+   },
+   "transforms": {
+    "20231121152933-to-20231130112027.json": "AffineTransform 53keV 3.24 -> 53keV 7.91 (scale 0.4145)",
+    "20231121152933-to-20231201112849.json": "53keV 3.24 -> 88keV 3.24 (scale ~1.001)",
+    "20231121152933-to-20231201120546.json": "53keV 3.24 -> 70keV 3.24 (scale ~1.001)"
+   },
+   "layout_3p24_labelled": "working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/: surface_volume/00..64.tif (65 x uint16 TIFF, 104.8 MiB per layer), inklabels.png (binary 0/1, traced from ir.png), mask.png, ir.png, result.obj/.ppm/.tif, cellmap.tif",
+   "layout_7p91": "working/<name>_<E>keV_7.91um/: merged_hdf_slabs/ (raw reconstruction HDF), metadata/, an .mp4 and one yz slice PNG. NO surface_processing, NO surface_volume, NO inklabels at 7.91 um. volumes_zarr/<E>keV_7.91um_.zarr = OME-Zarr uint16, chunks 128^3, blosc-zstd, 6 levels.",
+   "label_canvas_hw": [
+    8853,
+    6205
+   ],
+   "ink_px": 4273526,
+   "ink_cm2": 0.449,
+   "mask_px": 36912011,
+   "mask_cm2": 3.875,
+   "ink_frac_of_mask": 0.1158,
+   "bbox_yyxx": [
+    640,
+    8322,
+    864,
+    5992
+   ],
+   "bbox_frac": 0.7171,
+   "surface_volume_3p24": {
+    "layers": 65,
+    "ext": [
+     ".tif"
+    ],
+    "per_layer": "104.8 MiB",
+    "stack_GiB": 6.65,
+    "canvas_wh": [
+     6205,
+     8853
+    ]
+   },
+   "paths": {
+    "note": "paths/ is empty (.vckeep only)",
+    "count": 0
+   },
+   "in_ink9um_training": false,
+   "in_ink9um_note": "no fragments in ink_9um; but scrollprize/resnet50_7.9um_scroll1_frags was trained on frag1-6 (that model is contaminated here)",
+   "verified_live": {
+    "frag6_working": {
+     "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:43Z"
+    },
+    "frag6_labels": {
+     "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/inklabels.png",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:44Z"
+    },
+    "frag6_7p91_zarr": {
+     "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/volumes_zarr/53keV_7.91um_.zarr/0/.zarray",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:44Z"
+    },
+    "frag6_transform_53_7p91": {
+     "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/transforms/20231121152933-to-20231130112027.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:44Z"
+    }
+   },
+   "license": "Vesuvius Challenge Data Agreement; EduceLab-Scrolls (Univ. of Kentucky) citation required (dl.ash2txt.org/LICENSE.txt: \"Scrolls 1-4 and Fragments 1-6\")",
+   "pool_to_9.36": {
+    "from_3.24": {
+     "factor_inplane": 2.8889,
+     "direction": "downsample 2.889 (non-integer; e.g. 3x box mean then x0.963 resample, or one anti-aliased resample)",
+     "z": "65 x 3.24 um = 211 um deep -> 22.5 slices at 9.36 um: the whole stack becomes ~21-22 slices, i.e. it matches the 21-slice window with no z-crop; pool z by the same 2.889 (no integer pooling)."
+    },
+    "from_7.91": {
+     "factor_inplane": 1.1833,
+     "direction": "downsample (anti-aliased resample, non-integer 1.1833)",
+     "z": "legacy layers are 1 voxel = 7.91 um apart along the surface normal; 65 layers = 514 um. The ink_9um window is 21 slices x 9.36 um = 197 um = 24.9 legacy layers: take layers 20..44 (centre 32) and resample z by the same 1.1833 (or 25->21 slices). No integer z-pooling applies.",
+     "alternative": "train at native 7.91 (15.5% pitch mismatch to 9.36); ink_9um itself tolerates 9.596 vs 9.36 (2.5%) - prefer resampling so the comparison with ink_9um is clean",
+     "availability": "no released 7.91 um surface volume: to use it, map result.obj (3.24 frame) into the 7.91 volume with the affine in transforms/ (scale ~0.414 = 3.24/7.91) and re-render 21 x 9.36 um slices from the 7.91 zarr; the IR label transfers through the same UV canvas"
+    }
+   },
+   "energy_note": "the four energies are NOT all at 7.91 um: 7.91 um exists only at 53 keV; 70 and 88 keV exist only at 3.24 um (RESEARCH_PLAN Bet C text says \"7.91 um at four energies\" - wrong in detail). Energy augmentation is available at 3.24 um (3 energies, registered by affine), pitch pairing at 53 keV only."
+  },
+  {
+   "id": "ink_9um_training_set_reference",
+   "scroll": "PHerc0139 / PHerc1667 / PHercParis4 / PHerc0814",
+   "pitch_um": {
+    "aligned": "2.399 um source pooled x4 (level-2 XY + 4x z-mean) = 9.596 um",
+    "native": 9.362
+   },
+   "energy_keV": {
+    "aligned_2p399_volumes": 78,
+    "native_0139_9p362": 113
+   },
+   "urls": {
+    "bucket_readme": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/README.md",
+    "labels_tree": "https://huggingface.co/api/buckets/scrollprize/datasets/tree/ink_9um/labels",
+    "model_readme": "https://huggingface.co/scrollprize/ink_9um/raw/main/README.md",
+    "config": "https://raw.githubusercontent.com/ScrollPrize/villa/merge-ink-pipelines/ink-detection/configs/aligned21_fixed_scroll_prior.json"
+   },
+   "layout": "labels only (zarr): aligned-scrollprizeorg-21slices/<seg>/<seg>_{inklabels,supervision_mask}.zarr, 21 slices, annotated at Z=10 only; native9-scrollprizeorg-21slices/<seg>/..., 28 slices, annotated at Z=14; 3 validation masks (pherc0139-w016, pherc0814-46527, pherc1667-w029). Surface volumes from S3 open-data (see README table).",
+   "representations": {
+    "aligned_24": [
+     "pherc0139-w016",
+     "pherc0139-w017",
+     "pherc0139-w028",
+     "pherc0139-w029",
+     "pherc0139-w035",
+     "pherc0139-w039",
+     "pherc0139-w040",
+     "pherc0139-w041",
+     "pherc0139-w043",
+     "pherc0814-46527",
+     "pherc1667-w013",
+     "pherc1667-w018",
+     "pherc1667-w023",
+     "pherc1667-w028",
+     "pherc1667-w029",
+     "pherc1667-w031",
+     "phercparis4-w00",
+     "phercparis4-w01",
+     "phercparis4-w02",
+     "phercparis4-w03",
+     "phercparis4-w05",
+     "phercparis4-w06",
+     "phercparis4-w07",
+     "phercparis4-w09"
+    ],
+    "native_5": [
+     "w035",
+     "w039",
+     "w040",
+     "w041",
+     "w044"
+    ]
+   },
+   "batch_prior": {
+    "0139": 29,
+    "1667": 22,
+    "Paris4": 11,
+    "0814": 2,
+    "batch_size": 64
+   },
+   "paris4_mapping": {
+    "phercparis4-w00": "20231016151002",
+    "phercparis4-w01": "20230702185753",
+    "phercparis4-w02": "20231031143852",
+    "phercparis4-w03": "20231106155351",
+    "phercparis4-w05": "20231012184424",
+    "phercparis4-w06": "20231210121321",
+    "phercparis4-w07": "20231007101619",
+    "phercparis4-w09": "20230929220926",
+    "source_volume": "PHercParis4/segments/<id>/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr (the 2026 2.4 um rescan, NOT the 2023 7.91 um scan)",
+    "unused": "ink/unused/phercparis4/w08_3336 = 20231005123336 (annotated but not in ink_9um)"
+   },
+   "hf_ink_bucket": {
+    "children": [
+     "0009b",
+     "0139",
+     "0500p2",
+     "1667",
+     "814",
+     "841",
+     "man5",
+     "phercparis4",
+     "unused",
+     "README.md",
+     "labels"
+    ],
+    "phercparis4_dirs": [
+     "w00_20231016151002",
+     "w01_20230702185753_r15",
+     "w02_20231031143852",
+     "w03_20231106155351",
+     "w05_4424",
+     "w06_1321",
+     "w07_1619",
+     "w09_20230929220926"
+    ],
+    "note": "ink/phercparis4/<w>/ holds meta.json (tifxyz frame, scroll_source PHercParis4), x/y/z.tif, <w>_inklabels.tif + _supervision_mask.tif (+zarr) and preds/; w00 inklabels.tif = 51380x32249 - a 2.4 um-frame canvas, NOT the 7.91 legacy canvas"
+   },
+   "source_volume_table": "see bucket README (24 aligned rows + 5 native rows) - copied verbatim into trackD/bench/vendor if needed",
+   "verified_live": {
+    "hf_ink9um_bucket_readme": {
+     "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/README.md",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:44Z"
+    },
+    "hf_ink9um_labels_tree": {
+     "url": "https://huggingface.co/api/buckets/scrollprize/datasets/tree/ink_9um/labels?limit=1",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:45Z"
+    },
+    "hf_ink9um_model_readme": {
+     "url": "https://huggingface.co/scrollprize/ink_9um/raw/main/README.md",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:45Z"
+    },
+    "hf_ink_paris4_meta": {
+     "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink/phercparis4/w00_20231016151002/meta.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:46Z"
+    },
+    "villa_aligned21_config": {
+     "url": "https://raw.githubusercontent.com/ScrollPrize/villa/merge-ink-pipelines/ink-detection/configs/aligned21_fixed_scroll_prior.json",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:46Z"
+    },
+    "villa_configs_readme": {
+     "url": "https://raw.githubusercontent.com/ScrollPrize/villa/merge-ink-pipelines/ink-detection/configs/README.md",
+     "status": 200,
+     "method": "HEAD",
+     "checked_utc": "2026-09-02T04:01:46Z"
+    }
+   },
+   "license": "MIT (model card); labels bucket README carries no separate license line",
+   "pool_to_9.36": "already at 9.596 (aligned) / 9.362 (native); ink_9um treats both as 9.36"
+  }
+ ],
+ "ink9um_exclusion_and_dedup": {
+  "purpose": "dedup + hold-out bookkeeping for Bet C",
+  "physical_segment_key_rule": "villa config keys physical segments as <scroll>:<w>; the 7.91 legacy stacks must be keyed to the SAME physical key when the segment id (or its superseded lineage, first 13 digits) matches an ink_9um paris4 row, so one physical surface gets one budget even if it has two representations (2.4-pooled and 7.91-native).",
+  "scroll1_legacy_exact_in_ink9um": [
+   "20230702185753",
+   "20230929220926",
+   "20231106155351",
+   "20231210121321"
+  ],
+  "scroll1_legacy_sibling_of_ink9um": [
+   "20230929220924",
+   "20231007101615",
+   "20231012184420",
+   "20231012184421",
+   "20231012184423",
+   "20231016151000",
+   "20231031143850",
+   "20231106155350"
+  ],
+  "scroll1_legacy_clean_by_id": [
+   "20230520175435",
+   "20230522181603",
+   "20230522215721",
+   "20230530164535",
+   "20230530172803",
+   "20230530212931",
+   "20230531121653",
+   "20230531193658",
+   "20230601193301",
+   "20230611014200",
+   "20230620230617",
+   "20230620230619",
+   "20230701020044",
+   "20230813_real_1",
+   "20230820203112",
+   "20230826170124",
+   "20230827161847",
+   "20230901184804",
+   "20230902141231",
+   "20230903193206",
+   "20230904020426",
+   "20230904135535",
+   "20230905134255",
+   "20230909121925",
+   "20231001164029",
+   "20231004222109",
+   "20231005123333",
+   "20231005123336",
+   "20231012085431",
+   "20231012173610",
+   "20231022170900",
+   "20231022170901"
+  ],
+  "scroll1_unresolved": "sheet-level overlap between the Sept-Dec 2023 GP-region segments (20231005123333/6, 20231022170900/1, 20231012173610, 20231012085431, 20231001164029, 20231004222109) and the 8 ink_9um paris4 wraps is NOT resolved (needs mesh intersection); May-Sept 2023 outer-wrap segments and recto/verso are the most independent",
+  "eval_holdouts_never_train": [
+   "PHerc0139 native w035/w039/w040/w041/w044 (bench manifest)",
+   "PHerc0500P2 500p2a",
+   "Frag1-4 (IR truth; bench manifest)",
+   "any Tier-1 scroll (0358/0813/0826)"
+  ],
+  "models_contaminated_on_new_sources": {
+   "scrollprize/timesformer_scroll5_27112024, timesformer_scroll5_july_retreat": "trained on the Bodillium Scroll 5 labels",
+   "scrollprize/resnet50_7.9um_scroll1_frags, timesformer_GP_scroll1, timesformer_large_scroll1_01122024": "trained on the 2023 Scroll 1 legacy labels / frags"
+  }
+ },
+ "verified_live_all": {
+  "dl_root_license": {
+   "url": "https://dl.ash2txt.org/LICENSE.txt",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:33Z"
+  },
+  "scroll1_paths": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:34Z"
+  },
+  "scroll1_vol_meta": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/volumes/20230205180739/meta.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:34Z"
+  },
+  "scroll1_example_layer": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231005123336/layers/32.tif",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:34Z"
+  },
+  "scroll1_superseded_example": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll1/PHercParis4.volpkg/paths/20231016151000_superseded/layers/32.tif",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:35Z"
+  },
+  "younader_repo": {
+   "url": "https://github.com/younader/Vesuvius-Grandprize-Winner",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:35Z"
+  },
+  "younader_labels_dir": {
+   "url": "https://github.com/younader/Vesuvius-Grandprize-Winner/tree/main/all_labels",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:36Z"
+  },
+  "younader_label_example": {
+   "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231005123336_inklabels.png",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:36Z"
+  },
+  "younader_label_tiff": {
+   "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/all_labels/20231022170901_inklabels.tiff",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:37Z"
+  },
+  "younader_download_sh": {
+   "url": "https://raw.githubusercontent.com/younader/Vesuvius-Grandprize-Winner/main/download.sh",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:37Z"
+  },
+  "stephen_recto_sv": {
+   "url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_surface_volume/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:37Z"
+  },
+  "stephen_verso_sv": {
+   "url": "https://dl.ash2txt.org/community-uploads/stephen/verso/Scroll1_part_1_wrap_verso_surface_volume/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:38Z"
+  },
+  "stephen_recto_mask": {
+   "url": "https://dl.ash2txt.org/community-uploads/stephen/recto/Scroll1_part_1_wrap_recto_mask.png",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:38Z"
+  },
+  "stephen_parsons_uploads_old": {
+   "url": "https://dl.ash2txt.org/stephen-parsons-uploads/recto/",
+   "status": 404,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:38Z"
+  },
+  "volumetric_labels": {
+   "url": "https://dl.ash2txt.org/community-uploads/youssef/volumetric_labels/20231016151000/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:38Z"
+  },
+  "scroll5_paths": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:39Z"
+  },
+  "scroll5_vol_meta": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/volumes/20241024131838/meta.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:39Z"
+  },
+  "scroll5_license": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/LICENSE.txt",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:39Z"
+  },
+  "scroll5_example_layer": {
+   "url": "https://dl.ash2txt.org/full-scrolls/Scroll5/PHerc172.volpkg/paths/20241108120732/layers/32.jpg",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:40Z"
+  },
+  "bodillium_repo": {
+   "url": "https://github.com/Bodillium/Herculaneum-Scroll-Labels",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:40Z"
+  },
+  "bodillium_label_example": {
+   "url": "https://raw.githubusercontent.com/Bodillium/Herculaneum-Scroll-Labels/main/P.Herc.%20172%20(Scroll%205)%20Ink%20Labels/20241108120732_inklabels.png",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:41Z"
+  },
+  "s3_pherc0172_segments": {
+   "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/?list-type=2&prefix=PHerc0172/segments/&delimiter=/&max-keys=5",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:41Z"
+  },
+  "s3_pherc0172_volume": {
+   "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0172/volumes/20241024131838-7.910um-53keV-masked.zarr/.zattrs",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:42Z"
+  },
+  "s3_paris4_segments": {
+   "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/?list-type=2&prefix=PHercParis4/segments/&delimiter=/&max-keys=5",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:42Z"
+  },
+  "frag5_working": {
+   "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:42Z"
+  },
+  "frag5_labels": {
+   "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/working/PHerc1667Cr01Fr03_70keV_3.24um/surface_processing/inklabels.png",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:42Z"
+  },
+  "frag5_7p91_zarr": {
+   "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/volumes_zarr/70keV_7.91um_.zarr/0/.zarray",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:43Z"
+  },
+  "frag5_transform": {
+   "url": "https://dl.ash2txt.org/fragments/Frag5/PHerc1667Cr1Fr3.volpkg/transforms/20231121133215-to-20231130111236.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:43Z"
+  },
+  "frag6_working": {
+   "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:43Z"
+  },
+  "frag6_labels": {
+   "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/working/PHerc0051Cr04Fr08_53keV_3.24um/surface_processing/inklabels.png",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:44Z"
+  },
+  "frag6_7p91_zarr": {
+   "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/volumes_zarr/53keV_7.91um_.zarr/0/.zarray",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:44Z"
+  },
+  "frag6_transform_53_7p91": {
+   "url": "https://dl.ash2txt.org/fragments/Frag6/PHerc51Cr4Fr8.volpkg/transforms/20231121152933-to-20231130112027.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:44Z"
+  },
+  "hf_ink9um_bucket_readme": {
+   "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/README.md",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:44Z"
+  },
+  "hf_ink9um_labels_tree": {
+   "url": "https://huggingface.co/api/buckets/scrollprize/datasets/tree/ink_9um/labels?limit=1",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:45Z"
+  },
+  "hf_ink9um_model_readme": {
+   "url": "https://huggingface.co/scrollprize/ink_9um/raw/main/README.md",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:45Z"
+  },
+  "hf_ink_paris4_meta": {
+   "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink/phercparis4/w00_20231016151002/meta.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:46Z"
+  },
+  "villa_aligned21_config": {
+   "url": "https://raw.githubusercontent.com/ScrollPrize/villa/merge-ink-pipelines/ink-detection/configs/aligned21_fixed_scroll_prior.json",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:46Z"
+  },
+  "villa_configs_readme": {
+   "url": "https://raw.githubusercontent.com/ScrollPrize/villa/merge-ink-pipelines/ink-detection/configs/README.md",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:46Z"
+  },
+  "scrollprize_data_licenses": {
+   "url": "https://scrollprize.org/data",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:47Z"
+  },
+  "hf_model_timesformer_scroll5": {
+   "url": "https://huggingface.co/scrollprize/timesformer_scroll5_27112024",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:47Z"
+  },
+  "hf_model_resnet50_7p9_scroll1_frags": {
+   "url": "https://huggingface.co/scrollprize/resnet50_7.9um_scroll1_frags",
+   "status": 200,
+   "method": "HEAD",
+   "checked_utc": "2026-09-02T04:01:48Z"
+  }
+ }
+}

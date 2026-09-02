@@ -18,6 +18,21 @@ T = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, T)
 from k2c_separability import open_level  # noqa: E402
 from hunt.mesh_lamella_alignment import mesh_normal, sheet_normal  # noqa: E402
+from hunt.corpus_alignment_local import local_normal  # noqa: E402  (Aug-25 lesson: curved sheets need the LOCAL normal)
+import glob
+import re
+
+
+def pairing_from_logs(logs_dir, scroll_id):
+    """seed index -> patch name, from the tracer's own 'saving <dir>' line in G_<id>_NN.log.
+    Exact, unlike bbox containment (overlapping ~9 cm2 patches contain several seeds)."""
+    m = {}
+    for p in glob.glob(os.path.join(logs_dir, f"G_{scroll_id}_*.log")):
+        k = int(re.search(r"G_\w+?_(\d+)\.log$", os.path.basename(p)).group(1))
+        for line in open(p, errors="replace"):
+            if line.startswith("saving "):
+                m[os.path.basename(line.split()[-1].strip())] = k
+    return m
 
 VOL = {"PHerc0358": "20250821151737-9.362um-1.2m-113keV-masked.zarr",
        "PHerc0813": "20250821151723-9.362um-1.2m-113keV-masked.zarr",
@@ -41,7 +56,9 @@ def main():
     ap.add_argument("--paths", required=True)
     ap.add_argument("--seeds", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--logs", default=None, help="dir with the tracer logs G_<id>_NN.log (exact seed pairing)")
     a = ap.parse_args()
+    log_pairs = pairing_from_logs(a.logs, a.scroll[-4:]) if a.logs else {}
     cache = os.path.join(r"D:\vesuvius-data\trackD", f"gate_{a.scroll[-4:]}_seeds")
     os.makedirs(cache, exist_ok=True)
     seeds = json.load(open(a.seeds))
@@ -52,8 +69,9 @@ def main():
     for dn in meshes:
         md = os.path.join(a.paths, dn)
         meta = json.load(open(os.path.join(md, "meta.json")))
-        si = seed_for(meta, seeds)
-        rec = dict(name=dn, area_cm2=round(float(meta.get("area_cm2", 0)), 3), bbox=meta.get("bbox"))
+        si = log_pairs.get(dn, seed_for(meta, seeds))
+        rec = dict(name=dn, area_cm2=round(float(meta.get("area_cm2", 0)), 3), bbox=meta.get("bbox"),
+                   pairing="log" if dn in log_pairs else "bbox")
         if not isinstance(si, int):
             rec.update(status=f"seed match {'ambiguous' if si else 'none'}", PASS=False, seed_candidates=si)
             rows.append(rec)
@@ -67,19 +85,27 @@ def main():
             o = (max(sd["z"] - ROI // 2, 0), max(sd["y"] - ROI // 2, 0), max(sd["x"] - ROI // 2, 0))
             cube = np.asarray(z0[o[0]:o[0] + ROI, o[1]:o[1] + ROI, o[2]:o[2] + ROI])
             np.save(cp, cube)
-        mn, nv = mesh_normal(md)
+        o = (max(sd["z"] - ROI // 2, 0), max(sd["y"] - ROI // 2, 0), max(sd["x"] - ROI // 2, 0))
+        mn, nv = mesh_normal(md)                 # whole-patch (global) normal, reported
+        ln, nl = local_normal(md, o)             # normal from the vertices inside the seed cube -- the GATE
         sn = sheet_normal(cube)
-        rec.update(seed_index=si, seed_xyz=[sd["x"], sd["y"], sd["z"]], separability=sd.get("separability"), n_vertices=nv)
-        if mn is None or sn is None:
+        rec.update(seed_index=si, seed_xyz=[sd["x"], sd["y"], sd["z"]], separability=sd.get("separability"),
+                   n_vertices=nv, n_local_vertices=nl)
+        if sn is None or (mn is None and ln is None):
             rec.update(status="unmeasurable", PASS=False)
         else:
-            nz = abs(float(mn[0]))
-            ang = float(np.degrees(np.arccos(min(1.0, abs(float(np.dot(mn, sn)))))))
-            rec.update(abs_nz=round(nz, 3), angle_deg=round(ang, 1), PASS=bool(ang < 30.0), status="ok")
+            if mn is not None:
+                rec["abs_nz"] = round(abs(float(mn[0])), 3)
+                rec["angle_global_deg"] = round(float(np.degrees(np.arccos(min(1.0, abs(float(np.dot(mn, sn))))))), 1)
+            if ln is not None:
+                rec["angle_local_deg"] = round(float(np.degrees(np.arccos(min(1.0, abs(float(np.dot(ln, sn))))))), 1)
+                rec.update(angle_deg=rec["angle_local_deg"], PASS=bool(rec["angle_local_deg"] < 30.0), status="ok")
+            else:
+                rec.update(angle_deg=rec.get("angle_global_deg"), PASS=False, status="no local vertices in cube")
         rows.append(rec)
-        print(f"  {dn[-9:]}  seed{si:02d}  nz={rec.get('abs_nz', '-')}  angle={rec.get('angle_deg', '-')}  "
-              f"area={rec['area_cm2']} cm2  {'PASS' if rec.get('PASS') else 'fail'}")
-    out = dict(scroll=a.scroll, gate="angle_deg < 30 (mesh normal vs local sheet normal at seed)",
+        print(f"  {dn[-9:]}  seed{si:02d} [{rec['pairing']}]  nz={rec.get('abs_nz', '-')}  local={rec.get('angle_local_deg', '-')}  "
+              f"global={rec.get('angle_global_deg', '-')}  area={rec['area_cm2']} cm2  {'PASS' if rec.get('PASS') else 'fail'}")
+    out = dict(scroll=a.scroll, gate="angle_local_deg < 30 (mesh normal from the vertices inside the 256^3 seed cube vs the cube's sheet normal; global whole-patch angle reported beside it)",
                reference="published GP meshes 13.1 deg median; stale-build failures 68.1; random 60",
                n_meshes=len(rows), n_pass=sum(1 for r in rows if r.get("PASS")),
                area_pass_cm2=round(sum(r["area_cm2"] for r in rows if r.get("PASS")), 2), patches=rows)

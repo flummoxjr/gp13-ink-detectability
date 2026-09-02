@@ -410,15 +410,31 @@ EOF
     PIDS=()
     for ((k = i; k < i + WAVE && k < NSEED; k++)); do
       X=$(jq -r ".jobs[$j].seeds[$k].x" "$VAR/jobs.json"); Y=$(jq -r ".jobs[$j].seeds[$k].y" "$VAR/jobs.json"); Z=$(jq -r ".jobs[$j].seeds[$k].z" "$VAR/jobs.json")
-      ( timeout "$TIMEOUT_S" "$BIN" --volume "$BUCKET/$SCROLL/representations/predictions/surfaces/$PREDBASE.zarr" \
-          --target-dir "$PD" --params "$WORK/params_$ID.json" --seed "$X" "$Y" "$Z" > "$OUT/logs/G_${ID}_$(printf %02d $k).log" 2>&1; \
-        echo "G_${ID}_${k}_EXIT=$?" >> "$OUT/logs/G_${ID}_$(printf %02d $k).log" ) &
+      # Per-seed subshell: the ERR trap and errexit are DISABLED inside it. On
+      # 2026-09-02 a seed that hit the 1800 s timeout (exit 124) fired the
+      # inherited ERR trap inside the subshell, which parked that subshell in
+      # fail_linger's sleep loop; `wait` never returned and the whole run died
+      # with 24 finished PHerc0813 meshes unbundled. A timeout is a per-seed
+      # result, recorded in the log, never fatal.
+      ( trap - ERR; set +e
+        timeout "$TIMEOUT_S" "$BIN" --volume "$BUCKET/$SCROLL/representations/predictions/surfaces/$PREDBASE.zarr" \
+          --target-dir "$PD" --params "$WORK/params_$ID.json" --seed "$X" "$Y" "$Z" > "$OUT/logs/G_${ID}_$(printf %02d $k).log" 2>&1
+        echo "G_${ID}_${k}_EXIT=$?" >> "$OUT/logs/G_${ID}_$(printf %02d $k).log"
+        exit 0 ) &
       PIDS+=($!); sleep 2
     done
     wait "${PIDS[@]}" || true
     say "grow $SCROLL: wave $((i / WAVE + 1)) done; patches so far $(ls "$PD" | grep -c auto_grown || true)"
   done
-  say "grow $SCROLL: finished -- $(ls "$PD" | grep -c auto_grown || true) patches from $NSEED seeds; exits: $(grep -h "_EXIT=" "$OUT"/logs/G_${ID}_*.log | sort | uniq -c | tr '\n' ' ')"
+  say "grow $SCROLL: finished -- $(ls "$PD" | grep -c auto_grown || true) patches from $NSEED seeds; exits: $(grep -h "_EXIT=" "$OUT"/logs/G_${ID}_*.log | sed 's/.*_EXIT=//' | sort | uniq -c | tr '\n' ' ')"
+  # Bundle THIS scroll immediately so a later failure or the guard's deadline
+  # still leaves its meshes harvestable (served at out/paths_<id>.tgz).
+  if ( cd "$WORK" && tar czf "$OUT/paths_$ID.tgz.part" "paths_$ID" -C "$OUT/logs" . ); then
+    mv -f "$OUT/paths_$ID.tgz.part" "$OUT/paths_$ID.tgz"
+    say "grow $SCROLL: bundled -> paths_$ID.tgz ($(du -h "$OUT/paths_$ID.tgz" | cut -f1))"
+  else
+    rm -f "$OUT/paths_$ID.tgz.part"; say "grow $SCROLL: per-scroll bundle FAILED (non-fatal)"
+  fi
 done
 stage_close grow_all
 

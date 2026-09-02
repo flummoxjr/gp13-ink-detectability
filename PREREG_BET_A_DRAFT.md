@@ -56,11 +56,19 @@ The native-5 representations of 0139 are *removed from training* in every arm (t
 - Every run reports the four positive controls of §3 of the benchmark from the same harness.
 - Seed spread of arm 0 is the noise floor; a difference smaller than it is "no effect".
 
-## 4. Anchor gate (before any arm 1/2 spend)
+## 4. Anchor gate (before any arm 1/2 spend) — corrected 2026-09-02 (addendum from `bench/betA_arm0/PLAN.md` §8–9)
 
-Arm 0 must land within 0.05 AUC-equivalent of khj1222's published LOSO number on 0139
-(+0.17 F1 over the everything-is-ink floor; convert with the same threshold sweep). If it does not,
-STOP: our reproduction of the recipe is wrong and no arm comparison means anything.
+Arm 0 is anchored on khj1222's **native-5 best-of-grid mean best-F1** with their scorer (best-F1 threshold
+sweep on the supervision mask, best of 7 checkpoints × 2 seeds): published **0.653** (seed42 0.627, seed43 0.653;
+everything-is-ink floor 0.541; margin +0.112; per segment w035 0.679, w039 0.585, w040 0.652, w041 0.703,
+w044 0.646; peak at 10–30k steps, 75k overtrains; seed |Δ| 0.032). The "+0.17" in the first draft was the
+all-14-representation number, not the native tier — corrected here before any run.
+
+PASS the reproduction iff our best-of-both-seeds ≥ **0.603** (within 0.05) **and** our mean-of-seeds margin over
+the same floors is ≥ **+0.06** **and** the trajectory peaks at 10–30k with 75k below the peak on both seeds.
+If it fails, STOP: our reproduction of the recipe is wrong and no arm comparison means anything. Pixel AUC (both
+directions, best-of-grid checkpoint per seed) is reported alongside and becomes the arm-0 AUC baseline for §5;
+the arm-0 seed spread in AUC is the noise floor (khj1222 published F1 only).
 
 ## 5. Decision rule (to be frozen)
 

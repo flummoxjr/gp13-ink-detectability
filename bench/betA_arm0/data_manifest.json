@@ -1,0 +1,3840 @@
+{
+ "manifest_version": "betA_arm0 data manifest v1",
+ "generated_utc": "2026-09-02T03:57:55+00:00",
+ "purpose": "Every store the LOSO(no-0139) retrain pod must fetch: 15 kept training representations (labels + sparse level-2 source volumes), 5 native PHerc0139 eval volumes (crops), code pins and the released checkpoint for harness controls.",
+ "conventions": {
+  "s3_base": "https://vesuvius-challenge-open-data.s3.amazonaws.com/",
+  "hf_labels_base": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/",
+  "chunk_key": "level/<z>{sep}<y>{sep}<x> with sep = the store's .zarray dimension_separator ('.' for pherc1667-w013 level 2, '/' for every other store below); copy .zarray/.zattrs/.zgroup verbatim so the local store honours the same separator and fill_value",
+  "http_404_on_chunk": "absent chunk = all fill_value (0); write a zero-length marker (p2a_v3 ctl_build.py convention) and count it; FATAL if > 60% of the planned chunks of a store are absent (the planned set lies inside the supervision bbox, where data exists)",
+  "aligned_label_all_zero_chunk": {
+   "bytes": 78,
+   "xetHash": "50cce7bbd06eea2a0367c31de5fb3ac212044946ebc1055005e49f634c82ea6a",
+   "note": "blosc-compressed 21x128x128 zeros; skipping it is content-identical to fetching it (fill_value 0). Filter by xetHash, not by size."
+  },
+  "native_label_all_zero_chunk": {
+   "bytes": 134,
+   "xetHash": "4f3a32296d2d0709242deb9790ff0079d6174b177386edca5ed9de03e00fcef4",
+   "note": "134-byte chunks with a different xetHash exist (few nonzero px) -- size alone is NOT an emptiness test"
+  },
+  "hf_tree_api": "https://huggingface.co/api/buckets/scrollprize/datasets/tree/<path>?limit=1000 (paginated via Link rel=next cursor); each entry carries path, size, xetHash",
+  "training_chunk_rule": "level-2 chunks covering the union of training patches: for every supervised pixel (y,x) at label plane z=10, patch corner = (y//32*32, x//32*32), patch = [corner, corner+128); union of covering 128x128 chunk columns, dilated by 1 chunk (128 px) as margin. The counts below used a superset (supervision mask max-filtered +-128 px); the pod recomputes from the downloaded supervision masks and asserts every patch bbox of the trainer's patch index lies inside the fetched set.",
+  "pooling": "vesuvius.ink_detection.preprocessing.prepare_9um_isotropic_input <local sparse level-2 group> <out.zarr> --level 2 : centered 84 of 109 planes = z[13:97], 4x mean -> 21 slices, uint8, chunks (21,128,128), blosc zstd clevel 5 bitshuffle, attrs.format 'level2-zmean4-21slice-v1'; matches the label .zattrs (source_z_slice [13,97], z_pool '21 complete means of 4 source planes')"
+ },
+ "code": {
+  "villa_pin": {
+   "repo": "https://github.com/flummoxjr/villa-pin-37e300d3",
+   "branch": "master",
+   "sha": "a3f2c292f61b76d1471db4f6bedcb54cb36f4e90",
+   "upstream": "ScrollPrize/villa vesuvius @ 37e300d3 (pinned 2026-08-24)",
+   "train_entry": "python -m vesuvius.ink_detection.training.train <config.json>",
+   "pool_entry": "python -m vesuvius.ink_detection.preprocessing.prepare_9um_isotropic_input <in> <out> --level 2",
+   "infer_entry": "python -m vesuvius.ink_detection.inference.infer <zarr> <ckpt> <out.tif> --direction forward|reverse|both --batch-size 16 --num-workers 8 --gpus 0 --no-compile",
+   "offline_checks_2026-09-02": "generated LOSO config parsed by TrainingConfig.from_mapping(resolve_training_mapping(..)) and stage_training_request() at this sha; make_model: 34.55 M params, peak 5.43 GiB allocated / 7.23 GiB reserved at batch 64 fp16 (17,128,128), 360 ms/step compute-only on an RTX 4090 laptop"
+  },
+  "reference_upstream": {
+   "repo": "https://github.com/ScrollPrize/villa",
+   "branch": "merge-ink-pipelines",
+   "tip": "3ea17f54a9b3d5fd1aaf73e1d2c8386dbaa9f30e",
+   "package": "ink-detection/koine_machines (pyproject: torch==2.10.0, torchvision==0.25.0, zarr==2.18.7, numcodecs==0.15.1, numpy<=2.2, python>=3.11, uv.lock present, depends on ../vesuvius editable)",
+   "note": "khj1222 trained the published LOSO arms here (PR #1608: tested at c61cc9f, branched from 3ea17f5). villa-pin carries the same pipeline under vesuvius.ink_detection (the merged copy). Not byte-identical code paths; the anchor-gate tolerance absorbs that."
+  },
+  "generator": {
+   "path": "trackD/bench/vendor/make_holdout_config.py",
+   "sha256": "1361f28852da0538d4597546f4dacec18c899a4d10a220de115f095c5390335d",
+   "source": "villa PR #1608 @ dc9edb6 (khj1222)",
+   "invocation": "--labels-root <labels> --volumes-root <volumes> --exclude-scroll 0139 --seed <42|43> --recipe vendor/configs/aligned21_hybrid_3d2d.json --contract vendor/configs/aligned21_fixed_scroll_prior.json --out <cfg> --run-dir <run>",
+   "expected": "15 kept / 14 held out; quotas {'1667': 40, 'Paris4': 20, '0814': 4}; 3 dataset entries (0814, 1667, Paris4)"
+  },
+  "recipe": {
+   "path": "trackD/bench/vendor/configs/aligned21_hybrid_3d2d.json",
+   "sha256": "e5036d8ed38ec00a2dbc824276c362c1e11329d210d98a3dd41a42bb3250a003"
+  },
+  "contract": {
+   "path": "trackD/bench/vendor/configs/aligned21_fixed_scroll_prior.json",
+   "sha256": "0e20230f4d2517987f31baed4c6fc2fa8110d230ce2d14a60dfe5d6a838c68d1",
+   "note": "byte-identical to villa-pin's vesuvius/src/vesuvius/ink_detection/configs/aligned21_fixed_scroll_prior.json"
+  },
+  "released_checkpoint_for_controls": {
+   "hf_repo": "scrollprize/ink_9um",
+   "file": "hybrid_3d2d-seed42/step-075000.pth",
+   "bytes": 138360039,
+   "note": "used ONLY for the benchmark's four positive controls (harness certification) and the in-scroll 'ref' row; seed43 files are 138360231 bytes"
+  },
+  "hf_dataset_readme": {
+   "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/README.md",
+   "bytes": 10739,
+   "sha256": "c9a88ff970594fcef3788eb588bb75dbbd0e6436f4812f89074e26c0d9fef7a5"
+  }
+ },
+ "labels_hf": {
+  "kept_aligned": {
+   "pherc1667-w013": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_inklabels.zarr",
+      "shape": [
+       21,
+       10400,
+       19900
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       82,
+       156
+      ],
+      "chunk_files": 12792,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_inklabels.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "5b1aa3ac9416ee2f3db51c06b85485139d9dea3f4a7c625ae7895fe3bed48fb2"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_inklabels.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "cb3cf48f7f288af5861554fad0c7de63bcb784edea2dcf4b0b6344edb2a4bd66"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_supervision_mask.zarr",
+      "shape": [
+       21,
+       10400,
+       19900
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       82,
+       156
+      ],
+      "chunk_files": 12792,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_supervision_mask.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "5b1aa3ac9416ee2f3db51c06b85485139d9dea3f4a7c625ae7895fe3bed48fb2"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w013/pherc1667-w013_supervision_mask.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "cb3cf48f7f288af5861554fad0c7de63bcb784edea2dcf4b0b6344edb2a4bd66"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 3358655,
+     "ink_px": 1012042,
+     "sup_frac": 0.01623,
+     "sup_bbox_yx": [
+      669,
+      7361,
+      514,
+      4857
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "pherc1667-w018": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_inklabels.zarr",
+      "shape": [
+       21,
+       10595,
+       24525
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       83,
+       192
+      ],
+      "chunk_files": 15936,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_inklabels.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "250fe1f6374039fa1871a13af5b3cd34e10e16006e1c4a4b965ec7f1ac82fab2"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_inklabels.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "f8d047f8eb787a2860589f7ba78bf5f09aed7336650993f21b385f5cb3ae0a67"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_supervision_mask.zarr",
+      "shape": [
+       21,
+       10595,
+       24525
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       83,
+       192
+      ],
+      "chunk_files": 15936,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_supervision_mask.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "250fe1f6374039fa1871a13af5b3cd34e10e16006e1c4a4b965ec7f1ac82fab2"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w018/pherc1667-w018_supervision_mask.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "f8d047f8eb787a2860589f7ba78bf5f09aed7336650993f21b385f5cb3ae0a67"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 13899340,
+     "ink_px": 3580927,
+     "sup_frac": 0.05349,
+     "sup_bbox_yx": [
+      962,
+      8193,
+      192,
+      24057
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "pherc1667-w023": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_inklabels.zarr",
+      "shape": [
+       21,
+       10465,
+       25590
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       82,
+       200
+      ],
+      "chunk_files": 16400,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_inklabels.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "34274061d16ac94dd178fddb33eaa304318566089033f9fb5576ca67290e69aa"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_inklabels.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "4f338c48be7f08042ef9eaa077773e30632bd967ac95d26973bf78526ddfe13d"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_supervision_mask.zarr",
+      "shape": [
+       21,
+       10465,
+       25590
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       82,
+       200
+      ],
+      "chunk_files": 16400,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_supervision_mask.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "34274061d16ac94dd178fddb33eaa304318566089033f9fb5576ca67290e69aa"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w023/pherc1667-w023_supervision_mask.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "4f338c48be7f08042ef9eaa077773e30632bd967ac95d26973bf78526ddfe13d"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 5404437,
+     "ink_px": 1419591,
+     "sup_frac": 0.02018,
+     "sup_bbox_yx": [
+      1603,
+      7949,
+      1330,
+      25264
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "pherc1667-w028": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_inklabels.zarr",
+      "shape": [
+       21,
+       9355,
+       7585
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       74,
+       60
+      ],
+      "chunk_files": 4440,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "4441304e06f67efaf4563605510b1c09122e05e4f2c2777d74eb88dd22736ffa"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_inklabels.zarr/.zattrs",
+       "bytes": 1236,
+       "sha256": "7fee18c15f1a142c7a762728df0cd62823d0eaf789ac085201a40793b8789b5f"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_supervision_mask.zarr",
+      "shape": [
+       21,
+       9355,
+       7585
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       74,
+       60
+      ],
+      "chunk_files": 4440,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "4441304e06f67efaf4563605510b1c09122e05e4f2c2777d74eb88dd22736ffa"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w028/pherc1667-w028_supervision_mask.zarr/.zattrs",
+       "bytes": 1236,
+       "sha256": "7fee18c15f1a142c7a762728df0cd62823d0eaf789ac085201a40793b8789b5f"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 844786,
+     "ink_px": 331857,
+     "sup_frac": 0.01191,
+     "sup_bbox_yx": [
+      2251,
+      5519,
+      560,
+      7502
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "pherc1667-w029": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_inklabels.zarr",
+      "shape": [
+       21,
+       9500,
+       7830
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       75,
+       62
+      ],
+      "chunk_files": 4650,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "52e50d0371f434ea084ad8f1fb02f31a0e1c4cc11b6e2f250faf63febb8b024a"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_inklabels.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "1a749c0c9d290f24424d9018c0a98ed80a3abe4f99424a0f773d66c7c8774cd6"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_supervision_mask.zarr",
+      "shape": [
+       21,
+       9500,
+       7830
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       75,
+       62
+      ],
+      "chunk_files": 4650,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "52e50d0371f434ea084ad8f1fb02f31a0e1c4cc11b6e2f250faf63febb8b024a"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_supervision_mask.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "1a749c0c9d290f24424d9018c0a98ed80a3abe4f99424a0f773d66c7c8774cd6"
+      }
+     },
+     "validation_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_validation_mask.zarr",
+      "shape": [
+       21,
+       9500,
+       7830
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       75,
+       62
+      ],
+      "chunk_files": 4650,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_validation_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "52e50d0371f434ea084ad8f1fb02f31a0e1c4cc11b6e2f250faf63febb8b024a"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w029/pherc1667-w029_validation_mask.zarr/.zattrs",
+       "bytes": 1235,
+       "sha256": "1a749c0c9d290f24424d9018c0a98ed80a3abe4f99424a0f773d66c7c8774cd6"
+      }
+     }
+    },
+    "supervision_plane_stats": {
+     "sup_px": 1213836,
+     "ink_px": 444385,
+     "sup_frac": 0.01632,
+     "sup_bbox_yx": [
+      1621,
+      7012,
+      1745,
+      7163
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "pherc1667-w031": {
+    "scroll": "1667",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_inklabels.zarr",
+      "shape": [
+       21,
+       9370,
+       8045
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       74,
+       63
+      ],
+      "chunk_files": 4662,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "071c6d76b2541f8c08eb4b8e9a03a7cb626212aeaccb46ddd0314234a2c69776"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_inklabels.zarr/.zattrs",
+       "bytes": 1229,
+       "sha256": "6d728535b01f5b3ff88a20c89b10df06a2ded2ccce50c2af170f93c9f6d49980"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_supervision_mask.zarr",
+      "shape": [
+       21,
+       9370,
+       8045
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       74,
+       63
+      ],
+      "chunk_files": 4662,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "071c6d76b2541f8c08eb4b8e9a03a7cb626212aeaccb46ddd0314234a2c69776"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc1667-w031/pherc1667-w031_supervision_mask.zarr/.zattrs",
+       "bytes": 1229,
+       "sha256": "6d728535b01f5b3ff88a20c89b10df06a2ded2ccce50c2af170f93c9f6d49980"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 2621780,
+     "ink_px": 778204,
+     "sup_frac": 0.03478,
+     "sup_bbox_yx": [
+      2797,
+      7070,
+      1447,
+      5949
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w00": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_inklabels.zarr",
+      "shape": [
+       21,
+       7990,
+       12990
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       63,
+       102
+      ],
+      "chunk_files": 6426,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "73153d95cbe890f3b99ebfa1c0723a51390e312cdcf9a5fd50cd2051cce71fd7"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "62e482ef983b21ee941321118e304f2fe76d45da9061f6e78f1232da5958db78"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_supervision_mask.zarr",
+      "shape": [
+       21,
+       7990,
+       12990
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       63,
+       102
+      ],
+      "chunk_files": 6426,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "73153d95cbe890f3b99ebfa1c0723a51390e312cdcf9a5fd50cd2051cce71fd7"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "62e482ef983b21ee941321118e304f2fe76d45da9061f6e78f1232da5958db78"
+      }
+     },
+     "validation_mask": null
+    }
+   },
+   "phercparis4-w01": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_inklabels.zarr",
+      "shape": [
+       21,
+       12650,
+       9100
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       99,
+       72
+      ],
+      "chunk_files": 7128,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "56b3617182c41c16ae15082f94967b4594de36a07be4b960f25c2fbaa88cbb8c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "34a657aa586d2adeeb63e5d06d2a7f82f45172ca19768f8d56f40bbf855be3b9"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_supervision_mask.zarr",
+      "shape": [
+       21,
+       12650,
+       9100
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       99,
+       72
+      ],
+      "chunk_files": 7128,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "56b3617182c41c16ae15082f94967b4594de36a07be4b960f25c2fbaa88cbb8c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w01/phercparis4-w01_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "34a657aa586d2adeeb63e5d06d2a7f82f45172ca19768f8d56f40bbf855be3b9"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 8268843,
+     "ink_px": 2163941,
+     "sup_frac": 0.07183,
+     "sup_bbox_yx": [
+      389,
+      12594,
+      407,
+      8032
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w02": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_inklabels.zarr",
+      "shape": [
+       21,
+       8545,
+       11005
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       86
+      ],
+      "chunk_files": 5762,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "a65f9bf41b1c21fc0d439581d18915c212de958945f76653107dbe9c1baef1b3"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "f911d4ea285000fbcc02c7d87770dcb07be359dacf0e0eb21538d72bdafb4be9"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_supervision_mask.zarr",
+      "shape": [
+       21,
+       8545,
+       11005
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       86
+      ],
+      "chunk_files": 5762,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "a65f9bf41b1c21fc0d439581d18915c212de958945f76653107dbe9c1baef1b3"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w02/phercparis4-w02_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "f911d4ea285000fbcc02c7d87770dcb07be359dacf0e0eb21538d72bdafb4be9"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 4647609,
+     "ink_px": 1087282,
+     "sup_frac": 0.04942,
+     "sup_bbox_yx": [
+      668,
+      8420,
+      2209,
+      10956
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w03": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_inklabels.zarr",
+      "shape": [
+       21,
+       8575,
+       12810
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       101
+      ],
+      "chunk_files": 6767,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "08541cb71dd81c3464a32997d8f4ec724c45437c3474deab104527f553a8e179"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "af8d6c654e47d757ae16aaa8c089975f8724fdf3418c05ca9309cf063bf182f9"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_supervision_mask.zarr",
+      "shape": [
+       21,
+       8575,
+       12810
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       101
+      ],
+      "chunk_files": 6767,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "08541cb71dd81c3464a32997d8f4ec724c45437c3474deab104527f553a8e179"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w03/phercparis4-w03_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "af8d6c654e47d757ae16aaa8c089975f8724fdf3418c05ca9309cf063bf182f9"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 6169508,
+     "ink_px": 2125255,
+     "sup_frac": 0.05617,
+     "sup_bbox_yx": [
+      744,
+      7962,
+      1449,
+      9743
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w05": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_inklabels.zarr",
+      "shape": [
+       21,
+       12700,
+       18930
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       100,
+       148
+      ],
+      "chunk_files": 14800,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_inklabels.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "d66a3860e233941be0786904ebe04cc3afb3ea646088da974b81a2fba30807a3"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_inklabels.zarr/.zattrs",
+       "bytes": 1197,
+       "sha256": "05718f2d7eca260f61fe7b630aacf18674f32e61e35cffd4d095f44c9914ac63"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_supervision_mask.zarr",
+      "shape": [
+       21,
+       12700,
+       18930
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       100,
+       148
+      ],
+      "chunk_files": 14800,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_supervision_mask.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "d66a3860e233941be0786904ebe04cc3afb3ea646088da974b81a2fba30807a3"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w05/phercparis4-w05_supervision_mask.zarr/.zattrs",
+       "bytes": 1197,
+       "sha256": "05718f2d7eca260f61fe7b630aacf18674f32e61e35cffd4d095f44c9914ac63"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 31930770,
+     "ink_px": 6737328,
+     "sup_frac": 0.13282,
+     "sup_bbox_yx": [
+      1792,
+      12112,
+      3051,
+      18095
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w06": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_inklabels.zarr",
+      "shape": [
+       21,
+       12750,
+       9995
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       100,
+       79
+      ],
+      "chunk_files": 7900,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "dac94e3783f9a3f309015623fc0d7c9c7a49f706617eaccad5f59a43baa40c9b"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "a362caf3047d6be7f6279995461d30e1c9afdd99958f4b4de58c13592462bd3c"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_supervision_mask.zarr",
+      "shape": [
+       21,
+       12750,
+       9995
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       100,
+       79
+      ],
+      "chunk_files": 7900,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "dac94e3783f9a3f309015623fc0d7c9c7a49f706617eaccad5f59a43baa40c9b"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w06/phercparis4-w06_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "a362caf3047d6be7f6279995461d30e1c9afdd99958f4b4de58c13592462bd3c"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 11074717,
+     "ink_px": 3443040,
+     "sup_frac": 0.0869,
+     "sup_bbox_yx": [
+      518,
+      12571,
+      1845,
+      8865
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w07": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_inklabels.zarr",
+      "shape": [
+       21,
+       13010,
+       27035
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       102,
+       212
+      ],
+      "chunk_files": 21624,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_inklabels.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "e152e26112f31cdba91c06c62fe9056897fb3bbc6be280ab12c1e46b21a291bc"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_inklabels.zarr/.zattrs",
+       "bytes": 1197,
+       "sha256": "946366c031d057043c7731b30f801ed2823ad4d6c8737f36e07f097410aa42f7"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_supervision_mask.zarr",
+      "shape": [
+       21,
+       13010,
+       27035
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       102,
+       212
+      ],
+      "chunk_files": 21624,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_supervision_mask.zarr/0/.zarray",
+       "bytes": 368,
+       "sha256": "e152e26112f31cdba91c06c62fe9056897fb3bbc6be280ab12c1e46b21a291bc"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w07/phercparis4-w07_supervision_mask.zarr/.zattrs",
+       "bytes": 1197,
+       "sha256": "946366c031d057043c7731b30f801ed2823ad4d6c8737f36e07f097410aa42f7"
+      }
+     },
+     "validation_mask": null
+    },
+    "supervision_plane_stats": {
+     "sup_px": 16003870,
+     "ink_px": 5022838,
+     "sup_frac": 0.0455,
+     "sup_bbox_yx": [
+      1748,
+      12561,
+      2382,
+      25087
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   },
+   "phercparis4-w09": {
+    "scroll": "Paris4",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_inklabels.zarr",
+      "shape": [
+       21,
+       8020,
+       18950
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       63,
+       149
+      ],
+      "chunk_files": 9387,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_inklabels.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "2635e05427d6aa985b2ffa8ba2bb11571fd1aef3107be03bdf51719da480a69c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_inklabels.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "0a6b6bea4d1505b65bbe6d42c3df8477647cc019a624d827efdfd5f21cb81beb"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_supervision_mask.zarr",
+      "shape": [
+       21,
+       8020,
+       18950
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       63,
+       149
+      ],
+      "chunk_files": 9387,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_supervision_mask.zarr/0/.zarray",
+       "bytes": 367,
+       "sha256": "2635e05427d6aa985b2ffa8ba2bb11571fd1aef3107be03bdf51719da480a69c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_supervision_mask.zarr/.zattrs",
+       "bytes": 1196,
+       "sha256": "0a6b6bea4d1505b65bbe6d42c3df8477647cc019a624d827efdfd5f21cb81beb"
+      }
+     },
+     "validation_mask": null
+    }
+   },
+   "pherc0814-46527": {
+    "scroll": "0814",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_inklabels.zarr",
+      "shape": [
+       21,
+       2130,
+       3455
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       17,
+       27
+      ],
+      "chunk_files": 459,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "6d35e50273e289cb032f1c7fb22f034467f17f559b4bc636ef0b31dc414cf223"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_inklabels.zarr/.zattrs",
+       "bytes": 1221,
+       "sha256": "a45a86e16a22c07b7a99566766bca3df0cb922efe42afff504e3393da2a31ac7"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_supervision_mask.zarr",
+      "shape": [
+       21,
+       2130,
+       3455
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       17,
+       27
+      ],
+      "chunk_files": 459,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "6d35e50273e289cb032f1c7fb22f034467f17f559b4bc636ef0b31dc414cf223"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_supervision_mask.zarr/.zattrs",
+       "bytes": 1221,
+       "sha256": "a45a86e16a22c07b7a99566766bca3df0cb922efe42afff504e3393da2a31ac7"
+      }
+     },
+     "validation_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_validation_mask.zarr",
+      "shape": [
+       21,
+       2130,
+       3455
+      ],
+      "chunks": [
+       21,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 5,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       17,
+       27
+      ],
+      "chunk_files": 459,
+      "annotated_plane_z": 10,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_validation_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "6d35e50273e289cb032f1c7fb22f034467f17f559b4bc636ef0b31dc414cf223"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_validation_mask.zarr/.zattrs",
+       "bytes": 1221,
+       "sha256": "a45a86e16a22c07b7a99566766bca3df0cb922efe42afff504e3393da2a31ac7"
+      }
+     }
+    },
+    "supervision_plane_stats": {
+     "sup_px": 428993,
+     "ink_px": 187170,
+     "sup_frac": 0.05829,
+     "sup_bbox_yx": [
+      1149,
+      1761,
+      277,
+      1427
+     ],
+     "source": "local cache D:/vesuvius-data/trackD/ink9um_planes (extracted 2026-08-24)"
+    }
+   }
+  },
+  "heldout_native_eval": {
+   "w035": {
+    "scroll": "0139",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_inklabels.zarr",
+      "shape": [
+       28,
+       5820,
+       5240
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       46,
+       41
+      ],
+      "chunk_files": 1886,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "1df6c0c53d73e53f625ef02fc6bc2efadb304474b7dd23e11abd380d4e68016a"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_inklabels.zarr/.zattrs",
+       "bytes": 3744,
+       "sha256": "a6f81fbe400b6f9c43ec3d48b422662033bb1639afeb0551b4f8527848f01603"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_supervision_mask.zarr",
+      "shape": [
+       28,
+       5820,
+       5240
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       46,
+       41
+      ],
+      "chunk_files": 1886,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "1df6c0c53d73e53f625ef02fc6bc2efadb304474b7dd23e11abd380d4e68016a"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_supervision_mask.zarr/.zattrs",
+       "bytes": 3797,
+       "sha256": "e7945fb3839de67232979426ce8c0b51550432b7149f213e3404c0be1c420cd3"
+      }
+     }
+    },
+    "eval": {
+     "sup_bbox_rows_cols": [
+      680,
+      2770,
+      564,
+      2910
+     ],
+     "crop_rows_cols_pad128": [
+      512,
+      2944,
+      384,
+      3072
+     ],
+     "crop_px": 6537216,
+     "pos_ink_and_sup": 334035,
+     "neg_sup_not_ink": 737086,
+     "ink_frac": 0.3119,
+     "floor_f1_2p_over_1p": 0.4754,
+     "khj1222_scored_px": 1069617,
+     "khj1222_floor": 0.4755
+    }
+   },
+   "w039": {
+    "scroll": "0139",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_inklabels.zarr",
+      "shape": [
+       28,
+       8560,
+       7720
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       61
+      ],
+      "chunk_files": 4087,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "cb7c5185b209ae1992ed510da107c2dddf040b662697bdea359b94215c32564c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_inklabels.zarr/.zattrs",
+       "bytes": 3743,
+       "sha256": "b19a57000d6d473697064569f86f6f692d2243cd6058c928107d3c7625b35bfc"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_supervision_mask.zarr",
+      "shape": [
+       28,
+       8560,
+       7720
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       67,
+       61
+      ],
+      "chunk_files": 4087,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "cb7c5185b209ae1992ed510da107c2dddf040b662697bdea359b94215c32564c"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w039/w039_supervision_mask.zarr/.zattrs",
+       "bytes": 3795,
+       "sha256": "d8186471374a881c27bfc90656f5da2ad9cd49872a94b1605f631a90509319fd"
+      }
+     }
+    },
+    "eval": {
+     "sup_bbox_rows_cols": [
+      3829,
+      4844,
+      2453,
+      5153
+     ],
+     "crop_rows_cols_pad128": [
+      3584,
+      4992,
+      2304,
+      5376
+     ],
+     "crop_px": 4325376,
+     "pos_ink_and_sup": 182429,
+     "neg_sup_not_ink": 393791,
+     "ink_frac": 0.3166,
+     "floor_f1_2p_over_1p": 0.4809,
+     "khj1222_scored_px": 574928,
+     "khj1222_floor": 0.4817
+    }
+   },
+   "w040": {
+    "scroll": "0139",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_inklabels.zarr",
+      "shape": [
+       28,
+       6400,
+       7980
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       50,
+       63
+      ],
+      "chunk_files": 3150,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "2b9e57043448af2583a60da580b9e3ecd70a0f687b590f5bd5fda8edd10447cf"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_inklabels.zarr/.zattrs",
+       "bytes": 3744,
+       "sha256": "b6e9f7b89ed5acb10495ed2ef534f046a1404eee9a9e4d782d68e63b2c6b97fb"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_supervision_mask.zarr",
+      "shape": [
+       28,
+       6400,
+       7980
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       50,
+       63
+      ],
+      "chunk_files": 3150,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "2b9e57043448af2583a60da580b9e3ecd70a0f687b590f5bd5fda8edd10447cf"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w040/w040_supervision_mask.zarr/.zattrs",
+       "bytes": 3798,
+       "sha256": "390300e469aa9ccb9d834721657877ba901b863a97f55b49bc4fa136b79e7696"
+      }
+     }
+    },
+    "eval": {
+     "sup_bbox_rows_cols": [
+      644,
+      5977,
+      1552,
+      7744
+     ],
+     "crop_rows_cols_pad128": [
+      512,
+      6144,
+      1408,
+      7936
+     ],
+     "crop_px": 36765696,
+     "pos_ink_and_sup": 716725,
+     "neg_sup_not_ink": 913009,
+     "ink_frac": 0.4398,
+     "floor_f1_2p_over_1p": 0.6109,
+     "khj1222_scored_px": 1626899,
+     "khj1222_floor": 0.6115
+    }
+   },
+   "w041": {
+    "scroll": "0139",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_inklabels.zarr",
+      "shape": [
+       28,
+       6200,
+       8020
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       49,
+       63
+      ],
+      "chunk_files": 3087,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "267c6654e5a3f9439e4cde3f416fc5a4297a661ce414775276aacdbbfe202201"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_inklabels.zarr/.zattrs",
+       "bytes": 3743,
+       "sha256": "542b064b000c06d8a9aa401fefa3526bff1d3e0faa3124028bb14f8a47f0c47b"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_supervision_mask.zarr",
+      "shape": [
+       28,
+       6200,
+       8020
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       49,
+       63
+      ],
+      "chunk_files": 3087,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "267c6654e5a3f9439e4cde3f416fc5a4297a661ce414775276aacdbbfe202201"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w041/w041_supervision_mask.zarr/.zattrs",
+       "bytes": 3795,
+       "sha256": "b6e2884096185e3bfa9b6b30a3f58f0dc7f10d994405efab9c5f57e7ce632f39"
+      }
+     }
+    },
+    "eval": {
+     "sup_bbox_rows_cols": [
+      1836,
+      5515,
+      558,
+      4592
+     ],
+     "crop_rows_cols_pad128": [
+      1664,
+      5760,
+      384,
+      4736
+     ],
+     "crop_px": 17825792,
+     "pos_ink_and_sup": 229884,
+     "neg_sup_not_ink": 325745,
+     "ink_frac": 0.4137,
+     "floor_f1_2p_over_1p": 0.5853,
+     "khj1222_scored_px": 554742,
+     "khj1222_floor": 0.5859
+    }
+   },
+   "w044": {
+    "scroll": "0139",
+    "dir": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/",
+    "stores": {
+     "inklabels": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_inklabels.zarr",
+      "shape": [
+       28,
+       6040,
+       8160
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       48,
+       64
+      ],
+      "chunk_files": 3072,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_inklabels.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "ee134fbb3bf3d522e58fefdaa8976822e791845d99ec2b15e8ed84a747069961"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_inklabels.zarr/.zattrs",
+       "bytes": 3743,
+       "sha256": "0cce62e9da5a9296a97a56ce7c432f8330dd92a91b76b8e271ac04af92eeaf8d"
+      }
+     },
+     "supervision_mask": {
+      "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_supervision_mask.zarr",
+      "shape": [
+       28,
+       6040,
+       8160
+      ],
+      "chunks": [
+       28,
+       128,
+       128
+      ],
+      "dtype": "|u1",
+      "compressor": {
+       "blocksize": 0,
+       "clevel": 3,
+       "cname": "zstd",
+       "id": "blosc",
+       "shuffle": 2
+      },
+      "dimension_separator": ".",
+      "chunk_grid_yx": [
+       48,
+       64
+      ],
+      "chunk_files": 3072,
+      "annotated_plane_z": 14,
+      "zarray_0": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_supervision_mask.zarr/0/.zarray",
+       "bytes": 366,
+       "sha256": "ee134fbb3bf3d522e58fefdaa8976822e791845d99ec2b15e8ed84a747069961"
+      },
+      "zattrs": {
+       "url": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices/w044/w044_supervision_mask.zarr/.zattrs",
+       "bytes": 3797,
+       "sha256": "e71698e6616de096ecf8bbfdb972d6530fb930abf26e1c6b0229136531d800be"
+      }
+     }
+    },
+    "eval": {
+     "sup_bbox_rows_cols": [
+      3834,
+      4759,
+      1854,
+      4413
+     ],
+     "crop_rows_cols_pad128": [
+      3584,
+      4992,
+      1664,
+      4608
+     ],
+     "crop_px": 4145152,
+     "pos_ink_and_sup": 451297,
+     "neg_sup_not_ink": 739010,
+     "ink_frac": 0.3791,
+     "floor_f1_2p_over_1p": 0.5498,
+     "khj1222_scored_px": 1189591,
+     "khj1222_floor": 0.5501
+    }
+   }
+  },
+  "measured_inventories": {
+   "0814_sup": {
+    "name": "0814_sup",
+    "path": "ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_supervision_mask.zarr/0",
+    "n_files": 460,
+    "bytes": 38008,
+    "empty_like": 440,
+    "nonempty": 20,
+    "pages": 1
+   },
+   "0814_ink": {
+    "name": "0814_ink",
+    "path": "ink_9um/labels/aligned-scrollprizeorg-21slices/pherc0814-46527/pherc0814-46527_inklabels.zarr/0",
+    "n_files": 460,
+    "bytes": 39974,
+    "empty_like": 427,
+    "nonempty": 33,
+    "pages": 1
+   },
+   "w00_sup": {
+    "name": "w00_sup",
+    "path": "ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w00/phercparis4-w00_supervision_mask.zarr/0",
+    "n_files": 6427,
+    "bytes": 520066,
+    "empty_like": 6308,
+    "nonempty": 119,
+    "pages": 7
+   },
+   "w09_sup": {
+    "name": "w09_sup",
+    "path": "ink_9um/labels/aligned-scrollprizeorg-21slices/phercparis4-w09/phercparis4-w09_supervision_mask.zarr/0",
+    "n_files": 9388,
+    "bytes": 750301,
+    "empty_like": 9248,
+    "nonempty": 140,
+    "pages": 10
+   },
+   "native_w035_sup": {
+    "name": "native_w035_sup",
+    "path": "ink_9um/labels/native9-scrollprizeorg-21slices/w035/w035_supervision_mask.zarr/0",
+    "n_files": 1888,
+    "bytes": 264996,
+    "empty_like": 1765,
+    "nonempty": 123,
+    "pages": 2
+   }
+  }
+ },
+ "training_surface_volumes_s3_level2_sparse": {
+  "pherc1667-w013": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304141531-w013_20240304141531_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    10400,
+    19900
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": {
+    "id": "blosc",
+    "clevel": 3
+   },
+   "dimension_separator": ".",
+   "chunk_grid_zyx": [
+    1,
+    82,
+    156
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 12792,
+   "bytes_per_chunk_measured_mean": 1603054,
+   "full_fetch_GB": 20.5,
+   "chunks_planned_sparse": 565,
+   "sparse_fetch_GB_est": 0.91,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1784361,
+    1783566,
+    1780688,
+    1773520,
+    1781806,
+    1774703,
+    1785872,
+    1772884,
+    7272,
+    1785872
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304141531-w013_20240304141531_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "377f91ef8c5f43c66234e7699176698d34e0f945bccb47a88c916b115e408207"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304141531-w013_20240304141531_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 232,
+    "sha256": "746b1818331ab29c1be9a84d121873338b061409194319973f2924a9748eb6c2",
+    "shape": [
+     109,
+     10400,
+     19900
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": {
+     "id": "blosc",
+     "clevel": 3
+    },
+    "dimension_separator": "."
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304141531-w013_20240304141531_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w013.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     10400,
+     19900
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc1667-w018": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304144031-w018_20240304144031_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    10595,
+    24525
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    83,
+    192
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 15936,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 28.5,
+   "chunks_planned_sparse": 2233,
+   "sparse_fetch_GB_est": 3.99,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304144031-w018_20240304144031_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "05563ff67f5ff9ab414ba4d9d762432983eca2da6ad6bd50322a612a66594d60"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304144031-w018_20240304144031_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 208,
+    "sha256": "01191b2e63f97b9db41a76cd68ebf72b4e4a927c21cdd7f7ecb380cf9cd72e30",
+    "shape": [
+     109,
+     10595,
+     24525
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304144031-w018_20240304144031_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w018.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     10595,
+     24525
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc1667-w023": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304161941-w023_20240304161941_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    10465,
+    25590
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    82,
+    200
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 16400,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 29.3,
+   "chunks_planned_sparse": 935,
+   "sparse_fetch_GB_est": 1.67,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    null,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304161941-w023_20240304161941_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3468,
+    "sha256": "ffde33ec7da4123dbda2c6e4d4bb2aea158cca0c3871ec23afe58db4fc66b508"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304161941-w023_20240304161941_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 208,
+    "sha256": "68eab84c37edec6960ad2ca0989a13507de6c85f29f4873cbba6dc9b0e84bcf6",
+    "shape": [
+     109,
+     10465,
+     25590
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304161941-w023_20240304161941_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w023.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     10465,
+     25590
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc1667-w028": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251208130119-w028_20251208130119156_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    9355,
+    7585
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    74,
+    60
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 4440,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 7.9,
+   "chunks_planned_sparse": 182,
+   "sparse_fetch_GB_est": 0.33,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    null,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251208130119-w028_20251208130119156_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "067bf0fab127b2f626c427072163524d49155f9e4d139bf49fe5385746174fbf"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251208130119-w028_20251208130119156_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 206,
+    "sha256": "78f11b16a54282c3ca45c04175bc21096956a019d95d7a8d33c3ca6ddc8d6efd",
+    "shape": [
+     109,
+     9355,
+     7585
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251208130119-w028_20251208130119156_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w028.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     9355,
+     7585
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc1667-w029": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251212185248-w029_20251212185248662_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    9500,
+    7830
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    75,
+    62
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 4650,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 8.3,
+   "chunks_planned_sparse": 299,
+   "sparse_fetch_GB_est": 0.53,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    null,
+    null,
+    null
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251212185248-w029_20251212185248662_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "f36a32c04fb7fe1b045fd45d117fc6991433c6286577d0fb87a1128c8484e414"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251212185248-w029_20251212185248662_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 206,
+    "sha256": "6e33b6b5d93db9cc803d66590a5a41efd960abeb46281f5595b6b7f1dc5a8b9a",
+    "shape": [
+     109,
+     9500,
+     7830
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251212185248-w029_20251212185248662_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w029.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     9500,
+     7830
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc1667-w031": {
+   "scroll": "1667",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251223230000-w031_2025122323_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    9370,
+    8045
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    74,
+    63
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 4662,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 8.3,
+   "chunks_planned_sparse": 447,
+   "sparse_fetch_GB_est": 0.8,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    null,
+    1785856,
+    null
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251223230000-w031_2025122323_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "7e9c1685e03409998f1fb9e27ac412d9d96c5ae0e9ef13f97094931cb2d03fcf"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251223230000-w031_2025122323_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/2/.zarray",
+    "bytes": 206,
+    "sha256": "745c344e47881fd368cdb4c68724126979ee3fadde9a3bca9679ae0fdccc5b5f",
+    "shape": [
+     109,
+     9370,
+     8045
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20251223230000-w031_2025122323_flatboi/surface-volumes/2.399um-0.22m-78keV-volume-20251217075048.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc1667-w031.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     9370,
+     8045
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w00": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231016151002/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    7990,
+    12990
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    63,
+    102
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 6426,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 11.5,
+   "chunks_planned_sparse": 583,
+   "sparse_fetch_GB_est": 1.04,
+   "sparse_plan_source": "HF tree listing of supervision_mask nonempty chunks, +1-chunk dilation",
+   "sampled_chunk_bytes": [
+    null,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231016151002/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "cc8823194a641db0a487a201b2b333013f325aa49382bb597c43b06d20d45225"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231016151002/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "245fd92049dfb7b5e2b7cbb674cec584c5df1218df9df063766d1a677c7a610e",
+    "shape": [
+     109,
+     7990,
+     12990
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231016151002/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w00.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     7990,
+     12990
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w01": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230702185753/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    12650,
+    9100
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    99,
+    72
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 7128,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 12.7,
+   "chunks_planned_sparse": 1407,
+   "sparse_fetch_GB_est": 2.51,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230702185753/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "5155f017823ac6cce5f0dda37a0a330fbfbcd98971a64b4c6b1f42fef6030e0b"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230702185753/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "ceda97f8680230e792bc786cc84ac9ee3ab4d8c70ce1204a9563eac85a3dcb50",
+    "shape": [
+     109,
+     12650,
+     9100
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230702185753/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w01.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     12650,
+     9100
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w02": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231031143852/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    8545,
+    11005
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    67,
+    86
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 5762,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 10.3,
+   "chunks_planned_sparse": 811,
+   "sparse_fetch_GB_est": 1.45,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    1785856,
+    null,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231031143852/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "fb2ae133b069c3bc952609b01a814649a767b1ffe31181745e71c24f03a8fd93"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231031143852/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "95ff2319cd1e00171b725f16edcd352bc8dae2b77025ec1ba9c3fd588b6ec7c5",
+    "shape": [
+     109,
+     8545,
+     11005
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231031143852/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w02.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     8545,
+     11005
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w03": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231106155351/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    8575,
+    12810
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    67,
+    101
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 6767,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 12.1,
+   "chunks_planned_sparse": 1033,
+   "sparse_fetch_GB_est": 1.84,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    1785856,
+    null,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231106155351/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "5988437428028cfa072d27bea424ec697645931e50ec574a92907ac47567f97b"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231106155351/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "b4e25fb78ab621c14aae0aa4b63960069cb8d7b51a7e205ecb08e341779e7b24",
+    "shape": [
+     109,
+     8575,
+     12810
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231106155351/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w03.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     8575,
+     12810
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w05": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231012184424/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    12700,
+    18930
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    100,
+    148
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 14800,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 26.4,
+   "chunks_planned_sparse": 3044,
+   "sparse_fetch_GB_est": 5.44,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231012184424/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "776b22d857d03c6c94157e1e8ae0392745fdd6a56d8220fe7eead986141aa184"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231012184424/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 208,
+    "sha256": "b2da39cb18ca0382f7b356a368834bf4d6ac95bcb817eb50faefd87152ac787e",
+    "shape": [
+     109,
+     12700,
+     18930
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231012184424/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w05.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     12700,
+     18930
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w06": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231210121321/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    12750,
+    9995
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    100,
+    79
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 7900,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 14.1,
+   "chunks_planned_sparse": 1748,
+   "sparse_fetch_GB_est": 3.12,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231210121321/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "cf95285c9f7a7ff4752abf533647d5fca0145daed9e7e0db1d4e6c0ca2da8576"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231210121321/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "08b54aa77cdc720a892848bcc0a6d0b4976c1968d1702ebcee8949c3b3f77042",
+    "shape": [
+     109,
+     12750,
+     9995
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231210121321/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w06.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     12750,
+     9995
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w07": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231007101619/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    13010,
+    27035
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    102,
+    212
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 21624,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 38.6,
+   "chunks_planned_sparse": 2475,
+   "sparse_fetch_GB_est": 4.42,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    null,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231007101619/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3400,
+    "sha256": "549d42677e49060290cc625669aabf6a30ec2a5306e75e8b06a080b35ec8cd8c"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231007101619/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 208,
+    "sha256": "636a6c2eefca42107c4f89a9a207e3bc3fca330da1b859a57d6954ff185c3b80",
+    "shape": [
+     109,
+     13010,
+     27035
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20231007101619/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w07.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     13010,
+     27035
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "phercparis4-w09": {
+   "scroll": "Paris4",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230929220926/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    8020,
+    18950
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    63,
+    149
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 9387,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 16.8,
+   "chunks_planned_sparse": 645,
+   "sparse_fetch_GB_est": 1.15,
+   "sparse_plan_source": "HF tree listing of supervision_mask nonempty chunks, +1-chunk dilation",
+   "sampled_chunk_bytes": [
+    null,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    null,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230929220926/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zattrs",
+    "bytes": 3399,
+    "sha256": "94ace5a986d22414e621239d292df6aceb8ddebf10dbc16481c9e0b06e1082ba"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230929220926/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/2/.zarray",
+    "bytes": 207,
+    "sha256": "964bbfa3713ed5efa6f5f9be3dc9aa2c2ecc28445f071b0270726152be24d605",
+    "shape": [
+     109,
+     8020,
+     18950
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230929220926/surface-volumes/2.4um-0.22m-78keV-volume-20260411134726.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/phercparis4-w09.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     8020,
+     18950
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  },
+  "pherc0814-46527": {
+   "scroll": "0814",
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0814/segments/20260226000000-46527_2um_try2/surface-volumes/2.399um-0.22m-78keV-volume-20260309142202.zarr",
+   "level": 2,
+   "level_scale_um_zyx": [
+    2.399,
+    9.596,
+    9.596
+   ],
+   "shape": [
+    109,
+    2130,
+    3455
+   ],
+   "chunks": [
+    109,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "chunk_grid_zyx": [
+    1,
+    17,
+    27
+   ],
+   "z_slice_for_pooling": [
+    13,
+    97
+   ],
+   "chunks_total": 459,
+   "bytes_per_chunk_measured_mean": 1785856,
+   "full_fetch_GB": 0.8,
+   "chunks_planned_sparse": 75,
+   "sparse_fetch_GB_est": 0.13,
+   "sparse_plan_source": "local label plane, supervision max-filter +-128 px",
+   "sampled_chunk_bytes": [
+    1785856,
+    null,
+    1785856,
+    null,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856,
+    1785856
+   ],
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0814/segments/20260226000000-46527_2um_try2/surface-volumes/2.399um-0.22m-78keV-volume-20260309142202.zarr/.zattrs",
+    "bytes": 3467,
+    "sha256": "b2f95a926b15c680a6b8a957a56f08a0633773a5bb38c78a985262fdf29c23db"
+   },
+   "zarray_level2": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0814/segments/20260226000000-46527_2um_try2/surface-volumes/2.399um-0.22m-78keV-volume-20260309142202.zarr/2/.zarray",
+    "bytes": 206,
+    "sha256": "fa8593eb1bacda3ef5dd64a4e50641e9e8016d628804db783bb5ab35bab65eb0",
+    "shape": [
+     109,
+     2130,
+     3455
+    ],
+    "chunks": [
+     109,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0814/segments/20260226000000-46527_2um_try2/surface-volumes/2.399um-0.22m-78keV-volume-20260309142202.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "pooled_output": {
+    "path": "volumes/aligned9/pherc0814-46527.zarr",
+    "array": "0",
+    "shape": [
+     21,
+     2130,
+     3455
+    ],
+    "dtype": "uint8",
+    "chunks": [
+     21,
+     128,
+     128
+    ]
+   }
+  }
+ },
+ "eval_native_volumes_s3_level0": {
+  "w035": {
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+   "level": 0,
+   "scale_um": 9.362,
+   "shape": [
+    28,
+    5820,
+    5240
+   ],
+   "chunks": [
+    28,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "bytes_per_chunk": 458752,
+   "chunks_total": 1886,
+   "full_fetch_GB": 0.87,
+   "eval_crop_rows_cols": [
+    512,
+    2944,
+    384,
+    3072
+   ],
+   "eval_crop_chunks": 399,
+   "eval_crop_fetch_MB": 183.0,
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zattrs",
+    "bytes": 3481,
+    "sha256": "b95dec627c88cde2f89b5c8b685b73f0ad242838f798d597a2d426909d7fd8f3"
+   },
+   "zarray_level0": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/0/.zarray",
+    "bytes": 204,
+    "sha256": "198fe201477e275420a6100c383d382f6312b3c48ad8859bcea6c3aef34a8e5e",
+    "shape": [
+     28,
+     5820,
+     5240
+    ],
+    "chunks": [
+     28,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "note": "w035 crop rows 512:2944 cols 384:3072 (399 chunks) is the p2a_v3 control crop: on-record fwd 0.9991 / rev 0.5118 with the released seed42 step-075000 checkpoint"
+  },
+  "w039": {
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260302000000-w039_2026030210/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+   "level": 0,
+   "scale_um": 9.362,
+   "shape": [
+    28,
+    8560,
+    7720
+   ],
+   "chunks": [
+    28,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "bytes_per_chunk": 458752,
+   "chunks_total": 4087,
+   "full_fetch_GB": 1.87,
+   "eval_crop_rows_cols": [
+    3584,
+    4992,
+    2304,
+    5376
+   ],
+   "eval_crop_chunks": 264,
+   "eval_crop_fetch_MB": 121.1,
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260302000000-w039_2026030210/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zattrs",
+    "bytes": 3481,
+    "sha256": "6f96a330f4a2d1e35d28b746a11d5a51ebbb26be7e0362fc127535cfa97dc145"
+   },
+   "zarray_level0": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260302000000-w039_2026030210/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/0/.zarray",
+    "bytes": 204,
+    "sha256": "b3f0eeff1059ba1ac5e7b8e664f3c7512379c87e1e28abeb768ee10d4850fed2",
+    "shape": [
+     28,
+     8560,
+     7720
+    ],
+    "chunks": [
+     28,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260302000000-w039_2026030210/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "note": "w035 crop rows 512:2944 cols 384:3072 (399 chunks) is the p2a_v3 control crop: on-record fwd 0.9991 / rev 0.5118 with the released seed42 step-075000 checkpoint"
+  },
+  "w040": {
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20250831000000-w040_2025083102/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+   "level": 0,
+   "scale_um": 9.362,
+   "shape": [
+    28,
+    6400,
+    7980
+   ],
+   "chunks": [
+    28,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "bytes_per_chunk": 458752,
+   "chunks_total": 3150,
+   "full_fetch_GB": 1.45,
+   "eval_crop_rows_cols": [
+    512,
+    6144,
+    1408,
+    7936
+   ],
+   "eval_crop_chunks": 2244,
+   "eval_crop_fetch_MB": 1029.4,
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20250831000000-w040_2025083102/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zattrs",
+    "bytes": 3481,
+    "sha256": "cde869a04a8b490a960812af1d8a7c2f8eae2d471575da85c4f2b31803fb47d4"
+   },
+   "zarray_level0": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20250831000000-w040_2025083102/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/0/.zarray",
+    "bytes": 204,
+    "sha256": "063ef0a16a27b7b4aca77b64b50058ee65387a3881ac2a0603f49cbce380b353",
+    "shape": [
+     28,
+     6400,
+     7980
+    ],
+    "chunks": [
+     28,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20250831000000-w040_2025083102/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "note": "w035 crop rows 512:2944 cols 384:3072 (399 chunks) is the p2a_v3 control crop: on-record fwd 0.9991 / rev 0.5118 with the released seed42 step-075000 checkpoint"
+  },
+  "w041": {
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260108000000-w041_2026010816/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+   "level": 0,
+   "scale_um": 9.362,
+   "shape": [
+    28,
+    6200,
+    8020
+   ],
+   "chunks": [
+    28,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "bytes_per_chunk": 458752,
+   "chunks_total": 3087,
+   "full_fetch_GB": 1.42,
+   "eval_crop_rows_cols": [
+    1664,
+    5760,
+    384,
+    4736
+   ],
+   "eval_crop_chunks": 1088,
+   "eval_crop_fetch_MB": 499.1,
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260108000000-w041_2026010816/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zattrs",
+    "bytes": 3481,
+    "sha256": "800bd4060bc7f7cff48b655a16823fac76a5b2b3f7d1d186943cc2aabba0e4b3"
+   },
+   "zarray_level0": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260108000000-w041_2026010816/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/0/.zarray",
+    "bytes": 204,
+    "sha256": "4b6065d478699d3dc225ed72ed7bc4b1e703a9ef73307e9145dd1c538b047ef2",
+    "shape": [
+     28,
+     6200,
+     8020
+    ],
+    "chunks": [
+     28,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260108000000-w041_2026010816/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "note": "w035 crop rows 512:2944 cols 384:3072 (399 chunks) is the p2a_v3 control crop: on-record fwd 0.9991 / rev 0.5118 with the released seed42 step-075000 checkpoint"
+  },
+  "w044": {
+   "store": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260115000000-w044_2026011522/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+   "level": 0,
+   "scale_um": 9.362,
+   "shape": [
+    28,
+    6040,
+    8160
+   ],
+   "chunks": [
+    28,
+    128,
+    128
+   ],
+   "dtype": "|u1",
+   "fill_value": 0,
+   "compressor": null,
+   "dimension_separator": "/",
+   "bytes_per_chunk": 458752,
+   "chunks_total": 3072,
+   "full_fetch_GB": 1.41,
+   "eval_crop_rows_cols": [
+    3584,
+    4992,
+    1664,
+    4608
+   ],
+   "eval_crop_chunks": 253,
+   "eval_crop_fetch_MB": 116.1,
+   "zattrs": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260115000000-w044_2026011522/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zattrs",
+    "bytes": 3481,
+    "sha256": "fb8f9872638330a673e4066a0426c14732042337c2817148bb8ff887733d2ad2"
+   },
+   "zarray_level0": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260115000000-w044_2026011522/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/0/.zarray",
+    "bytes": 204,
+    "sha256": "64b36b3feb1f064de76c4ebdac6e1b4afaf332cc2aeae66b78aa55d200c21153",
+    "shape": [
+     28,
+     6040,
+     8160
+    ],
+    "chunks": [
+     28,
+     128,
+     128
+    ],
+    "dtype": "|u1",
+    "compressor": null,
+    "dimension_separator": "/"
+   },
+   "zgroup": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260115000000-w044_2026011522/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr/.zgroup",
+    "bytes": 19,
+    "sha256": "2b31f1f542fb152b20ff3afe0da0ed76e15b34cd4320854e2d1e6d8671b29d85"
+   },
+   "note": "w035 crop rows 512:2944 cols 384:3072 (399 chunks) is the p2a_v3 control crop: on-record fwd 0.9991 / rev 0.5118 with the released seed42 step-075000 checkpoint"
+  }
+ },
+ "totals": {
+  "training_level2_chunks_planned": 16482,
+  "training_level2_sparse_GB_est": 29.3,
+  "training_level2_full_chunks": 139133,
+  "training_level2_full_GB": 246.1,
+  "eval_native_crop_chunks": 4248,
+  "eval_native_crop_GB": 1.95,
+  "eval_native_full_GB": 7.01,
+  "labels_nonempty_chunk_files_est": "about 2 x 15,300 aligned + 2 x 600 native (skip all-zero chunks by xetHash); 3 metadata files per store",
+  "released_checkpoint_MB": 138.4,
+  "pod_disk_peak_GB_est": "about 20 env + 1 labels + 27-40 sparse level-2 (delete after pooling) + 8-12 pooled + 2 native crops + 4.4 checkpoints (2 seeds x 16 x 138 MB) -> request 120 GB container disk"
+ }
+}

@@ -54,6 +54,8 @@ def main():
     ap.add_argument("--min-ram", type=int, default=0, help="minimum RAM GB per GPU (REST minRAMPerGPU)")
     ap.add_argument("--cpu-flavor", default="", help="CPU-only pod: RunPod cpu flavor id (cpu3c compute $0.06/vCPU-h, cpu3g general 4 GB RAM/vCPU $0.08, cpu5c/cpu5g newer); no GPU is attached")
     ap.add_argument("--vcpu", type=int, default=16, help="vCPU count for a CPU-only pod (2-32)")
+    ap.add_argument("--fetch-dirs", default="", help="passed to pod_guard: served dirs to mirror before terminating")
+    ap.add_argument("--fetch-files", default="", help="passed to pod_guard: served files to save before terminating (also on FAILED/deadline)")
     ap.add_argument("--dry", action="store_true")
     a = ap.parse_args()
     attempts = ATTEMPTS
@@ -135,8 +137,13 @@ def main():
             break
     print("POD_ID", pid, "-- handing over to pod_guard")
     sys.stdout.flush()
-    rc = subprocess.call([PY, "-X", "utf8", GUARD, f"{pid}:{a.name}", "--deadline-hours", str(a.deadline_hours),
-                          "--out", a.out, "--no-status-min", str(a.no_status_min)])
+    cmd = [PY, "-X", "utf8", GUARD, f"{pid}:{a.name}", "--deadline-hours", str(a.deadline_hours),
+           "--out", a.out, "--no-status-min", str(a.no_status_min)]
+    if a.fetch_dirs:
+        cmd += ["--fetch-dirs", a.fetch_dirs]
+    if a.fetch_files:
+        cmd += ["--fetch-files", a.fetch_files]
+    rc = subprocess.call(cmd)
     print("guard exit", rc)
 
 

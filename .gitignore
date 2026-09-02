@@ -93,3 +93,7 @@ G1_RESULTS.json
 METROLOGY_BLOCK1.json
 ZROLL_PREP.json
 NUL
+
+# GrowPatch release v1 geometry (2026-09-02): small tifxyz, deliberate exceptions to the *.tif rule
+!hunt/pherc0813_release_v1/**/*.tif
+!hunt/pherc0826_release_v1/**/*.tif
