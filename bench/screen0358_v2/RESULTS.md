@@ -40,18 +40,31 @@ Renders took 160–240 s per patch on this host (v1's host: 1,619 s).
 
 ## Local five-gate battery (PROTOCOL_V2, 200 permutations, control first)
 
-_Running (`experiments/screen0358c/battery.log`); results are written to
-`trackD/out/screen0358_v2/battery_0358.json` and summarised here when done._
+`analyze_survey_corpus_v2.py` unchanged, driven by `run_battery_0358.py` (10 units × 200 joint 64-tile permutations,
+28 min on 8 cores); output `trackD/out/screen0358_v2/battery_0358.json`.
 
-| unit | gates passed | empirical p | note |
-|---|---|---|---|
-| w035_CONTROL_strided | pending | | must reproduce 5/5 or the battery is invalid |
-| 8 patches | pending | | flag rule ≥ 4 of 5 computable gates → "region worth human inspection", never letter language |
+| unit | gates passed | empirical p | period (mm) | fwd/rev r | note |
+|---|---|---|---|---|---|
+| w035_CONTROL_strided | **5/5** | 0.00498 (0/200) | 4.678 | 0.094 | z +16.26 — reproduces the protocol record exactly (prom 123.5, 11 cycles, bin 4/24) |
+| …619482 | 2/5 | 0.134 | 4.40 | 0.474 | cycles+band only |
+| …611879 | 0/5 | 0.174 | 7.41 | 0.482 | none |
+| …613379 | 0/5 | 0.507 | 7.20 | 0.552 | none |
+| …625980 | 2/5 | 0.567 | 1.92 | 0.585 | cycles+band only |
+| …621418 | 1/5 | 0.572 | 6.16 | 0.447 | autocorr only |
+| …615680 | 2/5 | 0.706 | 4.37 | 0.536 | cycles+band only |
+| …619178 | 2/5 | 0.751 | 5.13 | 0.586 | cycles+band only |
+| …624780 | 0/5 | 0.771 | 7.64 | 0.468 | none |
+
+**Verdict under PREREG_0358_v2: 0 of 8 flagged** (flag rule ≥ 4 of 5 computable gates; best patch 2/5). 0 of 8 at
+p ≤ 0.05 against 0.4 expected under the null; corrected z from −0.75 to +1.09; constrained (band-restricted) search: 0
+survivors; gate_fwd_rev 0/8 (r 0.45–0.59). The control passing 5/5 through the identical code path certifies the run.
+Per gate: significance 0/8, cycles 4/8, autocorr 1/8, band-bin 4/8, fwd/rev 0/8 — the same profile the 71-segment GP
+corpus showed (0/71).
 
 ## Reading (pre-registered)
 
 Expected outcome was NULL with sensitivity bounded by the corrected foreign-scroll anchor. The
-measurement is consistent with that: no tripwire, no depth asymmetry, hot pixels at speckle scale.
+measurement and the battery are consistent with that: no tripwire, no depth asymmetry, hot pixels at speckle scale.
 **A blank screen here is not evidence that these patches carry no text** — ink_9um reads 500p2a at
 0.52 with the pitch fault removed, so its sensitivity on a foreign scroll is near zero. The value of the
 run is what the prereg said it would be: the first-ever look at any recoverable surface of PHerc0358,
