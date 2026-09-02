@@ -1,0 +1,146 @@
+{
+ "checks": [
+  {
+   "name": "frag1_obs_and_tiles",
+   "ok": true,
+   "detail": "obs +1914.07 (stored +1914.07), tiles 2560 (stored 2560)"
+  },
+  {
+   "name": "frag1_null_draws_reproduce",
+   "ok": true,
+   "detail": "max |draw diff| vs stored = 0.000"
+  },
+  {
+   "name": "frag1_null_sd_2755",
+   "ok": true,
+   "detail": "sd 2755.28 (stored 2755.28), mean -39.08 (stored -39.08)"
+  },
+  {
+   "name": "frag1_null_heavy_tailed",
+   "ok": true,
+   "detail": "worst draw -12833, IQR [-992,+1334], excess kurtosis +9.84, single-draw variance share 55.3%, sd without it 1836.6"
+  },
+  {
+   "name": "frag1_slab_constants_reproduce",
+   "ok": true,
+   "detail": "sd*sqrt(n) over 7 slabs: min 57650 max 146740 (stored 57,650..146,740), ratio 2.55x"
+  },
+  {
+   "name": "plate_constants",
+   "ok": true,
+   "detail": "sd*sqrt(n): Frag1 139407, Frag2 59173, Frag6 79252 -> plate ratio 2.36x"
+  }
+ ],
+ "frag1_whole_plate": {
+  "obs": 1914.07,
+  "n_tiles": 2560,
+  "null_sd": 2755.28,
+  "null_mean": -39.08,
+  "worst_draw": -12833.4,
+  "iqr": [
+   -991.7,
+   1333.9
+  ],
+  "excess_kurtosis": 9.84,
+  "worst_draw_variance_share": 0.5529,
+  "sd_without_worst": 1836.6,
+  "sd_sqrt_n": 139407.0
+ },
+ "slabs_1024": [
+  {
+   "rows": [
+    0,
+    1023
+   ],
+   "n_tiles": 263,
+   "obs": 4188.8,
+   "null_sd": 9048.4,
+   "sd_sqrt_n": 146740.0
+  },
+  {
+   "rows": [
+    1024,
+    2047
+   ],
+   "n_tiles": 238,
+   "obs": 527.4,
+   "null_sd": 3736.9,
+   "sd_sqrt_n": 57650.0
+  },
+  {
+   "rows": [
+    2048,
+    3071
+   ],
+   "n_tiles": 333,
+   "obs": -1829.7,
+   "null_sd": 3520.3,
+   "sd_sqrt_n": 64240.0
+  },
+  {
+   "rows": [
+    3072,
+    4095
+   ],
+   "n_tiles": 378,
+   "obs": 2396.9,
+   "null_sd": 3437.6,
+   "sd_sqrt_n": 66835.0
+  },
+  {
+   "rows": [
+    4096,
+    5119
+   ],
+   "n_tiles": 409,
+   "obs": 3001.7,
+   "null_sd": 3464.1,
+   "sd_sqrt_n": 70056.0
+  },
+  {
+   "rows": [
+    5120,
+    6143
+   ],
+   "n_tiles": 359,
+   "obs": -2858.2,
+   "null_sd": 5131.4,
+   "sd_sqrt_n": 97226.0
+  },
+  {
+   "rows": [
+    6144,
+    7167
+   ],
+   "n_tiles": 319,
+   "obs": -66.0,
+   "null_sd": 3536.5,
+   "sd_sqrt_n": 63164.0
+  }
+ ],
+ "plates": {
+  "Frag1": {
+   "n_tiles": 2560,
+   "sd_recomputed": 2755.3,
+   "sd_stored": 2755.28,
+   "sd_sqrt_n": 139407.0,
+   "excess_kurtosis": 9.84
+  },
+  "Frag2": {
+   "n_tiles": 4014,
+   "sd_recomputed": 934.0,
+   "sd_stored": 933.97,
+   "sd_sqrt_n": 59173.0,
+   "excess_kurtosis": 0.05
+  },
+  "Frag6": {
+   "n_tiles": 1857,
+   "sd_recomputed": 1839.1,
+   "sd_stored": 1839.09,
+   "sd_sqrt_n": 79252.0,
+   "excess_kurtosis": -0.28
+  }
+ },
+ "verdict": "PREMISE REPRODUCED",
+ "elapsed_s": 10.9
+}

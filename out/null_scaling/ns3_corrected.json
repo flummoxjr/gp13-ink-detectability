@@ -1,0 +1,223 @@
+{
+ "whole_plate": {
+  "obs": 1914.1,
+  "block": [
+   2,
+   8
+  ],
+  "boot_sd": 1227.6,
+  "boot_sd_10seeds": {
+   "mean": 1232.8,
+   "sd": 7.84,
+   "cv_pct": 0.64
+  },
+  "z_corrected": 1.559,
+  "sensitivity": {
+   "block_1x1": {
+    "sd": 929.0,
+    "n_blocks": 2560
+   },
+   "block_1x4": {
+    "sd": 1134.3,
+    "n_blocks": 1715
+   },
+   "block_2x4": {
+    "sd": 1150.3,
+    "n_blocks": 1066
+   },
+   "block_2x8": {
+    "sd": 1228.4,
+    "n_blocks": 764
+   },
+   "block_3x8": {
+    "sd": 1217.3,
+    "n_blocks": 551
+   },
+   "block_4x12": {
+    "sd": 1256.4,
+    "n_blocks": 341
+   }
+  },
+  "rigid_40draw_sd": 2755.3,
+  "rigid_400draw_sd": 2091.9,
+  "g1_threshold": 2300.0
+ },
+ "rigid_400_ensemble": {
+  "sd": 2091.9,
+  "mean": -246.0,
+  "sd_wo_first40": 2008.4,
+  "sd_ci95_bootstrap": [
+   1849.0,
+   2354.2
+  ],
+  "z_obs_vs_400": 1.033
+ },
+ "V1_null_field_boot": {
+  "n_fields": 40,
+  "median": 1452.1,
+  "q25": 1265.9,
+  "q75": 1845.2,
+  "target_rigid_400_sd": 2091.9,
+  "note": "single-field bootstrap vs between-draw ensemble sd; a shortfall is the between-region (nonstationarity) component the single field cannot see"
+ },
+ "slabs": [
+  {
+   "rows": [
+    0,
+    1023
+   ],
+   "n_tiles": 263,
+   "n_blocks": 82,
+   "obs": 4188.8,
+   "rigid_ref_400": 10437.3,
+   "rigid_40draw_10x": {
+    "min": 5763.3,
+    "max": 13680.1,
+    "cv_pct": 22.1
+   },
+   "boot_sd": 3498.7,
+   "boot_10seed_cv_pct": 0.45,
+   "boot_over_ref": 0.335,
+   "sd_sqrt_n_boot": 56740.0,
+   "sd_sqrt_n_ref": 169265.0
+  },
+  {
+   "rows": [
+    1024,
+    2047
+   ],
+   "n_tiles": 238,
+   "n_blocks": 84,
+   "obs": 527.4,
+   "rigid_ref_400": 3912.6,
+   "rigid_40draw_10x": {
+    "min": 3196.2,
+    "max": 4595.3,
+    "cv_pct": 11.3
+   },
+   "boot_sd": 2605.9,
+   "boot_10seed_cv_pct": 0.61,
+   "boot_over_ref": 0.666,
+   "sd_sqrt_n_boot": 40202.0,
+   "sd_sqrt_n_ref": 60361.0
+  },
+  {
+   "rows": [
+    2048,
+    3071
+   ],
+   "n_tiles": 333,
+   "n_blocks": 110,
+   "obs": -1829.7,
+   "rigid_ref_400": 3513.9,
+   "rigid_40draw_10x": {
+    "min": 3187.4,
+    "max": 3847.3,
+    "cv_pct": 6.5
+   },
+   "boot_sd": 3689.2,
+   "boot_10seed_cv_pct": 0.53,
+   "boot_over_ref": 1.05,
+   "sd_sqrt_n_boot": 67321.0,
+   "sd_sqrt_n_ref": 64122.0
+  },
+  {
+   "rows": [
+    3072,
+    4095
+   ],
+   "n_tiles": 378,
+   "n_blocks": 133,
+   "obs": 2396.9,
+   "rigid_ref_400": 4162.3,
+   "rigid_40draw_10x": {
+    "min": 2926.2,
+    "max": 6275.4,
+    "cv_pct": 23.6
+   },
+   "boot_sd": 2513.6,
+   "boot_10seed_cv_pct": 0.69,
+   "boot_over_ref": 0.604,
+   "sd_sqrt_n_boot": 48869.0,
+   "sd_sqrt_n_ref": 80924.0
+  },
+  {
+   "rows": [
+    4096,
+    5119
+   ],
+   "n_tiles": 409,
+   "n_blocks": 140,
+   "obs": 3001.7,
+   "rigid_ref_400": 3658.1,
+   "rigid_40draw_10x": {
+    "min": 2949.1,
+    "max": 4361.3,
+    "cv_pct": 13.8
+   },
+   "boot_sd": 2375.3,
+   "boot_10seed_cv_pct": 0.43,
+   "boot_over_ref": 0.649,
+   "sd_sqrt_n_boot": 48038.0,
+   "sd_sqrt_n_ref": 73980.0
+  },
+  {
+   "rows": [
+    5120,
+    6143
+   ],
+   "n_tiles": 359,
+   "n_blocks": 105,
+   "obs": -2858.2,
+   "rigid_ref_400": 4673.8,
+   "rigid_40draw_10x": {
+    "min": 4022.5,
+    "max": 5719.4,
+    "cv_pct": 11.6
+   },
+   "boot_sd": 2916.8,
+   "boot_10seed_cv_pct": 0.52,
+   "boot_over_ref": 0.624,
+   "sd_sqrt_n_boot": 55266.0,
+   "sd_sqrt_n_ref": 88555.0
+  },
+  {
+   "rows": [
+    6144,
+    7167
+   ],
+   "n_tiles": 319,
+   "n_blocks": 101,
+   "obs": -66.0,
+   "rigid_ref_400": 4585.6,
+   "rigid_40draw_10x": {
+    "min": 3536.5,
+    "max": 5504.8,
+    "cv_pct": 13.2
+   },
+   "boot_sd": 3752.7,
+   "boot_10seed_cv_pct": 0.65,
+   "boot_over_ref": 0.818,
+   "sd_sqrt_n_boot": 67025.0,
+   "sd_sqrt_n_ref": 81902.0
+  }
+ ],
+ "stability_summary": {
+  "rigid_40draw_cv_pct": {
+   "min": 6.5,
+   "max": 23.6,
+   "median": 13.2
+  },
+  "boot_seed_cv_pct": {
+   "min": 0.43,
+   "max": 0.69,
+   "median": 0.53
+  },
+  "boot_over_converged_ref": {
+   "min": 0.335,
+   "max": 1.05,
+   "median": 0.649
+  }
+ },
+ "elapsed_s": 4.0
+}

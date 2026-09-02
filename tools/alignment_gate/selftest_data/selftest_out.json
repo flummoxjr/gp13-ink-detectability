@@ -1,0 +1,203 @@
+{
+ "tool": "alignment_gate",
+ "version": "1.0.0",
+ "params": {
+  "cube": 256,
+  "block": 32,
+  "sigma": 1.0,
+  "reject_deg": 30.0,
+  "split": 1
+ },
+ "calibration": {
+  "published_reference_median_deg": 13.1,
+  "published_reference_within_30deg": "7/9",
+  "random_null_median_deg": 60.0,
+  "failed_population_median_deg": 68.1,
+  "failed_population_within_30deg": "0/8",
+  "reject_above_deg": 30.0,
+  "source": "PHerc0813 mesh-lamella alignment, sentinel-fixed method, 2026-08"
+ },
+ "volume": {
+  "path": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\alignment_gate\\selftest_data\\vol.npy",
+  "shape": [
+   200,
+   200,
+   200
+  ]
+ },
+ "overall_verdict": "REJECT",
+ "meshes": [
+  {
+   "mesh": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\alignment_gate\\selftest_data\\aligned",
+   "grid_shape": [
+    64,
+    64
+   ],
+   "valid_fraction": 1.0,
+   "n_contributing_vertices": 3844,
+   "tiles": [
+    {
+     "tile": [
+      0,
+      0
+     ],
+     "n_vertices": 3844,
+     "site_zyx": [
+      80.0,
+      83.0,
+      83.0
+     ],
+     "mesh_normal_zyx": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "angle_deg": 0.0,
+     "verdict": "ALIGNED",
+     "note": "mesh follows the sheets",
+     "n_blocks": 216,
+     "mean_coherence": 0.9999,
+     "sheet_normal_zyx": [
+      0.9999999999784766,
+      1.7422330955443096e-06,
+      -6.325474782954523e-06
+     ]
+    }
+   ],
+   "median_angle_deg": 0.0,
+   "verdict": "ALIGNED",
+   "note": "mesh follows the sheets",
+   "n_tiles_rejected": 0,
+   "n_tiles": 1
+  },
+  {
+   "mesh": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\alignment_gate\\selftest_data\\aligned_sentinel",
+   "grid_shape": [
+    64,
+    64
+   ],
+   "valid_fraction": 0.817383,
+   "n_contributing_vertices": 3100,
+   "tiles": [
+    {
+     "tile": [
+      0,
+      0
+     ],
+     "n_vertices": 3100,
+     "site_zyx": [
+      80.0,
+      83.0,
+      83.0
+     ],
+     "mesh_normal_zyx": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "angle_deg": 0.0,
+     "verdict": "ALIGNED",
+     "note": "mesh follows the sheets",
+     "n_blocks": 216,
+     "mean_coherence": 0.9999,
+     "sheet_normal_zyx": [
+      0.9999999999784766,
+      1.7422330955443096e-06,
+      -6.325474782954523e-06
+     ]
+    }
+   ],
+   "median_angle_deg": 0.0,
+   "verdict": "ALIGNED",
+   "note": "mesh follows the sheets",
+   "n_tiles_rejected": 0,
+   "n_tiles": 1
+  },
+  {
+   "mesh": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\alignment_gate\\selftest_data\\oblique45",
+   "grid_shape": [
+    64,
+    64
+   ],
+   "valid_fraction": 1.0,
+   "n_contributing_vertices": 3844,
+   "tiles": [
+    {
+     "tile": [
+      0,
+      0
+     ],
+     "n_vertices": 3844,
+     "site_zyx": [
+      79.29999923706055,
+      83.0,
+      99.29999923706055
+     ],
+     "mesh_normal_zyx": [
+      -0.7071067656483827,
+      0.0,
+      0.707106796724712
+     ],
+     "angle_deg": 45.0,
+     "verdict": "REJECT",
+     "note": "oblique to the sheets",
+     "n_blocks": 216,
+     "mean_coherence": 0.9999,
+     "sheet_normal_zyx": [
+      0.9999999999784766,
+      1.7422330955443096e-06,
+      -6.325474782954523e-06
+     ]
+    }
+   ],
+   "median_angle_deg": 45.0,
+   "verdict": "REJECT",
+   "note": "oblique to the sheets",
+   "n_tiles_rejected": 1,
+   "n_tiles": 1
+  },
+  {
+   "mesh": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\alignment_gate\\selftest_data\\orthogonal",
+   "grid_shape": [
+    64,
+    64
+   ],
+   "valid_fraction": 1.0,
+   "n_contributing_vertices": 3844,
+   "tiles": [
+    {
+     "tile": [
+      0,
+      0
+     ],
+     "n_vertices": 3844,
+     "site_zyx": [
+      83.0,
+      83.0,
+      100.0
+     ],
+     "mesh_normal_zyx": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "angle_deg": 90.0,
+     "verdict": "REJECT",
+     "note": "mesh cuts ACROSS the sheets",
+     "n_blocks": 216,
+     "mean_coherence": 0.9999,
+     "sheet_normal_zyx": [
+      0.9999999999784766,
+      1.7422330955443096e-06,
+      -6.325474782954523e-06
+     ]
+    }
+   ],
+   "median_angle_deg": 90.0,
+   "verdict": "REJECT",
+   "note": "mesh cuts ACROSS the sheets",
+   "n_tiles_rejected": 1,
+   "n_tiles": 1
+  }
+ ]
+}

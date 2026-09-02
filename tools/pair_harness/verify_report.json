@@ -1,0 +1,41 @@
+{
+  "original_path": "C:\\Users\\benbl\\AppData\\Local\\Temp\\claude\\C--Users-benbl-Desktop-Vsuvious\\35d67aba-4ea6-4b13-a3c0-2f3fc87bbe13\\scratchpad\\ship\\pair_harness\\original\\extract_fusion_sites.py",
+  "original_sha256": "209b0141e10768642d537fb88d4324c7f7c6fa248c5896c9608d6c54e4027ab9",
+  "cases": 3,
+  "numpy": "2.5.2",
+  "scipy": "1.18.0",
+  "python": "3.12.10",
+  "sites": {
+    "rows_orig": 1200,
+    "rows_port": 1200,
+    "identical": true
+  },
+  "diag": {
+    "rows_orig": 3,
+    "rows_port": 3,
+    "identical": true
+  },
+  "funnel_totals": {
+    "n_pairs_tight_raw": 13824,
+    "clean_2-3": 0,
+    "clean_3-4": 6624,
+    "clean_4-5": 6912,
+    "clean_5-6.01": 0,
+    "ccpass_2-3": 0,
+    "ccpass_3-4": 5328,
+    "ccpass_4-5": 6912,
+    "ccpass_5-6.01": 0,
+    "n_tight_final": 900,
+    "n_loose_final": 300
+  },
+  "coverage_checks": {
+    "raw_candidates>0": true,
+    "step2_rejections>0": true,
+    "step3_rejections>0": true,
+    "tight_sites>0": true,
+    "loose_sites>0": true,
+    "mismatch_blank_case1": true,
+    "mismatch_filled_case2+": true
+  },
+  "verdict": "PASS"
+}

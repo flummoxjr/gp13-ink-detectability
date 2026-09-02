@@ -1,0 +1,92 @@
+2026-08-24T23:26:22Z BOOT pod_curve_audit v1 pid=22 host=9a162c143584 root=/workspace/curve -- status live; server next
+2026-08-24T23:26:23Z SERVE http.server pid=54 0.0.0.0:8000 dir=/workspace/curve/out external=https://s70r8trh4epogu-8000.proxy.runpod.net/status.txt local_probe=200
+2026-08-24T23:26:23Z PREREG locked prereg.json sha256=ab3e8d9d4c6d -- decision rules recorded before any provisioning, download, or data
+2026-08-24T23:26:23Z scripts written to /workspace/curve/scripts (analysis code locked before provisioning)
+2026-08-24T23:26:23Z === STAGE provision OPEN ===
+2026-08-24T23:26:32Z provision: villa @ a3f2c29
+2026-08-24T23:26:34Z provision: uv sync starting (full log at /provision.log on :8000)
+2026-08-24T23:27:23Z HEARTBEAT stage=provision up=61s free=88G
+2026-08-24T23:28:23Z HEARTBEAT stage=provision up=121s free=77G
+2026-08-24T23:28:29Z === STAGE provision DONE (126s) ===
+2026-08-24T23:28:29Z === STAGE ckpt OPEN ===
+2026-08-24T23:28:37Z ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad
+2026-08-24T23:28:37Z === STAGE ckpt DONE (8s) ===
+2026-08-24T23:28:37Z === STAGE frag1 OPEN ===
+2026-08-24T23:28:41Z frag1 fetch: layer 00 done
+2026-08-24T23:29:23Z HEARTBEAT stage=frag1 up=181s free=76G
+2026-08-24T23:30:23Z HEARTBEAT stage=frag1 up=241s free=76G
+2026-08-24T23:31:23Z HEARTBEAT stage=frag1 up=301s free=76G
+2026-08-24T23:32:23Z HEARTBEAT stage=frag1 up=361s free=76G
+2026-08-24T23:33:23Z HEARTBEAT stage=frag1 up=421s free=76G
+2026-08-24T23:33:48Z frag1 fetch: layer 10 done
+2026-08-24T23:34:23Z HEARTBEAT stage=frag1 up=481s free=76G
+2026-08-24T23:35:23Z HEARTBEAT stage=frag1 up=541s free=76G
+2026-08-24T23:36:23Z HEARTBEAT stage=frag1 up=601s free=75G
+2026-08-24T23:37:23Z HEARTBEAT stage=frag1 up=661s free=75G
+2026-08-24T23:38:23Z HEARTBEAT stage=frag1 up=721s free=75G
+2026-08-24T23:38:44Z frag1 fetch: layer 20 done
+2026-08-24T23:39:23Z HEARTBEAT stage=frag1 up=781s free=75G
+2026-08-24T23:40:23Z HEARTBEAT stage=frag1 up=841s free=74G
+2026-08-24T23:41:23Z HEARTBEAT stage=frag1 up=901s free=74G
+2026-08-24T23:42:23Z HEARTBEAT stage=frag1 up=961s free=74G
+2026-08-24T23:42:46Z frag1 fetch: layer 30 done
+2026-08-24T23:43:23Z HEARTBEAT stage=frag1 up=1021s free=73G
+2026-08-24T23:44:23Z HEARTBEAT stage=frag1 up=1081s free=73G
+2026-08-24T23:45:23Z HEARTBEAT stage=frag1 up=1141s free=73G
+2026-08-24T23:46:00Z frag1 fetch: layer 40 done
+2026-08-24T23:46:23Z HEARTBEAT stage=frag1 up=1201s free=73G
+2026-08-24T23:47:23Z HEARTBEAT stage=frag1 up=1261s free=72G
+2026-08-24T23:48:23Z HEARTBEAT stage=frag1 up=1321s free=72G
+2026-08-24T23:48:47Z retry 1/3 failed: fetch_one -- backoff 10s
+2026-08-24T23:49:23Z HEARTBEAT stage=frag1 up=1381s free=72G
+2026-08-24T23:50:23Z HEARTBEAT stage=frag1 up=1441s free=72G
+2026-08-24T23:51:23Z HEARTBEAT stage=frag1 up=1501s free=72G
+2026-08-24T23:52:23Z HEARTBEAT stage=frag1 up=1561s free=72G
+2026-08-24T23:53:24Z HEARTBEAT stage=frag1 up=1622s free=72G
+2026-08-24T23:54:24Z HEARTBEAT stage=frag1 up=1682s free=72G
+2026-08-24T23:55:24Z HEARTBEAT stage=frag1 up=1742s free=72G
+2026-08-24T23:56:21Z frag1 fetch: layer 50 done
+2026-08-24T23:56:24Z HEARTBEAT stage=frag1 up=1802s free=72G
+2026-08-24T23:57:24Z HEARTBEAT stage=frag1 up=1862s free=72G
+2026-08-24T23:58:24Z HEARTBEAT stage=frag1 up=1922s free=72G
+2026-08-24T23:59:24Z HEARTBEAT stage=frag1 up=1982s free=71G
+2026-08-24T23:59:34Z frag1 fetch: layer 60 done
+2026-08-25T00:00:24Z HEARTBEAT stage=frag1 up=2042s free=71G
+2026-08-25T00:01:24Z HEARTBEAT stage=frag1 up=2102s free=71G
+2026-08-25T00:02:24Z HEARTBEAT stage=frag1 up=2162s free=71G
+2026-08-25T00:03:24Z HEARTBEAT stage=frag1 up=2222s free=71G
+2026-08-25T00:04:24Z HEARTBEAT stage=frag1 up=2282s free=71G
+2026-08-25T00:04:47Z frag1 fetch complete (6.3G); verifying every IFD
+2026-08-25T00:04:49Z FRAG1_VERIFY layer 00 SO=260 endian=MM ok
+2026-08-25T00:04:54Z FRAG1_VERIFY layer 10 SO=262 endian=MM ok
+2026-08-25T00:05:01Z FRAG1_VERIFY layer 20 SO=262 endian=MM ok
+2026-08-25T00:05:06Z FRAG1_VERIFY layer 30 SO=262 endian=MM ok
+2026-08-25T00:05:07Z FRAG1_VERIFY layer 40 SO=262 endian=MM ok
+2026-08-25T00:05:07Z FRAG1_VERIFY layer 50 SO=262 endian=MM ok
+2026-08-25T00:05:08Z FRAG1_VERIFY layer 60 SO=262 endian=MM ok
+2026-08-25T00:05:09Z FRAG1_VERIFY all 65 layers parsed per-file; observed StripOffsets histogram {260: 10, 262: 55} (expected {260:10, 262:55} -- parsed, not assumed); labels sha256 + class counts EXACT match
+2026-08-25T00:05:09Z === STAGE frag1 DONE (2192s) ===
+2026-08-25T00:05:09Z === STAGE expa_build OPEN ===
+2026-08-25T00:05:09Z BUILD baseline: 3.24 -> 9.36um, target (23,2832,2191) uint16
+2026-08-25T00:05:24Z HEARTBEAT stage=expa_build up=2342s free=70G
+2026-08-25T00:06:24Z HEARTBEAT stage=expa_build up=2402s free=70G
+2026-08-25T00:07:24Z HEARTBEAT stage=expa_build up=2462s free=69G
+2026-08-25T00:08:24Z HEARTBEAT stage=expa_build up=2522s free=67G
+2026-08-25T00:09:24Z HEARTBEAT stage=expa_build up=2582s free=66G
+2026-08-25T00:09:24Z resample baseline slice 1/23
+2026-08-25T00:09:31Z resample baseline slice 9/23
+2026-08-25T00:09:39Z resample baseline slice 17/23
+2026-08-25T00:09:49Z BUILD baseline done: /workspace/curve/data/frag1_base_u16.zarr
+2026-08-25T00:09:50Z probe: running inference on a uint16 crop to confirm dtype acceptance
+2026-08-25T00:10:03Z probe PASSED: uint16 accepted (tifxyz_robust casts to float32) -- PLAN A
+2026-08-25T00:10:03Z === STAGE expa_build DONE (294s) ===
+2026-08-25T00:10:03Z === STAGE expa_baseline OPEN ===
+2026-08-25T00:10:03Z infer OPEN frag1_base_u16.zarr -> expA_base.tif [both]
+2026-08-25T00:10:24Z HEARTBEAT stage=expa_baseline up=2642s free=70G
+2026-08-25T00:10:34Z infer DONE expA_base.tif [both] (31s)
+2026-08-25T00:10:51Z EXPA_BASELINE AUC[forward] = 0.6925 (pos=5339364 neg=23803476)
+2026-08-25T00:10:52Z EXPA_BASELINE AUC[reverse] = 0.4477 (pos=5339364 neg=23803476)
+2026-08-25T00:10:52Z EXPA_BASELINE GATE FAILED: best AUC 0.6925 < 0.85 -- pre-registered verdict KILLED_BASELINE; the whole run aborts (evidence in results/expA_baseline.json + previews)
+2026-08-25T00:10:52Z FATAL stage=expa_baseline exit=21 line=321 cmd: uv run --no-sync --extra models python "$@"
+2026-08-25T00:10:52Z FAILED -- run is dead; status + logs stay served on :8000; fix or fetch, then TERMINATE THE POD (it bills until you do)
+2026-08-25T00:11:24Z HEARTBEAT stage=FAILED up=2702s free=70G

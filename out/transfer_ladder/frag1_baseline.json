@@ -1,0 +1,7 @@
+{
+ "auc_forward": 0.6924957676009699,
+ "auc_reverse": 0.4477044357829138,
+ "direction": "forward",
+ "gate": 0.85,
+ "gate_passed": false
+}

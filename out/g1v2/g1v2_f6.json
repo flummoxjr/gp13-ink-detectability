@@ -1,0 +1,83 @@
+{
+ "fragment": "Frag6",
+ "plate": "PHerc51Cr4Fr8 PHerc0051Cr04Fr08_53keV_3.24um surface_processing",
+ "analysis_band": "fetched band, plate rows 640..8351 (7712 x 6205)",
+ "grid": [
+  241,
+  193
+ ],
+ "n_tiles": 1857,
+ "obs": 1113.53,
+ "sum_weight": 505988.0,
+ "G0": {
+  "paired_auc": 0.9616,
+  "v1_value": 0.9616,
+  "reproduces_v1": true,
+  "passes": true
+ },
+ "block_null": {
+  "block": [
+   2,
+   8
+  ],
+  "nrep": 4000,
+  "boot_sd": 1229.2,
+  "n_blocks": 660,
+  "seed_headline": 2,
+  "boot_sd_10seeds": {
+   "mean": 1223.0,
+   "sd": 6.49,
+   "cv_pct": 0.53
+  },
+  "sensitivity": {
+   "block_1x1": {
+    "sd": 1042.5,
+    "n_blocks": 1857
+   },
+   "block_1x4": {
+    "sd": 1147.7,
+    "n_blocks": 1416
+   },
+   "block_2x4": {
+    "sd": 1214.8,
+    "n_blocks": 863
+   },
+   "block_2x8": {
+    "sd": 1230.4,
+    "n_blocks": 660
+   },
+   "block_3x8": {
+    "sd": 1293.0,
+    "n_blocks": 470
+   },
+   "block_4x12": {
+    "sd": 1281.8,
+    "n_blocks": 288
+   }
+  }
+ },
+ "z_block": 0.9059,
+ "rigid_diag": {
+  "n_draws": 400,
+  "sd": 1596.6,
+  "mean": 139.6,
+  "sd_first40": 1839.1,
+  "mean_first40": 767.1,
+  "first40_match_v1": true,
+  "v1_sd40": 1839.09,
+  "v1_mean40": 767.08,
+  "z_vs_400": 0.61,
+  "null_tiles": {
+   "min": 1001,
+   "median": 1349,
+   "max": 1887
+  }
+ },
+ "reproduction": {
+  "obs_v1": 1113.53,
+  "n_v1": 1857,
+  "obs_ok": true,
+  "n_ok": true
+ },
+ "elapsed_s": 55.7
+}

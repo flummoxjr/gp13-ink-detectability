@@ -1,0 +1,31 @@
+{
+  "locked_before": "any provisioning, download, or data contact",
+  "seed": 20260824,
+  "expA": {
+    "scoring": "exact tie-corrected pixel rank-AUC on the native 3.24um grid; predictions bilinearly upsampled to native; 16-bit histogram bins (map*257)",
+    "positives": "inklabels & mask (expected 5339364 px)",
+    "negatives": "mask & ~inklabels (expected 23803476 px)",
+    "baseline_gate": "AUC_base = max(forward, reverse) on the undegraded 3.24->9.36um resample; if AUC_base < 0.85 the ENTIRE run aborts as KILLED_BASELINE",
+    "baseline_gate_justification": "0.85 keeps 0.35 of range above chance, the minimum that can order 13 rungs; an instrument that cannot read the undegraded plate supports no degradation claim",
+    "rung_direction": "the baseline argmax direction (tie -> forward) for every rung",
+    "detectable_rule": "DETECTABLE <=> AUC_rung >= 0.75 AND (AUC_rung-0.5)/(AUC_base-0.5) >= 0.50; detectability limit = coarsest DETECTABLE pitch",
+    "pitch_rungs_um": [4.0, 5.0, 6.5, 8.0, 9.36, 12.0],
+    "pitch_harness": "anti-aliased resample 3.24->P (Gaussian sigma=(f-1)/2 source px, linear, grid_mode) then regrid P->9.36 so the model always runs at its trained pitch; measures acquisition information, not model scale sensitivity; the 9.36 rung is identical to baseline by construction and reported as reused",
+    "noise_rungs": "sigma_add = k*sigma_plate for k in {1,2,4,8} at the 9.36 grid, clipped to dtype; sigma_plate = 1.4826*median|(I_z - I_{z+1})/sqrt(2)| over in-mask voxels of the central 17 baseline slices; SNR falls to {0.71,0.45,0.24,0.12} of the plate as scanned",
+    "bitdepth_rung": "uint8 = rint(uint16/257), full-range released-volume windowing; DEGENERATE-flagged if baseline had to fall back to uint8",
+    "blur_rungs_sigma_px": [1.0, 2.0],
+    "blur_note": "3D isotropic Gaussian at 9.36um; FWHM 22 and 44 um (PSF-like)"
+  },
+  "expB": {
+    "inputs": ["win1", "win2", "win3", "frag1"],
+    "primary_scale": "resampled to 9.36um; native-4.32um passes are sensitivity only, never verdict-bearing",
+    "audited_cell": "per input, the direction (fwd/rev) with the higher REAL AUC at the primary scale; both directions reported",
+    "real_auc": "pos = label & mask, neg = mask & ~label; win3 positives are ink AND mask only, its 621303 out-of-mask ink px excluded from both classes",
+    "null": "40 rigid translations of the (label & mask) shape image, seed 20260824, drawn once per input on the native grid; |shift|_inf in [4.4mm, 0.40*min(H,W)]; accepted iff >= 50000 pseudo-positive px; pos_i = T_i(shapes) & mask & ~label; neg_i = mask & ~label & ~T_i(shapes) -- the whole comparison lives inside (mask==1 AND label==0)",
+    "shape_confounded_threshold": "in the audited cell: median of the 40 translated-label AUCs >= 0.60, OR >= 20% of the 40 individually >= 0.60",
+    "shape_confounded_justification": "a rigid translation carries zero information about true ink; min shift 4.4mm >= ~1.5-2 letter heights so translated strokes cannot overlap their sources; 0.60 is 0.10 above chance, beyond any plausible translation-sampling spread (empirical spread reported beside the verdict), yet far below genuine detection, so real signal cannot trip it. The 20%-of-draws OR-clause catches PERIODIC confounds: text-row structure re-aligns only at shifts near multiples of the line spacing, inflating the null max while leaving the median at or below 0.5 (demonstrated in pre-launch synthetic validation: row-confound null median 0.44, max 0.96); under a clean null, 8 of 40 draws above 0.60 has ~zero probability",
+    "genuine_rule": "GENUINE <=> not SHAPE-CONFOUNDED, AND AUC_real > max of the 40 translated AUCs (rank p = 1/41 ~= 0.024; every positive beats a matched null), AND gap = AUC_real - median(translated) >= 0.15; otherwise INDETERMINATE",
+    "headline": "gap = AUC_real - median(translated AUC), reported for every cell"
+  },
+  "data_gates": "exact label-count and sha256 asserts (embedded expectations); any mismatch -> KILLED with evidence"
+}

@@ -1,0 +1,50 @@
+{
+ "rule": "BULK = inmask_mean at argmax-layer of the inmask-MEAN depth profile, minus I_air (rule replicates pilot 6434.3 vs committed 6434)",
+ "pilot_replication": {
+  "band_rows": [
+   4128,
+   4223
+  ],
+  "I_air_pilot": 23349.0,
+  "peak_layer_median_profile": 26,
+  "peak_layer_mean_profile": 25,
+  "candidates_vs_6434": {
+   "mean_at_median_peak_layer": 6357.8,
+   "mean_at_mean_peak_layer": 6434.3,
+   "mean_over_peak_pm1": 6214.9,
+   "mean_over_peak_pm2": 5942.6,
+   "median_at_median_peak_layer": 7308.0
+  }
+ },
+ "Frag1": {
+  "BULK_used": 6434.0,
+  "source": "committed v1-prereg anchor (pilot band, I_air 23349)",
+  "whole_plate_same_rule": {
+   "peak_layer": 28,
+   "I_air": 23263.0,
+   "value": 5947.3
+  }
+ },
+ "Frag2": {
+  "BULK_used": 3311.3,
+  "peak_layer": 27,
+  "I_air": 24674.0,
+  "source": "fetched band, same rule as pilot",
+  "sensitivity": {
+   "mean_at_median_peak": 3274.6,
+   "median_at_median_peak": 2785.0,
+   "mean_peak_pm1": 3288.0
+  }
+ },
+ "Frag6": {
+  "BULK_used": 5262.1,
+  "peak_layer": 27,
+  "I_air": 27115.0,
+  "source": "fetched band, same rule as pilot",
+  "sensitivity": {
+   "mean_at_median_peak": 5262.1,
+   "median_at_median_peak": 5107.0,
+   "mean_peak_pm1": 5180.5
+  }
+ }
+}

@@ -1,0 +1,218 @@
+[
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w016",
+  "sample": "PHerc0139",
+  "seg": "20250108000004-w029_2025010827",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w017",
+  "sample": "PHerc0139",
+  "seg": "20250108000005-w030_2025010818",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w028",
+  "sample": "PHerc0139",
+  "seg": "20260115000000-w044_2026011522",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w029",
+  "sample": "PHerc0139",
+  "seg": "20260126000000-w045_2026012619",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w035",
+  "sample": "PHerc0139",
+  "seg": "20260317000000-w035_2026031718",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w039",
+  "sample": "PHerc0139",
+  "seg": "20260302000000-w039_2026030210",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w040",
+  "sample": "PHerc0139",
+  "seg": "20250831000000-w040_2025083102",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w041",
+  "sample": "PHerc0139",
+  "seg": "20260108000000-w041_2026010816",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0139-w043",
+  "sample": "PHerc0139",
+  "seg": "20260112000000-w043_2026011217",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc0814-46527",
+  "sample": "PHerc0814",
+  "seg": "20260226000000-46527_2um_try2",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w013",
+  "sample": "PHerc1667",
+  "seg": "20240304141531-w013_20240304141531_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w018",
+  "sample": "PHerc1667",
+  "seg": "20240304144031-w018_20240304144031_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w023",
+  "sample": "PHerc1667",
+  "seg": "20240304161941-w023_20240304161941_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w028",
+  "sample": "PHerc1667",
+  "seg": "20251208130119-w028_20251208130119156_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w029",
+  "sample": "PHerc1667",
+  "seg": "20251212185248-w029_20251212185248662_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "pherc1667-w031",
+  "sample": "PHerc1667",
+  "seg": "20251223230000-w031_2025122323_flatboi",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w01",
+  "sample": "PHercParis4",
+  "seg": "20230702185753",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w02",
+  "sample": "PHercParis4",
+  "seg": "20231031143852",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w03",
+  "sample": "PHercParis4",
+  "seg": "20231106155351",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w05",
+  "sample": "PHercParis4",
+  "seg": "20231012184424",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w06",
+  "sample": "PHercParis4",
+  "seg": "20231210121321",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "aligned-scrollprizeorg-21slices",
+  "corpus_name": "phercparis4-w07",
+  "sample": "PHercParis4",
+  "seg": "20231007101619",
+  "zplane": "z=10 of 21",
+  "primary": true
+ },
+ {
+  "family": "native9-scrollprizeorg-21slices",
+  "corpus_name": "w035",
+  "sample": "PHerc0139",
+  "seg": "20260317000000-w035_2026031718",
+  "zplane": "z=14 of 28",
+  "primary": false
+ },
+ {
+  "family": "native9-scrollprizeorg-21slices",
+  "corpus_name": "w039",
+  "sample": "PHerc0139",
+  "seg": "20260302000000-w039_2026030210",
+  "zplane": "z=14 of 28",
+  "primary": false
+ },
+ {
+  "family": "native9-scrollprizeorg-21slices",
+  "corpus_name": "w040",
+  "sample": "PHerc0139",
+  "seg": "20250831000000-w040_2025083102",
+  "zplane": "z=14 of 28",
+  "primary": false
+ },
+ {
+  "family": "native9-scrollprizeorg-21slices",
+  "corpus_name": "w041",
+  "sample": "PHerc0139",
+  "seg": "20260108000000-w041_2026010816",
+  "zplane": "z=14 of 28",
+  "primary": false
+ },
+ {
+  "family": "native9-scrollprizeorg-21slices",
+  "corpus_name": "w044",
+  "sample": "PHerc0139",
+  "seg": "20260115000000-w044_2026011522",
+  "zplane": "z=14 of 28",
+  "primary": false
+ }
+]

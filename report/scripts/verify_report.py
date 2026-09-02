@@ -3,8 +3,8 @@ import json
 import os
 import re
 
-R = r"C:\Users\benbl\Desktop\Vsuvious\trackD\report"
-T = r"C:\Users\benbl\Desktop\Vsuvious\trackD"
+R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+T = os.path.dirname(R)
 problems, checks = [], []
 
 # --- 1. figure links resolve from each file's own directory

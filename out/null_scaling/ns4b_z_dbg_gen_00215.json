@@ -1,0 +1,35 @@
+{
+ "key": "z_dbg_gen_00215",
+ "shape": [
+  1322,
+  778
+ ],
+ "px_um": 34.56,
+ "n_perm": 50,
+ "obs_prominence": 30.494,
+ "theta_deg": 165.0,
+ "period_mm": 7.111,
+ "tiles": {
+  "64": {
+   "n_blocks": 118,
+   "n_perm": 50,
+   "null_mean": 17.494,
+   "null_sd": 5.787,
+   "null_max": 31.966,
+   "z": 2.246,
+   "empirical_p": 0.05882,
+   "n_null_ge_obs": 2
+  },
+  "128": {
+   "n_blocks": 28,
+   "n_perm": 50,
+   "null_mean": 17.166,
+   "null_sd": 5.067,
+   "null_max": 30.236,
+   "z": 2.63,
+   "empirical_p": 0.01961,
+   "n_null_ge_obs": 0
+  }
+ },
+ "elapsed_s": 465.4
+}

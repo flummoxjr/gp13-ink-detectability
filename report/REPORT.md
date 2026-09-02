@@ -63,7 +63,8 @@ Total cloud compute for all of the above: **≈ $20**, itemized in the opening p
 | 1 | [Scan-quality / detectability index, and the separability axis](sections/01_index.md) | Method, 14-volume ranked table, two-tier finding, campaign correlation, PHerc0139 anchor, uint8-clipping censoring caveat, **§1.8 the second (sheet-separability) axis with its measured isotropic floor, and the correction to §1's own ROI rule** |
 | 2 | [Validated ink instrument + corpus-wide screen](sections/02_instrument.md) | Control-first design, w035 positive control, renderer validation, the 80/80 corpus screen, the four-test battery calibrated on PHerc1203, the refuted flag, the scope correction that bounds the negative, the first PHerc0813 surfaces, beyond-labels postscript |
 | 3 | [Two screens, two nulls](sections/03_screens.md) | Part A: Paris 4 dual-energy (sign lesson, clean null, honest bound, incrustation catalog, PSF-artifact caution). Part B: ink_3d transfer failure, mechanism, fine-tune recipe, frozen benchmark |
-| 4 | [Adversarial QC as infrastructure](sections/04_methodology.md) | The audit protocol, the $4.46 fleet stop, the eleven-row corrections ledger, the K1/K1b depth micro-finding, K2's sampling-limited result, what survives as reusable infrastructure |
+| 4 | [Adversarial QC as infrastructure](sections/04_methodology.md) | The audit protocol, the $4.46 fleet stop, the sixteen-row corrections ledger, the K1/K1b depth micro-finding, K2's sampling-limited result, what survives as reusable infrastructure |
+| A | [Addendum: four pre-registered verdicts after the report closed](ADDENDUM.md) | an ink-mass ceiling; the translation-null pathology (and this report's 0-of-71 surviving it); a cross-acquisition kill; the fragment-transfer number |
 | — | [Reproducibility](REPRODUCIBILITY.md) | Environment pins, data URLs (all public), per-figure regeneration commands, licensing |
 
 ---
@@ -92,7 +93,7 @@ Stated plainly, because the report's value depends on it:
 
 All code is MIT. All derived data is CC-BY-NC 4.0. Every input is public (`s3://vesuvius-challenge-open-data`, `huggingface.co/scrollprize`) — nothing here needs credentials or a data agreement to reproduce.
 
-Repository: **https://github.com/flummoxjr/gp13-ink-detectability** — public at submission; MIT.
+Repository: **https://github.com/flummoxjr/measure-before-you-hunt** — public at submission; MIT.
 
 **Tools intended for reuse**
 - `salvage/verdict_*.py` — the four-test text-signature battery with texture-preserving nulls and the pre-registered tripwire (~5 min/segment, CPU).

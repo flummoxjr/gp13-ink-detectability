@@ -1,0 +1,148 @@
+{
+ "claim_under_test": "0 of 71 corpus maps pass the v2 screen",
+ "stored_headline": {
+  "n_scored": 71,
+  "n_pass_all": 0,
+  "gate_pass_counts": {
+   "gate_significance": 4,
+   "gate_cycles": 19,
+   "gate_autocorr": 23,
+   "gate_band_bin": 23,
+   "gate_fwd_rev": 0
+  },
+  "n_p_le_alpha": 4,
+  "expected_p_le_alpha_under_null": 3.55
+ },
+ "structural_argument": {
+  "note": "pass requires all 5 gates; only gate_significance depends on the null. Deleting the significance gate entirely (the most anti-conservative possible null correction) leaves the 4 null-free gates.",
+  "n_pass_all_four_null_free_gates": 0,
+  "n_pass_fwd_rev_alone": 0,
+  "min_fwd_rev_r": 0.2215,
+  "fwd_rev_threshold": 0.2,
+  "conclusion": "no change to the null can raise the pass count above 0"
+ },
+ "map_correlation_vs_perm_tile": {
+  "perm_tile_ds4": 64,
+  "n_seg_L01_over_64": 19,
+  "n_measured": 74,
+  "L01_x": {
+   "min": 14.0,
+   "median": 26.0,
+   "max": 200.0
+  },
+  "L01_y": {
+   "min": 14.0,
+   "median": 26.0,
+   "max": 200.0
+  },
+  "hazard": "tile-64 permutation is anti-conservative on maps whose correlation length exceeds the tile; 19 of 74 maps have L(0.1) > 64 ds4 px"
+ },
+ "renull_tile128_50perm": [
+  {
+   "name": "20251105093211-z_dbg_gen_00320",
+   "kind": "segment",
+   "obs": 57.312,
+   "period_mm": 7.603,
+   "p_v2_tile64_200perm": 0.0199,
+   "z_v2_tile64": 3.955,
+   "p_tile128_50perm": 0.03922,
+   "z_tile128": 2.702,
+   "n_null_ge_obs": 1,
+   "null_sd_64": 8.533,
+   "null_sd_128": 10.703,
+   "keeps_raw_p_le_0p05": true,
+   "fwd_rev_r": 0.5378,
+   "other_gates_failed": [
+    "gate_cycles",
+    "gate_autocorr",
+    "gate_band_bin",
+    "gate_fwd_rev"
+   ]
+  },
+  {
+   "name": "w035_CONTROL_strided",
+   "kind": "control",
+   "obs": 123.547,
+   "period_mm": 4.678,
+   "p_v2_tile64_200perm": 0.00498,
+   "z_v2_tile64": 16.259,
+   "p_tile128_50perm": 0.01961,
+   "z_tile128": 5.138,
+   "n_null_ge_obs": 0,
+   "null_sd_64": 6.367,
+   "null_sd_128": 15.927,
+   "keeps_raw_p_le_0p05": true,
+   "fwd_rev_r": 0.09426297762677881,
+   "other_gates_failed": null
+  },
+  {
+   "name": "z_dbg_gen_00215",
+   "kind": "segment",
+   "obs": 30.494,
+   "period_mm": 7.111,
+   "p_v2_tile64_200perm": 0.0398,
+   "z_v2_tile64": 2.072,
+   "p_tile128_50perm": 0.01961,
+   "z_tile128": 2.63,
+   "n_null_ge_obs": 0,
+   "null_sd_64": 6.577,
+   "null_sd_128": 5.067,
+   "keeps_raw_p_le_0p05": true,
+   "fwd_rev_r": 0.7654,
+   "other_gates_failed": [
+    "gate_cycles",
+    "gate_band_bin",
+    "gate_fwd_rev"
+   ]
+  },
+  {
+   "name": "z_dbg_gen_00260",
+   "kind": "segment",
+   "obs": 58.062,
+   "period_mm": 7.949,
+   "p_v2_tile64_200perm": 0.00498,
+   "z_v2_tile64": 4.642,
+   "p_tile128_50perm": 0.05882,
+   "z_tile128": 2.24,
+   "n_null_ge_obs": 2,
+   "null_sd_64": 7.407,
+   "null_sd_128": 12.88,
+   "keeps_raw_p_le_0p05": false,
+   "fwd_rev_r": 0.6393,
+   "other_gates_failed": [
+    "gate_cycles",
+    "gate_band_bin",
+    "gate_fwd_rev"
+   ]
+  },
+  {
+   "name": "z_dbg_gen_00357",
+   "kind": "segment",
+   "obs": 33.652,
+   "period_mm": 6.897,
+   "p_v2_tile64_200perm": 0.03483,
+   "z_v2_tile64": 2.561,
+   "p_tile128_50perm": 0.19608,
+   "z_tile128": 1.224,
+   "n_null_ge_obs": 9,
+   "null_sd_64": 5.381,
+   "null_sd_128": 6.81,
+   "keeps_raw_p_le_0p05": false,
+   "fwd_rev_r": 0.6246,
+   "other_gates_failed": [
+    "gate_band_bin",
+    "gate_fwd_rev"
+   ]
+  }
+ ],
+ "verdict": {
+  "survives": true,
+  "headline": "'0 of 71 pass' SURVIVES any null correction",
+  "basis": [
+   "structural: 0 of 71 pass the four null-free gates, so no null can flip the verdict",
+   "measured: at block 128 >= the measured correlation length, 2 of 4 significance passers keep raw p<=0.05 (screen's own expectation under the null: 3.55 of 71)",
+   "the strongest tile-64 passer (z_dbg_gen_00260, p .00498) rises to p .0588 at tile 128",
+   "power retained: the genuine-ruling control still passes at tile 128 (0/50 nulls >= obs, z +5.14 vs +16.26 at tile 64)"
+  ]
+ }
+}

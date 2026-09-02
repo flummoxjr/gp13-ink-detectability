@@ -1,0 +1,63 @@
+{
+ "gate": "PASS",
+ "checked": {
+  "registration_scale": {
+   "anchor": 0.9402,
+   "got": 0.940199
+  },
+  "residual_px": {
+   "anchor": 2.0,
+   "got": 2.0
+  },
+  "peak_snr": {
+   "anchor": 25.4,
+   "got": 25.03,
+   "note": "unwindowed phase correlation, peak/std excl. 11x11"
+  },
+  "r": {
+   "anchor": 0.6608,
+   "got": 0.6635,
+   "tolerance": 0.03
+  },
+  "null_rot180_r": {
+   "anchor": 0.0767,
+   "got": 0.078
+  },
+  "null_roll700_700_r": {
+   "anchor": 0.0515,
+   "got": 0.0512
+  },
+  "L99": {
+   "anchor": 34.0,
+   "got": 34.069,
+   "tolerance": "20%"
+  },
+  "auc_A": {
+   "anchor": 0.8768,
+   "got": 0.8763,
+   "tolerance": 0.01
+  },
+  "auc_B": {
+   "anchor": 0.8771,
+   "got": 0.8773
+  },
+  "auc_fused": {
+   "anchor": 0.9015,
+   "got": 0.9014
+  },
+  "fpr50": {
+   "anchor": [
+    0.0363,
+    0.0321,
+    0.0263
+   ],
+   "got": [
+    0.0342,
+    0.0309,
+    0.0237
+   ],
+   "note": "no pre-registered tolerance; deltas 0.002-0.003 traced to label-resampling interpolation convention (INTER_AREA here); AUCs match to 0.0005 under the same convention"
+  }
+ },
+ "convention_recovery": "pilot harness not on disk; conventions recovered by matching anchors: joint-valid mask = (A>2/255)&(registered B>2/255); L(q) quantile-based; B->A resample by shape ratio (INTER_AREA); unwindowed phase correlation refine (+/-60 px window, v1.1); labels resampled INTER_AREA, pos=ink>0, neg=ink==0 within supervision & joint mask; fused=(zA+zB)/2."
+}

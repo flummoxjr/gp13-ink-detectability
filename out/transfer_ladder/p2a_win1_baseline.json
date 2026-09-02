@@ -1,0 +1,10 @@
+{
+ "anchor": "win1",
+ "auc_forward": 0.5381735003489817,
+ "auc_reverse": 0.5054886897469728,
+ "direction": "forward",
+ "gate": 0.85,
+ "n_pos": 4388955,
+ "n_neg": 8576280,
+ "gate_passed": false
+}

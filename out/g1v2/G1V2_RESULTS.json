@@ -1,0 +1,168 @@
+{
+ "prereg": "PREREG_G1_V2.md, git a2e0001, 2026-08-24T10:43:59-05:00",
+ "VOID_gate": {
+  "block_sd_anchor": 1227.6,
+  "block_sd_measured": 1227.6,
+  "block_sd_dev_pct": 0.0,
+  "block_z_anchor": 1.56,
+  "block_z_measured": 1.559,
+  "block_z_dev": 0.0,
+  "rigid400_sd_anchor": 2091.9,
+  "rigid400_sd_measured": 2091.9,
+  "rigid400_sd_dev_pct": 0.001,
+  "ok": true
+ },
+ "v1_reproduction": {
+  "Frag1": {
+   "obs": 1914.07,
+   "obs_ok": true,
+   "n_tiles": 2560,
+   "n_ok": true,
+   "G0_auc": 0.9433,
+   "G0_ok": true,
+   "rigid_first40_match_v1": true
+  },
+  "Frag2": {
+   "obs": 1678.14,
+   "obs_ok": true,
+   "n_tiles": 4014,
+   "n_ok": true,
+   "G0_auc": 0.9461,
+   "G0_ok": true,
+   "rigid_first40_match_v1": true
+  },
+  "Frag6": {
+   "obs": 1113.53,
+   "obs_ok": true,
+   "n_tiles": 1857,
+   "n_ok": true,
+   "G0_auc": 0.9616,
+   "G0_ok": true,
+   "rigid_first40_match_v1": true
+  }
+ },
+ "G1v2_gates": {
+  "Frag1": {
+   "n_tiles": 2560,
+   "tiles_ok": true,
+   "block_sd": 1227.6,
+   "sd_ok": true,
+   "G0_pass": true,
+   "admitted": true
+  },
+  "Frag2": {
+   "n_tiles": 4014,
+   "tiles_ok": true,
+   "block_sd": 929.2,
+   "sd_ok": true,
+   "G0_pass": true,
+   "admitted": true
+  },
+  "Frag6": {
+   "n_tiles": 1857,
+   "tiles_ok": true,
+   "block_sd": 1229.2,
+   "sd_ok": true,
+   "G0_pass": true,
+   "admitted": true
+  }
+ },
+ "admitted_fragments": [
+  "Frag1",
+  "Frag2",
+  "Frag6"
+ ],
+ "pooling_licensed": true,
+ "detection": {
+  "threshold": 4.0,
+  "family": "Bonferroni across 3 admitted fragments (one-sided per-test alpha 3.17e-5, family alpha 9.5e-05)",
+  "z_block": {
+   "Frag1": 1.5592,
+   "Frag2": 1.806,
+   "Frag6": 0.9059
+  },
+  "any_over": false
+ },
+ "per_fragment_ceilings": {
+  "Frag1": {
+   "BULK_DN_per_voxel": 6434.0,
+   "block": {
+    "null_mean": 0.0,
+    "null_sd": 1227.6,
+    "ceiling_DNvox": 4369.3,
+    "ceiling_voxequiv": 0.6791,
+    "ceiling_mg_cm2": 0.132
+   },
+   "rigid": {
+    "null_mean": -246.0,
+    "null_sd": 2091.9,
+    "ceiling_DNvox": 6343.9,
+    "ceiling_voxequiv": 0.986,
+    "ceiling_mg_cm2": 0.1917
+   },
+   "block_over_rigid_sd_ratio": 0.587
+  },
+  "Frag2": {
+   "BULK_DN_per_voxel": 3311.3,
+   "block": {
+    "null_mean": 0.0,
+    "null_sd": 929.2,
+    "ceiling_DNvox": 3536.5,
+    "ceiling_voxequiv": 1.068,
+    "ceiling_mg_cm2": 0.2076
+   },
+   "rigid": {
+    "null_mean": 71.4,
+    "null_sd": 892.6,
+    "ceiling_DNvox": 3391.9,
+    "ceiling_voxequiv": 1.0244,
+    "ceiling_mg_cm2": 0.1991
+   },
+   "block_over_rigid_sd_ratio": 1.041
+  },
+  "Frag6": {
+   "BULK_DN_per_voxel": 5262.1,
+   "block": {
+    "null_mean": 0.0,
+    "null_sd": 1229.2,
+    "ceiling_DNvox": 3571.9,
+    "ceiling_voxequiv": 0.6788,
+    "ceiling_mg_cm2": 0.132
+   },
+   "rigid": {
+    "null_mean": 139.6,
+    "null_sd": 1596.6,
+    "ceiling_DNvox": 4167.1,
+    "ceiling_voxequiv": 0.7919,
+    "ceiling_mg_cm2": 0.1539
+   },
+   "block_over_rigid_sd_ratio": 0.77
+  }
+ },
+ "pooled": {
+  "block": {
+   "pooled_delta_voxequiv": 0.316,
+   "pooled_sd_voxequiv": 0.1307,
+   "pooled_z_diagnostic_only": 2.417,
+   "ceiling_voxequiv": 0.5775,
+   "ceiling_mg_cm2": 0.1123
+  },
+  "rigid": {
+   "pooled_delta_voxequiv": 0.3481,
+   "pooled_sd_voxequiv": 0.1713,
+   "pooled_z_diagnostic_only": 2.032,
+   "ceiling_voxequiv": 0.6907,
+   "ceiling_mg_cm2": 0.1343
+  },
+  "note": "inverse-variance in papyrus-voxel-equivalents (per-plate BULK), pooled ceiling = |pooled delta| + 2*pooled sd; pooled z is descriptive only, the detection rule is per-fragment z>4 Bonferroni"
+ },
+ "outcome": "CEILING",
+ "v1_verdict_reported_alongside": "PREREG_G1 v1 (git 502ae65): G1 FAIL via Frag1 40-draw rigid sd 2755.3 > 2300; outcome NO_BOUND_QUOTABLE; pooling unlicensed at 2 of 3. v2 does not erase it: the 40-draw sd carries 19.4% self-noise (SE 406) and the converged 400-draw value is 2091.9 -- the FAIL was a +1.6 SE estimator fluctuation, which is why v2 pre-registered a converged null. Both verdicts ship together.",
+ "pooling_robustness": {
+  "alternative_reading_weighted_mean_of_ceilings_voxequiv": {
+   "block": 0.7634,
+   "rigid": 0.9396
+  },
+  "note": "the committed reading is fixed-effect inverse-variance on (obs-null_mean)/BULK with pooled ceiling |pooled delta|+2*pooled sd; the alternative (inverse-variance-weighted mean of the per-fragment ceilings) is reported for robustness and is looser"
+ }
+}
