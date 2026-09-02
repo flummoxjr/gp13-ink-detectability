@@ -1,0 +1,315 @@
+# ============================================================================
+# DRY mode: exercise the machinery only (local validation; no network/GPU).
+# ============================================================================
+if [ "$DRY" = 1 ]; then
+  for st in provision ckpt p2a_fetch p2a_build_win1 expa_baseline expa_rungs \
+            p2a_build_rest expb_infer sec_frag1 expb_score; do
+    if stage_done "$st"; then say "=== STAGE $st already done, skipping ==="; continue; fi
+    stage_open "$st"
+    sleep 0.2
+    stage_close "$st"
+  done
+  stage_open finalize
+  say "DRY finalize: machinery only, skipping inventory (no real outputs)"
+  stage_close finalize
+  say "ALL DONE (DRY)"
+  echo IDLE > "$VAR/stage"
+  if [ "$LINGER_EXIT" = 1 ]; then exit 0; fi
+  while :; do sleep 300; say "IDLE (DRY) -- terminate when done"; done
+fi
+
+# ============================================================================
+# STAGE provision -- villa + uv env (the proven zroll/runbook recipe, verbatim
+# where it matters). The status server has been up since second ~2.
+# ============================================================================
+export PATH="$HOME/.local/bin:$PATH"
+if stage_done provision; then
+  say "=== STAGE provision already done, skipping ==="
+else
+  stage_open provision
+  cd /workspace
+  apt-get update -qq && apt-get install -y -qq git >/dev/null 2>&1 || true
+  command -v git >/dev/null || die "git unavailable after apt"
+  # Pinned snapshot repo (27 MB) instead of the full villa monorepo: the previous
+  # pod spent 2 h failing to fetch villa over a flaky link. timeout caps each try.
+  if [ ! -d villa ]; then
+    retry 3 timeout 300 git clone --depth 1 https://github.com/flummoxjr/villa-pin-37e300d3.git villa >> "$OUT/provision.log" 2>&1 || die "villa-pin clone failed - see provision.log"
+  fi
+  VSHA=$(cd villa && git rev-parse --short HEAD)
+  say "provision: villa @ $VSHA"
+  cd /workspace/villa/vesuvius
+  command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
+  export PATH="$HOME/.local/bin:$PATH"
+  say "provision: uv sync starting (full log at /provision.log on :8000)"
+  retry 3 timeout 1200 uv sync --extra models >> "$OUT/provision.log" 2>&1 || die "uv sync failed - see provision.log"
+  retry 2 timeout 1800 uv pip install "torch==2.11.0" torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128 >> "$OUT/provision.log" 2>&1 || die "torch pin install failed - see provision.log"
+  timeout 1200 uv pip install tqdm scipy scikit-image pandas einops opencv-python-headless \
+    tifffile aiohttp numba monai timm accelerate pytorch-lightning \
+    pytorch-optimizer huggingface-hub dynamic-network-architectures nnunetv2 \
+    batchgenerators fft-conv-pytorch fvcore connected-components-3d tensorstore \
+    typed-argument-parser psutil nest-asyncio blosc2 lxml imagecodecs pynrrd \
+    cachetools edt wandb s3fs pillow >> "$OUT/provision.log" 2>&1 || die "dep install failed - see provision.log"
+  pyrun -c "import torch,scipy,tifffile,numcodecs,PIL,zarr; \
+print('ENV_OK torch', torch.__version__, 'cuda', torch.cuda.is_available())" \
+    || die "environment import check failed"
+  pyrun -c "import torch; assert torch.cuda.is_available(); \
+print('GPU', torch.cuda.get_device_name(0))" || die "no CUDA device"
+  uv run vesuvius.accept_terms --yes >/dev/null 2>&1 || true
+  export TORCH_COMPILE_DISABLE=1
+  stage_close provision
+fi
+cd /workspace/villa/vesuvius
+export TORCH_COMPILE_DISABLE=1
+
+# ============================================================================
+# STAGE ckpt -- ink_9um seed42/step-075000 (public; expected 138360039 bytes).
+# ============================================================================
+CKPT=/workspace/ckpts/ink_9um/hybrid_3d2d-seed42/step-075000.pth
+if stage_done ckpt; then
+  say "=== STAGE ckpt already done, skipping ==="
+else
+  stage_open ckpt
+  if [ ! -s "$CKPT" ]; then
+    fetch_ckpt() {
+      pyrun - <<'PY_CKPT'
+from huggingface_hub import hf_hub_download
+p = hf_hub_download("scrollprize/ink_9um", "hybrid_3d2d-seed42/step-075000.pth",
+                    local_dir="/workspace/ckpts/ink_9um")
+print("CKPT", p)
+PY_CKPT
+    }
+    retry 4 fetch_ckpt || die "checkpoint download failed"
+  fi
+  SZ=$(stat -c %s "$CKPT" 2>/dev/null || echo 0)
+  [ "$SZ" = 138360039 ] || die "checkpoint size $SZ != expected 138360039"
+  pyrun - <<'PY_CFG' || die "checkpoint config check failed"
+import torch
+from vesuvius.ink_detection.config import InkConfig
+payload = torch.load("/workspace/ckpts/ink_9um/hybrid_3d2d-seed42/step-075000.pth",
+                     map_location="cpu", weights_only=False)
+c = InkConfig.from_mapping(payload["config"])
+mode, crop, norm = c.data.mode, tuple(c.model.crop_size), c.data.normalization.mode
+print(f"CKPT_CFG mode={mode} crop_size={crop} norm={norm}")
+assert mode == "flat" and crop == (17, 128, 128) and norm == "robust_mad", \
+    (mode, crop, norm)
+PY_CFG
+  say "ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad"
+  stage_close ckpt
+fi
+
+# ============================================================================
+# STAGE p2a_fetch -- 500p2a raster labels + the zarr chunks covering all three
+# windows, from the public HF bucket (verified live 2026-08-24). EXP A now
+# anchors on win1, so this fetch runs FIRST among the data stages.
+# ============================================================================
+if stage_done p2a_fetch; then
+  say "=== STAGE p2a_fetch already done, skipping ==="
+else
+  stage_open p2a_fetch
+  retry 3 pyrun "$SCRIPTS/fetch_windows.py" || die "window fetch failed"
+  stage_close p2a_fetch
+fi
+
+# ============================================================================
+# STAGE p2a_build_win1 -- assemble ONLY win1 (the EXP A anchor) first: if the
+# baseline gate kills the run, win2/win3 build time is never spent.
+# ============================================================================
+if stage_done p2a_build_win1; then
+  say "=== STAGE p2a_build_win1 already done, skipping ==="
+else
+  stage_open p2a_build_win1
+  pyrun "$SCRIPTS/build_windows.py" win1 || die "win1 build/verify failed (a data gate tripping here means KILLED: evidence above)"
+  stage_close p2a_build_win1
+fi
+
+# ============================================================================
+# STAGE expa_baseline -- ink_9um on win1 at 9.36um (the P1 pipeline), both
+# directions, scored on the native 4.32um grid vs the human labels. GATE 0.85.
+# ============================================================================
+if stage_done expa_baseline; then
+  say "=== STAGE expa_baseline already done, skipping ==="
+else
+  stage_open expa_baseline
+  run_infer "$DATA/win1_936.zarr" "$PREDS/expA_base.tif" both
+  # NOTE: '|| RC=$?' (an || list) is REQUIRED here -- a bare call under 'set +e'
+  # still fires the ERR trap (verified empirically 2026-08-25: set +e does NOT
+  # suppress trap ERR), and fail_linger never returns, so the 21-vs-other
+  # branching below would be dead code and the gate would land as a generic
+  # FATAL instead of KILLED_BASELINE. v1 had this latent bug; its pod only
+  # showed the right verdict because score_expa.py logs the gate result itself
+  # before exiting.
+  RC=0
+  pyrun "$SCRIPTS/score_expa.py" baseline || RC=$?
+  if [ $RC = 21 ]; then
+    die "KILLED_BASELINE -- win1 (clean, scroll-derived, in-modality 500p2a) AUC below the pre-registered 0.85 gate; everything aborts. THIS NUMBER IS THE RESULT: ink_9um does not transfer scroll-to-scroll at curve-anchoring quality (evidence in results/expA_baseline.json + previews; compare Frag1 v1 0.6925)"
+  elif [ $RC != 0 ]; then
+    die "baseline scoring failed rc=$RC"
+  fi
+  stage_close expa_baseline
+fi
+DIRECTION=$(cat "$VAR/direction.txt")
+case $DIRECTION in forward) DIR_SHORT=fwd;; reverse) DIR_SHORT=rev;; esac
+
+# ============================================================================
+# STAGE expa_rungs -- build all 11 degraded win1 volumes, infer (chosen
+# direction), score the curve.
+# ============================================================================
+if stage_done expa_rungs; then
+  say "=== STAGE expa_rungs already done, skipping ==="
+else
+  stage_open expa_rungs
+  pyrun "$SCRIPTS/build_expa.py" || die "rung build failed"
+  for P in 5.5 6.5 8.0 12.0; do
+    run_infer "$DATA/rung_p$P.zarr" "$PREDS/expA_p$P.tif" "$DIR_SHORT"
+  done
+  for K in 1 2 4 8; do
+    run_infer "$DATA/rung_n$K.zarr" "$PREDS/expA_n$K.tif" "$DIR_SHORT"
+  done
+  run_infer "$DATA/rung_bit4.zarr" "$PREDS/expA_bit4.tif" "$DIR_SHORT"
+  for S in 1.0 2.0; do
+    run_infer "$DATA/rung_blur$S.zarr" "$PREDS/expA_blur$S.tif" "$DIR_SHORT"
+  done
+  pyrun "$SCRIPTS/score_expa.py" rungs || die "rung scoring failed"
+  stage_close expa_rungs
+fi
+
+# ============================================================================
+# STAGE p2a_build_rest -- win2 + win3 (EXP B inputs), built only after the
+# gate has passed.
+# ============================================================================
+if stage_done p2a_build_rest; then
+  say "=== STAGE p2a_build_rest already done, skipping ==="
+else
+  stage_open p2a_build_rest
+  pyrun "$SCRIPTS/build_windows.py" win2 win3 || die "win2/win3 build/verify failed (a data gate tripping here means KILLED: evidence above)"
+  stage_close p2a_build_rest
+fi
+
+# ============================================================================
+# STAGE expb_infer -- 9.36um fwd+rev on win2/win3 (win1 reuses the EXP A
+# baseline maps) and native-4.32um fwd+rev on all three (sensitivity only).
+# ============================================================================
+if stage_done expb_infer; then
+  say "=== STAGE expb_infer already done, skipping ==="
+else
+  stage_open expb_infer
+  for W in win2 win3; do
+    run_infer "$DATA/${W}_936.zarr" "$PREDS/expB_${W}_s936.tif" both
+  done
+  if [ "$NATIVE_WINDOWS" = 1 ]; then
+    for W in win1 win2 win3; do
+      run_infer "$DATA/${W}_native.zarr" "$PREDS/expB_${W}_native.tif" both
+    done
+  fi
+  stage_close expb_infer
+fi
+
+# ============================================================================
+# STAGE sec_frag1 -- SECONDARY arm (NON-FATAL, NON-VERDICT-BEARING): Frag1
+# fetch + per-layer IFD verify + 9.36um uint16 baseline + fwd/rev inference.
+# Kept because (a) EXP B keeps its optical-GT audit input and (b) it
+# reproduces the v1 KILLED_BASELINE numbers (0.6925 fwd / 0.4477 rev) on
+# fresh infra. Its degradation CURVE is CUT, pre-registered: with baseline
+# ~0.69 the DETECTABLE floor (0.75) sits ABOVE baseline, so every rung would
+# be undetectable by construction. ANY failure here writes
+# var/secondary_failed and the PRIMARY run continues (the whole arm executes
+# inside an if-condition, so errexit and the ERR trap are inert within it).
+# ============================================================================
+FRAG1_URL="https://dl.ash2txt.org/fragments/Frag1/PHercParis2Fr47.volpkg/working/54keV_exposed_surface"
+FRAG1_DIR=$DATA/frag1
+fetch_one() { # fetch_one <url> <dest>  (resumable; 2.5s sleeps live in caller)
+  local url=$1 dest=$2
+  [ -s "$dest" ] && return 0
+  curl -fSs --connect-timeout 30 --max-time 1800 --retry 5 --retry-delay 5 \
+    -C - -o "$dest.part" "$url" && mv -f "$dest.part" "$dest"
+}
+sec_infer() { # sec_infer <zarr> <out.tif>  both directions; returns, NEVER dies
+  local zarr=$1 out=$2
+  local rev=${out%.tif}_reverse.tif
+  if [ -s "$out" ] && [ -s "$rev" ] && [ "$FORCE" != 1 ]; then
+    say "sec infer skip (exists): $(basename "$out")"; return 0
+  fi
+  local tmp=$PREDS/tmp_$(basename "$out")
+  local tmprev=${tmp%.tif}_reverse.tif
+  rm -f "$tmp" "$tmprev"
+  say "sec infer OPEN $(basename "$zarr") [both]"
+  (cd /workspace/villa/vesuvius && uv run --no-sync --extra models \
+      python -m vesuvius.ink_detection.inference.infer \
+      "$zarr" "$CKPT" "$tmp" --direction both \
+      --batch-size "$BATCH" --num-workers "$WORKERS" --gpus 0 --no-compile) || return 1
+  { [ -s "$tmp" ] && [ -s "$tmprev" ]; } || return 1
+  mv -f "$tmp" "$out"; mv -f "$tmprev" "$rev"
+  say "sec infer DONE $(basename "$out")"
+}
+run_secondary() { # every step guarded; failure returns nonzero, never dies
+  local L LL
+  mkdir -p "$FRAG1_DIR"
+  for L in $(seq 0 64); do
+    LL=$(printf "%02d" "$L")
+    if [ -s "$FRAG1_DIR/$LL.tif" ]; then continue; fi
+    retry 3 fetch_one "$FRAG1_URL/surface_volume/$LL.tif" \
+      "$FRAG1_DIR/$LL.tif" || return 1
+    if [ $(( L % 10 )) = 0 ]; then say "sec_frag1 fetch: layer $LL done"; fi
+    sleep 2.5
+  done
+  retry 3 fetch_one "$FRAG1_URL/inklabels.png" "$FRAG1_DIR/inklabels.png" || return 1
+  sleep 2.5
+  retry 3 fetch_one "$FRAG1_URL/mask.png" "$FRAG1_DIR/mask.png" || return 1
+  say "sec_frag1 fetch complete ($(du -sh "$FRAG1_DIR" 2>/dev/null | cut -f1)); verifying every layer's own IFD"
+  pyrun "$SCRIPTS/verify_frag1.py" || return 1
+  pyrun "$SCRIPTS/build_frag1.py" || return 1
+  sec_infer "$DATA/frag1_base_u16.zarr" "$PREDS/sec_frag1_936.tif" || return 1
+  touch "$VAR/secondary_ok"
+}
+if [ "$SECONDARY" = 1 ]; then
+  if stage_done sec_frag1; then
+    say "=== STAGE sec_frag1 already done, skipping ==="
+  else
+    stage_open sec_frag1
+    if run_secondary; then
+      say "SECONDARY frag1 arm complete (preds/sec_frag1_936*.tif); joins EXP B as a flagged secondary input"
+    else
+      echo "failed" > "$VAR/secondary_failed"
+      rm -f "$VAR/secondary_ok"
+      say "SECONDARY_DEGRADED -- frag1 arm failed; PRIMARY run continues; frag1 excluded from EXP B (pre-registered non-fatal)"
+    fi
+    stage_close sec_frag1
+  fi
+else
+  say "SECONDARY disabled (SECONDARY=0): frag1 arm skipped; EXP B runs on the three windows"
+fi
+
+# ============================================================================
+# STAGE expb_score -- real vs 40 matched translated nulls, gaps, verdicts.
+# ============================================================================
+if stage_done expb_score; then
+  say "=== STAGE expb_score already done, skipping ==="
+else
+  stage_open expb_score
+  pyrun "$SCRIPTS/score_expb.py" || die "expB scoring failed"
+  stage_close expb_score
+fi
+
+# ============================================================================
+# STAGE finalize -- aggregate + full inventory re-verification. ALL DONE is
+# printed here and nowhere else; finalize.py exits nonzero on ANY missing
+# artifact, and every earlier failure died before reaching this line.
+# ============================================================================
+stage_open finalize
+pyrun "$SCRIPTS/finalize.py" || die "finalize inventory check refused (missing artifacts listed above)"
+cp -f "$STATUS" "$OUT/status_at_done.txt" 2>/dev/null || true
+stage_close finalize
+say "ALL DONE -- results at results/results.json (served on :$PORT). scp -r root@POD:$OUT ./curve_out ; then TERMINATE THE POD."
+echo IDLE > "$VAR/stage"
+
+if [ "$AUTOSTOP" = 1 ] && command -v runpodctl >/dev/null 2>&1; then
+  say "AUTOSTOP armed: stopping pod in 30 min (results persist on the volume)"
+  sleep 1800
+  runpodctl stop pod "${RUNPOD_POD_ID:-}" || say "AUTOSTOP failed -- terminate manually"
+fi
+if [ "$LINGER_EXIT" = 1 ]; then exit 0; fi
+while :; do
+  sleep 300
+  say "IDLE -- ALL DONE; fetch results and TERMINATE THE POD (it bills until you do)"
+done
+

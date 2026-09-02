@@ -1,0 +1,57 @@
+{
+  "locked_before": "any provisioning, download, or data contact",
+  "version": "v3 -- C3: 500p2a anchor RE-MEASURED at the CORRECT pitch (2.215 um, not 4.32) with in-domain positive controls for the harness, the depth-order fault and the scale fault; v2's 0.5382/0.5055 is VOID (input fault: data at 4.80 um presented as 9.36)",
+  "seed": 20260901,
+  "pitch_correction": {
+    "old_um": 4.32,
+    "new_um": 2.215,
+    "evidence": [
+      "mesh bbox x<=16037, z<=27616 fits only the 2.215um volume (18209x28096), not the 4.317um one (9423x15838)",
+      "surface-volume canvas 26239x16182 is 1:1 with the 2.215um voxel extents",
+      "label geometry: median component height 2.49 mm, stroke width 0.61 mm at 2.215um vs 4.86/1.19 mm at 4.32um"
+    ],
+    "fault_factor": 1.9504
+  },
+  "ctl": {
+    "input": "PHerc0139 w035 native 9.362um surface volume, crop rows 512:2944 cols 384:3072 (supervision bbox padded to 128); labels = the plane the on-record 0.9991 control was scored on, embedded + sha256-checked; pos = ink & sup = 334035 px, neg = sup & ~ink = 737086 px",
+    "arms": {
+      "ctl_native": "as released (28 layers, centre-cropped to 17 by infer.py)",
+      "ctl_scalefault": "upsampled x1.9504 in-plane and depth (28->55 layers): 4.80um voxels presented as 9.36 -- the exact v2 fault",
+      "ctl_half": "downsampled x0.5 (14 layers, zero-padded to 17 by infer.py)"
+    },
+    "harness_gate_fatal": "ctl_native forward AUC >= 0.95, else HARNESS_BROKEN and the run dies",
+    "depth_order_gate_fatal": "ctl_native reverse AUC <= 0.80 (on record 0.5123), else the harness cannot certify fault controls and the run dies",
+    "scale_fault_verdict": "FAULT_REPRODUCED iff max(fwd,rev) of ctl_scalefault < 0.75; FAULT_NOT_REPRODUCED iff >= 0.85; PARTIAL otherwise; non-fatal; decides how the Aug-25 0.538 is read"
+  },
+  "expA": {
+    "anchor": "win1 (y0=12416, x0=6912, 4438 px @ 2.215um = 9.83 mm); resample 2.215->9.36um: in-plane 4438->1050 px",
+    "depth_modes": {
+      "iso": "PRIMARY: 65->15 layers at 9.36um, infer.py zero-pads 1 layer each side (stack is 144um vs the 159um window)",
+      "fit17": "sensitivity: 65->17 layers at 8.47um, no padding"
+    },
+    "scoring": "exact tie-corrected pixel rank-AUC on the native 2.215um grid; predictions bilinearly upsampled; 16-bit histogram bins (map*257); positives = ink & mask (4388955), negatives = mask & ~ink (8576280); 469 out-of-mask ink px excluded from both classes",
+    "corrected_anchor": "max(forward, reverse) of win1 iso; win1 fit17 and win2/win3 (both modes, both directions) reported alongside; the run does NOT abort on a low anchor",
+    "curve_gate": "rungs run iff corrected anchor >= 0.85 (unchanged from v1/v2)",
+    "prestated_reading": {
+      ">=0.85": "Aug-25 chance result was an input fault; ink_9um transfers in-modality to an unseen scroll at curve-anchoring quality",
+      "0.65-0.85": "partial transfer; Bet A's 500p2a gate rebases to anchor+0.05",
+      "<0.65": "transfer failure confirmed at the correct pitch (read jointly with the CTL scale-fault verdict)"
+    },
+    "pitch_rungs_um": [3.24, 4.32, 5.5, 6.5, 8.0, 9.36, 12.0],
+    "pitch_harness": "anti-aliased resample 2.215->P (Gaussian sigma=(f-1)/2 source px, linear, grid_mode) then regrid P->9.36 iso; the 9.36 row is baseline by construction; the 2.215 row is the native acquisition == baseline",
+    "noise_rungs": "sigma_add = k*sigma_plate, k in {1,2,4,8}, on the 9.36 iso grid, clipped to uint8; sigma_plate = 1.4826*median|(I_z - I_{z+1})/sqrt(2)| over in-mask voxels of the iso stack",
+    "bitdepth_rung": "bit4: uint8 -> 16 levels via rint(v/17)*17 (the released volume is already uint8, so bit8 == baseline)",
+    "blur_rungs_sigma_px": [1.0, 2.0],
+    "detectable_rule": "DETECTABLE <=> AUC_rung >= 0.75 AND (AUC_rung-0.5)/(AUC_base-0.5) >= 0.50; detectability limit = coarsest DETECTABLE pitch"
+  },
+  "expB": {
+    "inputs": ["win1", "win2", "win3"],
+    "cells": "iso fwd/rev (primary; the audited cell is the iso direction with the higher real AUC) and fit17 fwd/rev (reported, never verdict-bearing); win1 iso cells reuse the EXP A baseline maps",
+    "real_auc": "pos = label & mask, neg = mask & ~label; win3's 621303 out-of-mask ink px excluded from both classes",
+    "null": "40 rigid translations of the (label & mask) shape image, seed 20260901+window index, drawn once per window on the native grid; |shift|_inf in [3.75 mm, 0.60*min(H,W)] (v2's [4.4 mm, 0.40] is EMPTY at 2.215um: 1987 px > 1775 px; 3.75 mm = 1.5 x the measured 2.49 mm median letter height); accepted iff >= 50000 pseudo-positive px; pos_i = T_i(shapes) & mask & ~label; neg_i = mask & ~label & ~T_i(shapes)",
+    "shape_confounded_threshold": "median of the 40 translated-label AUCs >= 0.60, OR >= 20% of the 40 individually >= 0.60",
+    "genuine_rule": "GENUINE <=> not SHAPE_CONFOUNDED AND AUC_real > max of the 40 AND gap = AUC_real - median(translated) >= 0.15; otherwise INDETERMINATE",
+    "headline": "gap = AUC_real - median(translated AUC), per cell"
+  },
+  "data_gates": "exact label-count asserts for the 500p2a raster and every window; window volume subsample stats within +-0.5 DN of the Aug-25 record; embedded w035 labels sha256-match; checkpoint 138360039 bytes with mode=flat crop=(17,128,128) norm=robust_mad; any mismatch -> FATAL with evidence"
+}

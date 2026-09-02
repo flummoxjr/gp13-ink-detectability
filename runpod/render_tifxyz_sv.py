@@ -29,12 +29,21 @@ def parse_args():
 def main():
     args = parse_args()
     surf = read_tifxyz(args.tifxyz_dir, load_mask=False, validate=False)
+    hs, ws = surf.shape                      # stored grid
+    sy, sx = surf.get_scale_tuple()
     surf.use_full_resolution()
-    H, W = surf.shape
+    Hr, Wr = surf.shape                      # villa: int(h/scale) -- 1 px SHORT when the
+                                             # JSON scale is a float32-rounded value
+                                             # (0.05000000074505806 -> 152/scale = 3039.99995)
+    H, W = int(round(hs / sy)), int(round(ws / sx))   # canonical canvas (published SVs use this)
+    if (Hr, Wr) != (H, W):
+        print(f"WARNING: villa full-res shape {Hr}x{Wr} != canonical {H}x{W} "
+              f"(int() truncation in vesuvius.tifxyz.types.Tifxyz.shape); rendering the "
+              f"{Hr}x{Wr} region into a {H}x{W} canvas, extra row/col left zero")
     n = int(args.num_slices)
     offsets = (np.arange(n, dtype=np.float64) - (n - 1) / 2.0) * float(args.slice_step)
     pad = int(math.ceil(np.abs(offsets).max())) + int(args.margin)
-    print(f"full-res grid: {H} x {W}, {n} slices, offsets {offsets[0]}..{offsets[-1]}")
+    print(f"full-res grid: {H} x {W} (rendered {Hr} x {Wr}), {n} slices, offsets {offsets[0]}..{offsets[-1]}")
 
     kwargs = {}
     if args.cache_dir:
@@ -84,10 +93,10 @@ def main():
         out[:, r0:r1, c0:c1] = tile_out
 
     t = int(args.tile)
-    rows = list(range(0, H, t))
+    rows = list(range(0, Hr, t))
     for i, r0 in enumerate(rows):
-        for c0 in range(0, W, t):
-            render_tile(r0, min(H, r0 + t), c0, min(W, c0 + t))
+        for c0 in range(0, Wr, t):
+            render_tile(r0, min(Hr, r0 + t), c0, min(Wr, c0 + t))
         print(f"row band {i + 1}/{len(rows)} done")
 
     # occupancy level "3" (YX max-pool by 8) so infer.py can skip empty tiles

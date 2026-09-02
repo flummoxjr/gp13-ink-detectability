@@ -1,0 +1,181 @@
+#   the run reports KILLED with the evidence and stops.
+# =============================================================================
+
+set -Eeuo pipefail
+
+# ---------------------------------------------------------------- config ----
+ROOT=${ROOT:-/workspace/curve}
+PORT=${PORT:-8000}
+BATCH=${BATCH:-16}
+WORKERS=${WORKERS:-8}
+FORCE=${FORCE:-0}
+DRY=${DRY:-0}
+DRY_FAIL_STAGE=${DRY_FAIL_STAGE:-}
+LINGER_EXIT=${LINGER_EXIT:-0}
+NATIVE_WINDOWS=${NATIVE_WINDOWS:-1}
+SECONDARY=${SECONDARY:-1}
+AUTOSTOP=${AUTOSTOP:-0}
+PYTHON_BIN=${PYTHON_BIN:-python3}
+SEED=20260824
+
+OUT=$ROOT/out;  VAR=$ROOT/var;  DATA=$ROOT/data;  PREDS=$ROOT/preds
+SCRIPTS=$ROOT/scripts;  RESULTS=$OUT/results;  STATUS=$OUT/status.txt
+export ROOT OUT VAR DATA PREDS SCRIPTS RESULTS STATUS SEED BATCH WORKERS
+export NATIVE_WINDOWS SECONDARY
+
+# =================================================================== L1 ======
+# The very first actions: make the served dir and write the BOOT line.
+mkdir -p "$OUT" "$VAR" "$DATA" "$PREDS" "$SCRIPTS" "$RESULTS" "$OUT/previews" "$DATA/tmp"
+now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+say() { echo "$(now) $*" >> "$STATUS"; echo "$(now) $*"; }
+say "BOOT pod_curve_audit v2 pid=$$ host=${HOSTNAME:-unknown} root=$ROOT -- status live; server next"
+
+# =================================================================== L2 ======
+# Serve the status dir BEFORE anything else (provisioning included).
+SERVER_PID=""
+start_server() {
+  if command -v "$PYTHON_BIN" >/dev/null 2>&1; then
+    "$PYTHON_BIN" -m http.server "$PORT" --bind 0.0.0.0 --directory "$OUT" \
+      >/dev/null 2>&1 &
+    SERVER_PID=$!
+    echo "$SERVER_PID" > "$VAR/server.pid"
+  fi
+}
+start_server
+PROBE="FAILED"
+for _ in 1 2 3 4 5 6; do
+  if curl -fsS -o /dev/null "http://127.0.0.1:$PORT/status.txt" 2>/dev/null; then
+    PROBE="200"; break
+  fi
+  sleep 0.5
+done
+EXT_URL="(RUNPOD_POD_ID unset -- use 'ssh ... tail -f $STATUS' or http://<pod-ip>:$PORT/status.txt)"
+[ -n "${RUNPOD_POD_ID:-}" ] && EXT_URL="https://${RUNPOD_POD_ID}-${PORT}.proxy.runpod.net/status.txt"
+if [ "$PROBE" = 200 ]; then
+  say "SERVE http.server pid=${SERVER_PID:-none} 0.0.0.0:$PORT dir=$OUT external=$EXT_URL local_probe=200"
+else
+  say "SERVE DEGRADED -- local probe failed (python3 missing or port busy); status.txt still written; will retry at every heartbeat. external=$EXT_URL"
+fi
+
+# heartbeat + server watchdog, child of this script
+( STARTED=$SECONDS
+  while :; do
+    sleep 60
+    ST=$(cat "$VAR/stage" 2>/dev/null || echo boot)
+    DF=$(df -h "$ROOT" 2>/dev/null | awk 'NR==2{print $4}' || echo '?')
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) HEARTBEAT stage=$ST up=$((SECONDS))s free=$DF" >> "$STATUS"
+    SP=$(cat "$VAR/server.pid" 2>/dev/null || true)
+    if [ -n "$SP" ] && ! kill -0 "$SP" 2>/dev/null; then
+      if command -v "$PYTHON_BIN" >/dev/null 2>&1; then
+        "$PYTHON_BIN" -m http.server "$PORT" --bind 0.0.0.0 --directory "$OUT" >/dev/null 2>&1 &
+        echo $! > "$VAR/server.pid"
+        echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) SERVE RESTART pid=$(cat "$VAR/server.pid")" >> "$STATUS"
+      fi
+    fi
+  done
+) &
+HEART_PID=$!
+echo boot > "$VAR/stage"
+
+cleanup() {
+  kill "$HEART_PID" 2>/dev/null || true
+  SP=$(cat "$VAR/server.pid" 2>/dev/null || true)
+  [ -n "$SP" ] && kill "$SP" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+# =================================================================== L3 ======
+# Lock the pre-registration into the served dir before any provisioning.
+cat > "$OUT/prereg.json" <<'PREREG_JSON'
+{
+  "locked_before": "any provisioning, download, or data contact",
+  "version": "v2 -- C2: detectability curve RE-ANCHORED on 500p2a win1 (scroll-derived, human-labelled, CLEAN for ink_9um); Frag1 demoted to a non-fatal, non-verdict-bearing SECONDARY arm after its 0.6925/0.4477 KILLED_BASELINE",
+  "seed": 20260824,
+  "expA": {
+    "anchor": "500p2a win1 (y0=12416, x0=6912, 4438px @ 4.32um; rank-1 pairing-weight window; its 469 out-of-mask ink px are excluded from BOTH classes)",
+    "scoring": "exact tie-corrected pixel rank-AUC on the native 4.32um grid (4438x4438); predictions bilinearly upsampled from the 9.36um maps; 16-bit histogram bins (map*257)",
+    "positives": "inklabels & mask (expected exactly 4388955 px)",
+    "negatives": "mask & ~inklabels (expected exactly 8576280 px)",
+    "baseline": "ink_9um seed42/step-075000 on win1 anti-alias-resampled 4.32->9.36um (the P1-proven pipeline), inferred forward AND reverse; AUC_base = max(fwd,rev)",
+    "baseline_gate": "if AUC_base < 0.85 the ENTIRE run aborts as KILLED_BASELINE",
+    "baseline_gate_justification": "0.85 keeps 0.35 of range above chance, the minimum that can order 12 rungs; UNCHANGED from v1 so the Frag1 and 500p2a anchors face the same bar. Expectation from measured anchors (quoted): in-domain w035 anchor 0.9991 vs our-pipeline P1 reproduction 0.9656 fwd bound the pipeline cost at ~0.03 AUC; with the optical-GT modality gap removed the expected band is ~0.88-0.97. PRE-STATED meaning of a failure: ink_9um does not transfer scroll-to-scroll at curve-anchoring quality even in-modality on a clean human-labelled surface; combined with Frag1's 0.6925 that indicts scroll transfer, not the modality -- shipped as the result; the kill is honored, no re-gating",
+    "rung_direction": "the baseline argmax direction (tie -> forward) for every rung",
+    "detectable_rule": "DETECTABLE <=> AUC_rung >= 0.75 AND (AUC_rung-0.5)/(AUC_base-0.5) >= 0.50; detectability limit = coarsest DETECTABLE pitch",
+    "pitch_rungs_um": [5.5, 6.5, 8.0, 9.36, 12.0],
+    "pitch_harness": "anti-aliased resample 4.32->P (Gaussian sigma=(f-1)/2 source px, linear, grid_mode) then regrid P->9.36 so the model always runs at its trained pitch; measures acquisition information, not model scale sensitivity; the 9.36 rung is identical to baseline by construction (reused) and a pitch_4.32 row (native acquisition) also reuses baseline",
+    "noise_rungs": "sigma_add = k*sigma_plate for k in {1,2,4,8} on the 9.36 grid, clipped to uint8; sigma_plate = 1.4826*median|(I_z - I_{z+1})/sqrt(2)| over in-mask voxels of the central 17 baseline slices",
+    "bitdepth_rungs": "the released 4.32um 500p2a volume is ALREADY uint8, so the v1 uint16->uint8 rung is the baseline by construction (reported reused, never re-measured); the informative stressor is bit4: uint8 -> 16 levels via rint(v/17)*17",
+    "blur_rungs_sigma_px": [1.0, 2.0],
+    "blur_note": "3D isotropic Gaussian at 9.36um; FWHM 22 and 44 um (PSF-like)"
+  },
+  "expB": {
+    "primary_inputs": ["win1", "win2", "win3"],
+    "secondary_input": "frag1, included iff the non-fatal secondary arm succeeds; reported identically, NEVER verdict-bearing; the overall verdict is computed over the three windows only",
+    "win1_reuse": "win1's 9.36um fwd/rev cells reuse the EXP A baseline maps (same model, same volume; one inference, two roles)",
+    "primary_scale": "resampled to 9.36um; native-4.32um passes are sensitivity only, never verdict-bearing",
+    "audited_cell": "per input, the direction (fwd/rev) with the higher REAL AUC at the primary scale; both directions reported",
+    "real_auc": "pos = label & mask, neg = mask & ~label; win3 positives are ink AND mask only, its 621303 out-of-mask ink px excluded from both classes",
+    "null": "40 rigid translations of the (label & mask) shape image, seed 20260824, drawn once per input on the native grid; |shift|_inf in [4.4mm, 0.40*min(H,W)]; accepted iff >= 50000 pseudo-positive px; pos_i = T_i(shapes) & mask & ~label; neg_i = mask & ~label & ~T_i(shapes) -- the whole comparison lives inside (mask==1 AND label==0)",
+    "shape_confounded_threshold": "in the audited cell: median of the 40 translated-label AUCs >= 0.60, OR >= 20% of the 40 individually >= 0.60",
+    "shape_confounded_justification": "a rigid translation carries zero information about true ink; min shift 4.4mm >= ~1.5-2 letter heights so translated strokes cannot overlap their sources; 0.60 is 0.10 above chance, beyond any plausible translation-sampling spread (empirical spread reported beside the verdict), yet far below genuine detection, so real signal cannot trip it. The 20%-of-draws OR-clause catches PERIODIC confounds: text-row structure re-aligns only at shifts near multiples of the line spacing, inflating the null max while leaving the median at or below 0.5 (v1 pre-launch synthetic validation: row-confound null median 0.44, max 0.96); under a clean null, 8 of 40 draws above 0.60 has ~zero probability",
+    "genuine_rule": "GENUINE <=> not SHAPE-CONFOUNDED, AND AUC_real > max of the 40 translated AUCs (rank p = 1/41 ~= 0.024; every positive beats a matched null), AND gap = AUC_real - median(translated) >= 0.15; otherwise INDETERMINATE",
+    "headline": "gap = AUC_real - median(translated AUC), reported for every cell"
+  },
+  "secondary_frag1": {
+    "status": "SECONDARY, NON-FATAL, NON-VERDICT-BEARING; no gate applies to it",
+    "kept": "baseline fwd+rev only: (a) preserves the optical-GT audit input for EXP B, flagged secondary; (b) reproduces the 0.6925/0.4477 KILLED_BASELINE numbers on fresh infra (|new-old| reported)",
+    "curve_cut": "with baseline ~0.69 the DETECTABLE floor (0.75) sits above baseline, so every rung is undetectable by construction; a Frag1 curve is descriptive, not calibrated -- pre-registered CUT (~-$0.5)",
+    "failure_handling": "any secondary failure writes var/secondary_failed; the primary run continues; frag1 is excluded from EXP B and finalize does not require its artifacts"
+  },
+  "data_gates": "exact label-count and sha256 asserts (embedded expectations); any mismatch -> KILLED with evidence"
+}
+PREREG_JSON
+PRSHA=$(sha256sum "$OUT/prereg.json" | cut -c1-12)
+say "PREREG locked prereg.json sha256=$PRSHA -- decision rules recorded before any provisioning, download, or data"
+
+# ------------------------------------------------------------ machinery -----
+CURRENT_STAGE=boot
+fail_linger() {
+  touch "$OUT/FAILED"
+  echo FAILED > "$VAR/stage"
+  say "FAILED -- run is dead; status + logs stay served on :$PORT; fix or fetch, then TERMINATE THE POD (it bills until you do)"
+  if [ "$LINGER_EXIT" = 1 ]; then exit 1; fi
+  while :; do sleep 300; say "FAILED (still lingering; terminate the pod when done reading)"; done
+}
+die() { say "FATAL stage=$CURRENT_STAGE $*"; fail_linger; }
+on_err() {
+  local ec=$?
+  say "FATAL stage=$CURRENT_STAGE exit=$ec line=${BASH_LINENO[0]} cmd: ${BASH_COMMAND}"
+  fail_linger
+}
+trap on_err ERR
+
+stage_open() {
+  CURRENT_STAGE=$1
+  echo "$1" > "$VAR/stage"
+  STAGE_T0=$SECONDS
+  say "=== STAGE $1 OPEN ==="
+  if [ "$DRY" = 1 ] && [ "$DRY_FAIL_STAGE" = "$1" ]; then die "DRY injected failure"; fi
+}
+stage_close() {
+  touch "$VAR/done_$1"
+  say "=== STAGE $1 DONE ($((SECONDS - STAGE_T0))s) ==="
+}
+stage_done() { [ "$FORCE" != 1 ] && [ -f "$VAR/done_$1" ]; }
+
+retry() { # retry <tries> <cmd...>  backoff 10/30/90
+  local tries=$1; shift
+  local n=1 waits=(0 10 30 90 180)
+  while :; do
+    if "$@"; then return 0; fi
+    if [ $n -ge "$tries" ]; then return 1; fi
+    say "retry $n/$tries failed: $1 -- backoff ${waits[$n]}s"
+    sleep "${waits[$n]}"; n=$((n + 1))
+  done
+}
+
+pyrun() { (cd /workspace/villa/vesuvius && uv run --no-sync --extra models python "$@"); }
+
+run_infer() { # run_infer <zarr> <out_base_path.tif> <direction fwd|rev|both>
+  local zarr=$1 out=$2 dir=$3 d flag
+  case $dir in fwd) flag=forward;; rev) flag=reverse;; both) flag=both;; esac

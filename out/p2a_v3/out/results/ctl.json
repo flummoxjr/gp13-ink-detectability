@@ -1,0 +1,70 @@
+{
+ "arms": {
+  "ctl_native": {
+   "forward": 0.9990788299061785,
+   "forward_map_shape": [
+    2432,
+    2688
+   ],
+   "reverse": 0.5118254448605248,
+   "reverse_map_shape": [
+    2432,
+    2688
+   ]
+  },
+  "ctl_scalefault": {
+   "forward": 0.748858883525881,
+   "forward_map_shape": [
+    4743,
+    5243
+   ],
+   "reverse": 0.5381046306374253,
+   "reverse_map_shape": [
+    4743,
+    5243
+   ]
+  },
+  "ctl_half": {
+   "forward": 0.5227255585695708,
+   "forward_map_shape": [
+    1216,
+    1344
+   ],
+   "reverse": 0.4844046094765885,
+   "reverse_map_shape": [
+    1216,
+    1344
+   ]
+  }
+ },
+ "n_pos": 334035,
+ "n_neg": 737086,
+ "crop": [
+  512,
+  2944,
+  384,
+  3072
+ ],
+ "fault_factor": 1.9503386004514676,
+ "harness_gate": {
+  "min_forward": 0.95,
+  "passed": true
+ },
+ "depth_order_gate": {
+  "max_reverse": 0.8,
+  "passed": true
+ },
+ "scale_fault": {
+  "best": 0.748858883525881,
+  "verdict": "FAULT_REPRODUCED",
+  "reproduced_max": 0.75,
+  "not_reproduced_min": 0.85
+ },
+ "half_scale": {
+  "best": 0.5227255585695708
+ },
+ "on_record": {
+  "forward_full_canvas": 0.9991,
+  "reverse_full_canvas": 0.5123
+ }
+}

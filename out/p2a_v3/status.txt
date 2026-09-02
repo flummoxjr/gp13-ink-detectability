@@ -1,0 +1,186 @@
+2026-09-02T02:35:52Z BOOT pod_p2a_v3 pid=14 host=dfc90106be78 root=/workspace/p2a -- status live; server next
+2026-09-02T02:35:53Z SERVE http.server pid=40 0.0.0.0:8000 dir=/workspace/p2a/out external=https://hq7soy0hkbl6xi-8000.proxy.runpod.net/status.txt local_probe=200
+2026-09-02T02:35:53Z PREREG locked prereg.json sha256=49097685225a -- decision rules recorded before any provisioning, download, or data
+2026-09-02T02:35:53Z scripts written to /workspace/p2a/scripts (analysis code locked before provisioning)
+2026-09-02T02:35:53Z === STAGE provision OPEN ===
+2026-09-02T02:35:59Z provision: villa @ a3f2c29
+2026-09-02T02:35:59Z provision: uv sync starting (full log at /provision.log on :8000)
+2026-09-02T02:36:43Z === STAGE provision DONE (50s) ===
+2026-09-02T02:36:43Z === STAGE ckpt OPEN ===
+2026-09-02T02:36:49Z ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad
+2026-09-02T02:36:49Z === STAGE ckpt DONE (6s) ===
+2026-09-02T02:36:49Z === STAGE ctl_fetch OPEN ===
+2026-09-02T02:36:49Z CTL_FETCH .zarray parsed and matches embedded expectation (shape/chunks/dtype/raw/separator)
+2026-09-02T02:36:49Z CTL_FETCH 399 chunks total, 399 to fetch (8 threads, resumable)
+2026-09-02T02:36:53Z HEARTBEAT stage=ctl_fetch up=61s free=57G
+2026-09-02T02:37:01Z CTL_FETCH progress 100/399
+2026-09-02T02:37:11Z CTL_FETCH progress 200/399
+2026-09-02T02:37:23Z CTL_FETCH progress 300/399
+2026-09-02T02:37:33Z CTL_FETCH complete: 399 chunks on disk (0 absent-on-server = all-zero)
+2026-09-02T02:37:33Z === STAGE ctl_fetch DONE (44s) ===
+2026-09-02T02:37:33Z === STAGE ctl_build OPEN ===
+2026-09-02T02:37:33Z CTL_BUILD embedded labels verified: pos=334035 neg=737086 crop=2432x2688
+2026-09-02T02:37:34Z CTL_BUILD crop stats mean=75.97 sd=42.26 zero_frac=0.0001 max=255
+2026-09-02T02:37:36Z CTL_BUILD ctl_native.zarr ready (28x2432x2688)
+2026-09-02T02:37:36Z CTL_BUILD ctl_scalefault: x1.9503 -> (55, 4743, 5243)
+2026-09-02T02:37:50Z resample ctl_scalefault slice 1/55
+2026-09-02T02:37:53Z HEARTBEAT stage=ctl_build up=121s free=55G
+2026-09-02T02:37:54Z resample ctl_scalefault slice 9/55
+2026-09-02T02:37:58Z resample ctl_scalefault slice 17/55
+2026-09-02T02:38:02Z resample ctl_scalefault slice 25/55
+2026-09-02T02:38:06Z resample ctl_scalefault slice 33/55
+2026-09-02T02:38:10Z resample ctl_scalefault slice 41/55
+2026-09-02T02:38:14Z resample ctl_scalefault slice 49/55
+2026-09-02T02:38:28Z CTL_BUILD ctl_scalefault.zarr ready (55, 4743, 5243)
+2026-09-02T02:38:28Z CTL_BUILD ctl_half: x0.5000 -> (14, 1216, 1344)
+2026-09-02T02:38:33Z resample ctl_half slice 1/14
+2026-09-02T02:38:34Z resample ctl_half slice 9/14
+2026-09-02T02:38:34Z CTL_BUILD ctl_half.zarr ready (14, 1216, 1344)
+2026-09-02T02:38:35Z === STAGE ctl_build DONE (62s) ===
+2026-09-02T02:38:35Z === STAGE ctl_infer OPEN ===
+2026-09-02T02:38:35Z infer OPEN ctl_native.zarr -> ctl_native.tif [both]
+2026-09-02T02:38:53Z HEARTBEAT stage=ctl_infer up=181s free=56G
+2026-09-02T02:39:04Z infer DONE ctl_native.tif [both] (29s)
+2026-09-02T02:39:04Z infer OPEN ctl_scalefault.zarr -> ctl_scalefault.tif [both]
+2026-09-02T02:39:53Z HEARTBEAT stage=ctl_infer up=241s free=56G
+2026-09-02T02:40:28Z infer DONE ctl_scalefault.tif [both] (84s)
+2026-09-02T02:40:28Z infer OPEN ctl_half.zarr -> ctl_half.tif [both]
+2026-09-02T02:40:45Z infer DONE ctl_half.tif [both] (17s)
+2026-09-02T02:40:45Z === STAGE ctl_infer DONE (130s) ===
+2026-09-02T02:40:45Z === STAGE ctl_score OPEN ===
+2026-09-02T02:40:45Z CTL_SCORE ctl_native forward: AUC=0.9991 (map (2432, 2688))
+2026-09-02T02:40:46Z CTL_SCORE ctl_native reverse: AUC=0.5118 (map (2432, 2688))
+2026-09-02T02:40:47Z CTL_SCORE ctl_scalefault forward: AUC=0.7489 (map (4743, 5243))
+2026-09-02T02:40:48Z CTL_SCORE ctl_scalefault reverse: AUC=0.5381 (map (4743, 5243))
+2026-09-02T02:40:49Z CTL_SCORE ctl_half forward: AUC=0.5227 (map (1216, 1344))
+2026-09-02T02:40:49Z CTL_SCORE ctl_half reverse: AUC=0.4844 (map (1216, 1344))
+2026-09-02T02:40:49Z CTL GATES PASSED: native fwd=0.9991 rev=0.5118; scale-fault best=0.7489 -> FAULT_REPRODUCED; half-scale best=0.5227
+2026-09-02T02:40:49Z === STAGE ctl_score DONE (4s) ===
+2026-09-02T02:40:49Z === STAGE p2a_fetch OPEN ===
+2026-09-02T02:40:50Z EXPB_FETCH .zarray parsed and matches embedded expectation (shape/chunks/dtype/compressor/separator)
+2026-09-02T02:40:53Z HEARTBEAT stage=p2a_fetch up=301s free=56G
+2026-09-02T02:40:53Z EXPB_FETCH raster labels fetched (byte sizes exact)
+2026-09-02T02:40:53Z EXPB_FETCH 3675 chunks total, 3675 to fetch (8 threads, resumable)
+2026-09-02T02:41:22Z EXPB_FETCH progress 200/3675
+2026-09-02T02:41:50Z EXPB_FETCH progress 400/3675
+2026-09-02T02:41:53Z HEARTBEAT stage=p2a_fetch up=361s free=55G
+2026-09-02T02:42:19Z EXPB_FETCH progress 600/3675
+2026-09-02T02:42:47Z EXPB_FETCH progress 800/3675
+2026-09-02T02:42:53Z HEARTBEAT stage=p2a_fetch up=421s free=55G
+2026-09-02T02:43:16Z EXPB_FETCH progress 1000/3675
+2026-09-02T02:43:44Z EXPB_FETCH progress 1200/3675
+2026-09-02T02:43:53Z HEARTBEAT stage=p2a_fetch up=481s free=55G
+2026-09-02T02:44:12Z EXPB_FETCH progress 1400/3675
+2026-09-02T02:44:40Z EXPB_FETCH progress 1600/3675
+2026-09-02T02:44:53Z HEARTBEAT stage=p2a_fetch up=541s free=55G
+2026-09-02T02:45:07Z EXPB_FETCH progress 1800/3675
+2026-09-02T02:45:35Z EXPB_FETCH progress 2000/3675
+2026-09-02T02:45:53Z HEARTBEAT stage=p2a_fetch up=601s free=54G
+2026-09-02T02:46:02Z EXPB_FETCH progress 2200/3675
+2026-09-02T02:46:30Z EXPB_FETCH progress 2400/3675
+2026-09-02T02:46:53Z HEARTBEAT stage=p2a_fetch up=661s free=54G
+2026-09-02T02:46:58Z EXPB_FETCH progress 2600/3675
+2026-09-02T02:47:26Z EXPB_FETCH progress 2800/3675
+2026-09-02T02:47:53Z HEARTBEAT stage=p2a_fetch up=721s free=54G
+2026-09-02T02:47:54Z EXPB_FETCH progress 3000/3675
+2026-09-02T02:48:22Z EXPB_FETCH progress 3200/3675
+2026-09-02T02:48:51Z EXPB_FETCH progress 3400/3675
+2026-09-02T02:48:53Z HEARTBEAT stage=p2a_fetch up=781s free=53G
+2026-09-02T02:49:20Z EXPB_FETCH progress 3600/3675
+2026-09-02T02:49:32Z EXPB_FETCH complete: 3675 chunks on disk
+2026-09-02T02:49:32Z === STAGE p2a_fetch DONE (523s) ===
+2026-09-02T02:49:32Z === STAGE p2a_build_win1 OPEN ===
+2026-09-02T02:49:35Z P2A_BUILD raster label counts EXACT (ink_outside_mask=625970)
+2026-09-02T02:49:37Z P2A_BUILD win1 volume stats match the Aug-25 record (mean=76.114 sd=32.313 zf=0.00000)
+2026-09-02T02:49:53Z HEARTBEAT stage=p2a_build_win1 up=841s free=51G
+2026-09-02T02:50:04Z resample win1iso slice 1/15
+2026-09-02T02:50:06Z resample win1iso slice 9/15
+2026-09-02T02:50:08Z P2A_BUILD win1 iso: (15,1050,1050) at 9.60 um depth pitch
+2026-09-02T02:50:29Z resample win1fit17 slice 1/17
+2026-09-02T02:50:31Z resample win1fit17 slice 9/17
+2026-09-02T02:50:33Z resample win1fit17 slice 17/17
+2026-09-02T02:50:33Z P2A_BUILD win1 fit17: (17,1050,1050) at 8.47 um depth pitch
+2026-09-02T02:50:33Z P2A_BUILD win1 zarrs ready (native 65x4438x4438 @ 2.215 um -> iso 15x1050x1050, fit17 17x1050x1050)
+2026-09-02T02:50:33Z === STAGE p2a_build_win1 DONE (61s) ===
+2026-09-02T02:50:34Z === STAGE expa_baseline OPEN ===
+2026-09-02T02:50:34Z infer OPEN win1_iso.zarr -> expA_base.tif [both]
+2026-09-02T02:50:49Z infer DONE expA_base.tif [both] (15s)
+2026-09-02T02:50:49Z infer OPEN win1_fit17.zarr -> expA_base_fit17.tif [both]
+2026-09-02T02:50:53Z HEARTBEAT stage=expa_baseline up=901s free=52G
+2026-09-02T02:51:04Z infer DONE expA_base_fit17.tif [both] (15s)
+2026-09-02T02:51:05Z EXPA_BASELINE win1@500p2a [iso] AUC[forward] = 0.5211 (pos=4388955 neg=8576280)
+2026-09-02T02:51:06Z EXPA_BASELINE win1@500p2a [iso] AUC[reverse] = 0.5106 (pos=4388955 neg=8576280)
+2026-09-02T02:51:06Z EXPA_BASELINE win1@500p2a [fit17] AUC[forward] = 0.5301 (pos=4388955 neg=8576280)
+2026-09-02T02:51:07Z EXPA_BASELINE win1@500p2a [fit17] AUC[reverse] = 0.5099 (pos=4388955 neg=8576280)
+2026-09-02T02:51:07Z CORRECTED ANCHOR (win1 iso, forward): AUC = 0.5211 [fit17 best 0.5301] -- transfer failure confirmed at the correct pitch (read jointly with the CTL scale-fault verdict)
+2026-09-02T02:51:07Z EXPA_BASELINE curve gate not met: 0.5211 < 0.85; rungs are skipped; the anchor stands as the result (win2/win3 + EXP B still run)
+2026-09-02T02:51:07Z CURVE GATE NOT MET -- the corrected anchor is below 0.85; rungs skipped; the anchor IS the result and win2/win3 + EXP B still run (evidence in results/expA_baseline.json + previews)
+2026-09-02T02:51:07Z === STAGE expa_baseline DONE (33s) ===
+2026-09-02T02:51:07Z expa_rungs skipped (RUN_RUNGS=1, gate_failed=yes)
+2026-09-02T02:51:07Z === STAGE p2a_build_rest OPEN ===
+2026-09-02T02:51:10Z P2A_BUILD raster label counts EXACT (ink_outside_mask=625970)
+2026-09-02T02:51:12Z P2A_BUILD win2 volume stats match the Aug-25 record (mean=72.612 sd=32.042 zf=0.00000)
+2026-09-02T02:51:32Z resample win2iso slice 1/15
+2026-09-02T02:51:34Z resample win2iso slice 9/15
+2026-09-02T02:51:37Z P2A_BUILD win2 iso: (15,1050,1050) at 9.60 um depth pitch
+2026-09-02T02:51:53Z HEARTBEAT stage=p2a_build_rest up=961s free=50G
+2026-09-02T02:51:58Z resample win2fit17 slice 1/17
+2026-09-02T02:52:00Z resample win2fit17 slice 9/17
+2026-09-02T02:52:02Z resample win2fit17 slice 17/17
+2026-09-02T02:52:02Z P2A_BUILD win2 fit17: (17,1050,1050) at 8.47 um depth pitch
+2026-09-02T02:52:02Z P2A_BUILD win2 zarrs ready (native 65x4438x4438 @ 2.215 um -> iso 15x1050x1050, fit17 17x1050x1050)
+2026-09-02T02:52:06Z P2A_BUILD win3 volume stats match the Aug-25 record (mean=74.129 sd=31.922 zf=0.00023)
+2026-09-02T02:52:25Z resample win3iso slice 1/15
+2026-09-02T02:52:27Z resample win3iso slice 9/15
+2026-09-02T02:52:29Z P2A_BUILD win3 iso: (15,1050,1050) at 9.60 um depth pitch
+2026-09-02T02:52:50Z resample win3fit17 slice 1/17
+2026-09-02T02:52:52Z resample win3fit17 slice 9/17
+2026-09-02T02:52:53Z HEARTBEAT stage=p2a_build_rest up=1021s free=50G
+2026-09-02T02:52:54Z resample win3fit17 slice 17/17
+2026-09-02T02:52:54Z P2A_BUILD win3 fit17: (17,1050,1050) at 8.47 um depth pitch
+2026-09-02T02:52:54Z P2A_BUILD win3 zarrs ready (native 65x4438x4438 @ 2.215 um -> iso 15x1050x1050, fit17 17x1050x1050)
+2026-09-02T02:52:55Z === STAGE p2a_build_rest DONE (108s) ===
+2026-09-02T02:52:55Z === STAGE expb_infer OPEN ===
+2026-09-02T02:52:55Z infer OPEN win2_iso.zarr -> expB_win2_iso.tif [both]
+2026-09-02T02:53:10Z infer DONE expB_win2_iso.tif [both] (15s)
+2026-09-02T02:53:10Z infer OPEN win2_fit17.zarr -> expB_win2_fit17.tif [both]
+2026-09-02T02:53:26Z infer DONE expB_win2_fit17.tif [both] (16s)
+2026-09-02T02:53:26Z infer OPEN win3_iso.zarr -> expB_win3_iso.tif [both]
+2026-09-02T02:53:42Z infer DONE expB_win3_iso.tif [both] (16s)
+2026-09-02T02:53:42Z infer OPEN win3_fit17.zarr -> expB_win3_fit17.tif [both]
+2026-09-02T02:53:53Z HEARTBEAT stage=expb_infer up=1081s free=52G
+2026-09-02T02:53:58Z infer DONE expB_win3_fit17.tif [both] (16s)
+2026-09-02T02:53:58Z === STAGE expb_infer DONE (63s) ===
+2026-09-02T02:53:58Z === STAGE expb_score OPEN ===
+2026-09-02T02:53:58Z EXPB_SCORE win1: 40 translations drawn (|shift| in [1694,2662] px @ 2.215um, >= 50000 pseudo-pos each)
+2026-09-02T02:53:59Z EXPB_SCORE win1 iso forward: AUC_real=0.5211 null_med=0.5038 null_max=0.7501 GAP=0.0174
+2026-09-02T02:54:00Z EXPB_SCORE win1 iso reverse: AUC_real=0.5106 null_med=0.4471 null_max=0.7440 GAP=0.0635
+2026-09-02T02:54:01Z EXPB_SCORE win1 fit17 forward: AUC_real=0.5301 null_med=0.5071 null_max=0.7151 GAP=0.0230
+2026-09-02T02:54:01Z EXPB_SCORE win1 fit17 reverse: AUC_real=0.5099 null_med=0.4640 null_max=0.7372 GAP=0.0459
+2026-09-02T02:54:02Z EXPB_SCORE win1 VERDICT=SHAPE_CONFOUNDED (audited iso_forward: real=0.5211 null_med=0.5038 gap=0.0174)
+2026-09-02T02:54:02Z EXPB_SCORE win2: 40 translations drawn (|shift| in [1694,2662] px @ 2.215um, >= 50000 pseudo-pos each)
+2026-09-02T02:54:02Z EXPB_SCORE win2 iso forward: AUC_real=0.4339 null_med=0.4909 null_max=0.7874 GAP=-0.0570
+2026-09-02T02:54:03Z EXPB_SCORE win2 iso reverse: AUC_real=0.4971 null_med=0.5260 null_max=0.8259 GAP=-0.0289
+2026-09-02T02:54:04Z EXPB_SCORE win2 fit17 forward: AUC_real=0.4481 null_med=0.5146 null_max=0.7763 GAP=-0.0665
+2026-09-02T02:54:04Z EXPB_SCORE win2 fit17 reverse: AUC_real=0.4897 null_med=0.5307 null_max=0.8257 GAP=-0.0410
+2026-09-02T02:54:05Z EXPB_SCORE win2 VERDICT=SHAPE_CONFOUNDED (audited iso_reverse: real=0.4971 null_med=0.5260 gap=-0.0289)
+2026-09-02T02:54:05Z EXPB_SCORE win3: 40 translations drawn (|shift| in [1694,2662] px @ 2.215um, >= 50000 pseudo-pos each)
+2026-09-02T02:54:05Z EXPB_SCORE win3 iso forward: AUC_real=0.4914 null_med=0.3822 null_max=0.9211 GAP=0.1092
+2026-09-02T02:54:06Z EXPB_SCORE win3 iso reverse: AUC_real=0.4956 null_med=0.5305 null_max=0.8236 GAP=-0.0349
+2026-09-02T02:54:07Z EXPB_SCORE win3 fit17 forward: AUC_real=0.4761 null_med=0.3840 null_max=0.8767 GAP=0.0922
+2026-09-02T02:54:07Z EXPB_SCORE win3 fit17 reverse: AUC_real=0.4756 null_med=0.5316 null_max=0.8927 GAP=-0.0560
+2026-09-02T02:54:07Z EXPB_SCORE win3 VERDICT=SHAPE_CONFOUNDED (audited iso_reverse: real=0.4956 null_med=0.5305 gap=-0.0349)
+2026-09-02T02:54:07Z EXPB_SCORE complete; overall=SHAPE_CONFOUNDED
+2026-09-02T02:54:07Z === STAGE expb_score DONE (9s) ===
+2026-09-02T02:54:07Z === STAGE finalize OPEN ===
+2026-09-02T02:54:08Z SUMMARY ctl: native fwd=0.9991 rev=0.5118; scale-fault best=0.7489 -> FAULT_REPRODUCED; half best=0.5227
+2026-09-02T02:54:08Z SUMMARY anchor (win1 @ 2.215um): iso fwd=0.5211 rev=0.5106 | fit17 fwd=0.5301 rev=0.5099 | CORRECTED ANCHOR = 0.5211 (forward) | Aug-25 void 0.5382/0.5055
+2026-09-02T02:54:08Z SUMMARY reading: transfer failure confirmed at the correct pitch (read jointly with the CTL scale-fault verdict)
+2026-09-02T02:54:08Z SUMMARY curve: not run (gate not met or RUN_RUNGS=0)
+2026-09-02T02:54:08Z SUMMARY expB win1: SHAPE_CONFOUNDED real=0.5211 null_med=0.5038 gap=0.0174
+2026-09-02T02:54:08Z SUMMARY expB win2: SHAPE_CONFOUNDED real=0.4971 null_med=0.5260 gap=-0.0289
+2026-09-02T02:54:08Z SUMMARY expB win3: SHAPE_CONFOUNDED real=0.4956 null_med=0.5305 gap=-0.0349
+2026-09-02T02:54:08Z SUMMARY expB overall: SHAPE_CONFOUNDED
+2026-09-02T02:54:09Z bundle: /workspace/p2a/out/bundle.tgz (64M) -- results + previews + all prediction maps
+2026-09-02T02:54:09Z === STAGE finalize DONE (2s) ===
+2026-09-02T02:54:09Z ALL DONE -- results.json + bundle.tgz served on :8000; the laptop guard harvests and TERMINATES.

@@ -1,0 +1,19 @@
+{
+ "crop": [
+  512,
+  2944,
+  384,
+  3072
+ ],
+ "shape": [
+  2432,
+  2688
+ ],
+ "n_pos": 334035,
+ "n_neg": 737086,
+ "ink_outside_sup": 37959,
+ "n_sup": 1071121,
+ "n_ink": 371994,
+ "sha256_raw": "23ad57aed651ca8ff81e13bd4b829d359af7d6711fb904b68168c850e84aa4cf",
+ "source": "D:/vesuvius-data/trackD/ink9um_planes/native9-scrollprizeorg-21slices__w035.npz plane z=14 (the plane the 0.9991 control was scored on)"
+}

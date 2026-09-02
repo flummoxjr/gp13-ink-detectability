@@ -1,0 +1,81 @@
+{
+  "benchmark": "9um transfer benchmark",
+  "version": "0.1",
+  "written": "2026-09-01",
+  "model_pitch_um": 9.36,
+  "scorer": "bench/p2a_v3 curvelib.py (tie-corrected pixel rank-AUC on the native label grid; anti-aliased resampling; 40-translation hallucination null; block-mosaic null for positives)",
+  "controls": {
+    "w035_crop": {
+      "scroll": "PHerc0139",
+      "surface_volume": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr",
+      "shape": [28, 5820, 5240],
+      "chunks": [28, 128, 128],
+      "compressor": null,
+      "dimension_separator": "/",
+      "pitch_um": 9.362,
+      "crop_yyxx": [512, 2944, 384, 3072],
+      "labels": "embedded in bench/p2a_v3 (parts/w035_ctl_labels.b64; source D:/vesuvius-data/trackD/ink9um_planes/native9-scrollprizeorg-21slices__w035.npz plane z=14)",
+      "labels_sha256_packbits": "23ad57aed651ca8ff81e13bd4b829d359af7d6711fb904b68168c850e84aa4cf",
+      "n_pos": 334035,
+      "n_neg": 737086,
+      "on_record": {"forward_full_canvas": 0.9991, "reverse_full_canvas": 0.5123},
+      "measured_2026-09-02": {"native_forward": 0.9991, "native_reverse": 0.5118, "level_x1.9504_forward": 0.7489, "level_x1.9504_reverse": 0.5381, "level_x0.5_forward": 0.5227, "level_x0.5_reverse": 0.4844},
+      "arms": {
+        "native": "as released; pass iff forward >= 0.95",
+        "depth_reverse": "--direction reverse; pass iff <= 0.80",
+        "level_x1.9504": "upsampled x(4.32/2.215) in-plane and depth -> (55, 4743, 5243); reported",
+        "level_x0.5": "downsampled x0.5 -> (14, 1216, 1344); reported"
+      }
+    }
+  },
+  "surfaces": {
+    "500p2a": {
+      "tier": "anchor",
+      "scroll": "PHerc0500P2 (detached fragment; absent from the ink_9um 29-representation manifest)",
+      "bucket": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink/unused/500p2a",
+      "surface_volume": "500p2a.zarr (level 0 [65, 26239, 16182] uint8, chunks [65,128,128], blosc zstd, dimension_separator '.')",
+      "pitch_um": 2.215,
+      "pitch_note": "NOT 4.32; see bench/P2A_PITCH_RESOLUTION.md",
+      "labels": {"ink": "500p2a_inklabels.tif (3009475 bytes)", "mask": "500p2a_supervision_mask.tif (2983168 bytes)"},
+      "raster_counts": {"ink": 12856732, "mask": 34871346, "ink_and_mask": 12230762, "ink_outside_mask": 625970, "annot_blank": 22640584},
+      "windows": {
+        "win1": {"y0": 12416, "x0": 6912, "size": 4438, "ink_and_mask": 4388955, "annot_blank": 8576280, "ink_outside_mask": 469},
+        "win2": {"y0": 18432, "x0": 7424, "size": 4438, "ink_and_mask": 2862504, "annot_blank": 4778034, "ink_outside_mask": 0},
+        "win3": {"y0": 12160, "x0": 2432, "size": 4438, "ink_and_mask": 1536773, "annot_blank": 2237639, "ink_outside_mask": 621303}
+      },
+      "resample_to_model": {"inplane_px": 1050, "depth_iso_layers": 15, "depth_fit17_layers": 17},
+      "contamination": "clean for ink_9um; contaminated for ink_3d_dino_guided, ink_canonical_2um, PHerc1667-iteration-0",
+      "results": {"2026-08-25_v2_VOID": {"auc_forward": 0.5382, "auc_reverse": 0.5055, "fault": "fed at 4.80um presented as 9.36"}, "2026-09-02_v3": {"pitch_um": 2.215, "win1": {"iso_forward": 0.5211, "iso_reverse": 0.5106, "fit17_forward": 0.5301, "fit17_reverse": 0.5099}, "win2": {"iso_forward": 0.4339, "iso_reverse": 0.4971, "fit17_forward": 0.4481, "fit17_reverse": 0.4897}, "win3": {"iso_forward": 0.4914, "iso_reverse": 0.4956, "fit17_forward": 0.4761, "fit17_reverse": 0.4756}, "corrected_anchor": 0.5211, "expB": "SHAPE_CONFOUNDED on all three windows (real at chance; translated-label nulls up to 0.92)", "controls": {"native_forward": 0.9991, "native_reverse": 0.5118, "level_x1.9504": 0.7489, "level_x0.5": 0.5227}, "record": "trackD/out/p2a_v3/results.json"}}
+    },
+    "pherc0139_native": {
+      "tier": "native held-out (leave-one-scroll-out)",
+      "labels_root": "https://huggingface.co/buckets/scrollprize/datasets/resolve/ink_9um/labels/native9-scrollprizeorg-21slices",
+      "segments": {
+        "w035": {"label_shape3d": [28, 5820, 5240], "label_plane": 14, "ink_px": 396164, "sup_px": 1071121, "surface_volume": "PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/9.362um-1.2m-113keV-volume-20250728140407.zarr"},
+        "w039": {"label_shape3d": [28, 8560, 7720], "label_plane": 14, "ink_px": 184948, "sup_px": 576220, "surface_volume": "TODO resolve <timestamp>-w039_2026030210 on s3://vesuvius-challenge-open-data/PHerc0139/segments/"},
+        "w040": {"label_shape3d": [28, 6400, 7980], "label_plane": 14, "ink_px": 745657, "sup_px": 1629734, "surface_volume": "TODO resolve <timestamp>-w040_2025083102"},
+        "w041": {"label_shape3d": [28, 6200, 8020], "label_plane": 14, "ink_px": 231421, "sup_px": 555629, "surface_volume": "TODO resolve <timestamp>-w041_2026010816", "note": "same physical sheet as public w042 (opposite face) -- never count both"},
+        "w044": {"label_shape3d": [28, 6040, 8160], "label_plane": 14, "ink_px": 455469, "sup_px": 1190307, "surface_volume": "TODO resolve <timestamp>-w044_2026011522"}
+      },
+      "holdout_tool": "bench/vendor/make_holdout_config.py (khj1222, villa PR #1608 @ dc9edb6) --exclude-scroll 0139 -> quotas {1667: 40, Paris4: 20, 0814: 4}",
+      "published_baseline": "khj1222 LOSO: +0.17 F1 over the everything-is-ink floor on 0139 (to be reproduced as Bet A arm 0)"
+    },
+    "fragments": {
+      "tier": "optical-IR labelled fragments (resampled to 9.36um)",
+      "root": "https://dl.ash2txt.org/fragments/",
+      "items": {
+        "Frag1": {"volpkg": "PHercParis2Fr47.volpkg", "working": "54keV_exposed_surface", "pitch_um": 3.24, "layers": 65, "shape": [8181, 6330], "labels": {"inklabels.png": "bc36bd54e84b423faa44d3b62ca0d3a3c28403cb714b154acb382f94241d39b6", "mask.png": "1fdc13f7dc149dc4e00272af597ba236b650e54bb2dca38865f211207cee069f"}, "counts": {"ink_and_mask": 5339364, "mask": 29142840, "blank": 23803476}, "results": {"2026-08-25_ink_9um": {"auc_forward": 0.6925, "auc_reverse": 0.4477}}},
+        "Frag2": {"volpkg": "PHercParis2Fr143.volpkg", "working": "54keV_exposed_surface", "pitch_um": 3.24, "status": "fingerprint on first use"},
+        "Frag3": {"volpkg": "PHercParis1Fr34.volpkg", "working": "54keV_exposed_surface", "pitch_um": 3.24, "status": "fingerprint on first use (II end-IFD TIFF layout)"},
+        "Frag4": {"volpkg": "PHercParis1Fr39.volpkg", "working": "54keV_exposed_surface", "pitch_um": 3.24, "status": "fingerprint on first use"},
+        "Frag5": {"volpkg": "PHerc1667Cr1Fr3.volpkg", "working": ["PHerc1667Cr01Fr03_70keV_3.24um", "PHerc1667Cr01Fr03_70keV_7.91um"], "status": "fingerprint on first use; the 7.91um acquisition is closest to model pitch"},
+        "Frag6": {"volpkg": "PHerc51Cr4Fr8.volpkg", "working": ["PHerc0051Cr04Fr08_53keV_3.24um", "PHerc0051Cr04Fr08_53keV_7.91um", "PHerc0051Cr04Fr08_70keV_3.24um", "PHerc0051Cr04Fr08_88keV_3.24um"], "status": "fingerprint on first use (II end-IFD layout); four energies -> the energy-augmentation source for Bet C"}
+      }
+    }
+  },
+  "excluded": {
+    "PHerc0009B, PHerc0343P": "IR-labelled but need a week of segmentation + registration each; reserved as a contamination challenge",
+    "ink_9um training representations (24 pooled-2.4um + 5 native)": "in-domain for ink_9um; the native five are evaluation surfaces ONLY under leave-one-scroll-out",
+    "PHerc0139 duplicate wraps": "w045/w046 and w041/w042 are one sheet each (Track F); count once"
+  }
+}

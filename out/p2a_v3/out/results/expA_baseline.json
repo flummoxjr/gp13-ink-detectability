@@ -1,0 +1,32 @@
+{
+ "anchor": "win1",
+ "pitch_um": 2.215,
+ "primary_depth": "iso",
+ "modes": {
+  "iso": {
+   "auc_forward": 0.5211395012084953,
+   "auc_reverse": 0.5105808250745079,
+   "direction": "forward",
+   "best": 0.5211395012084953
+  },
+  "fit17": {
+   "auc_forward": 0.5300912626312285,
+   "auc_reverse": 0.5099427433347522,
+   "direction": "forward",
+   "best": 0.5300912626312285
+  }
+ },
+ "corrected_anchor_auc": 0.5211395012084953,
+ "direction": "forward",
+ "gate": 0.85,
+ "gate_passed": false,
+ "prestated_reading": "transfer failure confirmed at the correct pitch (read jointly with the CTL scale-fault verdict)",
+ "n_pos": 4388955,
+ "n_neg": 8576280,
+ "aug25_void": {
+  "auc_forward": 0.5382,
+  "auc_reverse": 0.5055,
+  "pitch_assumed": 4.32,
+  "true_effective_pitch_um": 4.799
+ }
+}
