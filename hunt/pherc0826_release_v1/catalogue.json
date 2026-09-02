@@ -1,0 +1,916 @@
+{
+ "scroll": "PHerc0826",
+ "release": "v1",
+ "date": "2026-09-02",
+ "volume": "20250821151701-9.362um-1.2m-113keV-masked.zarr",
+ "voxel_um": 9.362,
+ "prediction_store": "20250821151701-surface-20260413222639-surface-m7-L0-th0.2",
+ "tracer": "vc_grow_seg_from_seed, villa main (release vc-tracer-de3c2494; built from e2442b7)",
+ "params": {
+  "mode": "seed",
+  "generations": 75,
+  "min_area_cm": 0.3,
+  "thread_limit": 1,
+  "use_cuda": false,
+  "voxelsize": 9.362,
+  "normal_grid": "released .normal-grids"
+ },
+ "seed_selection": "separability index top ROIs (out/k2c_separability), support-gated on an m7 sheet voxel (hunt/pick_seeds.py)",
+ "alignment_gate": "angle_local_deg < 30 (mesh normal from the vertices inside the 256^3 seed cube vs the cube's sheet normal; global whole-patch angle reported beside it)",
+ "n_grown": 24,
+ "n_pass": 21,
+ "area_pass_cm2": 172.96,
+ "patches": [
+  {
+   "name": "auto_grown_20260902140829487",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.749,
+   "bbox_xyz": [
+    [
+     1321.2835693359375,
+     3656.8359375,
+     6112.98388671875
+    ],
+    [
+     3118.3203125,
+     5885.8916015625,
+     9633.84375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    1552,
+    4848,
+    7871
+   ],
+   "separability": 0.7583776010168652,
+   "abs_nz": 0.466,
+   "angle_to_lamellae_deg": 4.3,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140830497",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.915,
+   "bbox_xyz": [
+    [
+     782.8907470703125,
+     3256.657958984375,
+     8151.22998046875
+    ],
+    [
+     2089.277099609375,
+     5124.48779296875,
+     11055.2626953125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    1184,
+    3888,
+    9552
+   ],
+   "separability": 0.7434409483588531,
+   "abs_nz": 0.098,
+   "angle_to_lamellae_deg": 11.8,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140833266",
+   "PASS": false,
+   "status": "ok",
+   "area_cm2": 9.345,
+   "bbox_xyz": [
+    [
+     960.5199584960938,
+     3268.88916015625,
+     9641.21875
+    ],
+    [
+     3588.366943359375,
+     4824.62841796875,
+     11977.0048828125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    2368,
+    4013,
+    10976
+   ],
+   "separability": 0.7346175868043695,
+   "abs_nz": 0.2,
+   "angle_to_lamellae_deg": 31.7,
+   "n_vertices": 21316
+  },
+  {
+   "name": "auto_grown_20260902140834273",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.937,
+   "bbox_xyz": [
+    [
+     1779.815185546875,
+     3718.77880859375,
+     7511.861328125
+    ],
+    [
+     4087.1123046875,
+     5468.15869140625,
+     10082.9677734375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    2170,
+    4320,
+    9150
+   ],
+   "separability": 0.7327633228979398,
+   "abs_nz": 0.091,
+   "angle_to_lamellae_deg": 3.6,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140837335",
+   "PASS": false,
+   "status": "ok",
+   "area_cm2": 8.733,
+   "bbox_xyz": [
+    [
+     3113.8037109375,
+     5136.16015625,
+     8179.5732421875
+    ],
+    [
+     4883.5048828125,
+     5658.35791015625,
+     10332.4267578125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4176,
+    5300,
+    9168
+   ],
+   "separability": 0.7152914482036028,
+   "abs_nz": 0.041,
+   "angle_to_lamellae_deg": 44.6,
+   "n_vertices": 21316
+  },
+  {
+   "name": "auto_grown_20260902140838462",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.194,
+   "bbox_xyz": [
+    [
+     1150.342529296875,
+     3353.191162109375,
+     5230.84326171875
+    ],
+    [
+     3036.568115234375,
+     4969.212890625,
+     8420.4560546875
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    1244,
+    4032,
+    6624
+   ],
+   "separability": 0.6954099636706568,
+   "abs_nz": 0.116,
+   "angle_to_lamellae_deg": 25.1,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140841364",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.588,
+   "bbox_xyz": [
+    [
+     3594.35302734375,
+     4239.291015625,
+     11685.0537109375
+    ],
+    [
+     7398.03564453125,
+     5516.9951171875,
+     15574.36328125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    5568,
+    5128,
+    13744
+   ],
+   "separability": 0.6929187347615566,
+   "abs_nz": 0.183,
+   "angle_to_lamellae_deg": 2.2,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140842483",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.258,
+   "bbox_xyz": [
+    [
+     1370.0054931640625,
+     3066.867919921875,
+     5819.85595703125
+    ],
+    [
+     4692.7607421875,
+     4320.68359375,
+     8424.0712890625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3088,
+    3684,
+    7024
+   ],
+   "separability": 0.6861093528399727,
+   "abs_nz": 0.048,
+   "angle_to_lamellae_deg": 10.5,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140845521",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.771,
+   "bbox_xyz": [
+    [
+     2004.1180419921875,
+     3153.015380859375,
+     5538.80712890625
+    ],
+    [
+     4620.91455078125,
+     4736.14111328125,
+     7968.6708984375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3600,
+    4480,
+    7072
+   ],
+   "separability": 0.6702062740367096,
+   "abs_nz": 0.009,
+   "angle_to_lamellae_deg": 5.0,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140846561",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.86,
+   "bbox_xyz": [
+    [
+     2471.383544921875,
+     4647.51904296875,
+     9500.3173828125
+    ],
+    [
+     5806.8681640625,
+     5620.2890625,
+     12207.546875
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4112,
+    5264,
+    10672
+   ],
+   "separability": 0.6666624422175723,
+   "abs_nz": 0.228,
+   "angle_to_lamellae_deg": 0.9,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140849408",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.725,
+   "bbox_xyz": [
+    [
+     737.2116088867188,
+     3474.49267578125,
+     5371.732421875
+    ],
+    [
+     3674.331298828125,
+     5865.72705078125,
+     8496.09375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    1808,
+    4743,
+    6896
+   ],
+   "separability": 0.6536681939358805,
+   "abs_nz": 0.338,
+   "angle_to_lamellae_deg": 2.2,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140850514",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.596,
+   "bbox_xyz": [
+    [
+     2252.8203125,
+     4428.61328125,
+     10243.373046875
+    ],
+    [
+     5540.77294921875,
+     5276.423828125,
+     13727.810546875
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3744,
+    4864,
+    11904
+   ],
+   "separability": 0.6428683341247338,
+   "abs_nz": 0.238,
+   "angle_to_lamellae_deg": 2.3,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140853399",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.498,
+   "bbox_xyz": [
+    [
+     1158.8226318359375,
+     3281.481201171875,
+     9462.1591796875
+    ],
+    [
+     4062.60693359375,
+     4885.80078125,
+     11435.56640625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    2480,
+    4369,
+    10243
+   ],
+   "separability": 0.6375078042664383,
+   "abs_nz": 0.17,
+   "angle_to_lamellae_deg": 9.9,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140854546",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.587,
+   "bbox_xyz": [
+    [
+     4167.232421875,
+     4362.80029296875,
+     10795.0322265625
+    ],
+    [
+     7397.1298828125,
+     5571.69775390625,
+     13969.00390625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    5599,
+    5039,
+    12656
+   ],
+   "separability": 0.6135739280050226,
+   "abs_nz": 0.123,
+   "angle_to_lamellae_deg": 10.1,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140858608",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 9.214,
+   "bbox_xyz": [
+    [
+     3852.43603515625,
+     3780.79248046875,
+     2511.888671875
+    ],
+    [
+     6161.34423828125,
+     5522.1298828125,
+     5336.74951171875
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    5504,
+    4848,
+    4320
+   ],
+   "separability": 0.576682997345092,
+   "abs_nz": 0.007,
+   "angle_to_lamellae_deg": 4.8,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140900360",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.614,
+   "bbox_xyz": [
+    [
+     2901.484619140625,
+     4174.69287109375,
+     10076.2880859375
+    ],
+    [
+     6277.88916015625,
+     5058.85205078125,
+     13332.8154296875
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4544,
+    4654,
+    11680
+   ],
+   "separability": 0.5758958055538217,
+   "abs_nz": 0.205,
+   "angle_to_lamellae_deg": 4.2,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140909085",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.718,
+   "bbox_xyz": [
+    [
+     3950.286376953125,
+     2876.4150390625,
+     4780.064453125
+    ],
+    [
+     5608.7783203125,
+     4712.48388671875,
+     8172.97119140625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4272,
+    3552,
+    6368
+   ],
+   "separability": 0.5476756386552264,
+   "abs_nz": 0.472,
+   "angle_to_lamellae_deg": 17.3,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140909884",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 7.591,
+   "bbox_xyz": [
+    [
+     3064.206298828125,
+     3744.9326171875,
+     11249.8818359375
+    ],
+    [
+     6827.27783203125,
+     4846.02294921875,
+     14800.7548828125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4928,
+    4647,
+    13152
+   ],
+   "separability": 0.5321724748119472,
+   "abs_nz": 0.25,
+   "angle_to_lamellae_deg": 4.0,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140913191",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.368,
+   "bbox_xyz": [
+    [
+     4100.146484375,
+     3405.39697265625,
+     4983.775390625
+    ],
+    [
+     5953.1650390625,
+     5595.18896484375,
+     7557.36962890625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    5376,
+    4339,
+    6607
+   ],
+   "separability": 0.5303947801130867,
+   "abs_nz": 0.505,
+   "angle_to_lamellae_deg": 10.3,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140917784",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.507,
+   "bbox_xyz": [
+    [
+     2360.144287109375,
+     2879.8193359375,
+     2326.472412109375
+    ],
+    [
+     4654.87060546875,
+     4618.62841796875,
+     4751.095703125
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3132,
+    3330,
+    3312
+   ],
+   "separability": 0.5109572979948462,
+   "abs_nz": 0.279,
+   "angle_to_lamellae_deg": 8.1,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140919788",
+   "PASS": false,
+   "status": "ok",
+   "area_cm2": 9.581,
+   "bbox_xyz": [
+    [
+     1766.3916015625,
+     2762.41943359375,
+     4721.30224609375
+    ],
+    [
+     3950.536865234375,
+     3916.26318359375,
+     7995.11083984375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    2768,
+    3536,
+    6368
+   ],
+   "separability": 0.478244658566088,
+   "abs_nz": 0.325,
+   "angle_to_lamellae_deg": 52.1,
+   "n_vertices": 21316
+  },
+  {
+   "name": "auto_grown_20260902140921494",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.581,
+   "bbox_xyz": [
+    [
+     2275.72509765625,
+     2635.978515625,
+     4292.4208984375
+    ],
+    [
+     4963.3369140625,
+     3791.43359375,
+     6656.06640625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3599,
+    3444,
+    5824
+   ],
+   "separability": 0.39816873896845484,
+   "abs_nz": 0.442,
+   "angle_to_lamellae_deg": 7.8,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140924503",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.385,
+   "bbox_xyz": [
+    [
+     1678.1878662109375,
+     3357.615966796875,
+     7480.80615234375
+    ],
+    [
+     5340.83544921875,
+     4353.11474609375,
+     9781.8359375
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    3584,
+    3877,
+    8511
+   ],
+   "separability": 0.32797958509658004,
+   "abs_nz": 0.228,
+   "angle_to_lamellae_deg": 6.4,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  },
+  {
+   "name": "auto_grown_20260902140928704",
+   "PASS": true,
+   "status": "ok",
+   "area_cm2": 8.303,
+   "bbox_xyz": [
+    [
+     2458.02099609375,
+     2210.214599609375,
+     2950.69091796875
+    ],
+    [
+     6411.99560546875,
+     3201.162109375,
+     6123.56494140625
+    ]
+   ],
+   "scale": [
+    0.05000000074505806,
+    0.05000000074505806
+   ],
+   "seed_xyz": [
+    4464,
+    2652,
+    4368
+   ],
+   "separability": 0.3009956092113013,
+   "abs_nz": 0.307,
+   "angle_to_lamellae_deg": 3.6,
+   "n_vertices": 21316,
+   "files": [
+    "generations.tif",
+    "meta.json",
+    "x.tif",
+    "y.tif",
+    "z.tif"
+   ]
+  }
+ ]
+}
