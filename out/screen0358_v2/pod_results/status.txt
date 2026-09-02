@@ -1,0 +1,135 @@
+2026-09-02T02:55:21Z BOOT tAB_0358_screen v2 pid=14 host=05eabe039b8e root=/workspace/screen0358 -- status live; server next
+2026-09-02T02:55:22Z SERVE http.server pid=40 0.0.0.0:8000 dir=/workspace/screen0358/out external=https://pou3y6h4s7gp7i-8000.proxy.runpod.net/status.txt local_probe=200
+2026-09-02T02:55:22Z PREREG locked prereg.json sha256=3856c52e20d4 doc=PREREG_0358_v2.md sha256=dcfa3de67cf0 expected=NULL-with-bounded-sensitivity (corrected transfer anchor 0.5211; Aug-25 0.5382 VOID) -- rules recorded before any provisioning, download, or data
+2026-09-02T02:55:22Z embedded scripts + mesh manifest + patch metadata written to /workspace/screen0358/scripts and /workspace/screen0358/var
+2026-09-02T02:55:22Z === STAGE provision OPEN ===
+2026-09-02T02:55:28Z provision: villa @ a3f2c29
+2026-09-02T02:55:28Z provision: uv sync starting (full log at /provision.log on :8000)
+2026-09-02T02:56:12Z === STAGE provision DONE (50s) ===
+2026-09-02T02:56:12Z === STAGE ckpt OPEN ===
+2026-09-02T02:56:18Z ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad
+2026-09-02T02:56:18Z === STAGE ckpt DONE (6s) ===
+2026-09-02T02:56:18Z === STAGE meshes OPEN ===
+2026-09-02T02:56:18Z meshes: no tarball at /workspace/tAB_0358_meshes.tgz -- falling back to public-repo raw URLs
+2026-09-02T02:56:22Z HEARTBEAT stage=meshes up=61s free=57G
+2026-09-02T02:56:27Z meshes: 32 files fetched from raw URLs
+2026-09-02T02:56:27Z meshes: all 32 files sha256-verified against the frozen manifest
+2026-09-02T02:56:27Z === STAGE meshes DONE (9s) ===
+2026-09-02T02:56:27Z === STAGE volprobe OPEN ===
+2026-09-02T02:56:28Z volprobe: VOLPROBE mesh OK: auto_grown_20260825155624780 grid 152x152 bbox inside volume
+2026-09-02T02:56:28Z volprobe: VOLPROBE mesh OK: auto_grown_20260825155625980 grid 152x152 bbox inside volume
+2026-09-02T02:56:28Z volprobe: VOLPROBE ALL GATES PASS
+2026-09-02T02:56:28Z === STAGE volprobe DONE (1s) ===
+2026-09-02T02:56:28Z === STAGE screen_1 OPEN ===
+2026-09-02T02:56:28Z screen_1 = auto_grown_20260825155611879
+2026-09-02T02:57:22Z HEARTBEAT stage=screen_1 up=121s free=57G
+2026-09-02T02:58:22Z HEARTBEAT stage=screen_1 up=181s free=57G
+2026-09-02T02:59:22Z HEARTBEAT stage=screen_1 up=241s free=57G
+2026-09-02T02:59:23Z render DONE auto_grown_20260825155611879 (175s)
+2026-09-02T02:59:23Z infer OPEN auto_grown_20260825155611879.sv.zarr -> auto_grown_20260825155611879_fwd.tif [forward]
+2026-09-02T02:59:47Z infer DONE auto_grown_20260825155611879_fwd.tif [forward] (24s)
+2026-09-02T02:59:47Z infer OPEN auto_grown_20260825155611879.sv.zarr -> auto_grown_20260825155611879_rev.tif [reverse]
+2026-09-02T03:00:06Z infer DONE auto_grown_20260825155611879_rev.tif [reverse] (19s)
+2026-09-02T03:00:07Z stats: auto_grown_20260825155611879: fwd_rev_r=0.482 fwd_p99=193.0 TRIPWIRE=0 healthy
+2026-09-02T03:00:07Z === STAGE screen_1 DONE (219s) ===
+2026-09-02T03:00:07Z === STAGE screen_2 OPEN ===
+2026-09-02T03:00:07Z screen_2 = auto_grown_20260825155613379
+2026-09-02T03:00:22Z HEARTBEAT stage=screen_2 up=301s free=57G
+2026-09-02T03:01:22Z HEARTBEAT stage=screen_2 up=361s free=57G
+2026-09-02T03:02:22Z HEARTBEAT stage=screen_2 up=421s free=57G
+2026-09-02T03:02:47Z render DONE auto_grown_20260825155613379 (160s)
+2026-09-02T03:02:47Z infer OPEN auto_grown_20260825155613379.sv.zarr -> auto_grown_20260825155613379_fwd.tif [forward]
+2026-09-02T03:03:05Z infer DONE auto_grown_20260825155613379_fwd.tif [forward] (18s)
+2026-09-02T03:03:05Z infer OPEN auto_grown_20260825155613379.sv.zarr -> auto_grown_20260825155613379_rev.tif [reverse]
+2026-09-02T03:03:22Z HEARTBEAT stage=screen_2 up=481s free=57G
+2026-09-02T03:03:24Z infer DONE auto_grown_20260825155613379_rev.tif [reverse] (19s)
+2026-09-02T03:03:25Z stats: auto_grown_20260825155613379: fwd_rev_r=0.5522 fwd_p99=186.0 TRIPWIRE=0 healthy
+2026-09-02T03:03:25Z === STAGE screen_2 DONE (198s) ===
+2026-09-02T03:03:25Z === STAGE screen_3 OPEN ===
+2026-09-02T03:03:25Z screen_3 = auto_grown_20260825155615680
+2026-09-02T03:04:22Z HEARTBEAT stage=screen_3 up=541s free=57G
+2026-09-02T03:05:22Z HEARTBEAT stage=screen_3 up=601s free=57G
+2026-09-02T03:06:17Z render DONE auto_grown_20260825155615680 (172s)
+2026-09-02T03:06:17Z infer OPEN auto_grown_20260825155615680.sv.zarr -> auto_grown_20260825155615680_fwd.tif [forward]
+2026-09-02T03:06:22Z HEARTBEAT stage=screen_3 up=661s free=57G
+2026-09-02T03:06:35Z infer DONE auto_grown_20260825155615680_fwd.tif [forward] (18s)
+2026-09-02T03:06:35Z infer OPEN auto_grown_20260825155615680.sv.zarr -> auto_grown_20260825155615680_rev.tif [reverse]
+2026-09-02T03:06:54Z infer DONE auto_grown_20260825155615680_rev.tif [reverse] (19s)
+2026-09-02T03:06:55Z stats: auto_grown_20260825155615680: fwd_rev_r=0.5364 fwd_p99=191.0 TRIPWIRE=0 healthy
+2026-09-02T03:06:55Z === STAGE screen_3 DONE (210s) ===
+2026-09-02T03:06:55Z === STAGE screen_4 OPEN ===
+2026-09-02T03:06:55Z screen_4 = auto_grown_20260825155619178
+2026-09-02T03:07:22Z HEARTBEAT stage=screen_4 up=721s free=57G
+2026-09-02T03:08:22Z HEARTBEAT stage=screen_4 up=781s free=57G
+2026-09-02T03:09:22Z HEARTBEAT stage=screen_4 up=841s free=57G
+2026-09-02T03:10:22Z HEARTBEAT stage=screen_4 up=901s free=57G
+2026-09-02T03:10:55Z render DONE auto_grown_20260825155619178 (240s)
+2026-09-02T03:10:55Z infer OPEN auto_grown_20260825155619178.sv.zarr -> auto_grown_20260825155619178_fwd.tif [forward]
+2026-09-02T03:11:14Z infer DONE auto_grown_20260825155619178_fwd.tif [forward] (19s)
+2026-09-02T03:11:14Z infer OPEN auto_grown_20260825155619178.sv.zarr -> auto_grown_20260825155619178_rev.tif [reverse]
+2026-09-02T03:11:22Z HEARTBEAT stage=screen_4 up=961s free=57G
+2026-09-02T03:11:32Z infer DONE auto_grown_20260825155619178_rev.tif [reverse] (18s)
+2026-09-02T03:11:33Z stats: auto_grown_20260825155619178: fwd_rev_r=0.5857 fwd_p99=195.0 TRIPWIRE=0 healthy
+2026-09-02T03:11:33Z === STAGE screen_4 DONE (278s) ===
+2026-09-02T03:11:33Z === STAGE screen_5 OPEN ===
+2026-09-02T03:11:33Z screen_5 = auto_grown_20260825155619482
+2026-09-02T03:12:22Z HEARTBEAT stage=screen_5 up=1021s free=57G
+2026-09-02T03:13:22Z HEARTBEAT stage=screen_5 up=1081s free=57G
+2026-09-02T03:14:22Z HEARTBEAT stage=screen_5 up=1141s free=57G
+2026-09-02T03:14:44Z render DONE auto_grown_20260825155619482 (191s)
+2026-09-02T03:14:44Z infer OPEN auto_grown_20260825155619482.sv.zarr -> auto_grown_20260825155619482_fwd.tif [forward]
+2026-09-02T03:15:02Z infer DONE auto_grown_20260825155619482_fwd.tif [forward] (18s)
+2026-09-02T03:15:02Z infer OPEN auto_grown_20260825155619482.sv.zarr -> auto_grown_20260825155619482_rev.tif [reverse]
+2026-09-02T03:15:20Z infer DONE auto_grown_20260825155619482_rev.tif [reverse] (18s)
+2026-09-02T03:15:21Z stats: auto_grown_20260825155619482: fwd_rev_r=0.4739 fwd_p99=189.0 TRIPWIRE=0 healthy
+2026-09-02T03:15:21Z === STAGE screen_5 DONE (228s) ===
+2026-09-02T03:15:21Z === STAGE screen_6 OPEN ===
+2026-09-02T03:15:21Z screen_6 = auto_grown_20260825155621418
+2026-09-02T03:15:22Z HEARTBEAT stage=screen_6 up=1201s free=57G
+2026-09-02T03:16:22Z HEARTBEAT stage=screen_6 up=1261s free=57G
+2026-09-02T03:17:22Z HEARTBEAT stage=screen_6 up=1321s free=57G
+2026-09-02T03:18:21Z render DONE auto_grown_20260825155621418 (180s)
+2026-09-02T03:18:21Z infer OPEN auto_grown_20260825155621418.sv.zarr -> auto_grown_20260825155621418_fwd.tif [forward]
+2026-09-02T03:18:22Z HEARTBEAT stage=screen_6 up=1381s free=57G
+2026-09-02T03:18:39Z infer DONE auto_grown_20260825155621418_fwd.tif [forward] (18s)
+2026-09-02T03:18:39Z infer OPEN auto_grown_20260825155621418.sv.zarr -> auto_grown_20260825155621418_rev.tif [reverse]
+2026-09-02T03:18:58Z infer DONE auto_grown_20260825155621418_rev.tif [reverse] (19s)
+2026-09-02T03:18:59Z stats: auto_grown_20260825155621418: fwd_rev_r=0.4467 fwd_p99=193.0 TRIPWIRE=0 healthy
+2026-09-02T03:18:59Z === STAGE screen_6 DONE (218s) ===
+2026-09-02T03:18:59Z === STAGE screen_7 OPEN ===
+2026-09-02T03:18:59Z screen_7 = auto_grown_20260825155624780
+2026-09-02T03:19:22Z HEARTBEAT stage=screen_7 up=1441s free=57G
+2026-09-02T03:20:22Z HEARTBEAT stage=screen_7 up=1501s free=57G
+2026-09-02T03:21:22Z HEARTBEAT stage=screen_7 up=1561s free=57G
+2026-09-02T03:21:55Z render DONE auto_grown_20260825155624780 (176s)
+2026-09-02T03:21:55Z infer OPEN auto_grown_20260825155624780.sv.zarr -> auto_grown_20260825155624780_fwd.tif [forward]
+2026-09-02T03:22:13Z infer DONE auto_grown_20260825155624780_fwd.tif [forward] (18s)
+2026-09-02T03:22:13Z infer OPEN auto_grown_20260825155624780.sv.zarr -> auto_grown_20260825155624780_rev.tif [reverse]
+2026-09-02T03:22:22Z HEARTBEAT stage=screen_7 up=1621s free=57G
+2026-09-02T03:22:31Z infer DONE auto_grown_20260825155624780_rev.tif [reverse] (18s)
+2026-09-02T03:22:32Z stats: auto_grown_20260825155624780: fwd_rev_r=0.4676 fwd_p99=189.0 TRIPWIRE=0 healthy
+2026-09-02T03:22:32Z === STAGE screen_7 DONE (213s) ===
+2026-09-02T03:22:32Z === STAGE screen_8 OPEN ===
+2026-09-02T03:22:32Z screen_8 = auto_grown_20260825155625980
+2026-09-02T03:23:22Z HEARTBEAT stage=screen_8 up=1681s free=57G
+2026-09-02T03:24:22Z HEARTBEAT stage=screen_8 up=1741s free=57G
+2026-09-02T03:25:15Z render DONE auto_grown_20260825155625980 (163s)
+2026-09-02T03:25:15Z infer OPEN auto_grown_20260825155625980.sv.zarr -> auto_grown_20260825155625980_fwd.tif [forward]
+2026-09-02T03:25:22Z HEARTBEAT stage=screen_8 up=1801s free=57G
+2026-09-02T03:25:33Z infer DONE auto_grown_20260825155625980_fwd.tif [forward] (18s)
+2026-09-02T03:25:33Z infer OPEN auto_grown_20260825155625980.sv.zarr -> auto_grown_20260825155625980_rev.tif [reverse]
+2026-09-02T03:25:52Z infer DONE auto_grown_20260825155625980_rev.tif [reverse] (19s)
+2026-09-02T03:25:54Z stats: auto_grown_20260825155625980: fwd_rev_r=0.5853 fwd_p99=191.0 TRIPWIRE=0 healthy
+2026-09-02T03:25:54Z === STAGE screen_8 DONE (202s) ===
+2026-09-02T03:25:54Z === STAGE finalize OPEN ===
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155611879 fwd_rev_r=0.482 fwd_p99=193.0 frac_gt_blankp99=0.005732 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155613379 fwd_rev_r=0.5522 fwd_p99=186.0 frac_gt_blankp99=0.00209 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155615680 fwd_rev_r=0.5364 fwd_p99=191.0 frac_gt_blankp99=0.003117 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155619178 fwd_rev_r=0.5857 fwd_p99=195.0 frac_gt_blankp99=0.009954 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155619482 fwd_rev_r=0.4739 fwd_p99=189.0 frac_gt_blankp99=0.002695 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155621418 fwd_rev_r=0.4467 fwd_p99=193.0 frac_gt_blankp99=0.006172 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155624780 fwd_rev_r=0.4676 fwd_p99=189.0 frac_gt_blankp99=0.002803 tripwires=0
+2026-09-02T03:25:54Z SUMMARY auto_grown_20260825155625980 fwd_rev_r=0.5853 fwd_p99=191.0 frac_gt_blankp99=0.003009 tripwires=0
+2026-09-02T03:25:54Z SUMMARY inventory complete: 8/8 patches healthy; maps+stats ready for the LOCAL battery
+2026-09-02T03:25:54Z === STAGE finalize DONE (0s) ===
+2026-09-02T03:25:54Z ALL DONE -- measurement complete; per prereg the EXPECTED outcome is a bounded-sensitivity null and NOTHING here is a verdict. Fetch BOTH trees: scp -r root@POD:/workspace/screen0358/out ./screen0358_out ; scp -r root@POD:/workspace/screen0358/preds ./screen0358_preds ; then TERMINATE THE POD. The v2 5-gate battery runs locally on the fetched maps.
