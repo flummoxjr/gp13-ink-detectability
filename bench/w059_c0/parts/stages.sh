@@ -43,16 +43,34 @@ else
   if [ ! -x "$OIVENV/bin/python" ]; then
     python3 -m venv --system-site-packages "$OIVENV" >> "$OUT/logs/provision.log" 2>&1 || die "venv failed"
   fi
-  retry 2 timeout 1800 "$OIVENV/bin/pip" install -q -r "$OID/requirements.txt" >> "$OUT/logs/provision.log" 2>&1 || die "pip install -r requirements.txt failed (logs/provision.log)"
+  # 2026-09-03: a SECURE 5090 host read-timed-out on files.pythonhosted.org (pod wluhqd2196l2o6); measure first, fail fast, then pip with real retries
+  PF_URL="https://files.pythonhosted.org/packages/source/n/numpy/numpy-2.2.0.tar.gz"
+  PF_SPEED=$(curl -s -L --max-time 40 -r 0-8388607 -o /dev/null -w "%{speed_download}" "$PF_URL" || echo 0)
+  PF_MBS=$(awk -v s="$PF_SPEED" 'BEGIN{printf "%.2f", s/1048576}')
+  say "PREFLIGHT files.pythonhosted.org: ${PF_MBS} MB/s on an 8 MB range"
+  for U in https://huggingface.co/api/models/scrollprize/ink_canonical_2um https://vesuvius-challenge-open-data.s3.amazonaws.com/; do
+    C=$(curl -s -o /dev/null --max-time 20 -w "%{http_code}" "$U" || echo 000); say "PREFLIGHT $U -> http $C"
+  done
+  if awk -v s="$PF_MBS" 'BEGIN{exit !(s < 1.0)}'; then die "PREFLIGHT: files.pythonhosted.org ${PF_MBS} MB/s (< 1 MB/s) from this host; relaunch on another host/cloud"; fi
+  # 2026-09-03 pod 0q61zt4fkn0nki: `torch>=2.0.0` in requirements.txt pulled torch 2.14.0 over the image's
+  # 2.8 build (torchvision/torchaudio then mismatched; the import check died). Constrain torch* to the image's versions.
+  "$OIVENV/bin/python" -c 'import importlib
+for m in ("torch", "torchvision", "torchaudio"):
+    try:
+        print(f"{m}=={importlib.import_module(m).__version__}")
+    except Exception:
+        pass' > "$VAR/constraints.txt"
+  say "provision: pip constraints: $(tr '\n' ' ' < "$VAR/constraints.txt")"
+  retry 3 timeout 2400 "$OIVENV/bin/pip" install -q --timeout 180 --retries 8 -c "$VAR/constraints.txt" -r "$OID/requirements.txt" >> "$OUT/logs/provision.log" 2>&1 || die "pip install -r requirements.txt failed (logs/provision.log)"
   "$OIVENV/bin/pip" install -q numpy scipy tifffile opencv-python-headless >> "$OUT/logs/provision.log" 2>&1 || true
-  "$OIVENV/bin/python" - <<'PY' || die "optimized_inference import check failed"
+  "$OIVENV/bin/python" - <<'PY' >> "$OUT/logs/provision.log" 2>&1 || { tail -14 "$OUT/logs/provision.log" | while read -r L; do say "import: $L"; done; die "optimized_inference import check failed"; }
 import sys, os
 sys.path.insert(0, os.path.join(os.environ["OI"], "ink-detection", "optimized_inference"))
 import torch, zarr, s3fs, pytorch_lightning
 import processing, inference
 print("OI_IMPORT_OK torch", torch.__version__, "cuda", torch.cuda.is_available(), "zarr", zarr.__version__, "lightning", pytorch_lightning.__version__)
 PY
-  say "provision: OI_IMPORT_OK"
+  say "provision: $(grep OI_IMPORT_OK "$OUT/logs/provision.log" | tail -1)"
   stage_close provision
 fi
 OID="$OI/ink-detection/optimized_inference"

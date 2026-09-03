@@ -73,6 +73,26 @@ def main():
     i_fi = next(i for i in range(i_ckpt_close, len(p2a)) if p2a[i].strip() == "fi")
     prov = "\n".join(p2a[i_prov - 4:i_fi + 1])
     assert "STAGE provision" in prov and "CKPT=/workspace/ckpts" in prov and "uv sync" in prov
+    # 2026-09-03 smoke #3: a SECURE 5090 host could not fetch the CUDA-13 wheels from
+    # pypi.nvidia.com (uv gave up after 3 x 30 s on nvidia-curand; 8 min lost at $0.99/h).
+    # Preflight the index throughput and fail in ~40 s instead, and give uv a real timeout.
+    preflight = """  say "provision: PREFLIGHT (index reachability + throughput before uv sync)"
+  PF_URL="https://pypi.nvidia.com/nvidia-curand/nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl"
+  PF_SPEED=$(curl -s -L --max-time 40 -r 0-8388607 -o /dev/null -w "%{speed_download}" "$PF_URL" || echo 0)
+  PF_MBS=$(awk -v s="$PF_SPEED" 'BEGIN{printf "%.2f", s/1048576}')
+  say "PREFLIGHT pypi.nvidia.com: ${PF_MBS} MB/s on an 8 MB range of nvidia-curand"
+  for U in https://pypi.org/simple/uv/ https://huggingface.co/api/models/scrollprize/ink_9um https://vesuvius-challenge-open-data.s3.amazonaws.com/; do
+    C=$(curl -s -o /dev/null --max-time 20 -w "%{http_code}" "$U" || echo 000); say "PREFLIGHT $U -> http $C"
+  done
+  if awk -v s="$PF_MBS" 'BEGIN{exit !(s < 1.0)}'; then die "PREFLIGHT: pypi.nvidia.com ${PF_MBS} MB/s (< 1 MB/s) from this host - the 2.2 GB of CUDA wheels would not arrive; relaunch on another host/cloud"; fi
+"""
+    old_sync = """  say "provision: uv sync starting (full log at /provision.log on :8000)"
+  retry 3 timeout 1200 uv sync --extra models"""
+    new_sync = preflight + """  say "provision: uv sync starting (full log at /provision.log on :8000)"
+  export UV_HTTP_TIMEOUT=900 UV_CONCURRENT_DOWNLOADS=6
+  retry 3 timeout 2400 uv sync --extra models"""
+    assert old_sync in prov, "uv sync anchor"
+    prov = prov.replace(old_sync, new_sync)
     stages = stages.replace("@@PROVISION_AND_CKPT@@", prov)
     assert "@@" not in stages
     header = read(os.path.join(P, "header.sh"))

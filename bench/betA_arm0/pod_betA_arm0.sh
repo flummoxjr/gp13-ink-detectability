@@ -5058,24 +5058,44 @@ def sync_store(family, seg, store_name, expect):
     cl.say(f"HFSYNC {seg}/{store_name}: {len(entries)} files listed, {skipped} all-zero skipped, "
            f"{len(todo)} to fetch")
     done = [0]
+    failed = []
 
     def one(item):
         path, dest, size = item
-        body, _ = http(RESOLVE + path)
-        if body is None:
-            raise RuntimeError(f"404 on listed file {path}")
-        if len(body) != size:
-            raise RuntimeError(f"size mismatch {path}: {len(body)} != {size}")
-        os.makedirs(os.path.dirname(dest), exist_ok=True)
-        tmp = dest + ".part"
-        with open(tmp, "wb") as f:
-            f.write(body)
-        os.replace(tmp, dest)
-        done[0] += 1
-        if done[0] % 500 == 0:
-            cl.say(f"HFSYNC {seg}/{store_name}: {done[0]}/{len(todo)}")
+        try:
+            body = None
+            for attempt in range(4):
+                body, _ = http(RESOLVE + path)
+                if body is not None:
+                    break
+                time.sleep(5 * (attempt + 1))       # listed-but-404: xet propagation lag, retry
+            if body is None:
+                raise RuntimeError(f"404 on listed file {path}")
+            if len(body) != size:
+                raise RuntimeError(f"size mismatch {path}: {len(body)} != {size}")
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            tmp = dest + ".part"
+            with open(tmp, "wb") as f:
+                f.write(body)
+            os.replace(tmp, dest)
+            done[0] += 1
+            if done[0] % 500 == 0:
+                cl.say(f"HFSYNC {seg}/{store_name}: {done[0]}/{len(todo)}")
+        except Exception as e:                      # collect; retried below at low concurrency
+            failed.append((item, f"{type(e).__name__}: {str(e)[:160]}"))
     with ThreadPoolExecutor(max_workers=THREADS) as ex:
         list(ex.map(one, todo))
+    if failed:
+        cl.say(f"HFSYNC {seg}/{store_name}: {len(failed)} files failed at {THREADS} threads "
+               f"(first: {failed[0][1]}); retrying them at 4 threads after 30 s")
+        time.sleep(30)
+        retry_items = [f[0] for f in failed]
+        failed.clear()
+        with ThreadPoolExecutor(max_workers=4) as ex:
+            list(ex.map(one, retry_items))
+        if failed:
+            cl.say(f"HFSYNC {seg}/{store_name}: STILL FAILING {len(failed)}: {failed[0][1]}")
+            raise RuntimeError(f"{seg}/{store_name}: {len(failed)} files could not be fetched")
     # metadata gates
     for fn, key in ((".zattrs", "zattrs"), ("0/.zarray", "zarray_0")):
         p = os.path.join(local_store, fn)
@@ -5204,7 +5224,12 @@ def plan():
     for seg in SV:
         cols, ncorner = plan_one(seg)
         exp = int(SV[seg]["chunks_planned_sparse"])
-        lo, hi = 0.5 * exp, 1.25 * exp
+        # Our rule (patch corners +128 px, then +1 chunk of dilation) is systematically
+        # ~1.15-1.26x the manifest's "+-128 px max-filter" estimate (measured on the
+        # 2026-09-03 smoke: w013 1.17, w018 1.18, w023 1.19, w028 1.18, w029 1.26).
+        # The band is a sanity check against a broken plan, not a budget: the budget
+        # is the 45 GB total cap below.
+        lo, hi = 0.5 * exp, 1.6 * exp
         ok = lo <= len(cols) <= hi
         cl.say(f"SVPLAN {seg}: {ncorner} patch corners -> {len(cols)} chunk columns "
                f"(manifest {exp}; {'OK' if ok else 'OUT OF BAND'})")
@@ -5707,8 +5732,18 @@ else
   cd /workspace/villa/vesuvius
   command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"
+  say "provision: PREFLIGHT (index reachability + throughput before uv sync)"
+  PF_URL="https://pypi.nvidia.com/nvidia-curand/nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl"
+  PF_SPEED=$(curl -s -L --max-time 40 -r 0-8388607 -o /dev/null -w "%{speed_download}" "$PF_URL" || echo 0)
+  PF_MBS=$(awk -v s="$PF_SPEED" 'BEGIN{printf "%.2f", s/1048576}')
+  say "PREFLIGHT pypi.nvidia.com: ${PF_MBS} MB/s on an 8 MB range of nvidia-curand"
+  for U in https://pypi.org/simple/uv/ https://huggingface.co/api/models/scrollprize/ink_9um https://vesuvius-challenge-open-data.s3.amazonaws.com/; do
+    C=$(curl -s -o /dev/null --max-time 20 -w "%{http_code}" "$U" || echo 000); say "PREFLIGHT $U -> http $C"
+  done
+  if awk -v s="$PF_MBS" 'BEGIN{exit !(s < 1.0)}'; then die "PREFLIGHT: pypi.nvidia.com ${PF_MBS} MB/s (< 1 MB/s) from this host - the 2.2 GB of CUDA wheels would not arrive; relaunch on another host/cloud"; fi
   say "provision: uv sync starting (full log at /provision.log on :8000)"
-  retry 3 timeout 1200 uv sync --extra models >> "$OUT/provision.log" 2>&1 || die "uv sync failed - see provision.log"
+  export UV_HTTP_TIMEOUT=900 UV_CONCURRENT_DOWNLOADS=6
+  retry 3 timeout 2400 uv sync --extra models >> "$OUT/provision.log" 2>&1 || die "uv sync failed - see provision.log"
   retry 2 timeout 1800 uv pip install "torch==2.11.0" torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128 >> "$OUT/provision.log" 2>&1 || die "torch pin install failed - see provision.log"
   timeout 1200 uv pip install tqdm scipy scikit-image pandas einops opencv-python-headless \
     tifffile aiohttp numba monai timm accelerate pytorch-lightning \
