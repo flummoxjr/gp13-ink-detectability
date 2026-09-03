@@ -1,0 +1,541 @@
+{
+ "run": "pod_betA_arm0 v1",
+ "smoke_only": true,
+ "finished_utc": "2026-09-03T11:42:38Z",
+ "prereg": {
+  "locked_before": "any provisioning, download, or data contact",
+  "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict",
+  "seed": 20260902,
+  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
+  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
+  "anchor": {
+   "published_native5_mean_best_f1": 0.653,
+   "published_seeds": {
+    "42": 0.627,
+    "43": 0.653
+   },
+   "floor_mean": 0.541,
+   "margin": 0.112,
+   "per_segment": {
+    "w035": 0.679,
+    "w039": 0.585,
+    "w040": 0.652,
+    "w041": 0.703,
+    "w044": 0.646
+   },
+   "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
+   "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+  },
+  "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
+  "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
+  "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
+  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued"
+ },
+ "ctl": {
+  "arms": {
+   "ctl_native": {
+    "forward": 0.9990794843062824,
+    "forward_map_shape": [
+     2432,
+     2688
+    ],
+    "reverse": 0.5118366528079414,
+    "reverse_map_shape": [
+     2432,
+     2688
+    ]
+   },
+   "ctl_scalefault": {
+    "forward": 0.7488383911603473,
+    "forward_map_shape": [
+     4743,
+     5243
+    ],
+    "reverse": 0.5381003396412104,
+    "reverse_map_shape": [
+     4743,
+     5243
+    ]
+   },
+   "ctl_half": {
+    "forward": 0.5227070650747525,
+    "forward_map_shape": [
+     1216,
+     1344
+    ],
+    "reverse": 0.4845524707011225,
+    "reverse_map_shape": [
+     1216,
+     1344
+    ]
+   }
+  },
+  "n_pos": 334035,
+  "n_neg": 737086,
+  "crop": [
+   512,
+   2944,
+   384,
+   3072
+  ],
+  "fault_factor": 1.9503386004514676,
+  "harness_gate": {
+   "min_forward": 0.95,
+   "passed": true
+  },
+  "depth_order_gate": {
+   "max_reverse": 0.8,
+   "passed": true
+  },
+  "scale_fault": {
+   "best": 0.7488383911603473,
+   "verdict": "FAULT_REPRODUCED",
+   "reproduced_max": 0.75,
+   "not_reproduced_min": 0.85
+  },
+  "half_scale": {
+   "best": 0.5227070650747525
+  },
+  "on_record": {
+   "forward_full_canvas": 0.9991,
+   "reverse_full_canvas": 0.5123
+  }
+ },
+ "native_crops": {
+  "w035": {
+   "crop": [
+    512,
+    2944,
+    384,
+    3072
+   ],
+   "shape": [
+    28,
+    2432,
+    2688
+   ],
+   "n_pos": 334035,
+   "n_neg": 737086,
+   "zero_frac": 0.0001064673402255639,
+   "absent_chunks": 0
+  },
+  "w039": {
+   "crop": [
+    3584,
+    4992,
+    2304,
+    5376
+   ],
+   "shape": [
+    28,
+    1408,
+    3072
+   ],
+   "n_pos": 182429,
+   "n_neg": 393791,
+   "zero_frac": 6.912693832859848e-05,
+   "absent_chunks": 0
+  },
+  "w040": {
+   "crop": [
+    512,
+    6144,
+    1408,
+    7936
+   ],
+   "shape": [
+    28,
+    5632,
+    6528
+   ],
+   "n_pos": 716725,
+   "n_neg": 913009,
+   "zero_frac": 0.05621035978755849,
+   "absent_chunks": 81
+  },
+  "w041": {
+   "crop": [
+    1664,
+    5760,
+    384,
+    4736
+   ],
+   "shape": [
+    28,
+    4096,
+    4352
+   ],
+   "n_pos": 229884,
+   "n_neg": 325745,
+   "zero_frac": 2.501992618336397e-05,
+   "absent_chunks": 0
+  },
+  "w044": {
+   "crop": [
+    3584,
+    4992,
+    1664,
+    4608
+   ],
+   "shape": [
+    28,
+    1408,
+    2944
+   ],
+   "n_pos": 451297,
+   "n_neg": 739010,
+   "zero_frac": 1.278602087450593e-05,
+   "absent_chunks": 0
+  }
+ },
+ "eval": {
+  "s42_1000": {
+   "ckpt": "/workspace/betA/out/runs/s42/ckpt_001000.pth",
+   "crops": {
+    "w035": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.47728889125555385,
+       "threshold": 91,
+       "floor": 0.47544187264616883,
+       "margin": 0.0018470186093850205,
+       "n_pos": 334035,
+       "n_neg": 737086
+      },
+      "auc": 0.529156777386442
+     }
+    },
+    "w039": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.48093557137923487,
+       "threshold": 83,
+       "floor": 0.48093123433893675,
+       "margin": 4.337040298119099e-06,
+       "n_pos": 182429,
+       "n_neg": 393791
+      },
+      "auc": 0.5194075357951738
+     }
+    },
+    "w040": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.6109022284010969,
+       "threshold": 82,
+       "floor": 0.6108992315655207,
+       "margin": 2.996835576141166e-06,
+       "n_pos": 716725,
+       "n_neg": 913009
+      },
+      "auc": 0.5466003894227306
+     }
+    },
+    "w041": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.5857553118539027,
+       "threshold": 90,
+       "floor": 0.5853092183070172,
+       "margin": 0.0004460935468855176,
+       "n_pos": 229884,
+       "n_neg": 325745
+      },
+      "auc": 0.5378313822561808
+     }
+    },
+    "w044": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.5499543024627861,
+       "threshold": 87,
+       "floor": 0.5498244399989278,
+       "margin": 0.00012986246385826572,
+       "n_pos": 451297,
+       "n_neg": 739010
+      },
+      "auc": 0.5386082484388651
+     }
+    }
+   },
+   "native5_mean_best_f1": 0.540967261070515,
+   "native5_mean_floor": 0.5404811993713142,
+   "native5_mean_margin": 0.0004860616992006128,
+   "native5_mean_auc_forward": 0.5343208666598784
+  },
+  "s42_2000": {
+   "ckpt": "/workspace/betA/out/runs/s42/ckpt_002000.pth",
+   "crops": {
+    "w035": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.47775263535515206,
+       "threshold": 93,
+       "floor": 0.47544187264616883,
+       "margin": 0.0023107627089832272,
+       "n_pos": 334035,
+       "n_neg": 737086
+      },
+      "auc": 0.5356096183265768
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.47609355846530577,
+       "threshold": 92,
+       "floor": 0.47544187264616883,
+       "margin": 0.0006516858191369379,
+       "n_pos": 334035,
+       "n_neg": 737086
+      },
+      "auc": 0.5138417483427654
+     }
+    },
+    "w039": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.4809342337508947,
+       "threshold": 86,
+       "floor": 0.48093123433893675,
+       "margin": 2.9994119579712653e-06,
+       "n_pos": 182429,
+       "n_neg": 393791
+      },
+      "auc": 0.5252089837730272
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.4809508741397041,
+       "threshold": 88,
+       "floor": 0.48093123433893675,
+       "margin": 1.9639800767357052e-05,
+       "n_pos": 182429,
+       "n_neg": 393791
+      },
+      "auc": 0.5035425121470973
+     }
+    },
+    "w040": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.6109075566144083,
+       "threshold": 85,
+       "floor": 0.6108992315655207,
+       "margin": 8.32504888759189e-06,
+       "n_pos": 716725,
+       "n_neg": 913009
+      },
+      "auc": 0.5484496777020166
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.6108992315655206,
+       "threshold": 0,
+       "floor": 0.6108992315655207,
+       "margin": -1.1102230246251565e-16,
+       "n_pos": 716725,
+       "n_neg": 913009
+      },
+      "auc": 0.5354184926998706
+     }
+    },
+    "w041": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.5858322078680912,
+       "threshold": 90,
+       "floor": 0.5853092183070172,
+       "margin": 0.0005229895610739943,
+       "n_pos": 229884,
+       "n_neg": 325745
+      },
+      "auc": 0.5414763180932475
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.5858563074245479,
+       "threshold": 90,
+       "floor": 0.5853092183070172,
+       "margin": 0.0005470891175306525,
+       "n_pos": 229884,
+       "n_neg": 325745
+      },
+      "auc": 0.5223178038090371
+     }
+    },
+    "w044": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.5500181986511014,
+       "threshold": 90,
+       "floor": 0.5498244399989278,
+       "margin": 0.00019375865217352573,
+       "n_pos": 451297,
+       "n_neg": 739010
+      },
+      "auc": 0.5344160283548065
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.5499402656879641,
+       "threshold": 90,
+       "floor": 0.5498244399989278,
+       "margin": 0.0001158256890362308,
+       "n_pos": 451297,
+       "n_neg": 739010
+      },
+      "auc": 0.5192335793702534
+     }
+    }
+   },
+   "native5_mean_best_f1": 0.5410889664479296,
+   "native5_mean_floor": 0.5404811993713142,
+   "native5_mean_margin": 0.000607767076615262,
+   "native5_mean_auc_forward": 0.537032125249935
+  },
+  "ref_released": {
+   "ckpt": "/workspace/ckpts/ink_9um/hybrid_3d2d-seed42/step-075000.pth",
+   "crops": {
+    "w035": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.9784636494504688,
+       "threshold": 124,
+       "floor": 0.47544187264616883,
+       "margin": 0.5030217768042999,
+       "n_pos": 334035,
+       "n_neg": 737086
+      },
+      "auc": 0.9990794843062824
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.4754423760019871,
+       "threshold": 54,
+       "floor": 0.47544187264616883,
+       "margin": 5.033558182487852e-07,
+       "n_pos": 334035,
+       "n_neg": 737086
+      },
+      "auc": 0.5118366528079414
+     }
+    },
+    "w039": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.9832904002787219,
+       "threshold": 138,
+       "floor": 0.48093123433893675,
+       "margin": 0.5023591659397852,
+       "n_pos": 182429,
+       "n_neg": 393791
+      },
+      "auc": 0.9995098369502573
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.48097026781511754,
+       "threshold": 57,
+       "floor": 0.48093123433893675,
+       "margin": 3.903347618078312e-05,
+       "n_pos": 182429,
+       "n_neg": 393791
+      },
+      "auc": 0.4501396210156602
+     }
+    },
+    "w040": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.9662546910947544,
+       "threshold": 133,
+       "floor": 0.6108992315655207,
+       "margin": 0.35535545952923364,
+       "n_pos": 716725,
+       "n_neg": 913009
+      },
+      "auc": 0.9965860798776428
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.6110329724350647,
+       "threshold": 57,
+       "floor": 0.6108992315655207,
+       "margin": 0.00013374086954398567,
+       "n_pos": 716725,
+       "n_neg": 913009
+      },
+      "auc": 0.49632596780244226
+     }
+    },
+    "w041": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.9861546596109031,
+       "threshold": 134,
+       "floor": 0.5853092183070172,
+       "margin": 0.4008454413038859,
+       "n_pos": 229884,
+       "n_neg": 325745
+      },
+      "auc": 0.9995378107111179
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.5853133784169144,
+       "threshold": 55,
+       "floor": 0.5853092183070172,
+       "margin": 4.160109897233255e-06,
+       "n_pos": 229884,
+       "n_neg": 325745
+      },
+      "auc": 0.5303486677095983
+     }
+    },
+    "w044": {
+     "forward": {
+      "f1": {
+       "best_f1": 0.9852624313669969,
+       "threshold": 127,
+       "floor": 0.5498244399989278,
+       "margin": 0.43543799136806904,
+       "n_pos": 451297,
+       "n_neg": 739010
+      },
+      "auc": 0.9995239084056134
+     },
+     "reverse": {
+      "f1": {
+       "best_f1": 0.5563318993483228,
+       "threshold": 62,
+       "floor": 0.5498244399989278,
+       "margin": 0.006507459349395006,
+       "n_pos": 451297,
+       "n_neg": 739010
+      },
+      "auc": 0.5949101881425554
+     }
+    }
+   },
+   "native5_mean_best_f1": 0.979885166360369,
+   "native5_mean_floor": 0.5404811993713142,
+   "native5_mean_margin": 0.43940396698905476,
+   "native5_mean_auc_forward": 0.9988474240501828
+  }
+ },
+ "training": {
+  "42": {
+   "log_bytes": 227923,
+   "last_step": null,
+   "it_per_s_last": 3.12,
+   "checkpoints": [
+    "ckpt_001000.pth",
+    "ckpt_002000.pth"
+   ],
+   "sampling_observed": true
+  },
+  "43": null
+ },
+ "verdict": {
+  "mode": "SMOKE_ONLY -- pipeline validation; no gate verdict"
+ }
+}

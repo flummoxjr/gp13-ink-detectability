@@ -1,0 +1,625 @@
+2026-09-03T09:17:17Z BOOT pod_betA_arm0 pid=19 host=bdda5a3a7e97 root=/workspace/betA -- status live; server next
+2026-09-03T09:17:17Z SERVE http.server pid=45 0.0.0.0:8000 dir=/workspace/betA/out external=https://bzjjhx87k6hns9-8000.proxy.runpod.net/status.txt local_probe=200
+2026-09-03T09:17:17Z PREREG locked prereg.json sha256=df6492905823 -- decision rules recorded before any provisioning, download, or data
+2026-09-03T09:17:17Z scripts written to /workspace/betA/scripts (analysis code + manifest locked before provisioning)
+2026-09-03T09:17:17Z MODE SMOKE_ONLY=1 seeds='42' steps=2000 save_every=1000 fetch_threads=32 nproc=128
+2026-09-03T09:17:17Z === STAGE provision OPEN ===
+2026-09-03T09:17:28Z provision: villa @ a3f2c29
+2026-09-03T09:17:29Z provision: PREFLIGHT (index reachability + throughput before uv sync)
+2026-09-03T09:17:29Z PREFLIGHT pypi.nvidia.com: 50.27 MB/s on an 8 MB range of nvidia-curand
+2026-09-03T09:17:29Z PREFLIGHT https://pypi.org/simple/uv/ -> http 200
+2026-09-03T09:17:29Z PREFLIGHT https://huggingface.co/api/models/scrollprize/ink_9um -> http 200
+2026-09-03T09:17:30Z PREFLIGHT https://vesuvius-challenge-open-data.s3.amazonaws.com/ -> http 200
+2026-09-03T09:17:30Z provision: uv sync starting (full log at /provision.log on :8000)
+2026-09-03T09:18:17Z HEARTBEAT stage=provision up=60s free=114G
+2026-09-03T09:19:17Z HEARTBEAT stage=provision up=120s free=98G
+2026-09-03T09:19:31Z === STAGE provision DONE (134s) ===
+2026-09-03T09:19:31Z === STAGE ckpt OPEN ===
+2026-09-03T09:19:37Z ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad
+2026-09-03T09:19:37Z === STAGE ckpt DONE (6s) ===
+2026-09-03T09:19:37Z === STAGE trainer_check OPEN ===
+2026-09-03T09:19:40Z trainer_check: TRAIN_IMPORT_OK
+2026-09-03T09:19:40Z HFSYNC pherc0814-46527/inklabels: 462 files listed, 422 all-zero skipped, 40 to fetch
+2026-09-03T09:19:41Z HFSYNC pherc0814-46527/inklabels: OK sha256 metadata; plane z=10 nonzero=187170 shape=[2130, 3455]
+2026-09-03T09:19:42Z HFSYNC pherc0814-46527/supervision_mask: 462 files listed, 420 all-zero skipped, 42 to fetch
+2026-09-03T09:19:42Z HFSYNC pherc0814-46527/supervision_mask: OK sha256 metadata; plane z=10 nonzero=428993 shape=[2130, 3455]
+2026-09-03T09:19:42Z HFSYNC pherc0814-46527/validation_mask: 462 files listed, 442 all-zero skipped, 20 to fetch
+2026-09-03T09:19:43Z HFSYNC pherc0814-46527/validation_mask: OK sha256 metadata; plane z=10 nonzero=161051 shape=[2130, 3455]
+2026-09-03T09:19:48Z CFG synthetic: pherc0814-46527 labels ((21, 2130, 3455)) + random volume, 30 iterations, batch 8 -> /workspace/betA/out/cfg/syn.json
+2026-09-03T09:20:17Z HEARTBEAT stage=trainer_check up=180s free=95G
+2026-09-03T09:20:21Z trainer_check: 30 synthetic iterations OK; checkpoints: 1; log tail:   0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:05<?, ?it/s, loss=0.6959, lr=2.00e-03]  3%|â         | 1/30 [00:05<00:04,  7.13it/s, loss=0
+2026-09-03T09:20:21Z === STAGE trainer_check DONE (44s) ===
+2026-09-03T09:20:21Z === STAGE labels_fetch OPEN ===
+2026-09-03T09:20:22Z HFSYNC pherc1667-w013/inklabels: 12795 files listed, 12595 all-zero skipped, 200 to fetch
+2026-09-03T09:20:28Z HFSYNC pherc1667-w013/inklabels: OK sha256 metadata; plane z=10 nonzero=1012042 shape=[10400, 19900]
+2026-09-03T09:20:30Z HFSYNC pherc1667-w013/supervision_mask: 12795 files listed, 12476 all-zero skipped, 319 to fetch
+2026-09-03T09:20:37Z HFSYNC pherc1667-w013/supervision_mask: OK sha256 metadata; plane z=10 nonzero=3358655 shape=[10400, 19900]
+2026-09-03T09:20:39Z HFSYNC pherc1667-w018/inklabels: 15939 files listed, 15253 all-zero skipped, 686 to fetch
+2026-09-03T09:20:43Z HFSYNC pherc1667-w018/inklabels: 500/686
+2026-09-03T09:20:49Z HFSYNC pherc1667-w018/inklabels: OK sha256 metadata; plane z=10 nonzero=3580927 shape=[10595, 24525]
+2026-09-03T09:20:51Z HFSYNC pherc1667-w018/supervision_mask: 15939 files listed, 14688 all-zero skipped, 1251 to fetch
+2026-09-03T09:20:55Z HFSYNC pherc1667-w018/supervision_mask: 500/1251
+2026-09-03T09:20:59Z HFSYNC pherc1667-w018/supervision_mask: 1000/1251
+2026-09-03T09:21:06Z HFSYNC pherc1667-w018/supervision_mask: OK sha256 metadata; plane z=10 nonzero=13899340 shape=[10595, 24525]
+2026-09-03T09:21:08Z HFSYNC pherc1667-w023/inklabels: 16403 files listed, 16141 all-zero skipped, 262 to fetch
+2026-09-03T09:21:15Z HFSYNC pherc1667-w023/inklabels: OK sha256 metadata; plane z=10 nonzero=1419591 shape=[10465, 25590]
+2026-09-03T09:21:17Z HFSYNC pherc1667-w023/supervision_mask: 16403 files listed, 15890 all-zero skipped, 513 to fetch
+2026-09-03T09:21:17Z HEARTBEAT stage=labels_fetch up=240s free=95G
+2026-09-03T09:22:17Z HEARTBEAT stage=labels_fetch up=300s free=95G
+2026-09-03T09:23:17Z HEARTBEAT stage=labels_fetch up=360s free=95G
+2026-09-03T09:24:17Z HEARTBEAT stage=labels_fetch up=420s free=95G
+2026-09-03T09:24:47Z HFSYNC pherc1667-w023/supervision_mask: 500/513
+2026-09-03T09:24:52Z HFSYNC pherc1667-w023/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5404437 shape=[10465, 25590]
+2026-09-03T09:24:53Z HFSYNC pherc1667-w028/inklabels: 4443 files listed, 4370 all-zero skipped, 73 to fetch
+2026-09-03T09:24:55Z HFSYNC pherc1667-w028/inklabels: OK sha256 metadata; plane z=10 nonzero=331857 shape=[9355, 7585]
+2026-09-03T09:24:56Z HFSYNC pherc1667-w028/supervision_mask: 4443 files listed, 4354 all-zero skipped, 89 to fetch
+2026-09-03T09:24:58Z HFSYNC pherc1667-w028/supervision_mask: OK sha256 metadata; plane z=10 nonzero=844786 shape=[9355, 7585]
+2026-09-03T09:24:59Z HFSYNC pherc1667-w029/inklabels: 4653 files listed, 4565 all-zero skipped, 88 to fetch
+2026-09-03T09:25:02Z HFSYNC pherc1667-w029/inklabels: OK sha256 metadata; plane z=10 nonzero=444385 shape=[9500, 7830]
+2026-09-03T09:25:02Z HFSYNC pherc1667-w029/supervision_mask: 4653 files listed, 4511 all-zero skipped, 142 to fetch
+2026-09-03T09:25:05Z HFSYNC pherc1667-w029/supervision_mask: OK sha256 metadata; plane z=10 nonzero=1213836 shape=[9500, 7830]
+2026-09-03T09:25:06Z HFSYNC pherc1667-w029/validation_mask: 4653 files listed, 4608 all-zero skipped, 45 to fetch
+2026-09-03T09:25:08Z HFSYNC pherc1667-w029/validation_mask: OK sha256 metadata; plane z=10 nonzero=382353 shape=[9500, 7830]
+2026-09-03T09:25:09Z HFSYNC pherc1667-w031/inklabels: 4665 files listed, 4514 all-zero skipped, 151 to fetch
+2026-09-03T09:25:12Z HFSYNC pherc1667-w031/inklabels: OK sha256 metadata; plane z=10 nonzero=778204 shape=[9370, 8045]
+2026-09-03T09:25:12Z HFSYNC pherc1667-w031/supervision_mask: 4665 files listed, 4415 all-zero skipped, 250 to fetch
+2026-09-03T09:25:17Z HFSYNC pherc1667-w031/supervision_mask: OK sha256 metadata; plane z=10 nonzero=2621780 shape=[9370, 8045]
+2026-09-03T09:25:17Z HEARTBEAT stage=labels_fetch up=480s free=95G
+2026-09-03T09:25:18Z HFSYNC phercparis4-w00/inklabels: 6429 files listed, 6152 all-zero skipped, 277 to fetch
+2026-09-03T09:25:22Z HFSYNC phercparis4-w00/inklabels: OK sha256 metadata; plane z=10 nonzero=1335408 shape=[7990, 12990]
+2026-09-03T09:25:23Z HFSYNC phercparis4-w00/supervision_mask: 6429 files listed, 5896 all-zero skipped, 533 to fetch
+2026-09-03T09:25:27Z HFSYNC phercparis4-w00/supervision_mask: 500/533
+2026-09-03T09:25:29Z HFSYNC phercparis4-w00/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5798902 shape=[7990, 12990]
+2026-09-03T09:25:31Z HFSYNC phercparis4-w01/inklabels: 7131 files listed, 6689 all-zero skipped, 442 to fetch
+2026-09-03T09:25:37Z HFSYNC phercparis4-w01/inklabels: OK sha256 metadata; plane z=10 nonzero=2163941 shape=[12650, 9100]
+2026-09-03T09:25:38Z HFSYNC phercparis4-w01/supervision_mask: 7131 files listed, 6354 all-zero skipped, 777 to fetch
+2026-09-03T09:25:42Z HFSYNC phercparis4-w01/supervision_mask: 500/777
+2026-09-03T09:26:17Z HEARTBEAT stage=labels_fetch up=540s free=95G
+2026-09-03T09:27:17Z HEARTBEAT stage=labels_fetch up=600s free=95G
+2026-09-03T09:28:17Z HEARTBEAT stage=labels_fetch up=660s free=95G
+2026-09-03T09:29:17Z HEARTBEAT stage=labels_fetch up=720s free=95G
+2026-09-03T09:29:40Z HFSYNC phercparis4-w01/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T09:30:15Z HFSYNC phercparis4-w01/supervision_mask: OK sha256 metadata; plane z=10 nonzero=8268843 shape=[12650, 9100]
+2026-09-03T09:30:16Z HFSYNC phercparis4-w02/inklabels: 5765 files listed, 5527 all-zero skipped, 238 to fetch
+2026-09-03T09:30:18Z HEARTBEAT stage=labels_fetch up=781s free=95G
+2026-09-03T09:30:20Z HFSYNC phercparis4-w02/inklabels: OK sha256 metadata; plane z=10 nonzero=1087282 shape=[8545, 11005]
+2026-09-03T09:30:21Z HFSYNC phercparis4-w02/supervision_mask: 5765 files listed, 5327 all-zero skipped, 438 to fetch
+2026-09-03T09:30:26Z HFSYNC phercparis4-w02/supervision_mask: OK sha256 metadata; plane z=10 nonzero=4647609 shape=[8545, 11005]
+2026-09-03T09:30:27Z HFSYNC phercparis4-w03/inklabels: 6770 files listed, 6365 all-zero skipped, 405 to fetch
+2026-09-03T09:30:32Z HFSYNC phercparis4-w03/inklabels: OK sha256 metadata; plane z=10 nonzero=2125255 shape=[8575, 12810]
+2026-09-03T09:30:33Z HFSYNC phercparis4-w03/supervision_mask: 6770 files listed, 6194 all-zero skipped, 576 to fetch
+2026-09-03T09:30:37Z HFSYNC phercparis4-w03/supervision_mask: 500/576
+2026-09-03T09:30:40Z HFSYNC phercparis4-w03/supervision_mask: OK sha256 metadata; plane z=10 nonzero=6169508 shape=[8575, 12810]
+2026-09-03T09:30:42Z HFSYNC phercparis4-w05/inklabels: 14803 files listed, 13609 all-zero skipped, 1194 to fetch
+2026-09-03T09:30:46Z HFSYNC phercparis4-w05/inklabels: 500/1194
+2026-09-03T09:30:49Z HFSYNC phercparis4-w05/inklabels: 1000/1194
+2026-09-03T09:31:18Z HEARTBEAT stage=labels_fetch up=841s free=95G
+2026-09-03T09:32:18Z HEARTBEAT stage=labels_fetch up=901s free=95G
+2026-09-03T09:33:18Z HEARTBEAT stage=labels_fetch up=961s free=95G
+2026-09-03T09:34:18Z HEARTBEAT stage=labels_fetch up=1021s free=95G
+2026-09-03T09:34:52Z HFSYNC phercparis4-w05/inklabels: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T09:35:18Z HEARTBEAT stage=labels_fetch up=1081s free=95G
+2026-09-03T09:35:38Z HFSYNC phercparis4-w05/inklabels: OK sha256 metadata; plane z=10 nonzero=6737328 shape=[12700, 18930]
+2026-09-03T09:35:40Z HFSYNC phercparis4-w05/supervision_mask: 14803 files listed, 12480 all-zero skipped, 2323 to fetch
+2026-09-03T09:35:44Z HFSYNC phercparis4-w05/supervision_mask: 500/2323
+2026-09-03T09:35:47Z HFSYNC phercparis4-w05/supervision_mask: 1000/2323
+2026-09-03T09:35:51Z HFSYNC phercparis4-w05/supervision_mask: 1500/2323
+2026-09-03T09:35:54Z HFSYNC phercparis4-w05/supervision_mask: 2000/2323
+2026-09-03T09:36:01Z HFSYNC phercparis4-w05/supervision_mask: OK sha256 metadata; plane z=10 nonzero=31930770 shape=[12700, 18930]
+2026-09-03T09:36:03Z HFSYNC phercparis4-w06/inklabels: 7903 files listed, 7233 all-zero skipped, 670 to fetch
+2026-09-03T09:36:07Z HFSYNC phercparis4-w06/inklabels: 500/670
+2026-09-03T09:36:18Z HEARTBEAT stage=labels_fetch up=1141s free=95G
+2026-09-03T09:37:18Z HEARTBEAT stage=labels_fetch up=1201s free=95G
+2026-09-03T09:38:18Z HEARTBEAT stage=labels_fetch up=1261s free=95G
+2026-09-03T09:39:18Z HEARTBEAT stage=labels_fetch up=1321s free=95G
+2026-09-03T09:39:37Z HFSYNC phercparis4-w06/inklabels: OK sha256 metadata; plane z=10 nonzero=3443040 shape=[12750, 9995]
+2026-09-03T09:39:38Z HFSYNC phercparis4-w06/supervision_mask: 7903 files listed, 6900 all-zero skipped, 1003 to fetch
+2026-09-03T09:39:42Z HFSYNC phercparis4-w06/supervision_mask: 500/1003
+2026-09-03T09:39:46Z HFSYNC phercparis4-w06/supervision_mask: 1000/1003
+2026-09-03T09:39:49Z HFSYNC phercparis4-w06/supervision_mask: OK sha256 metadata; plane z=10 nonzero=11074717 shape=[12750, 9995]
+2026-09-03T09:39:51Z HFSYNC phercparis4-w07/inklabels: 21627 files listed, 20653 all-zero skipped, 974 to fetch
+2026-09-03T09:39:55Z HFSYNC phercparis4-w07/inklabels: 500/974
+2026-09-03T09:40:05Z HFSYNC phercparis4-w07/inklabels: OK sha256 metadata; plane z=10 nonzero=5022838 shape=[13010, 27035]
+2026-09-03T09:40:08Z HFSYNC phercparis4-w07/supervision_mask: 21627 files listed, 20179 all-zero skipped, 1448 to fetch
+2026-09-03T09:40:12Z HFSYNC phercparis4-w07/supervision_mask: 500/1448
+2026-09-03T09:40:18Z HEARTBEAT stage=labels_fetch up=1381s free=95G
+2026-09-03T09:41:18Z HEARTBEAT stage=labels_fetch up=1441s free=95G
+2026-09-03T09:42:18Z HEARTBEAT stage=labels_fetch up=1501s free=95G
+2026-09-03T09:43:18Z HEARTBEAT stage=labels_fetch up=1561s free=95G
+2026-09-03T09:44:18Z HEARTBEAT stage=labels_fetch up=1621s free=95G
+2026-09-03T09:45:08Z HFSYNC phercparis4-w07/supervision_mask: 1000/1448
+2026-09-03T09:45:18Z HEARTBEAT stage=labels_fetch up=1681s free=95G
+2026-09-03T09:45:20Z HFSYNC phercparis4-w07/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T09:46:01Z HFSYNC phercparis4-w07/supervision_mask: OK sha256 metadata; plane z=10 nonzero=16003870 shape=[13010, 27035]
+2026-09-03T09:46:03Z HFSYNC phercparis4-w09/inklabels: 9390 files listed, 9099 all-zero skipped, 291 to fetch
+2026-09-03T09:46:13Z HFSYNC phercparis4-w09/inklabels: OK sha256 metadata; plane z=10 nonzero=1487875 shape=[8020, 18950]
+2026-09-03T09:46:14Z HFSYNC phercparis4-w09/supervision_mask: 9390 files listed, 8921 all-zero skipped, 469 to fetch
+2026-09-03T09:46:18Z HEARTBEAT stage=labels_fetch up=1741s free=95G
+2026-09-03T09:46:20Z HFSYNC phercparis4-w09/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5238005 shape=[8020, 18950]
+2026-09-03T09:46:21Z HFSYNC w035/inklabels: 2564 files listed, 1190 all-zero skipped, 1374 to fetch
+2026-09-03T09:46:24Z HFSYNC w035/inklabels: 500/1374
+2026-09-03T09:46:28Z HFSYNC w035/inklabels: 1000/1374
+2026-09-03T09:46:32Z HFSYNC w035/inklabels: OK sha256 metadata; plane z=14 nonzero=396164 shape=[5820, 5240]
+2026-09-03T09:46:32Z HFSYNC w035/supervision_mask: 2564 files listed, 111 all-zero skipped, 2453 to fetch
+2026-09-03T09:47:18Z HEARTBEAT stage=labels_fetch up=1801s free=95G
+2026-09-03T09:48:18Z HEARTBEAT stage=labels_fetch up=1861s free=95G
+2026-09-03T09:49:18Z HEARTBEAT stage=labels_fetch up=1921s free=95G
+2026-09-03T09:50:02Z HFSYNC w035/supervision_mask: 500/2453
+2026-09-03T09:50:05Z HFSYNC w035/supervision_mask: 1000/2453
+2026-09-03T09:50:09Z HFSYNC w035/supervision_mask: 1500/2453
+2026-09-03T09:50:12Z HFSYNC w035/supervision_mask: 2000/2453
+2026-09-03T09:50:17Z HFSYNC w035/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1071121 shape=[5820, 5240]
+2026-09-03T09:50:17Z HFSYNC w039/inklabels: 5525 files listed, 200 all-zero skipped, 5325 to fetch
+2026-09-03T09:50:18Z HEARTBEAT stage=labels_fetch up=1981s free=95G
+2026-09-03T09:50:21Z HFSYNC w039/inklabels: 500/5325
+2026-09-03T09:51:18Z HEARTBEAT stage=labels_fetch up=2041s free=95G
+2026-09-03T09:52:18Z HEARTBEAT stage=labels_fetch up=2101s free=95G
+2026-09-03T09:53:18Z HEARTBEAT stage=labels_fetch up=2161s free=95G
+2026-09-03T09:54:18Z HEARTBEAT stage=labels_fetch up=2221s free=95G
+2026-09-03T09:55:17Z HFSYNC w039/inklabels: 1000/5325
+2026-09-03T09:55:18Z HEARTBEAT stage=labels_fetch up=2281s free=95G
+2026-09-03T09:55:21Z HFSYNC w039/inklabels: 1500/5325
+2026-09-03T09:55:26Z HFSYNC w039/inklabels: 2000/5325
+2026-09-03T09:55:30Z HFSYNC w039/inklabels: 2500/5325
+2026-09-03T09:55:33Z HFSYNC w039/inklabels: 3000/5325
+2026-09-03T09:55:37Z HFSYNC w039/inklabels: 3500/5325
+2026-09-03T09:56:18Z HEARTBEAT stage=labels_fetch up=2341s free=95G
+2026-09-03T09:57:18Z HEARTBEAT stage=labels_fetch up=2401s free=95G
+2026-09-03T09:58:18Z HEARTBEAT stage=labels_fetch up=2461s free=95G
+2026-09-03T09:59:18Z HEARTBEAT stage=labels_fetch up=2521s free=95G
+2026-09-03T09:59:33Z HFSYNC w039/inklabels: 4000/5325
+2026-09-03T09:59:36Z HFSYNC w039/inklabels: 4500/5325
+2026-09-03T09:59:40Z HFSYNC w039/inklabels: 5000/5325
+2026-09-03T09:59:42Z HFSYNC w039/inklabels: 64 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:00:18Z HEARTBEAT stage=labels_fetch up=2581s free=95G
+2026-09-03T10:00:19Z HFSYNC w039/inklabels: OK sha256 metadata; plane z=14 nonzero=184948 shape=[8560, 7720]
+2026-09-03T10:00:20Z HFSYNC w039/supervision_mask: 5525 files listed, 910 all-zero skipped, 4615 to fetch
+2026-09-03T10:00:24Z HFSYNC w039/supervision_mask: 500/4615
+2026-09-03T10:00:28Z HFSYNC w039/supervision_mask: 1000/4615
+2026-09-03T10:00:32Z HFSYNC w039/supervision_mask: 1500/4615
+2026-09-03T10:01:18Z HEARTBEAT stage=labels_fetch up=2641s free=95G
+2026-09-03T10:02:18Z HEARTBEAT stage=labels_fetch up=2701s free=95G
+2026-09-03T10:03:18Z HEARTBEAT stage=labels_fetch up=2761s free=95G
+2026-09-03T10:04:18Z HEARTBEAT stage=labels_fetch up=2821s free=95G
+2026-09-03T10:05:18Z HEARTBEAT stage=labels_fetch up=2881s free=95G
+2026-09-03T10:05:28Z HFSYNC w039/supervision_mask: 2000/4615
+2026-09-03T10:05:31Z HFSYNC w039/supervision_mask: 2500/4615
+2026-09-03T10:05:35Z HFSYNC w039/supervision_mask: 3000/4615
+2026-09-03T10:05:39Z HFSYNC w039/supervision_mask: 3500/4615
+2026-09-03T10:05:42Z HFSYNC w039/supervision_mask: 4000/4615
+2026-09-03T10:05:46Z HFSYNC w039/supervision_mask: 4500/4615
+2026-09-03T10:05:47Z HFSYNC w039/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:06:18Z HEARTBEAT stage=labels_fetch up=2941s free=95G
+2026-09-03T10:06:21Z HFSYNC w039/supervision_mask: OK sha256 metadata; plane z=14 nonzero=576220 shape=[8560, 7720]
+2026-09-03T10:06:22Z HFSYNC w040/inklabels: 4248 files listed, 595 all-zero skipped, 3653 to fetch
+2026-09-03T10:07:18Z HEARTBEAT stage=labels_fetch up=3001s free=95G
+2026-09-03T10:08:18Z HEARTBEAT stage=labels_fetch up=3061s free=95G
+2026-09-03T10:09:18Z HEARTBEAT stage=labels_fetch up=3121s free=95G
+2026-09-03T10:09:52Z HFSYNC w040/inklabels: 500/3653
+2026-09-03T10:09:56Z HFSYNC w040/inklabels: 1000/3653
+2026-09-03T10:09:59Z HFSYNC w040/inklabels: 1500/3653
+2026-09-03T10:10:03Z HFSYNC w040/inklabels: 2000/3653
+2026-09-03T10:10:06Z HFSYNC w040/inklabels: 2500/3653
+2026-09-03T10:10:10Z HFSYNC w040/inklabels: 3000/3653
+2026-09-03T10:10:18Z HEARTBEAT stage=labels_fetch up=3181s free=95G
+2026-09-03T10:11:18Z HEARTBEAT stage=labels_fetch up=3241s free=95G
+2026-09-03T10:12:18Z HEARTBEAT stage=labels_fetch up=3301s free=95G
+2026-09-03T10:13:18Z HEARTBEAT stage=labels_fetch up=3361s free=95G
+2026-09-03T10:14:18Z HEARTBEAT stage=labels_fetch up=3421s free=95G
+2026-09-03T10:15:07Z HFSYNC w040/inklabels: 3500/3653
+2026-09-03T10:15:08Z HFSYNC w040/inklabels: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:15:18Z HEARTBEAT stage=labels_fetch up=3481s free=95G
+2026-09-03T10:15:42Z HFSYNC w040/inklabels: OK sha256 metadata; plane z=14 nonzero=745657 shape=[6400, 7980]
+2026-09-03T10:15:43Z HFSYNC w040/supervision_mask: 4248 files listed, 198 all-zero skipped, 4050 to fetch
+2026-09-03T10:15:48Z HFSYNC w040/supervision_mask: 500/4050
+2026-09-03T10:15:52Z HFSYNC w040/supervision_mask: 1000/4050
+2026-09-03T10:15:55Z HFSYNC w040/supervision_mask: 1500/4050
+2026-09-03T10:15:59Z HFSYNC w040/supervision_mask: 2000/4050
+2026-09-03T10:16:18Z HEARTBEAT stage=labels_fetch up=3541s free=95G
+2026-09-03T10:17:18Z HEARTBEAT stage=labels_fetch up=3601s free=95G
+2026-09-03T10:18:19Z HEARTBEAT stage=labels_fetch up=3662s free=95G
+2026-09-03T10:19:19Z HEARTBEAT stage=labels_fetch up=3722s free=95G
+2026-09-03T10:19:30Z HFSYNC w040/supervision_mask: 2500/4050
+2026-09-03T10:19:35Z HFSYNC w040/supervision_mask: 3000/4050
+2026-09-03T10:19:38Z HFSYNC w040/supervision_mask: 3500/4050
+2026-09-03T10:19:42Z HFSYNC w040/supervision_mask: 4000/4050
+2026-09-03T10:19:42Z HFSYNC w040/supervision_mask: 25 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:20:16Z HFSYNC w040/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1629734 shape=[6400, 7980]
+2026-09-03T10:20:17Z HFSYNC w041/inklabels: 4185 files listed, 1219 all-zero skipped, 2966 to fetch
+2026-09-03T10:20:19Z HEARTBEAT stage=labels_fetch up=3782s free=95G
+2026-09-03T10:20:21Z HFSYNC w041/inklabels: 500/2966
+2026-09-03T10:20:25Z HFSYNC w041/inklabels: 1000/2966
+2026-09-03T10:21:19Z HEARTBEAT stage=labels_fetch up=3842s free=95G
+2026-09-03T10:22:19Z HEARTBEAT stage=labels_fetch up=3902s free=95G
+2026-09-03T10:23:19Z HEARTBEAT stage=labels_fetch up=3962s free=95G
+2026-09-03T10:24:19Z HEARTBEAT stage=labels_fetch up=4022s free=95G
+2026-09-03T10:25:19Z HEARTBEAT stage=labels_fetch up=4082s free=95G
+2026-09-03T10:25:22Z HFSYNC w041/inklabels: 1500/2966
+2026-09-03T10:25:25Z HFSYNC w041/inklabels: 2000/2966
+2026-09-03T10:25:29Z HFSYNC w041/inklabels: 2500/2966
+2026-09-03T10:25:32Z HFSYNC w041/inklabels: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:26:06Z HFSYNC w041/inklabels: OK sha256 metadata; plane z=14 nonzero=231421 shape=[6200, 8020]
+2026-09-03T10:26:07Z HFSYNC w041/supervision_mask: 4185 files listed, 426 all-zero skipped, 3759 to fetch
+2026-09-03T10:26:11Z HFSYNC w041/supervision_mask: 500/3759
+2026-09-03T10:26:15Z HFSYNC w041/supervision_mask: 1000/3759
+2026-09-03T10:26:19Z HEARTBEAT stage=labels_fetch up=4142s free=95G
+2026-09-03T10:27:19Z HEARTBEAT stage=labels_fetch up=4202s free=95G
+2026-09-03T10:28:19Z HEARTBEAT stage=labels_fetch up=4262s free=95G
+2026-09-03T10:29:19Z HEARTBEAT stage=labels_fetch up=4322s free=95G
+2026-09-03T10:29:45Z HFSYNC w041/supervision_mask: 1500/3759
+2026-09-03T10:29:48Z HFSYNC w041/supervision_mask: 2000/3759
+2026-09-03T10:29:52Z HFSYNC w041/supervision_mask: 2500/3759
+2026-09-03T10:29:55Z HFSYNC w041/supervision_mask: 3000/3759
+2026-09-03T10:29:59Z HFSYNC w041/supervision_mask: 3500/3759
+2026-09-03T10:30:03Z HFSYNC w041/supervision_mask: OK sha256 metadata; plane z=14 nonzero=555629 shape=[6200, 8020]
+2026-09-03T10:30:03Z HFSYNC w044/inklabels: 4110 files listed, 265 all-zero skipped, 3845 to fetch
+2026-09-03T10:30:07Z HFSYNC w044/inklabels: 500/3845
+2026-09-03T10:30:19Z HEARTBEAT stage=labels_fetch up=4382s free=95G
+2026-09-03T10:31:19Z HEARTBEAT stage=labels_fetch up=4442s free=95G
+2026-09-03T10:32:19Z HEARTBEAT stage=labels_fetch up=4502s free=95G
+2026-09-03T10:33:19Z HEARTBEAT stage=labels_fetch up=4562s free=95G
+2026-09-03T10:34:19Z HEARTBEAT stage=labels_fetch up=4622s free=95G
+2026-09-03T10:35:04Z HFSYNC w044/inklabels: 1000/3845
+2026-09-03T10:35:08Z HFSYNC w044/inklabels: 1500/3845
+2026-09-03T10:35:11Z HFSYNC w044/inklabels: 2000/3845
+2026-09-03T10:35:15Z HFSYNC w044/inklabels: 2500/3845
+2026-09-03T10:35:18Z HFSYNC w044/inklabels: 3000/3845
+2026-09-03T10:35:19Z HEARTBEAT stage=labels_fetch up=4682s free=95G
+2026-09-03T10:35:22Z HFSYNC w044/inklabels: 3500/3845
+2026-09-03T10:36:19Z HEARTBEAT stage=labels_fetch up=4742s free=95G
+2026-09-03T10:37:19Z HEARTBEAT stage=labels_fetch up=4802s free=95G
+2026-09-03T10:38:19Z HEARTBEAT stage=labels_fetch up=4862s free=95G
+2026-09-03T10:39:19Z HEARTBEAT stage=labels_fetch up=4922s free=95G
+2026-09-03T10:40:17Z HFSYNC w044/inklabels: 64 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-03T10:40:19Z HEARTBEAT stage=labels_fetch up=4982s free=95G
+2026-09-03T10:40:53Z HFSYNC w044/inklabels: OK sha256 metadata; plane z=14 nonzero=455469 shape=[6040, 8160]
+2026-09-03T10:40:53Z HFSYNC w044/supervision_mask: 4110 files listed, 842 all-zero skipped, 3268 to fetch
+2026-09-03T10:40:57Z HFSYNC w044/supervision_mask: 500/3268
+2026-09-03T10:41:01Z HFSYNC w044/supervision_mask: 1000/3268
+2026-09-03T10:41:04Z HFSYNC w044/supervision_mask: 1500/3268
+2026-09-03T10:41:08Z HFSYNC w044/supervision_mask: 2000/3268
+2026-09-03T10:41:11Z HFSYNC w044/supervision_mask: 2500/3268
+2026-09-03T10:41:19Z HEARTBEAT stage=labels_fetch up=5042s free=95G
+2026-09-03T10:42:19Z HEARTBEAT stage=labels_fetch up=5102s free=95G
+2026-09-03T10:43:19Z HEARTBEAT stage=labels_fetch up=5162s free=95G
+2026-09-03T10:44:19Z HEARTBEAT stage=labels_fetch up=5222s free=95G
+2026-09-03T10:44:41Z HFSYNC w044/supervision_mask: 3000/3268
+2026-09-03T10:44:45Z HFSYNC w044/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1190307 shape=[6040, 8160]
+2026-09-03T10:44:45Z === STAGE labels_fetch DONE (5064s) ===
+2026-09-03T10:44:45Z === STAGE sv_fetch OPEN ===
+2026-09-03T10:44:53Z SVPLAN pherc1667-w013: 3674 patch corners -> 660 chunk columns (manifest 565; OK)
+2026-09-03T10:45:11Z SVPLAN pherc1667-w018: 15107 patch corners -> 2628 chunk columns (manifest 2233; OK)
+2026-09-03T10:45:19Z HEARTBEAT stage=sv_fetch up=5282s free=95G
+2026-09-03T10:45:21Z SVPLAN pherc1667-w023: 5910 patch corners -> 1109 chunk columns (manifest 935; OK)
+2026-09-03T10:45:23Z SVPLAN pherc1667-w028: 963 patch corners -> 214 chunk columns (manifest 182; OK)
+2026-09-03T10:45:25Z SVPLAN pherc1667-w029: 1394 patch corners -> 377 chunk columns (manifest 299; OK)
+2026-09-03T10:45:29Z SVPLAN pherc1667-w031: 2866 patch corners -> 533 chunk columns (manifest 447; OK)
+2026-09-03T10:45:36Z SVPLAN phercparis4-w00: 6308 patch corners -> 1049 chunk columns (manifest 583; WARN out of the 0.5-1.6x band, ratio 1.80)
+2026-09-03T10:45:46Z SVPLAN phercparis4-w01: 9074 patch corners -> 1655 chunk columns (manifest 1407; OK)
+2026-09-03T10:45:52Z SVPLAN phercparis4-w02: 5075 patch corners -> 990 chunk columns (manifest 811; OK)
+2026-09-03T10:45:59Z SVPLAN phercparis4-w03: 6750 patch corners -> 1212 chunk columns (manifest 1033; OK)
+2026-09-03T10:46:19Z HEARTBEAT stage=sv_fetch up=5342s free=95G
+2026-09-03T10:46:36Z SVPLAN phercparis4-w05: 32553 patch corners -> 3295 chunk columns (manifest 3044; OK)
+2026-09-03T10:46:49Z SVPLAN phercparis4-w06: 12018 patch corners -> 2034 chunk columns (manifest 1748; OK)
+2026-09-03T10:47:11Z SVPLAN phercparis4-w07: 17348 patch corners -> 2907 chunk columns (manifest 2475; OK)
+2026-09-03T10:47:19Z SVPLAN phercparis4-w09: 5656 patch corners -> 930 chunk columns (manifest 645; OK)
+2026-09-03T10:47:19Z SVPLAN pherc0814-46527: 479 patch corners -> 89 chunk columns (manifest 75; OK)
+2026-09-03T10:47:19Z HEARTBEAT stage=sv_fetch up=5402s free=95G
+2026-09-03T10:47:19Z SVPLAN total 19682 chunks, ~35.0 GB (cap 45)
+2026-09-03T10:47:20Z SVFETCH pherc1667-w013: 660 planned, 660 to fetch, 0 known absent (sep '.')
+2026-09-03T10:47:25Z SVFETCH pherc1667-w013: 200/660
+2026-09-03T10:47:30Z SVFETCH pherc1667-w013: 400/660
+2026-09-03T10:47:34Z SVFETCH pherc1667-w013: 600/660
+2026-09-03T10:47:39Z SVFETCH pherc1667-w013: done; absent 0/660 = 0.0%
+2026-09-03T10:47:40Z SVFETCH pherc1667-w018: 2628 planned, 2628 to fetch, 0 known absent (sep '/')
+2026-09-03T10:47:45Z SVFETCH pherc1667-w018: 200/2628
+2026-09-03T10:47:50Z SVFETCH pherc1667-w018: 400/2628
+2026-09-03T10:47:54Z SVFETCH pherc1667-w018: 600/2628
+2026-09-03T10:47:59Z SVFETCH pherc1667-w018: 800/2628
+2026-09-03T10:48:04Z SVFETCH pherc1667-w018: 1000/2628
+2026-09-03T10:48:08Z SVFETCH pherc1667-w018: 1200/2628
+2026-09-03T10:48:13Z SVFETCH pherc1667-w018: 1400/2628
+2026-09-03T10:48:18Z SVFETCH pherc1667-w018: 1600/2628
+2026-09-03T10:48:19Z HEARTBEAT stage=sv_fetch up=5462s free=91G
+2026-09-03T10:48:22Z SVFETCH pherc1667-w018: 1800/2628
+2026-09-03T10:48:27Z SVFETCH pherc1667-w018: 2000/2628
+2026-09-03T10:48:31Z SVFETCH pherc1667-w018: 2200/2628
+2026-09-03T10:48:36Z SVFETCH pherc1667-w018: 2400/2628
+2026-09-03T10:48:40Z SVFETCH pherc1667-w018: 2600/2628
+2026-09-03T10:48:43Z SVFETCH pherc1667-w018: done; absent 28/2628 = 1.1%
+2026-09-03T10:48:44Z SVFETCH pherc1667-w023: 1109 planned, 1109 to fetch, 0 known absent (sep '/')
+2026-09-03T10:48:49Z SVFETCH pherc1667-w023: 200/1109
+2026-09-03T10:48:54Z SVFETCH pherc1667-w023: 400/1109
+2026-09-03T10:48:59Z SVFETCH pherc1667-w023: 600/1109
+2026-09-03T10:49:03Z SVFETCH pherc1667-w023: 800/1109
+2026-09-03T10:49:08Z SVFETCH pherc1667-w023: 1000/1109
+2026-09-03T10:49:12Z SVFETCH pherc1667-w023: done; absent 1/1109 = 0.1%
+2026-09-03T10:49:12Z SVFETCH pherc1667-w028: 214 planned, 214 to fetch, 0 known absent (sep '/')
+2026-09-03T10:49:17Z SVFETCH pherc1667-w028: 200/214
+2026-09-03T10:49:18Z SVFETCH pherc1667-w028: done; absent 8/214 = 3.7%
+2026-09-03T10:49:19Z HEARTBEAT stage=sv_fetch up=5522s free=88G
+2026-09-03T10:49:19Z SVFETCH pherc1667-w029: 377 planned, 377 to fetch, 0 known absent (sep '/')
+2026-09-03T10:49:24Z SVFETCH pherc1667-w029: 200/377
+2026-09-03T10:49:32Z SVFETCH pherc1667-w029: done; absent 0/377 = 0.0%
+2026-09-03T10:49:33Z SVFETCH pherc1667-w031: 533 planned, 533 to fetch, 0 known absent (sep '/')
+2026-09-03T10:49:38Z SVFETCH pherc1667-w031: 200/533
+2026-09-03T10:49:43Z SVFETCH pherc1667-w031: 400/533
+2026-09-03T10:49:47Z SVFETCH pherc1667-w031: done; absent 0/533 = 0.0%
+2026-09-03T10:49:48Z SVFETCH phercparis4-w00: 1049 planned, 1049 to fetch, 0 known absent (sep '/')
+2026-09-03T10:49:53Z SVFETCH phercparis4-w00: 200/1049
+2026-09-03T10:49:58Z SVFETCH phercparis4-w00: 400/1049
+2026-09-03T10:50:03Z SVFETCH phercparis4-w00: 600/1049
+2026-09-03T10:50:08Z SVFETCH phercparis4-w00: 800/1049
+2026-09-03T10:50:13Z SVFETCH phercparis4-w00: 1000/1049
+2026-09-03T10:50:18Z SVFETCH phercparis4-w00: done; absent 0/1049 = 0.0%
+2026-09-03T10:50:19Z SVFETCH phercparis4-w01: 1655 planned, 1655 to fetch, 0 known absent (sep '/')
+2026-09-03T10:50:19Z HEARTBEAT stage=sv_fetch up=5582s free=84G
+2026-09-03T10:50:24Z SVFETCH phercparis4-w01: 200/1655
+2026-09-03T10:50:29Z SVFETCH phercparis4-w01: 400/1655
+2026-09-03T10:50:34Z SVFETCH phercparis4-w01: 600/1655
+2026-09-03T10:50:39Z SVFETCH phercparis4-w01: 800/1655
+2026-09-03T10:50:44Z SVFETCH phercparis4-w01: 1000/1655
+2026-09-03T10:50:49Z SVFETCH phercparis4-w01: 1200/1655
+2026-09-03T10:50:54Z SVFETCH phercparis4-w01: 1400/1655
+2026-09-03T10:50:59Z SVFETCH phercparis4-w01: 1600/1655
+2026-09-03T10:51:04Z SVFETCH phercparis4-w01: done; absent 8/1655 = 0.5%
+2026-09-03T10:51:05Z SVFETCH phercparis4-w02: 990 planned, 990 to fetch, 0 known absent (sep '/')
+2026-09-03T10:51:10Z SVFETCH phercparis4-w02: 200/990
+2026-09-03T10:51:15Z SVFETCH phercparis4-w02: 400/990
+2026-09-03T10:51:19Z HEARTBEAT stage=sv_fetch up=5642s free=81G
+2026-09-03T10:51:20Z SVFETCH phercparis4-w02: 600/990
+2026-09-03T10:51:25Z SVFETCH phercparis4-w02: 800/990
+2026-09-03T10:51:31Z SVFETCH phercparis4-w02: done; absent 27/990 = 2.7%
+2026-09-03T10:51:32Z SVFETCH phercparis4-w03: 1212 planned, 1212 to fetch, 0 known absent (sep '/')
+2026-09-03T10:51:37Z SVFETCH phercparis4-w03: 200/1212
+2026-09-03T10:51:42Z SVFETCH phercparis4-w03: 400/1212
+2026-09-03T10:51:47Z SVFETCH phercparis4-w03: 600/1212
+2026-09-03T10:51:52Z SVFETCH phercparis4-w03: 800/1212
+2026-09-03T10:51:57Z SVFETCH phercparis4-w03: 1000/1212
+2026-09-03T10:52:01Z SVFETCH phercparis4-w03: 1200/1212
+2026-09-03T10:52:05Z SVFETCH phercparis4-w03: done; absent 0/1212 = 0.0%
+2026-09-03T10:52:06Z SVFETCH phercparis4-w05: 3295 planned, 3295 to fetch, 0 known absent (sep '/')
+2026-09-03T10:52:11Z SVFETCH phercparis4-w05: 200/3295
+2026-09-03T10:52:15Z SVFETCH phercparis4-w05: 400/3295
+2026-09-03T10:52:19Z HEARTBEAT stage=sv_fetch up=5702s free=77G
+2026-09-03T10:52:20Z SVFETCH phercparis4-w05: 600/3295
+2026-09-03T10:52:25Z SVFETCH phercparis4-w05: 800/3295
+2026-09-03T10:52:29Z SVFETCH phercparis4-w05: 1000/3295
+2026-09-03T10:52:34Z SVFETCH phercparis4-w05: 1200/3295
+2026-09-03T10:52:39Z SVFETCH phercparis4-w05: 1400/3295
+2026-09-03T10:52:44Z SVFETCH phercparis4-w05: 1600/3295
+2026-09-03T10:52:48Z SVFETCH phercparis4-w05: 1800/3295
+2026-09-03T10:52:52Z SVFETCH phercparis4-w05: 2000/3295
+2026-09-03T10:52:57Z SVFETCH phercparis4-w05: 2200/3295
+2026-09-03T10:53:02Z SVFETCH phercparis4-w05: 2400/3295
+2026-09-03T10:53:06Z SVFETCH phercparis4-w05: 2600/3295
+2026-09-03T10:53:11Z SVFETCH phercparis4-w05: 2800/3295
+2026-09-03T10:53:16Z SVFETCH phercparis4-w05: 3000/3295
+2026-09-03T10:53:19Z HEARTBEAT stage=sv_fetch up=5762s free=73G
+2026-09-03T10:53:21Z SVFETCH phercparis4-w05: 3200/3295
+2026-09-03T10:53:24Z SVFETCH phercparis4-w05: done; absent 10/3295 = 0.3%
+2026-09-03T10:53:25Z SVFETCH phercparis4-w06: 2034 planned, 2034 to fetch, 0 known absent (sep '/')
+2026-09-03T10:53:29Z SVFETCH phercparis4-w06: 200/2034
+2026-09-03T10:53:34Z SVFETCH phercparis4-w06: 400/2034
+2026-09-03T10:53:39Z SVFETCH phercparis4-w06: 600/2034
+2026-09-03T10:53:43Z SVFETCH phercparis4-w06: 800/2034
+2026-09-03T10:53:48Z SVFETCH phercparis4-w06: 1000/2034
+2026-09-03T10:53:52Z SVFETCH phercparis4-w06: 1200/2034
+2026-09-03T10:53:57Z SVFETCH phercparis4-w06: 1400/2034
+2026-09-03T10:54:01Z SVFETCH phercparis4-w06: 1600/2034
+2026-09-03T10:54:07Z SVFETCH phercparis4-w06: 1800/2034
+2026-09-03T10:54:11Z SVFETCH phercparis4-w06: 2000/2034
+2026-09-03T10:54:13Z SVFETCH phercparis4-w06: done; absent 37/2034 = 1.8%
+2026-09-03T10:54:13Z SVFETCH phercparis4-w07: 2907 planned, 2907 to fetch, 0 known absent (sep '/')
+2026-09-03T10:54:18Z SVFETCH phercparis4-w07: 200/2907
+2026-09-03T10:54:19Z HEARTBEAT stage=sv_fetch up=5822s free=69G
+2026-09-03T10:54:23Z SVFETCH phercparis4-w07: 400/2907
+2026-09-03T10:54:27Z SVFETCH phercparis4-w07: 600/2907
+2026-09-03T10:54:32Z SVFETCH phercparis4-w07: 800/2907
+2026-09-03T10:54:37Z SVFETCH phercparis4-w07: 1000/2907
+2026-09-03T10:54:41Z SVFETCH phercparis4-w07: 1200/2907
+2026-09-03T10:54:47Z SVFETCH phercparis4-w07: 1400/2907
+2026-09-03T10:54:51Z SVFETCH phercparis4-w07: 1600/2907
+2026-09-03T10:54:56Z SVFETCH phercparis4-w07: 1800/2907
+2026-09-03T10:55:00Z SVFETCH phercparis4-w07: 2000/2907
+2026-09-03T10:55:06Z SVFETCH phercparis4-w07: 2200/2907
+2026-09-03T10:55:10Z SVFETCH phercparis4-w07: 2400/2907
+2026-09-03T10:55:16Z SVFETCH phercparis4-w07: 2600/2907
+2026-09-03T10:55:19Z HEARTBEAT stage=sv_fetch up=5882s free=65G
+2026-09-03T10:55:20Z SVFETCH phercparis4-w07: 2800/2907
+2026-09-03T10:55:44Z SVFETCH phercparis4-w07: done; absent 0/2907 = 0.0%
+2026-09-03T10:55:45Z SVFETCH phercparis4-w09: 930 planned, 930 to fetch, 0 known absent (sep '/')
+2026-09-03T10:55:50Z SVFETCH phercparis4-w09: 200/930
+2026-09-03T10:55:54Z SVFETCH phercparis4-w09: 400/930
+2026-09-03T10:55:59Z SVFETCH phercparis4-w09: 600/930
+2026-09-03T10:56:03Z SVFETCH phercparis4-w09: 800/930
+2026-09-03T10:56:09Z SVFETCH phercparis4-w09: done; absent 0/930 = 0.0%
+2026-09-03T10:56:10Z SVFETCH pherc0814-46527: 89 planned, 89 to fetch, 0 known absent (sep '/')
+2026-09-03T10:56:13Z SVFETCH pherc0814-46527: done; absent 0/89 = 0.0%
+2026-09-03T10:56:14Z sv_fetch: level2 on disk 33G
+2026-09-03T10:56:14Z === STAGE sv_fetch DONE (689s) ===
+2026-09-03T10:56:14Z === STAGE pool OPEN ===
+2026-09-03T10:56:19Z HEARTBEAT stage=pool up=5942s free=63G
+2026-09-03T10:56:42Z pool: batch done (4/15 pooled)
+2026-09-03T10:56:58Z pool: batch done (8/15 pooled)
+2026-09-03T10:57:19Z HEARTBEAT stage=pool up=6002s free=59G
+2026-09-03T10:57:24Z pool: batch done (12/15 pooled)
+2026-09-03T10:58:02Z SVCHECK pherc1667-w013: pooled shape OK [21, 10400, 19900]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:08Z SVCHECK pherc1667-w018: pooled shape OK [21, 10595, 24525]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:15Z SVCHECK pherc1667-w023: pooled shape OK [21, 10465, 25590]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:17Z SVCHECK pherc1667-w028: pooled shape OK [21, 9355, 7585]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:19Z HEARTBEAT stage=pool up=6062s free=65G
+2026-09-03T10:58:20Z SVCHECK pherc1667-w029: pooled shape OK [21, 9500, 7830]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:22Z SVCHECK pherc1667-w031: pooled shape OK [21, 9370, 8045]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:25Z SVCHECK phercparis4-w00: pooled shape OK [21, 7990, 12990]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:28Z SVCHECK phercparis4-w01: pooled shape OK [21, 12650, 9100]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:31Z SVCHECK phercparis4-w02: pooled shape OK [21, 8545, 11005]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:35Z SVCHECK phercparis4-w03: pooled shape OK [21, 8575, 12810]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:41Z SVCHECK phercparis4-w05: pooled shape OK [21, 12700, 18930]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:46Z SVCHECK phercparis4-w06: pooled shape OK [21, 12750, 9995]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:58:55Z SVCHECK phercparis4-w07: pooled shape OK [21, 13010, 27035]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:59:00Z SVCHECK phercparis4-w09: pooled shape OK [21, 8020, 18950]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:59:01Z SVCHECK pherc0814-46527: pooled shape OK [21, 2130, 3455]; 0/20 sampled supervised patches all-zero
+2026-09-03T10:59:01Z pool: 15 volumes ready (5.0G); level2 deleted
+2026-09-03T10:59:01Z === STAGE pool DONE (167s) ===
+2026-09-03T10:59:01Z === STAGE config_gen OPEN ===
+2026-09-03T10:59:02Z CFG generator: wrote /workspace/betA/out/cfg/loso_s42.json | representations : 15 kept, 14 held out | held out        : pherc0139-w016, pherc0139-w017, pherc0139-w028, pherc0139-w029, pherc0139-w035, pherc0139-w039, pherc0139-w040, pherc0139-w041, pherc0139-w043, w035, w039, w040, w041, w044 | quotas          : {'1667': 40, 'Paris4': 20, '0814': 4} (batch 64) | dataset entries : 3
+2026-09-03T10:59:02Z CFG loso seed 42: 15 kept, quotas {'1667': 40, 'Paris4': 20, '0814': 4}, 2000 iterations, save every 1000, workers 12 -> /workspace/betA/out/cfg/loso_s42.json
+2026-09-03T10:59:02Z === STAGE config_gen DONE (1s) ===
+2026-09-03T10:59:02Z === STAGE native_fetch OPEN ===
+2026-09-03T10:59:04Z NATIVE w035: crop rows 512:2944 cols 384:3072 (2432x2688), 399 chunks, 399 to fetch
+2026-09-03T10:59:12Z NATIVE w035: zarr ready [28, 2432, 2688], pos=334035 neg=737086 zero_frac=0.000
+2026-09-03T10:59:17Z NATIVE w039: crop rows 3584:4992 cols 2304:5376 (1408x3072), 264 chunks, 264 to fetch
+2026-09-03T10:59:19Z HEARTBEAT stage=native_fetch up=6122s free=90G
+2026-09-03T10:59:21Z NATIVE w039: zarr ready [28, 1408, 3072], pos=182429 neg=393791 zero_frac=0.000
+2026-09-03T10:59:24Z NATIVE w040: crop rows 512:6144 cols 1408:7936 (5632x6528), 2244 chunks, 2244 to fetch
+2026-09-03T10:59:56Z NATIVE w040: zarr ready [28, 5632, 6528], pos=716725 neg=913009 zero_frac=0.056
+2026-09-03T10:59:59Z NATIVE w041: crop rows 1664:5760 cols 384:4736 (4096x4352), 1088 chunks, 1088 to fetch
+2026-09-03T11:00:16Z NATIVE w041: zarr ready [28, 4096, 4352], pos=229884 neg=325745 zero_frac=0.000
+2026-09-03T11:00:19Z HEARTBEAT stage=native_fetch up=6182s free=87G
+2026-09-03T11:00:20Z NATIVE w044: crop rows 3584:4992 cols 1664:4608 (1408x2944), 253 chunks, 253 to fetch
+2026-09-03T11:00:24Z NATIVE w044: zarr ready [28, 1408, 2944], pos=451297 neg=739010 zero_frac=0.000
+2026-09-03T11:00:24Z === STAGE native_fetch DONE (82s) ===
+2026-09-03T11:00:24Z === STAGE ctl OPEN ===
+2026-09-03T11:00:25Z CTL_FETCH .zarray parsed and matches embedded expectation (shape/chunks/dtype/raw/separator)
+2026-09-03T11:00:25Z CTL_FETCH 399 chunks total, 399 to fetch (8 threads, resumable)
+2026-09-03T11:00:29Z CTL_FETCH progress 100/399
+2026-09-03T11:00:34Z CTL_FETCH progress 200/399
+2026-09-03T11:00:38Z CTL_FETCH progress 300/399
+2026-09-03T11:00:43Z CTL_FETCH complete: 399 chunks on disk (0 absent-on-server = all-zero)
+2026-09-03T11:00:43Z CTL_BUILD embedded labels verified: pos=334035 neg=737086 crop=2432x2688
+2026-09-03T11:00:43Z CTL_BUILD crop stats mean=75.97 sd=42.26 zero_frac=0.0001 max=255
+2026-09-03T11:00:47Z CTL_BUILD ctl_native.zarr ready (28x2432x2688)
+2026-09-03T11:00:47Z CTL_BUILD ctl_scalefault: x1.9503 -> (55, 4743, 5243)
+2026-09-03T11:01:04Z resample ctl_scalefault slice 1/55
+2026-09-03T11:01:09Z resample ctl_scalefault slice 9/55
+2026-09-03T11:01:14Z resample ctl_scalefault slice 17/55
+2026-09-03T11:01:19Z resample ctl_scalefault slice 25/55
+2026-09-03T11:01:19Z HEARTBEAT stage=ctl up=6242s free=83G
+2026-09-03T11:01:24Z resample ctl_scalefault slice 33/55
+2026-09-03T11:01:29Z resample ctl_scalefault slice 41/55
+2026-09-03T11:01:34Z resample ctl_scalefault slice 49/55
+2026-09-03T11:01:51Z CTL_BUILD ctl_scalefault.zarr ready (55, 4743, 5243)
+2026-09-03T11:01:51Z CTL_BUILD ctl_half: x0.5000 -> (14, 1216, 1344)
+2026-09-03T11:01:57Z resample ctl_half slice 1/14
+2026-09-03T11:01:57Z resample ctl_half slice 9/14
+2026-09-03T11:01:58Z CTL_BUILD ctl_half.zarr ready (14, 1216, 1344)
+2026-09-03T11:01:59Z infer OPEN ctl_native.zarr -> ctl_native.tif [both]
+2026-09-03T11:02:19Z HEARTBEAT stage=ctl up=6302s free=86G
+2026-09-03T11:02:32Z infer DONE ctl_native.tif [both] (33s)
+2026-09-03T11:02:32Z infer OPEN ctl_scalefault.zarr -> ctl_scalefault.tif [both]
+2026-09-03T11:03:19Z HEARTBEAT stage=ctl up=6362s free=86G
+2026-09-03T11:04:19Z HEARTBEAT stage=ctl up=6422s free=86G
+2026-09-03T11:04:27Z infer DONE ctl_scalefault.tif [both] (115s)
+2026-09-03T11:04:27Z infer OPEN ctl_half.zarr -> ctl_half.tif [both]
+2026-09-03T11:04:49Z infer DONE ctl_half.tif [both] (22s)
+2026-09-03T11:04:49Z CTL_SCORE ctl_native forward: AUC=0.9991 (map (2432, 2688))
+2026-09-03T11:04:50Z CTL_SCORE ctl_native reverse: AUC=0.5118 (map (2432, 2688))
+2026-09-03T11:04:52Z CTL_SCORE ctl_scalefault forward: AUC=0.7488 (map (4743, 5243))
+2026-09-03T11:04:53Z CTL_SCORE ctl_scalefault reverse: AUC=0.5381 (map (4743, 5243))
+2026-09-03T11:04:54Z CTL_SCORE ctl_half forward: AUC=0.5227 (map (1216, 1344))
+2026-09-03T11:04:54Z CTL_SCORE ctl_half reverse: AUC=0.4846 (map (1216, 1344))
+2026-09-03T11:04:54Z CTL GATES PASSED: native fwd=0.9991 rev=0.5118; scale-fault best=0.7488 -> FAULT_REPRODUCED; half-scale best=0.5227
+2026-09-03T11:04:54Z === STAGE ctl DONE (270s) ===
+2026-09-03T11:04:54Z === STAGE train_s42 OPEN ===
+2026-09-03T11:05:19Z HEARTBEAT stage=train_s42 up=6482s free=86G
+2026-09-03T11:06:20Z HEARTBEAT stage=train_s42 up=6543s free=86G
+2026-09-03T11:06:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:07:20Z HEARTBEAT stage=train_s42 up=6603s free=86G
+2026-09-03T11:08:20Z HEARTBEAT stage=train_s42 up=6663s free=86G
+2026-09-03T11:08:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:09:20Z HEARTBEAT stage=train_s42 up=6723s free=86G
+2026-09-03T11:10:20Z HEARTBEAT stage=train_s42 up=6783s free=86G
+2026-09-03T11:10:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:11:20Z HEARTBEAT stage=train_s42 up=6843s free=86G
+2026-09-03T11:12:20Z HEARTBEAT stage=train_s42 up=6903s free=86G
+2026-09-03T11:12:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:13:20Z HEARTBEAT stage=train_s42 up=6963s free=86G
+2026-09-03T11:14:20Z HEARTBEAT stage=train_s42 up=7023s free=86G
+2026-09-03T11:14:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:15:20Z HEARTBEAT stage=train_s42 up=7083s free=86G
+2026-09-03T11:16:20Z HEARTBEAT stage=train_s42 up=7143s free=86G
+2026-09-03T11:16:54Z TRAIN s42:  | ckpts=0
+2026-09-03T11:17:20Z HEARTBEAT stage=train_s42 up=7203s free=85G
+2026-09-03T11:18:20Z HEARTBEAT stage=train_s42 up=7263s free=86G
+2026-09-03T11:18:54Z TRAIN s42:   6%|â         | 125/2000 [01:30<11:28,  2.72it/s, loss=0.6383, lr=1.25e-03] | ckpts=0
+2026-09-03T11:19:20Z HEARTBEAT stage=train_s42 up=7323s free=86G
+2026-09-03T11:20:20Z HEARTBEAT stage=train_s42 up=7383s free=86G
+2026-09-03T11:20:54Z TRAIN s42:  27%|âââ       | 538/2000 [03:30<06:30,  3.75it/s, loss=0.6191, lr=5.38e-03] | ckpts=0
+2026-09-03T11:21:20Z HEARTBEAT stage=train_s42 up=7443s free=86G
+2026-09-03T11:22:20Z HEARTBEAT stage=train_s42 up=7503s free=86G
+2026-09-03T11:22:54Z TRAIN s42:  48%|âââââ     | 962/2000 [05:30<04:52,  3.55it/s, loss=0.6107, lr=9.62e-03] | ckpts=0
+2026-09-03T11:23:20Z HEARTBEAT stage=train_s42 up=7563s free=85G
+2026-09-03T11:24:20Z HEARTBEAT stage=train_s42 up=7623s free=85G
+2026-09-03T11:24:54Z TRAIN s42:  67%|âââââââ   | 1344/2000 [07:30<03:05,  3.53it/s, loss=0.6140, lr=7.35e-03, val_loss=0.6185] | ckpts=1
+2026-09-03T11:25:20Z HEARTBEAT stage=train_s42 up=7683s free=85G
+2026-09-03T11:26:20Z HEARTBEAT stage=train_s42 up=7743s free=85G
+2026-09-03T11:26:54Z TRAIN s42:  88%|âââââââââ | 1765/2000 [09:30<01:08,  3.42it/s, loss=0.6091, lr=1.30e-03, val_loss=0.6185] | ckpts=1
+2026-09-03T11:27:20Z HEARTBEAT stage=train_s42 up=7803s free=85G
+2026-09-03T11:28:20Z HEARTBEAT stage=train_s42 up=7863s free=85G
+2026-09-03T11:28:54Z TRAIN s42: 100%|ââââââââââ| 2000/2000 [10:40<00:00,  3.12it/s, loss=0.6126, lr=0.00e+00, val_loss=0.6185] | ckpts=2
+2026-09-03T11:28:54Z train_s42: done; checkpoints ckpt_001000.pth ckpt_002000.pth 
+2026-09-03T11:28:54Z === STAGE train_s42 DONE (1440s) ===
+2026-09-03T11:28:54Z === STAGE eval_s42 OPEN ===
+2026-09-03T11:29:15Z EVAL s42_1000 w035 forward: bestF1=0.4773@91 floor=0.475 margin=+0.002 AUC=0.5292
+2026-09-03T11:29:20Z HEARTBEAT stage=eval_s42 up=7923s free=85G
+2026-09-03T11:29:34Z EVAL s42_1000 w039 forward: bestF1=0.4809@83 floor=0.481 margin=+0.000 AUC=0.5194
+2026-09-03T11:30:20Z HEARTBEAT stage=eval_s42 up=7983s free=85G
+2026-09-03T11:30:47Z EVAL s42_1000 w040 forward: bestF1=0.6109@82 floor=0.611 margin=+0.000 AUC=0.5466
+2026-09-03T11:31:20Z HEARTBEAT stage=eval_s42 up=8043s free=85G
+2026-09-03T11:31:22Z EVAL s42_1000 w041 forward: bestF1=0.5858@90 floor=0.585 margin=+0.000 AUC=0.5378
+2026-09-03T11:31:40Z EVAL s42_1000 w044 forward: bestF1=0.5500@87 floor=0.550 margin=+0.000 AUC=0.5386
+2026-09-03T11:31:40Z EVAL s42_1000: native-5 mean bestF1=0.5410 (floor 0.540, margin +0.000); mean AUC fwd=0.5343
+2026-09-03T11:32:01Z EVAL s42_2000 w035 forward: bestF1=0.4778@93 floor=0.475 margin=+0.002 AUC=0.5356
+2026-09-03T11:32:20Z EVAL s42_2000 w039 forward: bestF1=0.4809@86 floor=0.481 margin=+0.000 AUC=0.5252
+2026-09-03T11:32:20Z HEARTBEAT stage=eval_s42 up=8103s free=85G
+2026-09-03T11:33:20Z HEARTBEAT stage=eval_s42 up=8163s free=85G
+2026-09-03T11:33:34Z EVAL s42_2000 w040 forward: bestF1=0.6109@85 floor=0.611 margin=+0.000 AUC=0.5484
+2026-09-03T11:34:08Z EVAL s42_2000 w041 forward: bestF1=0.5858@90 floor=0.585 margin=+0.001 AUC=0.5415
+2026-09-03T11:34:20Z HEARTBEAT stage=eval_s42 up=8223s free=85G
+2026-09-03T11:34:25Z EVAL s42_2000 w044 forward: bestF1=0.5500@90 floor=0.550 margin=+0.000 AUC=0.5344
+2026-09-03T11:34:25Z EVAL s42_2000: native-5 mean bestF1=0.5411 (floor 0.540, margin +0.001); mean AUC fwd=0.5370
+2026-09-03T11:34:25Z eval s42: best-of-grid = s42_2000 -> reverse pass
+2026-09-03T11:34:26Z EVAL s42_2000 w035 forward: bestF1=0.4778@93 floor=0.475 margin=+0.002 AUC=0.5356
+2026-09-03T11:34:46Z EVAL s42_2000 w035 reverse: bestF1=0.4761@92 floor=0.475 margin=+0.001 AUC=0.5138
+2026-09-03T11:34:46Z EVAL s42_2000 w039 forward: bestF1=0.4809@86 floor=0.481 margin=+0.000 AUC=0.5252
+2026-09-03T11:35:04Z EVAL s42_2000 w039 reverse: bestF1=0.4810@88 floor=0.481 margin=+0.000 AUC=0.5035
+2026-09-03T11:35:05Z EVAL s42_2000 w040 forward: bestF1=0.6109@85 floor=0.611 margin=+0.000 AUC=0.5484
+2026-09-03T11:35:20Z HEARTBEAT stage=eval_s42 up=8283s free=85G
+2026-09-03T11:36:17Z EVAL s42_2000 w040 reverse: bestF1=0.6109@0 floor=0.611 margin=-0.000 AUC=0.5354
+2026-09-03T11:36:17Z EVAL s42_2000 w041 forward: bestF1=0.5858@90 floor=0.585 margin=+0.001 AUC=0.5415
+2026-09-03T11:36:20Z HEARTBEAT stage=eval_s42 up=8343s free=85G
+2026-09-03T11:36:51Z EVAL s42_2000 w041 reverse: bestF1=0.5859@90 floor=0.585 margin=+0.001 AUC=0.5223
+2026-09-03T11:36:51Z EVAL s42_2000 w044 forward: bestF1=0.5500@90 floor=0.550 margin=+0.000 AUC=0.5344
+2026-09-03T11:37:09Z EVAL s42_2000 w044 reverse: bestF1=0.5499@90 floor=0.550 margin=+0.000 AUC=0.5192
+2026-09-03T11:37:09Z EVAL s42_2000: native-5 mean bestF1=0.5411 (floor 0.540, margin +0.001); mean AUC fwd=0.5370
+2026-09-03T11:37:09Z === STAGE eval_s42 DONE (495s) ===
+2026-09-03T11:37:09Z === STAGE ref OPEN ===
+2026-09-03T11:37:20Z HEARTBEAT stage=ref up=8403s free=85G
+2026-09-03T11:37:30Z EVAL ref_released w035 forward: bestF1=0.9785@124 floor=0.475 margin=+0.503 AUC=0.9991
+2026-09-03T11:37:51Z EVAL ref_released w035 reverse: bestF1=0.4754@54 floor=0.475 margin=+0.000 AUC=0.5118
+2026-09-03T11:38:09Z EVAL ref_released w039 forward: bestF1=0.9833@138 floor=0.481 margin=+0.502 AUC=0.9995
+2026-09-03T11:38:20Z HEARTBEAT stage=ref up=8463s free=85G
+2026-09-03T11:38:27Z EVAL ref_released w039 reverse: bestF1=0.4810@57 floor=0.481 margin=+0.000 AUC=0.4501
+2026-09-03T11:39:20Z HEARTBEAT stage=ref up=8523s free=85G
+2026-09-03T11:39:41Z EVAL ref_released w040 forward: bestF1=0.9663@133 floor=0.611 margin=+0.355 AUC=0.9966
+2026-09-03T11:40:20Z HEARTBEAT stage=ref up=8583s free=85G
+2026-09-03T11:40:53Z EVAL ref_released w040 reverse: bestF1=0.6110@57 floor=0.611 margin=+0.000 AUC=0.4963
+2026-09-03T11:41:20Z HEARTBEAT stage=ref up=8643s free=85G
+2026-09-03T11:41:28Z EVAL ref_released w041 forward: bestF1=0.9862@134 floor=0.585 margin=+0.401 AUC=0.9995
+2026-09-03T11:42:02Z EVAL ref_released w041 reverse: bestF1=0.5853@55 floor=0.585 margin=+0.000 AUC=0.5303
+2026-09-03T11:42:20Z EVAL ref_released w044 forward: bestF1=0.9853@127 floor=0.550 margin=+0.435 AUC=0.9995
+2026-09-03T11:42:20Z HEARTBEAT stage=ref up=8703s free=85G
+2026-09-03T11:42:38Z EVAL ref_released w044 reverse: bestF1=0.5563@62 floor=0.550 margin=+0.007 AUC=0.5949
+2026-09-03T11:42:38Z EVAL ref_released: native-5 mean bestF1=0.9799 (floor 0.540, margin +0.439); mean AUC fwd=0.9988
+2026-09-03T11:42:38Z === STAGE ref DONE (329s) ===
+2026-09-03T11:42:38Z === STAGE finalize OPEN ===
+2026-09-03T11:42:38Z SUMMARY ctl (released ckpt): native fwd=0.9991 rev=0.5118; scale-fault 0.7488 -> FAULT_REPRODUCED
+2026-09-03T11:42:38Z SUMMARY s42_1000: native-5 bestF1 0.5410 (margin +0.000), AUC fwd 0.5343
+2026-09-03T11:42:38Z SUMMARY s42_2000: native-5 bestF1 0.5411 (margin +0.001), AUC fwd 0.5370
+2026-09-03T11:42:38Z SUMMARY ref_released: native-5 bestF1 0.9799 (margin +0.439), AUC fwd 0.9988
+2026-09-03T11:42:38Z SUMMARY train s42: last step None, 3.12 it/s, ckpts ['ckpt_001000.pth', 'ckpt_002000.pth']
+2026-09-03T11:42:38Z SUMMARY verdict: {"mode": "SMOKE_ONLY -- pipeline validation; no gate verdict"}
+2026-09-03T11:43:10Z bundle: 216M results+preds; ckpts_keep.tgz 489M
+2026-09-03T11:43:10Z === STAGE finalize DONE (32s) ===
+2026-09-03T11:43:10Z ALL DONE -- results.json, bundle.tgz, ckpts_keep.tgz served on :8000; the laptop guard harvests and TERMINATES.
