@@ -1,0 +1,137 @@
+{
+ "run": "pod_w059_c0 v1",
+ "finished_utc": "2026-09-03T11:03:53Z",
+ "prereg": {
+  "locked_before": "any provisioning, download, or data contact",
+  "version": "w059_c0 v1 (2026-09-03): C0 contract check of the public canonical 2um model on w035 + Track F arm B at full coverage on w059's 1.129um-L1 surface volume, with w035's L1 volume as the modality control",
+  "seed": 20260903,
+  "model": {
+   "repo": "scrollprize/ink_canonical_2um",
+   "file": "r152_3ddec_v2_l5_epoch13.ckpt",
+   "type": "resnet3d-152-3d-decoder",
+   "tile": 256,
+   "stride": 128,
+   "window": "62 layers centred on the surface plane"
+  },
+  "code": "ScrollPrize/villa main ink-detection/optimized_inference (sha recorded in results); processing.py anon=False -> anon=True for the public bucket; no other modification",
+  "inputs": {
+   "w035_A": {
+    "sv": "PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/2.399um-0.22m-78keV-volume-20260102150214.zarr",
+    "shape": [
+     109,
+     22640,
+     20400
+    ],
+    "window": [
+     23,
+     85
+    ],
+    "reference": "ink-detection/PHerc0139-20260317000000-2.399um-...-new_canon_autoresearch_recipe-tile256-stride128.tif (40782909 B; canvas 22640x20400)"
+   },
+   "w035_B": {
+    "sv": "PHerc0139/segments/20260317000000-w035_2026031718/surface-volumes/1.129um-0.22m-59keV-volume-20260413113053-L1.zarr",
+    "shape": [
+     116,
+     24080,
+     21700
+    ],
+    "window": [
+     27,
+     89
+    ]
+   },
+   "w059_B": {
+    "sv": "PHerc0139/segments/20250223000000-w059_2025022312/surface-volumes/1.129um-0.22m-59keV-volume-20260413113053-L1.zarr",
+    "shape": [
+     116,
+     29860,
+     41440
+    ],
+    "window": [
+     27,
+     89
+    ],
+    "directions": [
+     "forward",
+     "reverse"
+    ]
+   }
+  },
+  "c0_gate": "Pearson r between our w035_A map and the published map, computed on the joint support (both > 0) at ds4; PASS iff r >= 0.90 with window [23,85). If it misses and SWEEP=1, windows [12,74) then [34,96) are tried once each (bounded: 3 passes max); the best window is recorded and used for every other run. If no window reaches 0.90 the contract is NOT reproduced: the run still completes w035_B and w059 but every downstream number is flagged CONTRACT_UNVERIFIED and Bet B's C1/C2a do not proceed.",
+  "w059_measurements": "forward and reverse maps at full coverage; fwd/rev Pearson r on the joint support at ds4 (gate 5 input); ds16 (36.1 um/px) block-mean maps of every output for the local PROTOCOL_V2 battery; no verdict is computed on the pod",
+  "prestated_readings": {
+   "C0 pass, w035_B 4/4 map-internal gates locally, w059_B 4/4 + |fwd/rev r| < 0.20": "w059 clears the two-scanner rule -> escalation (>= 1000-perm rerun, human eyes, Discord); never letter language",
+   "C0 pass, w059_B fails significance at full coverage with the control passing": "the A-arm ruling signal is not confirmed on the second scanner; Track F lead downgraded and closed",
+   "C0 fail": "the 2um contract is not reproduced; nothing downstream is interpretable until it is"
+  },
+  "cost_cap": "$4; guard deadline 5 h"
+ },
+ "villa_sha": "9daa477e05af9c1cbac9791267deca35ac06021c",
+ "window": "23 85",
+ "c0": {
+  "c0_w035A_23_85": {
+   "tag": "c0_w035A_23_85",
+   "ours_shape": [
+    22640,
+    20400
+   ],
+   "ref_shape": [
+    22640,
+    20400
+   ],
+   "r_ds4_joint": 0.9999997065960653,
+   "n_joint_ds4": 24009865,
+   "ours_nonzero": 0.8313855400817571,
+   "ref_nonzero": 0.8313855400817571,
+   "ours_p99": 238.0,
+   "ref_p99": 238.0,
+   "gate": 0.9,
+   "passed": true
+  }
+ },
+ "c0_best_r": 0.9999997065960653,
+ "contract_unverified": false,
+ "maps": {
+  "c2_w035B": {
+   "name": "c2_w035B",
+   "shape": [
+    24080,
+    21700
+   ],
+   "px_um": 2.258,
+   "ds16_px_um": 36.128,
+   "nonzero_frac": 0.3883918409449301,
+   "p50_ds4": 35.0,
+   "p99_ds4": 237.0
+  },
+  "w059B_fwd": {
+   "name": "w059B_fwd",
+   "shape": [
+    29860,
+    41440
+   ],
+   "px_um": 2.258,
+   "ds16_px_um": 36.128,
+   "nonzero_frac": 0.3052900060320104,
+   "p50_ds4": 36.0,
+   "p99_ds4": 239.0
+  },
+  "w059B_rev": {
+   "name": "w059B_rev",
+   "shape": [
+    29860,
+    41440
+   ],
+   "px_um": 2.258,
+   "ds16_px_um": 36.128,
+   "nonzero_frac": 0.3052900060320104,
+   "p50_ds4": 33.0,
+   "p99_ds4": 231.0
+  },
+  "w059B_fwdrev": {
+   "r_ds4_joint": 0.003872447558075174,
+   "n_joint": 23646426
+  }
+ },
+ "battery": "runs LOCALLY on out/maps/*_ds16.npy (36.1 um/px) with PROTOCOL_V2; no verdict on the pod"
+}

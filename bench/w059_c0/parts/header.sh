@@ -32,7 +32,7 @@ SEED=20260903
 BATCH=${BATCH:-16}
 WORKERS=${WORKERS:-8}
 
-OUT=$ROOT/out;  VAR=$ROOT/var;  DATA=$ROOT/data;  PREDS=$ROOT/preds
+OUT=$ROOT/out;  VAR=$ROOT/var;  DATA=$ROOT/data;  PREDS=$ROOT/out/preds   # served on :8000 so the guard can fetch the TIFFs
 SCRIPTS=$ROOT/scripts;  RESULTS=$OUT/results;  STATUS=$OUT/status.txt
 OI=$ROOT/oi;  OIVENV=$ROOT/oivenv
 export ROOT OUT VAR DATA PREDS SCRIPTS RESULTS STATUS SEED BATCH WORKERS OI OIVENV BATCH_OI

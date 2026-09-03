@@ -41,7 +41,7 @@ SEEDS=${SEEDS:-"42 43"}
 SMOKE_STEPS=${SMOKE_STEPS:-2000}
 FULL_STEPS=${FULL_STEPS:-78125}
 FETCH_THREADS=${FETCH_THREADS:-32}
-POOL_PAR=${POOL_PAR:-3}
+POOL_PAR=${POOL_PAR:-4}
 RUN_P2A=${RUN_P2A:-0}
 SEED=20260902
 
@@ -5864,14 +5864,18 @@ if stage_done pool; then
   say "=== STAGE pool already done, skipping ==="
 else
   stage_open pool
-  N=0
+  # Smoke #5 (2026-09-03) hung here for 2 h: a bare `wait` also waits on the status server and
+  # heartbeat loops (background jobs of this same shell) that never exit. Wait on the pool PIDs only.
+  N=0; POOL_PIDS=""
   for S in $KEPT; do
     if [ -d "$VOLS/aligned9/$S.zarr" ]; then continue; fi
-    ( pyrun -m vesuvius.ink_detection.preprocessing.prepare_9um_isotropic_input "$DATA/level2/$S.zarr" "$VOLS/aligned9/$S.zarr" --level 2 --workers 6 > "$OUT/logs/pool_$S.log" 2>&1 || echo "POOL_FAIL $S" >> "$OUT/logs/pool_failures.txt" ) &
+    # `timeout` cannot run the pyrun shell function (smoke #7: rc=127 on all 15 stores); wrap the real command.
+    ( cd /workspace/villa/vesuvius && timeout -k 60 5400 uv run --no-sync --extra models python -m vesuvius.ink_detection.preprocessing.prepare_9um_isotropic_input "$DATA/level2/$S.zarr" "$VOLS/aligned9/$S.zarr" --level 2 --workers 6 > "$OUT/logs/pool_$S.log" 2>&1 || echo "POOL_FAIL $S rc=$?" >> "$OUT/logs/pool_failures.txt" ) &
+    POOL_PIDS="$POOL_PIDS $!"
     N=$((N + 1))
-    if [ "$N" -ge "$POOL_PAR" ]; then wait; N=0; say "pool: batch done ($(ls "$VOLS/aligned9" | wc -l)/15 pooled)"; fi
+    if [ "$N" -ge "$POOL_PAR" ]; then wait $POOL_PIDS; POOL_PIDS=""; N=0; say "pool: batch done ($(ls "$VOLS/aligned9" | wc -l)/15 pooled)"; fi
   done
-  wait
+  [ -z "$POOL_PIDS" ] || wait $POOL_PIDS
   [ ! -s "$OUT/logs/pool_failures.txt" ] || die "pooling failed for: $(cat "$OUT/logs/pool_failures.txt" | tr '\n' ' ')"
   for S in $KEPT; do
     pyrun "$SCRIPTS/svplan.py" check "$S" || die "pooled-volume gate failed for $S"

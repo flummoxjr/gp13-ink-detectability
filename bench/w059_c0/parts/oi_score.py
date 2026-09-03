@@ -10,19 +10,35 @@ import curvelib as cl
 
 
 def load_map(path):
-    import cv2
-    a = cv2.imread(path, cv2.IMREAD_UNCHANGED)
-    if a is None:
+    # w059's canvas is 29860 x 41440 = 1.24 Gpx > OpenCV's CV_IO_MAX_IMAGE_PIXELS (2^30): cv2.imread
+    # RAISES (it does not return None) -- pod kzh9my3ycl6679 died here 2026-09-03 after a 60-min pass.
+    os.environ.setdefault("OPENCV_IO_MAX_IMAGE_PIXELS", str(2 ** 40))
+    if path.lower().endswith((".tif", ".tiff")):
         import tifffile
         a = tifffile.imread(path)
+    else:
+        import cv2
+        a = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+        if a is None:
+            import tifffile
+            a = tifffile.imread(path)
     if a.ndim == 3:
         a = a[..., 0]
     return a
 
 
 def block_mean(a, f):
+    """Block mean without a full-res float copy (1.24 Gpx x float32 = 5 GB): strip-wise uint32 sums."""
     H, W = a.shape[0] // f * f, a.shape[1] // f * f
-    return a[:H, :W].astype(np.float32).reshape(H // f, f, W // f, f).mean(axis=(1, 3))
+    out = np.empty((H // f, W // f), np.float32)
+    rows = max(f, (4096 // f) * f)
+    for y in range(0, H, rows):
+        s = a[y:min(y + rows, H), :W]
+        h = s.shape[0] // f * f
+        acc = np.uint32 if np.issubdtype(s.dtype, np.integer) else np.float64
+        blk = s[:h].reshape(h // f, f, W // f, f).astype(acc).sum(axis=(1, 3))
+        out[y // f:(y + h) // f] = blk / float(f * f)
+    return out
 
 
 def pearson_joint(a4, b4):
@@ -52,17 +68,19 @@ def c0(ours, ref, tag):
 
 def ds(name, path, px_um):
     a = load_map(path)
-    a4 = np.clip(np.rint(block_mean(a, 4)), 0, 255).astype(np.uint8)
-    a16 = np.clip(np.rint(block_mean(a, 16)), 0, 255).astype(np.uint8)
+    a4f = block_mean(a, 4)
+    a4 = np.clip(np.rint(a4f), 0, 255).astype(np.uint8)
+    a16 = np.clip(np.rint(block_mean(a4f, 4)), 0, 255).astype(np.uint8)   # ds16 = ds4 of ds4 (exact for block means)
     np.save(os.path.join(cl.OUT, "maps", f"{name}_ds4.npy"), a4)
     np.save(os.path.join(cl.OUT, "maps", f"{name}_ds16.npy"), a16)
-    nz = a > 0
-    st = dict(name=name, shape=list(a.shape), px_um=float(px_um), ds16_px_um=float(px_um) * 16, nonzero_frac=float(nz.mean()),
-              p50=float(np.percentile(a[nz], 50)) if nz.any() else None, p99=float(np.percentile(a[nz], 99)) if nz.any() else None)
+    nonzero_frac = float(np.count_nonzero(a) / a.size)
+    nz4 = a4[a4 > 0]   # stats on the ds4 map: a full-res percentile of 1.24 Gpx needs ~20 GB
+    st = dict(name=name, shape=list(a.shape), px_um=float(px_um), ds16_px_um=float(px_um) * 16, nonzero_frac=nonzero_frac,
+              p50_ds4=float(np.percentile(nz4, 50)) if nz4.size else None, p99_ds4=float(np.percentile(nz4, 99)) if nz4.size else None)
     p = os.path.join(cl.RESULTS, "maps.json")
     d = json.load(open(p)) if os.path.exists(p) else {}
     d[name] = st; json.dump(d, open(p, "w"), indent=1)
-    cl.say(f"DS {name}: {a.shape} nonzero {st['nonzero_frac']:.3f} p99 {st['p99']} -> ds4/ds16 npys ({st['ds16_px_um']:.1f} um/px at ds16)")
+    cl.say(f"DS {name}: {a.shape} nonzero {st['nonzero_frac']:.3f} p99(ds4) {st['p99_ds4']} -> ds4/ds16 npys ({st['ds16_px_um']:.1f} um/px at ds16)")
 
 
 def fwdrev(name, f, r_):

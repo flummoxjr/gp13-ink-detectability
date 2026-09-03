@@ -1,0 +1,18 @@
+[
+ {
+  "name": "w059B_fwd",
+  "scroll": "PHerc0139_w059_2um",
+  "fwd_rev_r": 0.003872447558075174,
+  "forward": {
+   "tripwire_hits": []
+  }
+ },
+ {
+  "name": "c2_w035B",
+  "scroll": "PHerc0139_w035_2um",
+  "fwd_rev_r": null,
+  "forward": {
+   "tripwire_hits": []
+  }
+ }
+]
