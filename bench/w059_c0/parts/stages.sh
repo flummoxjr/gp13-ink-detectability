@@ -76,18 +76,39 @@ fi
 OID="$OI/ink-detection/optimized_inference"
 
 run_oi() { # run_oi <tag> <sv s3 path> <start> <end> <reverse true|false>
+  # villa optimized_inference is map/reduce: STEP=inference writes zarr partitions to
+  # ZARR_OUTPUT_DIR and STEP=reduce blends them into a tiled TIFF at OUTPUT_PATH.
+  # (Pod 4f690f8ejklc7i, 2026-09-03, ran inference alone and found no PNG: 25 min lost.)
   local TAG=$1 SV=$2 S=$3 E=$4 REV=$5
-  local OUTP="$PREDS/$TAG.png"
+  local OUTP="$PREDS/$TAG.tif" PARTS="$ROOT/parts_$TAG"
   if [ -s "$OUTP" ] && [ "$FORCE" != 1 ]; then say "oi skip (exists): $TAG"; return 0; fi
   say "OI OPEN $TAG: $SV layers [$S,$E) reverse=$REV tile 256 stride 128 batch $BATCH_OI"
   local t0=$SECONDS
-  ( cd "$OID" && MODEL="$MODEL_REPO" MODEL_TYPE=resnet3d-152-3d-decoder STEP=inference SURFACE_VOLUME_ZARR="$S3/$SV" \
-      START_LAYER="$S" END_LAYER="$E" TILE_SIZE=256 STRIDE=128 BATCH_SIZE="$BATCH_OI" FORCE_REVERSE="$REV" \
+  # Two villa caches are keyed WITHOUT the volume identity and poisoned every pass after the
+  # first on pod hyj20dywx5vg8a (2026-09-03: the arm-B "control" came out identical to arm A):
+  #   1. processing.get_cached_zarr_store: ZARR_CACHE_DIR defaults to ./zarr_cache (cwd) and the
+  #      LocalStore is keyed by zarr-internal chunk names, so a second S3 volume reads the first
+  #      volume's metadata and chunks  -> give every run its own ZARR_CACHE_DIR and delete it after.
+  #   2. reduce_partitions copies partitions to /tmp/partition_cache/mask_pred_part_000.zarr only
+  #      "if not already cached"                -> wipe /tmp/partition_cache before every reduce.
+  local ZC="$ROOT/zcache_$TAG"
+  rm -rf "$PARTS" "$ZC" /tmp/partition_cache "$OID/zarr_cache" 2>/dev/null || true
+  mkdir -p "$PARTS" "$ZC"
+  ( cd "$OID" && MODEL="$MODEL_REPO" MODEL_TYPE=resnet3d-152-3d-decoder STEP=inference NUM_PARTS=1 PART_ID=0 ZARR_OUTPUT_DIR="$PARTS" ZARR_CACHE_DIR="$ZC" \
+      SURFACE_VOLUME_ZARR="$S3/$SV" START_LAYER="$S" END_LAYER="$E" TILE_SIZE=256 STRIDE=128 BATCH_SIZE="$BATCH_OI" FORCE_REVERSE="$REV" \
       OUTPUT_PATH="$OUTP" COMPILE=0 PROFILING_LEVEL=basic "$OIVENV/bin/python" entrypoint.py > "$OUT/logs/oi_$TAG.log" 2>&1 ) || {
     tail -15 "$OUT/logs/oi_$TAG.log" | while read -r L; do say "oi_$TAG: $L"; done
     return 1; }
-  [ -s "$OUTP" ] || { say "oi_$TAG: no output written"; return 1; }
-  say "OI DONE $TAG ($((SECONDS - t0))s): $(du -h "$OUTP" | cut -f1)"
+  say "OI inference $TAG done ($((SECONDS - t0))s); partitions $(du -sh "$PARTS" 2>/dev/null | cut -f1); zarr cache $(du -sh "$ZC" 2>/dev/null | cut -f1); reduce next"
+  rm -rf /tmp/partition_cache 2>/dev/null || true
+  ( cd "$OID" && MODEL="$MODEL_REPO" MODEL_TYPE=resnet3d-152-3d-decoder STEP=reduce NUM_PARTS=1 ZARR_OUTPUT_DIR="$PARTS" ZARR_CACHE_DIR="$ZC" \
+      SURFACE_VOLUME_ZARR="$S3/$SV" START_LAYER="$S" END_LAYER="$E" TILE_SIZE=256 STRIDE=128 FORCE_REVERSE="$REV" \
+      OUTPUT_PATH="$OUTP" PROFILING_LEVEL=basic "$OIVENV/bin/python" entrypoint.py > "$OUT/logs/oi_${TAG}_reduce.log" 2>&1 ) || {
+    tail -15 "$OUT/logs/oi_${TAG}_reduce.log" | while read -r L; do say "oi_${TAG}_reduce: $L"; done
+    return 1; }
+  [ -s "$OUTP" ] || { say "oi_$TAG: no output written after reduce; preds/: $(ls "$PREDS" | tr '\n' ' ')"; tail -8 "$OUT/logs/oi_${TAG}_reduce.log" | while read -r L; do say "oi_${TAG}_reduce: $L"; done; return 1; }
+  rm -rf "$PARTS" "$ZC" /tmp/partition_cache /tmp/prediction_*.tif 2>/dev/null || true
+  say "OI DONE $TAG ($((SECONDS - t0))s): $(du -h "$OUTP" | cut -f1) $(pyrun -c "import tifffile;print(tifffile.imread('$OUTP').shape)" 2>/dev/null)"
 }
 
 # ============================================================================
@@ -104,7 +125,7 @@ else
     set -- $WIN
     TAG="c0_w035A_${1}_${2}"
     run_oi "$TAG" "$SV_W035_A" "$1" "$2" false || die "C0 inference failed for window [$1,$2)"
-    RC=0; pyrun "$SCRIPTS/oi_score.py" c0 "$PREDS/$TAG.png" "$DATA/ref_w035_A.tif" "$TAG" || RC=$?
+    RC=0; pyrun "$SCRIPTS/oi_score.py" c0 "$PREDS/$TAG.tif" "$DATA/ref_w035_A.tif" "$TAG" || RC=$?
     R=$(pyrun -c "import json;print(json.load(open('$RESULTS/c0_$TAG.json'))['r_ds4_joint'])")
     if pyrun -c "import sys; sys.exit(0 if float('$R') > float('$BESTR') else 1)"; then BEST="$1 $2"; BESTR=$R; fi
     if [ $RC = 0 ]; then break; fi
@@ -131,7 +152,7 @@ if stage_done c2; then
 else
   stage_open c2
   run_oi "c2_w035B" "$SV_W035_B" "$LS" "$LE" false || die "c2 inference failed"
-  pyrun "$SCRIPTS/oi_score.py" ds c2_w035B "$PREDS/c2_w035B.png" 2.258 || die "ds failed c2"
+  pyrun "$SCRIPTS/oi_score.py" ds c2_w035B "$PREDS/c2_w035B.tif" 2.258 || die "ds failed c2"
   stage_close c2
 fi
 
@@ -143,10 +164,10 @@ if stage_done w059; then
 else
   stage_open w059
   run_oi "w059B_fwd" "$SV_W059_B" "$LS" "$LE" false || die "w059 forward failed"
-  pyrun "$SCRIPTS/oi_score.py" ds w059B_fwd "$PREDS/w059B_fwd.png" 2.258 || die "ds failed w059 fwd"
+  pyrun "$SCRIPTS/oi_score.py" ds w059B_fwd "$PREDS/w059B_fwd.tif" 2.258 || die "ds failed w059 fwd"
   run_oi "w059B_rev" "$SV_W059_B" "$LS" "$LE" true || die "w059 reverse failed"
-  pyrun "$SCRIPTS/oi_score.py" ds w059B_rev "$PREDS/w059B_rev.png" 2.258 || die "ds failed w059 rev"
-  pyrun "$SCRIPTS/oi_score.py" fwdrev w059B "$PREDS/w059B_fwd.png" "$PREDS/w059B_rev.png" || die "fwdrev failed"
+  pyrun "$SCRIPTS/oi_score.py" ds w059B_rev "$PREDS/w059B_rev.tif" 2.258 || die "ds failed w059 rev"
+  pyrun "$SCRIPTS/oi_score.py" fwdrev w059B "$PREDS/w059B_fwd.tif" "$PREDS/w059B_rev.tif" || die "fwdrev failed"
   stage_close w059
 fi
 

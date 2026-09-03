@@ -82,12 +82,16 @@ def plan():
         # ~1.15-1.26x the manifest's "+-128 px max-filter" estimate (measured on the
         # 2026-09-03 smoke: w013 1.17, w018 1.18, w023 1.19, w028 1.18, w029 1.26).
         # The band is a sanity check against a broken plan, not a budget: the budget
-        # is the 45 GB total cap below.
+        # is the 45 GB total cap below. Smoke #4 (2026-09-03) died here on
+        # phercparis4-w00 at 1.80x (the manifest's estimate is poor for the Paris4
+        # geometry) after 59 min of label sync, so a miss is now a logged WARNING;
+        # only a grossly broken plan (>4x or <0.25x) or the total cap is fatal.
         lo, hi = 0.5 * exp, 1.6 * exp
         ok = lo <= len(cols) <= hi
+        sane = 0.25 * exp <= len(cols) <= 4.0 * exp
         cl.say(f"SVPLAN {seg}: {ncorner} patch corners -> {len(cols)} chunk columns "
-               f"(manifest {exp}; {'OK' if ok else 'OUT OF BAND'})")
-        assert ok, f"{seg}: planned {len(cols)} outside [{lo:.0f}, {hi:.0f}] of the manifest count {exp}"
+               f"(manifest {exp}; {'OK' if ok else ('WARN out of the 0.5-1.6x band, ratio %.2f' % (len(cols) / max(exp, 1)))})")
+        assert sane, f"{seg}: planned {len(cols)} outside the 0.25-4x sanity bound of the manifest count {exp}"
         out[seg] = dict(chunks=[list(c) for c in cols], n=len(cols), manifest=exp,
                         gb_est=round(len(cols) * SV[seg]["bytes_per_chunk_measured_mean"] / 1e9, 2))
         total += out[seg]["gb_est"]
