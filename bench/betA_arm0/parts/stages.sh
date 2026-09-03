@@ -40,6 +40,12 @@ else
     die "synthetic 30-iteration training FAILED (logs/train_syn.log) -- fix the trainer contract before spending on data"
   fi
   ls "$RUNS/syn"/*.pth >/dev/null 2>&1 || die "synthetic training produced no checkpoint in $RUNS/syn"
+  # Arms 1/2: exercise the flat inference path (arm 2 fits its whitener here) with the synthetic checkpoint
+  # BEFORE the data fetch, so an eval-time failure cannot surface only after hours of training.
+  SYN_CKPT=$(ls "$RUNS/syn"/*.pth | head -1)
+  ( cd /workspace/villa/vesuvius && uv run --no-sync --extra models python -m vesuvius.ink_detection.inference.infer "$DATA/syn/volumes/aligned9/pherc0814-46527.zarr" "$SYN_CKPT" "$OUT/syn_infer.tif" --direction forward --batch-size 8 > "$OUT/logs/syn_infer.log" 2>&1 ) || { tail -20 "$OUT/logs/syn_infer.log" | while read -r L; do say "syn_infer: $L"; done; die "synthetic flat inference FAILED (arm $ARM) -- logs/syn_infer.log"; }
+  [ -s "$OUT/syn_infer.tif" ] || die "synthetic flat inference wrote no output"
+  say "trainer_check: synthetic flat inference OK (arm $ARM): $(du -h "$OUT/syn_infer.tif" | cut -f1) $(grep -c 'whitening fitted' "$OUT/logs/syn_infer.log") whitening-fit lines"
   say "trainer_check: 30 synthetic iterations OK; checkpoints: $(ls "$RUNS/syn" | grep -c '\.pth$'); log tail: $(tail -1 "$OUT/logs/train_syn.log" | cut -c1-160)"
   stage_close trainer_check
 fi
@@ -136,8 +142,8 @@ else
   stage_open ctl
   retry 3 pyrun "$SCRIPTS/ctl_build.py" fetch || die "ctl chunk fetch failed"
   pyrun "$SCRIPTS/ctl_build.py" build || die "ctl build failed"
-  for ARM in ctl_native ctl_scalefault ctl_half; do
-    run_infer "$DATA/$ARM.zarr" "$PREDS/$ARM.tif" both
+  for CARM in ctl_native ctl_scalefault ctl_half; do
+    run_infer "$DATA/$CARM.zarr" "$PREDS/$CARM.tif" both
   done
   RC=0
   pyrun "$SCRIPTS/ctl_score.py" || RC=$?
@@ -148,6 +154,18 @@ else
 fi
 
 # ============================================================================
+# ============================================================================
+# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
+# reported before any arm-1 training so the degradation's activity is known (prereg gate).
+# ============================================================================
+if stage_done measure; then
+  say "=== STAGE measure already done, skipping ==="
+else
+  stage_open measure
+  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 || die "input statistics failed"
+  stage_close measure
+fi
+
 # STAGES train_s<seed> / eval_s<seed>
 # ============================================================================
 train_seed() { # train_seed <seed>

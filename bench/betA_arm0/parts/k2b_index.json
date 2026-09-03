@@ -1,0 +1,855 @@
+{
+ "PHerc0125": {
+  "n_pap_rois": 2,
+  "rois": [
+   {
+    "origin": [
+     3704,
+     2928,
+     4352
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 116.1,
+    "dn_headroom": 219.0
+   },
+   {
+    "origin": [
+     3952,
+     3368,
+     4136
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.35,
+    "dn_headroom": 223.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   114.225,
+   113.2875,
+   115.1625
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   220.0,
+   222.0
+  ]
+ },
+ "PHerc0191": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     5072,
+     4456,
+     4592
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 68.85,
+    "dn_headroom": 229.0
+   },
+   {
+    "origin": [
+     3272,
+     5224,
+     4088
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 74.5,
+    "dn_headroom": 237.0
+   },
+   {
+    "origin": [
+     5368,
+     4336,
+     4632
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 124.63,
+    "dn_headroom": 229.0
+   },
+   {
+    "origin": [
+     3816,
+     4880,
+     4240
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 139.59,
+    "dn_headroom": 226.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   99.565,
+   73.0875,
+   128.37
+  ],
+  "dn_headroom_med_iqr": [
+   229.0,
+   228.25,
+   231.0
+  ]
+ },
+ "PHerc0211": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     15184,
+     1664,
+     2976
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 97.76,
+    "dn_headroom": 215.0
+   },
+   {
+    "origin": [
+     14232,
+     1960,
+     5832
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 144.52,
+    "dn_headroom": 233.0
+   },
+   {
+    "origin": [
+     14408,
+     2720,
+     1784
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 123.66,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     15776,
+     4968,
+     5056
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 106.64,
+    "dn_headroom": 218.0
+   },
+   {
+    "origin": [
+     12800,
+     3928,
+     2280
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 91.32,
+    "dn_headroom": 221.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   106.64,
+   97.76,
+   123.66
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   218.0,
+   223.0
+  ]
+ },
+ "PHerc0257": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     3144,
+     7296,
+     4456
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 34.26,
+    "dn_headroom": 217.0
+   },
+   {
+    "origin": [
+     3160,
+     4024,
+     5856
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 24.83,
+    "dn_headroom": 150.0
+   },
+   {
+    "origin": [
+     6504,
+     4240,
+     2840
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 20.23,
+    "dn_headroom": 135.0
+   },
+   {
+    "origin": [
+     4160,
+     3472,
+     5240
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 20.59,
+    "dn_headroom": 137.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4449,
+   0.4449,
+   0.4576
+  ],
+  "snr_q025_med_iqr": [
+   22.71,
+   20.5,
+   27.1875
+  ],
+  "dn_headroom_med_iqr": [
+   143.5,
+   136.5,
+   166.75
+  ]
+ },
+ "PHerc0268": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     10744,
+     3672,
+     7736
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 13.94,
+    "dn_headroom": 183.0
+   },
+   {
+    "origin": [
+     11072,
+     4072,
+     8336
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 18.61,
+    "dn_headroom": 209.0
+   },
+   {
+    "origin": [
+     3880,
+     7600,
+     1952
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 37.0,
+    "dn_headroom": 173.0
+   },
+   {
+    "origin": [
+     11672,
+     4920,
+     7544
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 35.46,
+    "dn_headroom": 211.0
+   },
+   {
+    "origin": [
+     11104,
+     5016,
+     7504
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 23.6,
+    "dn_headroom": 214.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   23.6,
+   18.61,
+   35.46
+  ],
+  "dn_headroom_med_iqr": [
+   209.0,
+   183.0,
+   211.0
+  ]
+ },
+ "PHerc0358": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     3592,
+     4096,
+     3248
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 143.65,
+    "dn_headroom": 248.0
+   },
+   {
+    "origin": [
+     7768,
+     3520,
+     4680
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 57.91,
+    "dn_headroom": 219.0
+   },
+   {
+    "origin": [
+     6728,
+     3400,
+     4320
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 91.82,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     7256,
+     3496,
+     4560
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 85.77,
+    "dn_headroom": 232.0
+   },
+   {
+    "origin": [
+     2456,
+     3952,
+     3200
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 163.37,
+    "dn_headroom": 244.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   91.82,
+   85.77,
+   143.65
+  ],
+  "dn_headroom_med_iqr": [
+   232.0,
+   225.0,
+   244.0
+  ]
+ },
+ "PHerc0800": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     4768,
+     6096,
+     3296
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 69.94,
+    "dn_headroom": 192.0
+   },
+   {
+    "origin": [
+     19424,
+     2416,
+     3664
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 20.08,
+    "dn_headroom": 146.0
+   },
+   {
+    "origin": [
+     19056,
+     2656,
+     2896
+    ],
+    "bandwidth_cyc_px": 0.4195,
+    "snr_q025": 17.25,
+    "dn_headroom": 130.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4577,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   20.08,
+   18.665,
+   45.01
+  ],
+  "dn_headroom_med_iqr": [
+   146.0,
+   138.0,
+   169.0
+  ],
+  "noise_ref": "air",
+  "pap_mean_dn": 137.5,
+  "air_rois": [
+   {
+    "origin": [
+     23504,
+     4896,
+     9680
+    ],
+    "roi": 128,
+    "sub_origin": [
+     0,
+     4,
+     56
+    ],
+    "sub_n": 64,
+    "mean_dn": 43.4,
+    "psd_flatness": 11.7
+   }
+  ]
+ },
+ "PHerc0813": {
+  "n_pap_rois": 2,
+  "rois": [
+   {
+    "origin": [
+     6784,
+     3160,
+     4600
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 163.16,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     6936,
+     3416,
+     4552
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 156.02,
+    "dn_headroom": 217.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   159.59,
+   157.805,
+   161.375
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   219.0,
+   223.0
+  ]
+ },
+ "PHerc0826": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     3344,
+     2760,
+     4000
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 80.43,
+    "dn_headroom": 222.0
+   },
+   {
+    "origin": [
+     4456,
+     2648,
+     4520
+    ],
+    "bandwidth_cyc_px": 0.4534,
+    "snr_q025": 27.15,
+    "dn_headroom": 152.0
+   },
+   {
+    "origin": [
+     4704,
+     3560,
+     4776
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 72.2,
+    "dn_headroom": 222.0
+   },
+   {
+    "origin": [
+     3808,
+     2584,
+     5240
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 22.58,
+    "dn_headroom": 151.0
+   },
+   {
+    "origin": [
+     6336,
+     4128,
+     4176
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 160.6,
+    "dn_headroom": 232.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   72.2,
+   27.15,
+   80.43
+  ],
+  "dn_headroom_med_iqr": [
+   222.0,
+   152.0,
+   222.0
+  ]
+ },
+ "PHerc1218": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     18888,
+     3480,
+     3504
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 21.13,
+    "dn_headroom": 217.0
+   },
+   {
+    "origin": [
+     17392,
+     3368,
+     3688
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 24.87,
+    "dn_headroom": 220.0
+   },
+   {
+    "origin": [
+     17856,
+     3328,
+     3664
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 23.83,
+    "dn_headroom": 210.0
+   },
+   {
+    "origin": [
+     16952,
+     3440,
+     3784
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 27.52,
+    "dn_headroom": 229.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   24.35,
+   23.155,
+   25.5325
+  ],
+  "dn_headroom_med_iqr": [
+   218.5,
+   215.25,
+   222.25
+  ]
+ },
+ "PHerc1447": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     19136,
+     4016,
+     5704
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 10.28,
+    "dn_headroom": 119.0
+   },
+   {
+    "origin": [
+     19120,
+     3976,
+     5432
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 10.89,
+    "dn_headroom": 118.0
+   },
+   {
+    "origin": [
+     18504,
+     3816,
+     6624
+    ],
+    "bandwidth_cyc_px": 0.3941,
+    "snr_q025": 8.45,
+    "dn_headroom": 134.0
+   },
+   {
+    "origin": [
+     19056,
+     3544,
+     6824
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 7.65,
+    "dn_headroom": 125.0
+   },
+   {
+    "origin": [
+     18920,
+     3392,
+     6216
+    ],
+    "bandwidth_cyc_px": 0.3771,
+    "snr_q025": 8.12,
+    "dn_headroom": 141.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.3941,
+   0.3856,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   8.45,
+   8.12,
+   10.28
+  ],
+  "dn_headroom_med_iqr": [
+   125.0,
+   119.0,
+   134.0
+  ]
+ },
+ "PHerc1545": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     16032,
+     3408,
+     3368
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 132.73,
+    "dn_headroom": 220.0
+   },
+   {
+    "origin": [
+     16960,
+     3536,
+     2400
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 83.59,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     16352,
+     3776,
+     1760
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 132.14,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     16704,
+     3480,
+     2424
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.23,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     7040,
+     2448,
+     5280
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 86.72,
+    "dn_headroom": 228.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   112.23,
+   86.72,
+   132.14
+  ],
+  "dn_headroom_med_iqr": [
+   223.0,
+   223.0,
+   225.0
+  ]
+ },
+ "PHerc1203": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     4480,
+     3432,
+     1488
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.66,
+    "dn_headroom": 236.0
+   },
+   {
+    "origin": [
+     15344,
+     3224,
+     1512
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 87.24,
+    "dn_headroom": 194.0
+   },
+   {
+    "origin": [
+     15560,
+     1880,
+     3160
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 70.11,
+    "dn_headroom": 212.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   87.24,
+   78.675,
+   99.95
+  ],
+  "dn_headroom_med_iqr": [
+   212.0,
+   203.0,
+   224.0
+  ]
+ },
+ "PHerc0139": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     13184,
+     3200,
+     2272
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 115.54,
+    "dn_headroom": 151.0
+   },
+   {
+    "origin": [
+     12704,
+     3168,
+     3760
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 148.14,
+    "dn_headroom": 155.0
+   },
+   {
+    "origin": [
+     13728,
+     3440,
+     2480
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 100.06,
+    "dn_headroom": 143.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.3856,
+   0.3856,
+   0.3856
+  ],
+  "snr_q025_med_iqr": [
+   115.54,
+   107.8,
+   131.84
+  ],
+  "dn_headroom_med_iqr": [
+   151.0,
+   147.0,
+   153.0
+  ],
+  "noise_ref": "residual",
+  "pap_mean_dn": 126.7,
+  "noise_note": "no genuine air window passed validation; noise ref is the PSD of (papyrus ROI - its 3x3x3 uniform smooth), |1-U|^2-corrected white floor \u2014 SNR and bandwidth are conservative estimates"
+ }
+}

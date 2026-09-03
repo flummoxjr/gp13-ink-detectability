@@ -12,6 +12,19 @@ RECIPE = os.path.join(S, "aligned21_hybrid_3d2d.json")
 CONTRACT = os.path.join(S, "aligned21_fixed_scroll_prior.json")
 CFG = os.path.join(OUT, "cfg"); os.makedirs(CFG, exist_ok=True)
 NPROC = os.cpu_count() or 8
+ARM = int(os.environ.get("ARM", "0"))
+
+
+def arm_keys():
+    """Bet A arm config keys (trackD PREREG_BET_A): 0 -> none (recipe byte-identical),
+    1 -> input_degradation from the k2b index, 2 -> input_whitening."""
+    if ARM == 1:
+        idx = json.load(open(os.path.join(S, "k2b_index.json")))
+        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0,
+                                      "apply_blur": True, "apply_noise": True, "apply_headroom": True, "seed": 1}}
+    if ARM == 2:
+        return {"input_whitening": {"enabled": True, "n_samples": 64, "sample_size": 128, "q_ref": 0.02, "max_gain": 8.0, "seed": 2}}
+    return {}
 
 
 def synthetic():
@@ -36,8 +49,9 @@ def synthetic():
                         "sampling_scroll": "0814",
                         "sampling_physical_segment_keys": {seg: "0814:46527"},
                         "sampling_representation_keys": {seg: f"public_2p4_level2_zmean4:{seg}"}}])
+    r.update(arm_keys())
     p = os.path.join(CFG, "syn.json"); json.dump(r, open(p, "w"), indent=1)
-    cl.say(f"CFG synthetic: {seg} labels ({shape}) + random volume, 30 iterations, batch 8 -> {p}")
+    cl.say(f"CFG synthetic: {seg} labels ({shape}) + random volume, 30 iterations, batch 8, arm {ARM} -> {p}")
 
 
 def loso(seed, steps, save_every):
@@ -60,9 +74,10 @@ def loso(seed, steps, save_every):
     c.update(num_iterations=int(steps), save_every=int(save_every), val_every=int(save_every),
              dataloader_workers=min(12, max(2, NPROC - 2)), out_dir=run_dir, seed=int(seed))
     c["fixed_scroll_prior"]["seed"] = int(seed)
+    c.update(arm_keys())
     json.dump(c, open(out, "w"), indent=1)
     cl.say(f"CFG loso seed {seed}: 15 kept, quotas {q}, {steps} iterations, save every {save_every}, "
-           f"workers {c['dataloader_workers']} -> {out}")
+           f"workers {c['dataloader_workers']}, ARM {ARM} ({', '.join(arm_keys().keys()) or 'baseline'}) -> {out}")
 
 
 if __name__ == "__main__":

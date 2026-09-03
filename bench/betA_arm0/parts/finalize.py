@@ -65,7 +65,9 @@ def main():
                            PASS=bool(best_of_both >= 0.603 and mean_margin >= 0.06 and peaks),
                            rule="best-of-both >= 0.603 AND mean margin >= +0.06 AND peak at 10-30k with 75k below")
         verdict["per_seed"] = per_seed
-    agg = dict(run="pod_betA_arm0 v1", smoke_only=SMOKE, finished_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    stats_p = os.path.join(cl.RESULTS, "input_stats.json")
+    agg = dict(run="pod_betA_arm0 v1", arm=int(os.environ.get("ARM", "0")), villa_pin_ref=os.environ.get("VILLA_PIN_REF"), smoke_only=SMOKE,
+               input_stats=json.load(open(stats_p)) if os.path.exists(stats_p) else None, finished_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                prereg=json.load(open(os.path.join(cl.OUT, "prereg.json"))), ctl=ctl,
                native_crops=json.load(open(os.path.join(cl.RESULTS, "native_crops.json"))),
                eval=ev, training=trains, verdict=verdict)

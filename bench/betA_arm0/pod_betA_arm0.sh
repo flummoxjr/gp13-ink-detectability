@@ -37,6 +37,8 @@ DRY_FAIL_STAGE=${DRY_FAIL_STAGE:-}
 LINGER_EXIT=${LINGER_EXIT:-0}
 PYTHON_BIN=${PYTHON_BIN:-python3}
 SMOKE_ONLY=${SMOKE_ONLY:-1}
+ARM=${ARM:-0}                 # Bet A arm: 0 = LOSO baseline, 1 = input degradation, 2 = PSD whitening
+VILLA_PIN_REF=${VILLA_PIN_REF:-master}   # fork branch to clone: master = arm-0 snapshot a3f2c29; betA-arms = arms 1/2
 SEEDS=${SEEDS:-"42 43"}
 SMOKE_STEPS=${SMOKE_STEPS:-2000}
 FULL_STEPS=${FULL_STEPS:-78125}
@@ -49,7 +51,7 @@ OUT=$ROOT/out;  VAR=$ROOT/var;  DATA=$ROOT/data;  PREDS=$ROOT/preds
 SCRIPTS=$ROOT/scripts;  RESULTS=$OUT/results;  STATUS=$OUT/status.txt
 LABELS=$DATA/labels;  VOLS=$DATA/volumes;  NATIVE=$DATA/native;  RUNS=$OUT/runs
 export ROOT OUT VAR DATA PREDS SCRIPTS RESULTS STATUS SEED BATCH WORKERS
-export LABELS VOLS NATIVE RUNS SMOKE_ONLY SMOKE_STEPS FULL_STEPS FETCH_THREADS
+export LABELS VOLS NATIVE RUNS SMOKE_ONLY SMOKE_STEPS FULL_STEPS FETCH_THREADS ARM VILLA_PIN_REF
 
 # =================================================================== L1 ======
 # The very first actions: make the served dir and write the BOOT line.
@@ -116,24 +118,60 @@ trap cleanup EXIT
 # Lock the pre-registration into the served dir before any provisioning.
 cat > "$OUT/prereg.json" <<'PREREG_JSON'
 {
-  "locked_before": "any provisioning, download, or data contact",
-  "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict",
-  "seed": 20260902,
-  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
-  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
-  "anchor": {
-    "published_native5_mean_best_f1": 0.653,
-    "published_seeds": {"42": 0.627, "43": 0.653},
-    "floor_mean": 0.541,
-    "margin": 0.112,
-    "per_segment": {"w035": 0.679, "w039": 0.585, "w040": 0.652, "w041": 0.703, "w044": 0.646},
-    "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
-    "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+ "locked_before": "any provisioning, download, or data contact",
+ "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 67bb8c77242acb810770da4ce7e7e51cb88fbdb5)",
+ "seed": 20260902,
+ "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
+ "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
+ "anchor": {
+  "published_native5_mean_best_f1": 0.653,
+  "published_seeds": {
+   "42": 0.627,
+   "43": 0.653
   },
-  "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
-  "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
-  "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
-  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued"
+  "floor_mean": 0.541,
+  "margin": 0.112,
+  "per_segment": {
+   "w035": 0.679,
+   "w039": 0.585,
+   "w040": 0.652,
+   "w041": 0.703,
+   "w044": 0.646
+  },
+  "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
+  "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+ },
+ "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
+ "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
+ "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
+ "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued",
+ "arms_1_2": {
+  "locked": "2026-09-03 before any arm-1/2 pod; arm-0 results (seeds 42/43: best native-5 F1 0.627 @ 20k / 0.631 @ 30k, mean AUC fwd 0.7459 / 0.7566, mean 0.7513, seed spread 0.011) were known when this was written",
+  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 67bb8c77 = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
+  "arm_1_input_degradation": {
+   "where": "every TRAINING flat crop (pooled 2.4->9.6 um representations), before robust_mad normalisation; never on validation crops or at inference",
+   "target_draw": "per crop: one scroll uniformly from the 14-scroll k2b index (trackD out/k2b_index), then one of its ROIs uniformly -> (bandwidth_cyc_px, snr_q025, dn_headroom)",
+   "steps": [
+    "Gaussian in-plane blur with sigma^2 = ln(P(q_t) / (2 (N + n_add))) / (4 pi^2 q_t^2) so the crop's radial PSD crosses 2x its floor at the target bandwidth q_t (0 if already below)",
+    "additive white Gaussian noise so that the residual-floor structural SNR at q = 0.25 cyc/px equals the target (two measure-and-add passes)",
+    "contrast scaling about the crop mean so the in-mask p99.5 - p0.5 DN spread equals the target headroom, then clip to [0, 255]"
+   ],
+   "estimator": "2-D per-crop transposition of the k2b definitions (Hanning radial PSD, 3x3 uniform high-pass residual floor from the 0.35-0.48 band); index targets were measured in 3-D with air (where found) or residual references, so residual-referenced SNR is a lower bound and the added noise is conservative",
+   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such"
+  },
+  "arm_2_input_whitening": {
+   "where": "every flat crop of every volume at training AND validation AND flat inference (fitted per eval volume from 64 of its blocks in infer.py)",
+   "filter": "in-plane radial gain g(q) = sqrt(PSD(q_ref) / PSD(q)) with q_ref = 0.02 cyc/px, PSD = median radial PSD of 64 random 128x128 in-plane windows of the volume's central slices; gain clipped to [1/8, 8]; DC and crop mean preserved; applied per slice by rFFT before robust_mad"
+  },
+  "decision_rule_frozen": {
+   "primary": "arm 1 OR arm 2 beats arm 0 by >= +0.05 mean native-5 forward AUC at the best-of-grid checkpoint, both seeds (arm-0 baseline 0.7513; the improvement must also exceed 2 x the arm-0 seed spread = 0.022) -> the arm's mean AUC over its two seeds must be >= 0.8013",
+   "secondary": "500p2a win1 (iso) >= 0.65 for the passing arm (A3 = 0.5211), measured afterwards with bench/p2a_v3 on the saved best checkpoints; not computed on these pods",
+   "reverse_direction": "reported (depth-order asymmetry must persist: reverse AUC near 0.5) but not a gate",
+   "KILLED": "otherwise; the augmentation code, configs, input statistics and held-out numbers ship either way",
+   "combination": "two pods per arm (SEEDS=42 / SEEDS=43), combined locally with combine_verdict.py's rule extended by the +0.05 AUC clause (arm_verdict.py)"
+  },
+  "cost_cap": "4 pods x <= 15 h guard; about $5 per pod on a community 5090"
+ }
 }
 PREREG_JSON
 PRSHA=$(sha256sum "$OUT/prereg.json" | cut -c1-12)
@@ -5450,6 +5488,19 @@ RECIPE = os.path.join(S, "aligned21_hybrid_3d2d.json")
 CONTRACT = os.path.join(S, "aligned21_fixed_scroll_prior.json")
 CFG = os.path.join(OUT, "cfg"); os.makedirs(CFG, exist_ok=True)
 NPROC = os.cpu_count() or 8
+ARM = int(os.environ.get("ARM", "0"))
+
+
+def arm_keys():
+    """Bet A arm config keys (trackD PREREG_BET_A): 0 -> none (recipe byte-identical),
+    1 -> input_degradation from the k2b index, 2 -> input_whitening."""
+    if ARM == 1:
+        idx = json.load(open(os.path.join(S, "k2b_index.json")))
+        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0,
+                                      "apply_blur": True, "apply_noise": True, "apply_headroom": True, "seed": 1}}
+    if ARM == 2:
+        return {"input_whitening": {"enabled": True, "n_samples": 64, "sample_size": 128, "q_ref": 0.02, "max_gain": 8.0, "seed": 2}}
+    return {}
 
 
 def synthetic():
@@ -5474,8 +5525,9 @@ def synthetic():
                         "sampling_scroll": "0814",
                         "sampling_physical_segment_keys": {seg: "0814:46527"},
                         "sampling_representation_keys": {seg: f"public_2p4_level2_zmean4:{seg}"}}])
+    r.update(arm_keys())
     p = os.path.join(CFG, "syn.json"); json.dump(r, open(p, "w"), indent=1)
-    cl.say(f"CFG synthetic: {seg} labels ({shape}) + random volume, 30 iterations, batch 8 -> {p}")
+    cl.say(f"CFG synthetic: {seg} labels ({shape}) + random volume, 30 iterations, batch 8, arm {ARM} -> {p}")
 
 
 def loso(seed, steps, save_every):
@@ -5498,9 +5550,10 @@ def loso(seed, steps, save_every):
     c.update(num_iterations=int(steps), save_every=int(save_every), val_every=int(save_every),
              dataloader_workers=min(12, max(2, NPROC - 2)), out_dir=run_dir, seed=int(seed))
     c["fixed_scroll_prior"]["seed"] = int(seed)
+    c.update(arm_keys())
     json.dump(c, open(out, "w"), indent=1)
     cl.say(f"CFG loso seed {seed}: 15 kept, quotas {q}, {steps} iterations, save every {save_every}, "
-           f"workers {c['dataloader_workers']} -> {out}")
+           f"workers {c['dataloader_workers']}, ARM {ARM} ({', '.join(arm_keys().keys()) or 'baseline'}) -> {out}")
 
 
 if __name__ == "__main__":
@@ -5669,7 +5722,9 @@ def main():
                            PASS=bool(best_of_both >= 0.603 and mean_margin >= 0.06 and peaks),
                            rule="best-of-both >= 0.603 AND mean margin >= +0.06 AND peak at 10-30k with 75k below")
         verdict["per_seed"] = per_seed
-    agg = dict(run="pod_betA_arm0 v1", smoke_only=SMOKE, finished_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    stats_p = os.path.join(cl.RESULTS, "input_stats.json")
+    agg = dict(run="pod_betA_arm0 v1", arm=int(os.environ.get("ARM", "0")), villa_pin_ref=os.environ.get("VILLA_PIN_REF"), smoke_only=SMOKE,
+               input_stats=json.load(open(stats_p)) if os.path.exists(stats_p) else None, finished_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                prereg=json.load(open(os.path.join(cl.OUT, "prereg.json"))), ctl=ctl,
                native_crops=json.load(open(os.path.join(cl.RESULTS, "native_crops.json"))),
                eval=ev, training=trains, verdict=verdict)
@@ -5690,6 +5745,937 @@ def main():
 if __name__ == "__main__":
     main()
 PY_FINAL
+
+cat > "$SCRIPTS/measure_inputs.py" <<'PY_MEASURE'
+"""Bet A input statistics (prereg gate for arm 1): measure the pooled 2.4->9.6 um training volumes
+and the five native 9.36 um eval crops with the SAME per-crop 2-D estimator the arm-1 degradation
+uses (vesuvius.ink_detection.data.degradation.measure_2d: Hanning radial PSD, residual-based white
+floor from the 0.35-0.48 cyc/px band, structural SNR at q = 0.25, bandwidth = max q with PSD >= 2x floor,
+DN headroom = p99.5 - p0.5 in-mask). Writes results/input_stats.json and says a summary line per store.
+
+  python measure_inputs.py <aligned9 dir> <native dir> <k2b_index.json> [n_windows=64] [size=128]
+
+Reading: arm 1 can only degrade a crop whose measured SNR/bandwidth exceeds the drawn target. If the
+pooled sources already sit at or below the index targets, the noise/blur steps are inactive and arm 1
+reduces to the headroom match -- which is reported here BEFORE any arm-1 pod spends on training."""
+import glob, json, os, sys
+import numpy as np
+import zarr
+sys.path.insert(0, os.environ["SCRIPTS"])
+import curvelib as cl
+from vesuvius.ink_detection.data.degradation import measure_2d, sample_inplane_windows
+
+
+def stats_for(volume, name, n, size, rng):
+    wins = sample_inplane_windows(volume, n, size, rng)
+    rows = []
+    for w in wins:
+        q, p, nz = measure_2d(w)
+        i25 = int(np.argmin(np.abs(q - 0.25)))
+        above = (q > 0.02) & (p / nz >= 2.0)
+        dn = w[w > 0].astype(np.float32)
+        rows.append(dict(snr_q025=float(p[i25] / nz), bandwidth_cyc_px=float(q[above].max()) if above.any() else 0.0,
+                         dn_headroom=float(np.percentile(dn, 99.5) - np.percentile(dn, 0.5)), mean_dn=float(dn.mean())))
+    if not rows:
+        return dict(name=name, n=0)
+    def med_iqr(k):
+        v = np.array([r[k] for r in rows]); return [round(float(np.median(v)), 4), round(float(np.percentile(v, 25)), 4), round(float(np.percentile(v, 75)), 4)]
+    return dict(name=name, n=len(rows), shape=list(volume.shape), snr_q025_med_iqr=med_iqr("snr_q025"),
+                bandwidth_med_iqr=med_iqr("bandwidth_cyc_px"), dn_headroom_med_iqr=med_iqr("dn_headroom"), mean_dn=med_iqr("mean_dn"))
+
+
+def main():
+    aligned, native, index_path = sys.argv[1], sys.argv[2], sys.argv[3]
+    n = int(sys.argv[4]) if len(sys.argv) > 4 else 64
+    size = int(sys.argv[5]) if len(sys.argv) > 5 else 128
+    rng = np.random.default_rng(20260903)
+    out = dict(estimator="2-D per-window, residual floor (conservative); index targets are 3-D air/residual", window=size, n_per_volume=n, pooled={}, native={})
+    for z in sorted(glob.glob(os.path.join(aligned, "*.zarr"))):
+        name = os.path.basename(z)[:-5]
+        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["pooled"][name] = st
+        if st.get("n"):
+            cl.say(f"INPUTSTAT pooled {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} [{st['snr_q025_med_iqr'][1]:.1f},{st['snr_q025_med_iqr'][2]:.1f}] bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+    for z in sorted(glob.glob(os.path.join(native, "*.zarr"))):
+        name = os.path.basename(z)[:-5]
+        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["native"][name] = st
+        if st.get("n"):
+            cl.say(f"INPUTSTAT native {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+    idx = json.load(open(index_path))
+    tgt_snr = sorted(r["snr_q025"] for rec in idx.values() for r in rec["rois"])
+    tgt_bw = sorted(r["bandwidth_cyc_px"] for rec in idx.values() for r in rec["rois"])
+    pooled_snr = [v["snr_q025_med_iqr"][0] for v in out["pooled"].values() if v.get("n")]
+    pooled_bw = [v["bandwidth_med_iqr"][0] for v in out["pooled"].values() if v.get("n")]
+    out["index_targets"] = dict(n=len(tgt_snr), snr_q025_median=float(np.median(tgt_snr)), bandwidth_median=float(np.median(tgt_bw)))
+    out["arm1_active_fraction"] = dict(
+        noise=float(np.mean([s > np.median(tgt_snr) for s in pooled_snr])) if pooled_snr else None,
+        blur=float(np.mean([b > np.median(tgt_bw) for b in pooled_bw])) if pooled_bw else None)
+    json.dump(out, open(os.path.join(cl.RESULTS, "input_stats.json"), "w"), indent=1)
+    cl.say(f"INPUTSTAT summary: pooled snr25 median {np.median(pooled_snr) if pooled_snr else float('nan'):.1f} vs index-target median {np.median(tgt_snr):.1f}; "
+           f"pooled bw median {np.median(pooled_bw) if pooled_bw else float('nan'):.3f} vs target median {np.median(tgt_bw):.3f}; "
+           f"fraction of pooled stores where arm-1 noise / blur is active: {out['arm1_active_fraction']}")
+
+
+if __name__ == "__main__":
+    main()
+PY_MEASURE
+
+cat > "$SCRIPTS/k2b_index.json" <<'JSON_K2B'
+{
+ "PHerc0125": {
+  "n_pap_rois": 2,
+  "rois": [
+   {
+    "origin": [
+     3704,
+     2928,
+     4352
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 116.1,
+    "dn_headroom": 219.0
+   },
+   {
+    "origin": [
+     3952,
+     3368,
+     4136
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.35,
+    "dn_headroom": 223.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   114.225,
+   113.2875,
+   115.1625
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   220.0,
+   222.0
+  ]
+ },
+ "PHerc0191": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     5072,
+     4456,
+     4592
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 68.85,
+    "dn_headroom": 229.0
+   },
+   {
+    "origin": [
+     3272,
+     5224,
+     4088
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 74.5,
+    "dn_headroom": 237.0
+   },
+   {
+    "origin": [
+     5368,
+     4336,
+     4632
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 124.63,
+    "dn_headroom": 229.0
+   },
+   {
+    "origin": [
+     3816,
+     4880,
+     4240
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 139.59,
+    "dn_headroom": 226.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   99.565,
+   73.0875,
+   128.37
+  ],
+  "dn_headroom_med_iqr": [
+   229.0,
+   228.25,
+   231.0
+  ]
+ },
+ "PHerc0211": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     15184,
+     1664,
+     2976
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 97.76,
+    "dn_headroom": 215.0
+   },
+   {
+    "origin": [
+     14232,
+     1960,
+     5832
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 144.52,
+    "dn_headroom": 233.0
+   },
+   {
+    "origin": [
+     14408,
+     2720,
+     1784
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 123.66,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     15776,
+     4968,
+     5056
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 106.64,
+    "dn_headroom": 218.0
+   },
+   {
+    "origin": [
+     12800,
+     3928,
+     2280
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 91.32,
+    "dn_headroom": 221.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   106.64,
+   97.76,
+   123.66
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   218.0,
+   223.0
+  ]
+ },
+ "PHerc0257": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     3144,
+     7296,
+     4456
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 34.26,
+    "dn_headroom": 217.0
+   },
+   {
+    "origin": [
+     3160,
+     4024,
+     5856
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 24.83,
+    "dn_headroom": 150.0
+   },
+   {
+    "origin": [
+     6504,
+     4240,
+     2840
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 20.23,
+    "dn_headroom": 135.0
+   },
+   {
+    "origin": [
+     4160,
+     3472,
+     5240
+    ],
+    "bandwidth_cyc_px": 0.4449,
+    "snr_q025": 20.59,
+    "dn_headroom": 137.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4449,
+   0.4449,
+   0.4576
+  ],
+  "snr_q025_med_iqr": [
+   22.71,
+   20.5,
+   27.1875
+  ],
+  "dn_headroom_med_iqr": [
+   143.5,
+   136.5,
+   166.75
+  ]
+ },
+ "PHerc0268": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     10744,
+     3672,
+     7736
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 13.94,
+    "dn_headroom": 183.0
+   },
+   {
+    "origin": [
+     11072,
+     4072,
+     8336
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 18.61,
+    "dn_headroom": 209.0
+   },
+   {
+    "origin": [
+     3880,
+     7600,
+     1952
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 37.0,
+    "dn_headroom": 173.0
+   },
+   {
+    "origin": [
+     11672,
+     4920,
+     7544
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 35.46,
+    "dn_headroom": 211.0
+   },
+   {
+    "origin": [
+     11104,
+     5016,
+     7504
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 23.6,
+    "dn_headroom": 214.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   23.6,
+   18.61,
+   35.46
+  ],
+  "dn_headroom_med_iqr": [
+   209.0,
+   183.0,
+   211.0
+  ]
+ },
+ "PHerc0358": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     3592,
+     4096,
+     3248
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 143.65,
+    "dn_headroom": 248.0
+   },
+   {
+    "origin": [
+     7768,
+     3520,
+     4680
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 57.91,
+    "dn_headroom": 219.0
+   },
+   {
+    "origin": [
+     6728,
+     3400,
+     4320
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 91.82,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     7256,
+     3496,
+     4560
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 85.77,
+    "dn_headroom": 232.0
+   },
+   {
+    "origin": [
+     2456,
+     3952,
+     3200
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 163.37,
+    "dn_headroom": 244.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   91.82,
+   85.77,
+   143.65
+  ],
+  "dn_headroom_med_iqr": [
+   232.0,
+   225.0,
+   244.0
+  ]
+ },
+ "PHerc0800": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     4768,
+     6096,
+     3296
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 69.94,
+    "dn_headroom": 192.0
+   },
+   {
+    "origin": [
+     19424,
+     2416,
+     3664
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 20.08,
+    "dn_headroom": 146.0
+   },
+   {
+    "origin": [
+     19056,
+     2656,
+     2896
+    ],
+    "bandwidth_cyc_px": 0.4195,
+    "snr_q025": 17.25,
+    "dn_headroom": 130.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4577,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   20.08,
+   18.665,
+   45.01
+  ],
+  "dn_headroom_med_iqr": [
+   146.0,
+   138.0,
+   169.0
+  ],
+  "noise_ref": "air",
+  "pap_mean_dn": 137.5,
+  "air_rois": [
+   {
+    "origin": [
+     23504,
+     4896,
+     9680
+    ],
+    "roi": 128,
+    "sub_origin": [
+     0,
+     4,
+     56
+    ],
+    "sub_n": 64,
+    "mean_dn": 43.4,
+    "psd_flatness": 11.7
+   }
+  ]
+ },
+ "PHerc0813": {
+  "n_pap_rois": 2,
+  "rois": [
+   {
+    "origin": [
+     6784,
+     3160,
+     4600
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 163.16,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     6936,
+     3416,
+     4552
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 156.02,
+    "dn_headroom": 217.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   159.59,
+   157.805,
+   161.375
+  ],
+  "dn_headroom_med_iqr": [
+   221.0,
+   219.0,
+   223.0
+  ]
+ },
+ "PHerc0826": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     3344,
+     2760,
+     4000
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 80.43,
+    "dn_headroom": 222.0
+   },
+   {
+    "origin": [
+     4456,
+     2648,
+     4520
+    ],
+    "bandwidth_cyc_px": 0.4534,
+    "snr_q025": 27.15,
+    "dn_headroom": 152.0
+   },
+   {
+    "origin": [
+     4704,
+     3560,
+     4776
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 72.2,
+    "dn_headroom": 222.0
+   },
+   {
+    "origin": [
+     3808,
+     2584,
+     5240
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 22.58,
+    "dn_headroom": 151.0
+   },
+   {
+    "origin": [
+     6336,
+     4128,
+     4176
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 160.6,
+    "dn_headroom": 232.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   72.2,
+   27.15,
+   80.43
+  ],
+  "dn_headroom_med_iqr": [
+   222.0,
+   152.0,
+   222.0
+  ]
+ },
+ "PHerc1218": {
+  "n_pap_rois": 4,
+  "rois": [
+   {
+    "origin": [
+     18888,
+     3480,
+     3504
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 21.13,
+    "dn_headroom": 217.0
+   },
+   {
+    "origin": [
+     17392,
+     3368,
+     3688
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 24.87,
+    "dn_headroom": 220.0
+   },
+   {
+    "origin": [
+     17856,
+     3328,
+     3664
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 23.83,
+    "dn_headroom": 210.0
+   },
+   {
+    "origin": [
+     16952,
+     3440,
+     3784
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 27.52,
+    "dn_headroom": 229.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   24.35,
+   23.155,
+   25.5325
+  ],
+  "dn_headroom_med_iqr": [
+   218.5,
+   215.25,
+   222.25
+  ]
+ },
+ "PHerc1447": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     19136,
+     4016,
+     5704
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 10.28,
+    "dn_headroom": 119.0
+   },
+   {
+    "origin": [
+     19120,
+     3976,
+     5432
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 10.89,
+    "dn_headroom": 118.0
+   },
+   {
+    "origin": [
+     18504,
+     3816,
+     6624
+    ],
+    "bandwidth_cyc_px": 0.3941,
+    "snr_q025": 8.45,
+    "dn_headroom": 134.0
+   },
+   {
+    "origin": [
+     19056,
+     3544,
+     6824
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 7.65,
+    "dn_headroom": 125.0
+   },
+   {
+    "origin": [
+     18920,
+     3392,
+     6216
+    ],
+    "bandwidth_cyc_px": 0.3771,
+    "snr_q025": 8.12,
+    "dn_headroom": 141.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.3941,
+   0.3856,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   8.45,
+   8.12,
+   10.28
+  ],
+  "dn_headroom_med_iqr": [
+   125.0,
+   119.0,
+   134.0
+  ]
+ },
+ "PHerc1545": {
+  "n_pap_rois": 5,
+  "rois": [
+   {
+    "origin": [
+     16032,
+     3408,
+     3368
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 132.73,
+    "dn_headroom": 220.0
+   },
+   {
+    "origin": [
+     16960,
+     3536,
+     2400
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 83.59,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     16352,
+     3776,
+     1760
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 132.14,
+    "dn_headroom": 223.0
+   },
+   {
+    "origin": [
+     16704,
+     3480,
+     2424
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.23,
+    "dn_headroom": 225.0
+   },
+   {
+    "origin": [
+     7040,
+     2448,
+     5280
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 86.72,
+    "dn_headroom": 228.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   112.23,
+   86.72,
+   132.14
+  ],
+  "dn_headroom_med_iqr": [
+   223.0,
+   223.0,
+   225.0
+  ]
+ },
+ "PHerc1203": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     4480,
+     3432,
+     1488
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 112.66,
+    "dn_headroom": 236.0
+   },
+   {
+    "origin": [
+     15344,
+     3224,
+     1512
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 87.24,
+    "dn_headroom": 194.0
+   },
+   {
+    "origin": [
+     15560,
+     1880,
+     3160
+    ],
+    "bandwidth_cyc_px": 0.4958,
+    "snr_q025": 70.11,
+    "dn_headroom": 212.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.4958,
+   0.4958,
+   0.4958
+  ],
+  "snr_q025_med_iqr": [
+   87.24,
+   78.675,
+   99.95
+  ],
+  "dn_headroom_med_iqr": [
+   212.0,
+   203.0,
+   224.0
+  ]
+ },
+ "PHerc0139": {
+  "n_pap_rois": 3,
+  "rois": [
+   {
+    "origin": [
+     13184,
+     3200,
+     2272
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 115.54,
+    "dn_headroom": 151.0
+   },
+   {
+    "origin": [
+     12704,
+     3168,
+     3760
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 148.14,
+    "dn_headroom": 155.0
+   },
+   {
+    "origin": [
+     13728,
+     3440,
+     2480
+    ],
+    "bandwidth_cyc_px": 0.3856,
+    "snr_q025": 100.06,
+    "dn_headroom": 143.0
+   }
+  ],
+  "bandwidth_med_iqr": [
+   0.3856,
+   0.3856,
+   0.3856
+  ],
+  "snr_q025_med_iqr": [
+   115.54,
+   107.8,
+   131.84
+  ],
+  "dn_headroom_med_iqr": [
+   151.0,
+   147.0,
+   153.0
+  ],
+  "noise_ref": "residual",
+  "pap_mean_dn": 126.7,
+  "noise_note": "no genuine air window passed validation; noise ref is the PSD of (papyrus ROI - its 3x3x3 uniform smooth), |1-U|^2-corrected white floor \u2014 SNR and bandwidth are conservative estimates"
+ }
+}
+JSON_K2B
 
 }
 write_scripts
@@ -5730,10 +6716,10 @@ else
   # Pinned snapshot repo (27 MB) instead of the full villa monorepo: the previous
   # pod spent 2 h failing to fetch villa over a flaky link. timeout caps each try.
   if [ ! -d villa ]; then
-    retry 3 timeout 300 git clone --depth 1 https://github.com/flummoxjr/villa-pin-37e300d3.git villa >> "$OUT/provision.log" 2>&1 || die "villa-pin clone failed - see provision.log"
+    retry 3 timeout 300 git clone --depth 1 --branch "$VILLA_PIN_REF" https://github.com/flummoxjr/villa-pin-37e300d3.git villa >> "$OUT/provision.log" 2>&1 || die "villa-pin clone failed - see provision.log"
   fi
   VSHA=$(cd villa && git rev-parse --short HEAD)
-  say "provision: villa @ $VSHA"
+  say "provision: villa @ $VSHA (villa-pin ref $VILLA_PIN_REF, Bet A arm $ARM)"
   cd /workspace/villa/vesuvius
   command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"
@@ -5823,6 +6809,12 @@ else
     die "synthetic 30-iteration training FAILED (logs/train_syn.log) -- fix the trainer contract before spending on data"
   fi
   ls "$RUNS/syn"/*.pth >/dev/null 2>&1 || die "synthetic training produced no checkpoint in $RUNS/syn"
+  # Arms 1/2: exercise the flat inference path (arm 2 fits its whitener here) with the synthetic checkpoint
+  # BEFORE the data fetch, so an eval-time failure cannot surface only after hours of training.
+  SYN_CKPT=$(ls "$RUNS/syn"/*.pth | head -1)
+  ( cd /workspace/villa/vesuvius && uv run --no-sync --extra models python -m vesuvius.ink_detection.inference.infer "$DATA/syn/volumes/aligned9/pherc0814-46527.zarr" "$SYN_CKPT" "$OUT/syn_infer.tif" --direction forward --batch-size 8 > "$OUT/logs/syn_infer.log" 2>&1 ) || { tail -20 "$OUT/logs/syn_infer.log" | while read -r L; do say "syn_infer: $L"; done; die "synthetic flat inference FAILED (arm $ARM) -- logs/syn_infer.log"; }
+  [ -s "$OUT/syn_infer.tif" ] || die "synthetic flat inference wrote no output"
+  say "trainer_check: synthetic flat inference OK (arm $ARM): $(du -h "$OUT/syn_infer.tif" | cut -f1) $(grep -c 'whitening fitted' "$OUT/logs/syn_infer.log") whitening-fit lines"
   say "trainer_check: 30 synthetic iterations OK; checkpoints: $(ls "$RUNS/syn" | grep -c '\.pth$'); log tail: $(tail -1 "$OUT/logs/train_syn.log" | cut -c1-160)"
   stage_close trainer_check
 fi
@@ -5919,8 +6911,8 @@ else
   stage_open ctl
   retry 3 pyrun "$SCRIPTS/ctl_build.py" fetch || die "ctl chunk fetch failed"
   pyrun "$SCRIPTS/ctl_build.py" build || die "ctl build failed"
-  for ARM in ctl_native ctl_scalefault ctl_half; do
-    run_infer "$DATA/$ARM.zarr" "$PREDS/$ARM.tif" both
+  for CARM in ctl_native ctl_scalefault ctl_half; do
+    run_infer "$DATA/$CARM.zarr" "$PREDS/$CARM.tif" both
   done
   RC=0
   pyrun "$SCRIPTS/ctl_score.py" || RC=$?
@@ -5931,6 +6923,18 @@ else
 fi
 
 # ============================================================================
+# ============================================================================
+# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
+# reported before any arm-1 training so the degradation's activity is known (prereg gate).
+# ============================================================================
+if stage_done measure; then
+  say "=== STAGE measure already done, skipping ==="
+else
+  stage_open measure
+  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 || die "input statistics failed"
+  stage_close measure
+fi
+
 # STAGES train_s<seed> / eval_s<seed>
 # ============================================================================
 train_seed() { # train_seed <seed>

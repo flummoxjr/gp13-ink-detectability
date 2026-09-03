@@ -1,20 +1,56 @@
 {
-  "locked_before": "any provisioning, download, or data contact",
-  "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict",
-  "seed": 20260902,
-  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
-  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
-  "anchor": {
-    "published_native5_mean_best_f1": 0.653,
-    "published_seeds": {"42": 0.627, "43": 0.653},
-    "floor_mean": 0.541,
-    "margin": 0.112,
-    "per_segment": {"w035": 0.679, "w039": 0.585, "w040": 0.652, "w041": 0.703, "w044": 0.646},
-    "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
-    "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+ "locked_before": "any provisioning, download, or data contact",
+ "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 67bb8c77242acb810770da4ce7e7e51cb88fbdb5)",
+ "seed": 20260902,
+ "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
+ "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
+ "anchor": {
+  "published_native5_mean_best_f1": 0.653,
+  "published_seeds": {
+   "42": 0.627,
+   "43": 0.653
   },
-  "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
-  "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
-  "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
-  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued"
+  "floor_mean": 0.541,
+  "margin": 0.112,
+  "per_segment": {
+   "w035": 0.679,
+   "w039": 0.585,
+   "w040": 0.652,
+   "w041": 0.703,
+   "w044": 0.646
+  },
+  "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
+  "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+ },
+ "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
+ "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
+ "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
+ "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued",
+ "arms_1_2": {
+  "locked": "2026-09-03 before any arm-1/2 pod; arm-0 results (seeds 42/43: best native-5 F1 0.627 @ 20k / 0.631 @ 30k, mean AUC fwd 0.7459 / 0.7566, mean 0.7513, seed spread 0.011) were known when this was written",
+  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 67bb8c77 = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
+  "arm_1_input_degradation": {
+   "where": "every TRAINING flat crop (pooled 2.4->9.6 um representations), before robust_mad normalisation; never on validation crops or at inference",
+   "target_draw": "per crop: one scroll uniformly from the 14-scroll k2b index (trackD out/k2b_index), then one of its ROIs uniformly -> (bandwidth_cyc_px, snr_q025, dn_headroom)",
+   "steps": [
+    "Gaussian in-plane blur with sigma^2 = ln(P(q_t) / (2 (N + n_add))) / (4 pi^2 q_t^2) so the crop's radial PSD crosses 2x its floor at the target bandwidth q_t (0 if already below)",
+    "additive white Gaussian noise so that the residual-floor structural SNR at q = 0.25 cyc/px equals the target (two measure-and-add passes)",
+    "contrast scaling about the crop mean so the in-mask p99.5 - p0.5 DN spread equals the target headroom, then clip to [0, 255]"
+   ],
+   "estimator": "2-D per-crop transposition of the k2b definitions (Hanning radial PSD, 3x3 uniform high-pass residual floor from the 0.35-0.48 band); index targets were measured in 3-D with air (where found) or residual references, so residual-referenced SNR is a lower bound and the added noise is conservative",
+   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such"
+  },
+  "arm_2_input_whitening": {
+   "where": "every flat crop of every volume at training AND validation AND flat inference (fitted per eval volume from 64 of its blocks in infer.py)",
+   "filter": "in-plane radial gain g(q) = sqrt(PSD(q_ref) / PSD(q)) with q_ref = 0.02 cyc/px, PSD = median radial PSD of 64 random 128x128 in-plane windows of the volume's central slices; gain clipped to [1/8, 8]; DC and crop mean preserved; applied per slice by rFFT before robust_mad"
+  },
+  "decision_rule_frozen": {
+   "primary": "arm 1 OR arm 2 beats arm 0 by >= +0.05 mean native-5 forward AUC at the best-of-grid checkpoint, both seeds (arm-0 baseline 0.7513; the improvement must also exceed 2 x the arm-0 seed spread = 0.022) -> the arm's mean AUC over its two seeds must be >= 0.8013",
+   "secondary": "500p2a win1 (iso) >= 0.65 for the passing arm (A3 = 0.5211), measured afterwards with bench/p2a_v3 on the saved best checkpoints; not computed on these pods",
+   "reverse_direction": "reported (depth-order asymmetry must persist: reverse AUC near 0.5) but not a gate",
+   "KILLED": "otherwise; the augmentation code, configs, input statistics and held-out numbers ship either way",
+   "combination": "two pods per arm (SEEDS=42 / SEEDS=43), combined locally with combine_verdict.py's rule extended by the +0.05 AUC clause (arm_verdict.py)"
+  },
+  "cost_cap": "4 pods x <= 15 h guard; about $5 per pod on a community 5090"
+ }
 }
