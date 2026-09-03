@@ -6814,7 +6814,7 @@ else
   SYN_CKPT=$(ls "$RUNS/syn"/*.pth | head -1)
   ( cd /workspace/villa/vesuvius && uv run --no-sync --extra models python -m vesuvius.ink_detection.inference.infer "$DATA/syn/volumes/aligned9/pherc0814-46527.zarr" "$SYN_CKPT" "$OUT/syn_infer.tif" --direction forward --batch-size 8 > "$OUT/logs/syn_infer.log" 2>&1 ) || { tail -20 "$OUT/logs/syn_infer.log" | while read -r L; do say "syn_infer: $L"; done; die "synthetic flat inference FAILED (arm $ARM) -- logs/syn_infer.log"; }
   [ -s "$OUT/syn_infer.tif" ] || die "synthetic flat inference wrote no output"
-  say "trainer_check: synthetic flat inference OK (arm $ARM): $(du -h "$OUT/syn_infer.tif" | cut -f1) $(grep -c 'whitening fitted' "$OUT/logs/syn_infer.log") whitening-fit lines"
+  say "trainer_check: synthetic flat inference OK (arm $ARM): $(du -h "$OUT/syn_infer.tif" | cut -f1) $(grep -c 'whitening fitted' "$OUT/logs/syn_infer.log" || true) whitening-fit lines"
   say "trainer_check: 30 synthetic iterations OK; checkpoints: $(ls "$RUNS/syn" | grep -c '\.pth$'); log tail: $(tail -1 "$OUT/logs/train_syn.log" | cut -c1-160)"
   stage_close trainer_check
 fi
