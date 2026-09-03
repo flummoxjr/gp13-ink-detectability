@@ -109,6 +109,32 @@ else
   stage_close pool
 fi
 
+
+# ============================================================================
+# STAGE native_fetch -- the five held-out native crops + label planes.
+# ============================================================================
+if stage_done native_fetch; then
+  say "=== STAGE native_fetch already done, skipping ==="
+else
+  stage_open native_fetch
+  retry 2 pyrun "$SCRIPTS/natfetch.py" $NATIVE5 || die "native crop fetch failed"
+  stage_close native_fetch
+fi
+
+# ============================================================================
+# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
+# reported before any arm-1 training so the degradation's activity is known (prereg gate).
+# ============================================================================
+if stage_done measure; then
+  say "=== STAGE measure already done, skipping ==="
+else
+  stage_open measure
+  # A reporting stage must never kill a $5 run (arm-2 s42 pod 28nacbva6r9l8p died here 2026-09-03 on a
+  # zarr group vs array mismatch): log the failure, keep going; the traceback is kept in logs/measure.log.
+  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 > "$OUT/logs/measure.log" 2>&1 || { tail -12 "$OUT/logs/measure.log" | while read -r L; do say "measure: $L"; done; say "measure: FAILED (non-fatal) -- input_stats.json absent; see logs/measure.log"; }
+  stage_close measure
+fi
+
 # ============================================================================
 # STAGE config_gen -- khj1222's generator, --exclude-scroll 0139, per seed.
 # ============================================================================
@@ -120,17 +146,6 @@ else
     pyrun "$SCRIPTS/cfggen.py" loso "$SD" "$STEPS" "$SAVE_EVERY" || die "LOSO config generation failed for seed $SD"
   done
   stage_close config_gen
-fi
-
-# ============================================================================
-# STAGE native_fetch -- the five held-out native crops + label planes.
-# ============================================================================
-if stage_done native_fetch; then
-  say "=== STAGE native_fetch already done, skipping ==="
-else
-  stage_open native_fetch
-  retry 2 pyrun "$SCRIPTS/natfetch.py" $NATIVE5 || die "native crop fetch failed"
-  stage_close native_fetch
 fi
 
 # ============================================================================
@@ -154,17 +169,6 @@ else
 fi
 
 # ============================================================================
-# ============================================================================
-# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
-# reported before any arm-1 training so the degradation's activity is known (prereg gate).
-# ============================================================================
-if stage_done measure; then
-  say "=== STAGE measure already done, skipping ==="
-else
-  stage_open measure
-  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 || die "input statistics failed"
-  stage_close measure
-fi
 
 # STAGES train_s<seed> / eval_s<seed>
 # ============================================================================

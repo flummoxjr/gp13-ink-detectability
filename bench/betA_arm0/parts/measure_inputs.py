@@ -17,6 +17,21 @@ import curvelib as cl
 from vesuvius.ink_detection.data.degradation import measure_2d, sample_inplane_windows
 
 
+def open_level0(path):
+    """Pooled aligned9 volumes and native crops are zarr GROUPS with the full-resolution array at "0"
+    (prepare_9um_isotropic_input: group.create_array("0")); a bare array is accepted too."""
+    g = zarr.open(path, mode="r")
+    if hasattr(g, "shape"):
+        return g
+    for key in ("0", "s0", "level0"):
+        if key in g:
+            return g[key]
+    keys = sorted(k for k in g.array_keys()) if hasattr(g, "array_keys") else []
+    if not keys:
+        raise ValueError(f"no array in zarr group {path}")
+    return g[keys[0]]
+
+
 def stats_for(volume, name, n, size, rng):
     wins = sample_inplane_windows(volume, n, size, rng)
     rows = []
@@ -41,16 +56,19 @@ def main():
     size = int(sys.argv[5]) if len(sys.argv) > 5 else 128
     rng = np.random.default_rng(20260903)
     out = dict(estimator="2-D per-window, residual floor (conservative); index targets are 3-D air/residual", window=size, n_per_volume=n, pooled={}, native={})
-    for z in sorted(glob.glob(os.path.join(aligned, "*.zarr"))):
-        name = os.path.basename(z)[:-5]
-        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["pooled"][name] = st
-        if st.get("n"):
-            cl.say(f"INPUTSTAT pooled {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} [{st['snr_q025_med_iqr'][1]:.1f},{st['snr_q025_med_iqr'][2]:.1f}] bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
-    for z in sorted(glob.glob(os.path.join(native, "*.zarr"))):
-        name = os.path.basename(z)[:-5]
-        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["native"][name] = st
-        if st.get("n"):
-            cl.say(f"INPUTSTAT native {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+    for kind, root in (("pooled", aligned), ("native", native)):
+        for z in sorted(glob.glob(os.path.join(root, "*.zarr"))):
+            name = os.path.basename(z)[:-5]
+            try:
+                st = stats_for(open_level0(z), name, n, size, rng)
+            except Exception as e:  # one bad store must not sink a reporting stage
+                st = dict(name=name, n=0, error=f"{type(e).__name__}: {e}"[:200])
+            out[kind][name] = st
+            if st.get("n"):
+                cl.say(f"INPUTSTAT {kind} {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} [{st['snr_q025_med_iqr'][1]:.1f},{st['snr_q025_med_iqr'][2]:.1f}] "
+                       f"bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+            else:
+                cl.say(f"INPUTSTAT {kind} {name}: FAILED {st.get('error', 'no windows')}")
     idx = json.load(open(index_path))
     tgt_snr = sorted(r["snr_q025"] for rec in idx.values() for r in rec["rois"])
     tgt_bw = sorted(r["bandwidth_cyc_px"] for rec in idx.values() for r in rec["rois"])

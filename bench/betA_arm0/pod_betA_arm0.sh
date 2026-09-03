@@ -119,7 +119,7 @@ trap cleanup EXIT
 cat > "$OUT/prereg.json" <<'PREREG_JSON'
 {
  "locked_before": "any provisioning, download, or data contact",
- "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 67bb8c77242acb810770da4ce7e7e51cb88fbdb5)",
+ "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 4516beddbf4309517a66715eb579fad9c332cf81)",
  "seed": 20260902,
  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
@@ -147,7 +147,7 @@ cat > "$OUT/prereg.json" <<'PREREG_JSON'
  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued",
  "arms_1_2": {
   "locked": "2026-09-03 before any arm-1/2 pod; arm-0 results (seeds 42/43: best native-5 F1 0.627 @ 20k / 0.631 @ 30k, mean AUC fwd 0.7459 / 0.7566, mean 0.7513, seed spread 0.011) were known when this was written",
-  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 67bb8c77 = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
+  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 4516bedd = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
   "arm_1_input_degradation": {
    "where": "every TRAINING flat crop (pooled 2.4->9.6 um representations), before robust_mad normalisation; never on validation crops or at inference",
    "target_draw": "per crop: one scroll uniformly from the 14-scroll k2b index (trackD out/k2b_index), then one of its ROIs uniformly -> (bandwidth_cyc_px, snr_q025, dn_headroom)",
@@ -157,7 +157,8 @@ cat > "$OUT/prereg.json" <<'PREREG_JSON'
     "contrast scaling about the crop mean so the in-mask p99.5 - p0.5 DN spread equals the target headroom, then clip to [0, 255]"
    ],
    "estimator": "2-D per-crop transposition of the k2b definitions (Hanning radial PSD, 3x3 uniform high-pass residual floor from the 0.35-0.48 band); index targets were measured in 3-D with air (where found) or residual references, so residual-referenced SNR is a lower bound and the added noise is conservative",
-   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such"
+   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such Activity is judged AFTER calibration (pooled 2-D stats vs scaled targets).",
+   "target_calibration": "AMENDED 2026-09-03 23:45 UTC before any arm-1 training (the first four arm pods died in the measure stage on a zarr group/array bug; their input statistics never ran): the index targets were measured on 3-D ROIs, the per-crop estimator is 2-D; on the native PHerc0139 crop the 2-D estimator reads snr_q025 ~51 vs the index's 115.5 (bandwidth 0.369 vs 0.386, headroom 167 vs 151). Each arm-1 pod therefore multiplies every drawn (bandwidth, snr, headroom) target by target_scale = median over the five native-0139 crops of the 2-D value / the index's PHerc0139 median (computed in the measure stage, which now runs BEFORE config generation, and recorded in the config under input_degradation.calibration). If input_stats.json is missing the scale is (1,1,1) and the run is flagged uncalibrated."
   },
   "arm_2_input_whitening": {
    "where": "every flat crop of every volume at training AND validation AND flat inference (fitted per eval volume from 64 of its blocks in infer.py)",
@@ -5496,7 +5497,21 @@ def arm_keys():
     1 -> input_degradation from the k2b index, 2 -> input_whitening."""
     if ARM == 1:
         idx = json.load(open(os.path.join(S, "k2b_index.json")))
-        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0,
+        # Calibrate the 3-D index targets to the 2-D per-crop estimator on the one scroll present in both:
+        # PHerc0139 (native-5 eval crops measured by the measure stage vs the index's PHerc0139 medians).
+        scale, cal = (1.0, 1.0, 1.0), {"status": "uncalibrated (input_stats.json or PHerc0139 missing)"}
+        sp = os.path.join(cl.RESULTS, "input_stats.json")
+        if os.path.exists(sp) and "PHerc0139" in idx:
+            st = json.load(open(sp)); nat = [v for v in st.get("native", {}).values() if v.get("n")]
+            if nat:
+                med = lambda key: float(np.median([v[key][0] for v in nat]))
+                ref = idx["PHerc0139"]
+                scale = (med("bandwidth_med_iqr") / ref["bandwidth_med_iqr"][0], med("snr_q025_med_iqr") / ref["snr_q025_med_iqr"][0],
+                         med("dn_headroom_med_iqr") / ref["dn_headroom_med_iqr"][0])
+                cal = {"status": "calibrated on PHerc0139 native-5 crops (2-D) vs index PHerc0139 (3-D)", "native_2d": [med("bandwidth_med_iqr"), med("snr_q025_med_iqr"), med("dn_headroom_med_iqr")],
+                       "index_3d": [ref["bandwidth_med_iqr"][0], ref["snr_q025_med_iqr"][0], ref["dn_headroom_med_iqr"][0]], "n_native_stores": len(nat)}
+        cl.say(f"CFG arm 1 target_scale (bw, snr, headroom) = {tuple(round(x, 4) for x in scale)} -- {cal['status']}")
+        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0, "target_scale": list(scale), "calibration": cal,
                                       "apply_blur": True, "apply_noise": True, "apply_headroom": True, "seed": 1}}
     if ARM == 2:
         return {"input_whitening": {"enabled": True, "n_samples": 64, "sample_size": 128, "q_ref": 0.02, "max_gain": 8.0, "seed": 2}}
@@ -5766,6 +5781,21 @@ import curvelib as cl
 from vesuvius.ink_detection.data.degradation import measure_2d, sample_inplane_windows
 
 
+def open_level0(path):
+    """Pooled aligned9 volumes and native crops are zarr GROUPS with the full-resolution array at "0"
+    (prepare_9um_isotropic_input: group.create_array("0")); a bare array is accepted too."""
+    g = zarr.open(path, mode="r")
+    if hasattr(g, "shape"):
+        return g
+    for key in ("0", "s0", "level0"):
+        if key in g:
+            return g[key]
+    keys = sorted(k for k in g.array_keys()) if hasattr(g, "array_keys") else []
+    if not keys:
+        raise ValueError(f"no array in zarr group {path}")
+    return g[keys[0]]
+
+
 def stats_for(volume, name, n, size, rng):
     wins = sample_inplane_windows(volume, n, size, rng)
     rows = []
@@ -5790,16 +5820,19 @@ def main():
     size = int(sys.argv[5]) if len(sys.argv) > 5 else 128
     rng = np.random.default_rng(20260903)
     out = dict(estimator="2-D per-window, residual floor (conservative); index targets are 3-D air/residual", window=size, n_per_volume=n, pooled={}, native={})
-    for z in sorted(glob.glob(os.path.join(aligned, "*.zarr"))):
-        name = os.path.basename(z)[:-5]
-        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["pooled"][name] = st
-        if st.get("n"):
-            cl.say(f"INPUTSTAT pooled {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} [{st['snr_q025_med_iqr'][1]:.1f},{st['snr_q025_med_iqr'][2]:.1f}] bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
-    for z in sorted(glob.glob(os.path.join(native, "*.zarr"))):
-        name = os.path.basename(z)[:-5]
-        st = stats_for(zarr.open(z, mode="r"), name, n, size, rng); out["native"][name] = st
-        if st.get("n"):
-            cl.say(f"INPUTSTAT native {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+    for kind, root in (("pooled", aligned), ("native", native)):
+        for z in sorted(glob.glob(os.path.join(root, "*.zarr"))):
+            name = os.path.basename(z)[:-5]
+            try:
+                st = stats_for(open_level0(z), name, n, size, rng)
+            except Exception as e:  # one bad store must not sink a reporting stage
+                st = dict(name=name, n=0, error=f"{type(e).__name__}: {e}"[:200])
+            out[kind][name] = st
+            if st.get("n"):
+                cl.say(f"INPUTSTAT {kind} {name}: snr25 {st['snr_q025_med_iqr'][0]:.1f} [{st['snr_q025_med_iqr'][1]:.1f},{st['snr_q025_med_iqr'][2]:.1f}] "
+                       f"bw {st['bandwidth_med_iqr'][0]:.3f} head {st['dn_headroom_med_iqr'][0]:.0f} (n={st['n']})")
+            else:
+                cl.say(f"INPUTSTAT {kind} {name}: FAILED {st.get('error', 'no windows')}")
     idx = json.load(open(index_path))
     tgt_snr = sorted(r["snr_q025"] for rec in idx.values() for r in rec["rois"])
     tgt_bw = sorted(r["bandwidth_cyc_px"] for rec in idx.values() for r in rec["rois"])
@@ -6878,6 +6911,32 @@ else
   stage_close pool
 fi
 
+
+# ============================================================================
+# STAGE native_fetch -- the five held-out native crops + label planes.
+# ============================================================================
+if stage_done native_fetch; then
+  say "=== STAGE native_fetch already done, skipping ==="
+else
+  stage_open native_fetch
+  retry 2 pyrun "$SCRIPTS/natfetch.py" $NATIVE5 || die "native crop fetch failed"
+  stage_close native_fetch
+fi
+
+# ============================================================================
+# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
+# reported before any arm-1 training so the degradation's activity is known (prereg gate).
+# ============================================================================
+if stage_done measure; then
+  say "=== STAGE measure already done, skipping ==="
+else
+  stage_open measure
+  # A reporting stage must never kill a $5 run (arm-2 s42 pod 28nacbva6r9l8p died here 2026-09-03 on a
+  # zarr group vs array mismatch): log the failure, keep going; the traceback is kept in logs/measure.log.
+  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 > "$OUT/logs/measure.log" 2>&1 || { tail -12 "$OUT/logs/measure.log" | while read -r L; do say "measure: $L"; done; say "measure: FAILED (non-fatal) -- input_stats.json absent; see logs/measure.log"; }
+  stage_close measure
+fi
+
 # ============================================================================
 # STAGE config_gen -- khj1222's generator, --exclude-scroll 0139, per seed.
 # ============================================================================
@@ -6889,17 +6948,6 @@ else
     pyrun "$SCRIPTS/cfggen.py" loso "$SD" "$STEPS" "$SAVE_EVERY" || die "LOSO config generation failed for seed $SD"
   done
   stage_close config_gen
-fi
-
-# ============================================================================
-# STAGE native_fetch -- the five held-out native crops + label planes.
-# ============================================================================
-if stage_done native_fetch; then
-  say "=== STAGE native_fetch already done, skipping ==="
-else
-  stage_open native_fetch
-  retry 2 pyrun "$SCRIPTS/natfetch.py" $NATIVE5 || die "native crop fetch failed"
-  stage_close native_fetch
 fi
 
 # ============================================================================
@@ -6923,17 +6971,6 @@ else
 fi
 
 # ============================================================================
-# ============================================================================
-# STAGE measure -- input statistics with the arm-1 estimator (pooled vs native vs index targets);
-# reported before any arm-1 training so the degradation's activity is known (prereg gate).
-# ============================================================================
-if stage_done measure; then
-  say "=== STAGE measure already done, skipping ==="
-else
-  stage_open measure
-  pyrun "$SCRIPTS/measure_inputs.py" "$VOLS/aligned9" "$NATIVE" "$SCRIPTS/k2b_index.json" 64 128 || die "input statistics failed"
-  stage_close measure
-fi
 
 # STAGES train_s<seed> / eval_s<seed>
 # ============================================================================

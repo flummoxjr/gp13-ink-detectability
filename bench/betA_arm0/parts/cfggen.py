@@ -20,7 +20,21 @@ def arm_keys():
     1 -> input_degradation from the k2b index, 2 -> input_whitening."""
     if ARM == 1:
         idx = json.load(open(os.path.join(S, "k2b_index.json")))
-        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0,
+        # Calibrate the 3-D index targets to the 2-D per-crop estimator on the one scroll present in both:
+        # PHerc0139 (native-5 eval crops measured by the measure stage vs the index's PHerc0139 medians).
+        scale, cal = (1.0, 1.0, 1.0), {"status": "uncalibrated (input_stats.json or PHerc0139 missing)"}
+        sp = os.path.join(cl.RESULTS, "input_stats.json")
+        if os.path.exists(sp) and "PHerc0139" in idx:
+            st = json.load(open(sp)); nat = [v for v in st.get("native", {}).values() if v.get("n")]
+            if nat:
+                med = lambda key: float(np.median([v[key][0] for v in nat]))
+                ref = idx["PHerc0139"]
+                scale = (med("bandwidth_med_iqr") / ref["bandwidth_med_iqr"][0], med("snr_q025_med_iqr") / ref["snr_q025_med_iqr"][0],
+                         med("dn_headroom_med_iqr") / ref["dn_headroom_med_iqr"][0])
+                cal = {"status": "calibrated on PHerc0139 native-5 crops (2-D) vs index PHerc0139 (3-D)", "native_2d": [med("bandwidth_med_iqr"), med("snr_q025_med_iqr"), med("dn_headroom_med_iqr")],
+                       "index_3d": [ref["bandwidth_med_iqr"][0], ref["snr_q025_med_iqr"][0], ref["dn_headroom_med_iqr"][0]], "n_native_stores": len(nat)}
+        cl.say(f"CFG arm 1 target_scale (bw, snr, headroom) = {tuple(round(x, 4) for x in scale)} -- {cal['status']}")
+        return {"input_degradation": {"enabled": True, "index": idx, "probability": 1.0, "target_scale": list(scale), "calibration": cal,
                                       "apply_blur": True, "apply_noise": True, "apply_headroom": True, "seed": 1}}
     if ARM == 2:
         return {"input_whitening": {"enabled": True, "n_samples": 64, "sample_size": 128, "q_ref": 0.02, "max_gain": 8.0, "seed": 2}}

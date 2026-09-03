@@ -24,10 +24,12 @@ held-out ground truth in every arm.
 | arm | training input | code |
 |---|---|---|
 | 0 | recipe unchanged | villa-pin `master` @ a3f2c29 |
-| 1 | `input_degradation`: every training flat crop degraded, per crop, to a target drawn from the 14-scroll k2b index — blur to the target bandwidth, white noise to the target SNR at q = 0.25 cyc/px, contrast scaled to the target DN headroom (definitions in `degradation.py`; 2-D transposition of `k2b_detectability_index.py`) | branch `betA-arms` @ 67bb8c77 |
-| 2 | `input_whitening`: every crop of every volume filtered by g(q) = √(PSD(q_ref)/PSD(q)) from that volume's own in-plane radial PSD (64 windows, q_ref 0.02, gain clipped to [1/8, 8]) at train, validation and inference | branch `betA-arms` @ 67bb8c77 |
+| 1 | `input_degradation`: every training flat crop degraded, per crop, to a target drawn from the 14-scroll k2b index — blur to the target bandwidth, white noise to the target SNR at q = 0.25 cyc/px, contrast scaled to the target DN headroom (definitions in `degradation.py`; 2-D transposition of `k2b_detectability_index.py`) | branch `betA-arms` @ 4516bedd |
+| 2 | `input_whitening`: every crop of every volume filtered by g(q) = √(PSD(q_ref)/PSD(q)) from that volume's own in-plane radial PSD (64 windows, q_ref 0.02, gain clipped to [1/8, 8]) at train, validation and inference | branch `betA-arms` @ 4516bedd |
 
 Everything else is byte-identical: absent config keys leave the arm-0 code path untouched.
+
+**Target calibration (amended 2026-09-03 23:45 UTC, before any arm-1 training).** The index targets are 3-D measurements; the per-crop estimator is 2-D. On the native PHerc0139 crops the 2-D estimator reads SNR ≈ 51 where the index says 115.5 (bandwidth 0.369 vs 0.386, headroom 167 vs 151), so uncalibrated targets would under-degrade by ~2×. Each arm-1 pod multiplies every drawn target by `target_scale` = (2-D median over the five native-0139 crops) / (index PHerc0139 median), per quantity, computed in the `measure` stage before the config is generated and stored in the config. The first four arm pods (21:42–23:40 UTC) never trained: they died in the measure stage on a zarr group/array bug; no arm-1 or arm-2 result existed when this amendment was written.
 
 **Input-statistics gate (new, pre-registered here).** Each pod runs a `measure` stage before training that
 measures the pooled sources and the native crops with the arm-1 estimator and reports the fraction of pooled

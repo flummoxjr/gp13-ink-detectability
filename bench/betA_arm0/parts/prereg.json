@@ -1,6 +1,6 @@
 {
  "locked_before": "any provisioning, download, or data contact",
- "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 67bb8c77242acb810770da4ce7e7e51cb88fbdb5)",
+ "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict | ARMS 1/2 v1 (2026-09-03 21:50 UTC, after the arm-0 anchor PASS): same recipe, seeds, schedule and evaluation; arm 1 adds input_degradation, arm 2 adds input_whitening (fork branch betA-arms @ 4516beddbf4309517a66715eb579fad9c332cf81)",
  "seed": 20260902,
  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
@@ -28,7 +28,7 @@
  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued",
  "arms_1_2": {
   "locked": "2026-09-03 before any arm-1/2 pod; arm-0 results (seeds 42/43: best native-5 F1 0.627 @ 20k / 0.631 @ 30k, mean AUC fwd 0.7459 / 0.7566, mean 0.7513, seed spread 0.011) were known when this was written",
-  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 67bb8c77 = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
+  "code": "flummoxjr/villa-pin-37e300d3 branch betA-arms @ 4516bedd = arm-0 snapshot a3f2c29 + vesuvius/ink_detection/data/degradation.py + config/dataset/infer hooks; absent keys keep arm 0 byte-identical",
   "arm_1_input_degradation": {
    "where": "every TRAINING flat crop (pooled 2.4->9.6 um representations), before robust_mad normalisation; never on validation crops or at inference",
    "target_draw": "per crop: one scroll uniformly from the 14-scroll k2b index (trackD out/k2b_index), then one of its ROIs uniformly -> (bandwidth_cyc_px, snr_q025, dn_headroom)",
@@ -38,7 +38,8 @@
     "contrast scaling about the crop mean so the in-mask p99.5 - p0.5 DN spread equals the target headroom, then clip to [0, 255]"
    ],
    "estimator": "2-D per-crop transposition of the k2b definitions (Hanning radial PSD, 3x3 uniform high-pass residual floor from the 0.35-0.48 band); index targets were measured in 3-D with air (where found) or residual references, so residual-referenced SNR is a lower bound and the added noise is conservative",
-   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such"
+   "activity_gate": "stage `measure` (results/input_stats.json) reports the pooled sources' snr_q025 / bandwidth / headroom with the same estimator BEFORE training; the fraction of pooled stores whose SNR (bandwidth) exceeds the index-target median is the fraction of crops where the noise (blur) step can act. If both fractions are 0 the arm-1 degradation reduces to the headroom match and the result is read as such Activity is judged AFTER calibration (pooled 2-D stats vs scaled targets).",
+   "target_calibration": "AMENDED 2026-09-03 23:45 UTC before any arm-1 training (the first four arm pods died in the measure stage on a zarr group/array bug; their input statistics never ran): the index targets were measured on 3-D ROIs, the per-crop estimator is 2-D; on the native PHerc0139 crop the 2-D estimator reads snr_q025 ~51 vs the index's 115.5 (bandwidth 0.369 vs 0.386, headroom 167 vs 151). Each arm-1 pod therefore multiplies every drawn (bandwidth, snr, headroom) target by target_scale = median over the five native-0139 crops of the 2-D value / the index's PHerc0139 median (computed in the measure stage, which now runs BEFORE config generation, and recorded in the config under input_degradation.calibration). If input_stats.json is missing the scale is (1,1,1) and the run is flagged uncalibrated."
   },
   "arm_2_input_whitening": {
    "where": "every flat crop of every volume at training AND validation AND flat inference (fitted per eval volume from 64 of its blocks in infer.py)",
