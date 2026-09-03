@@ -56,6 +56,7 @@ def main():
     ap.add_argument("--vcpu", type=int, default=16, help="vCPU count for a CPU-only pod (2-32)")
     ap.add_argument("--fetch-dirs", default="", help="passed to pod_guard: served dirs to mirror before terminating")
     ap.add_argument("--fetch-files", default="", help="passed to pod_guard: served files to save before terminating (also on FAILED/deadline)")
+    ap.add_argument("--allow-concurrent", action="store_true", help="permit a launch while another pod is running (default: refuse, to prevent accidental double-launches)")
     ap.add_argument("--dry", action="store_true")
     a = ap.parse_args()
     attempts = ATTEMPTS
@@ -67,7 +68,7 @@ def main():
     me = gql("query { myself { clientBalance currentSpendPerHr pods { id name } } }")["myself"]
     print(f"balance ${me['clientBalance']:.2f} burn ${me['currentSpendPerHr']}/hr pods={me['pods']}")
     assert me["clientBalance"] > a.min_balance, "balance below floor"
-    assert not me["pods"], "another pod is running; refusing to double-launch"
+    assert a.allow_concurrent or not me["pods"], "another pod is running; refusing to double-launch (pass --allow-concurrent)"
     base = {"name": a.name, "imageName": a.image, "gpuCount": 1, "containerDiskInGb": a.disk,
             "volumeInGb": 0, "ports": ["8000/http", "22/tcp"], "supportPublicIp": True,
             "env": {"PYTHONUNBUFFERED": "1"}, "dockerStartCmd": ["bash", "-c", boot]}
