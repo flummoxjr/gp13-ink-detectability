@@ -27,10 +27,11 @@ def main():
     for f in ["ctl.json", "native_crops.json", "eval.json"]:
         if not os.path.exists(os.path.join(cl.RESULTS, f)):
             missing.append("results/" + f)
+    # 2026-09-03: hard-coded "train_s42"/"eval_s42" refused a SEEDS=43-only full run after 7 h of
+    # work (pod nxcv6ufppr8t6m); the required train/eval stages are exactly those of SEEDS.
     stages = ["provision", "ckpt", "trainer_check", "labels_fetch", "sv_fetch", "pool", "config_gen",
-              "native_fetch", "ctl", "train_s42", "eval_s42", "ref"]
-    if not SMOKE:
-        stages += [f"train_s{s}" for s in SEEDS] + [f"eval_s{s}" for s in SEEDS]
+              "native_fetch", "ctl", "ref"]
+    stages += [f"train_s{s}" for s in SEEDS] + [f"eval_s{s}" for s in SEEDS]
     for st in dict.fromkeys(stages):
         if not os.path.exists(os.path.join(VAR, "done_" + st)):
             missing.append("stage:" + st)

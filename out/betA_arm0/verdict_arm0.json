@@ -1,0 +1,71 @@
+{
+ "best_of_both": 0.6307,
+ "mean_margin": 0.0883,
+ "peak_rule": {
+  "42": {
+   "ok": true,
+   "peak_step": 20000
+  },
+  "43": {
+   "ok": true,
+   "peak_step": 30000
+  }
+ },
+ "PASS": true,
+ "rule": "best-of-both >= 0.603 AND mean margin >= +0.06 AND peak at 10-30k with 75k below (prereg section 4, corrected 2026-09-02)",
+ "per_seed": {
+  "42": {
+   "best_tag": "s42_20000",
+   "best_f1": 0.627002376794554,
+   "margin": 0.08652117742323966,
+   "auc": 0.7458908563515818,
+   "trajectory": {
+    "s42_5000": 0.5857280260793928,
+    "s42_10000": 0.6202194143746971,
+    "s42_15000": 0.626916300408392,
+    "s42_20000": 0.627002376794554,
+    "s42_25000": 0.6119581298844742,
+    "s42_30000": 0.6217309883648026,
+    "s42_35000": 0.6042136023536734,
+    "s42_40000": 0.6102815155157734,
+    "s42_45000": 0.6010964575428128,
+    "s42_50000": 0.5960162835822969,
+    "s42_55000": 0.5976863290562953,
+    "s42_60000": 0.5877473365301515,
+    "s42_65000": 0.5846651574560988,
+    "s42_70000": 0.5859786120811383,
+    "s42_75000": 0.5845137774957443
+   },
+   "it_per_s": 3.25,
+   "source": "out/betA_arm0/s42/results_s42.json",
+   "prereg_sha": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict"
+  },
+  "43": {
+   "best_tag": "s43_30000",
+   "best_f1": 0.63065804932549,
+   "margin": 0.0901768499541757,
+   "auc": 0.7565748918253916,
+   "trajectory": {
+    "s43_5000": 0.562950051805461,
+    "s43_10000": 0.6013289674095745,
+    "s43_15000": 0.6251256049498486,
+    "s43_20000": 0.6236894447866219,
+    "s43_25000": 0.621216186232805,
+    "s43_30000": 0.63065804932549,
+    "s43_35000": 0.5966544191294375,
+    "s43_40000": 0.5952125737631576,
+    "s43_45000": 0.5955905675140416,
+    "s43_50000": 0.6031689805944079,
+    "s43_55000": 0.6125138646295485,
+    "s43_60000": 0.596643368304938,
+    "s43_65000": 0.6174820336111688,
+    "s43_70000": 0.6039277167082775,
+    "s43_75000": 0.602998517322355
+   },
+   "it_per_s": 4.51,
+   "source": "out/betA_arm0/s43/results_s43.json",
+   "prereg_sha": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict"
+  }
+ },
+ "anchor": "khj1222 native-5 F1 0.653 (floor 0.541)"
+}

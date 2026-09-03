@@ -1,0 +1,20 @@
+{
+  "locked_before": "any provisioning, download, or data contact",
+  "version": "Bet A arm 0 v1 -- leave-PHerc0139-out retrain of the published ink_9um recipe (aligned21_hybrid_3d2d + aligned21_fixed_scroll_prior, villa PR #1608 generator), 2 seeds, scored on the five held-out native PHerc0139 segments; SMOKE_ONLY runs are pipeline validation only and carry no verdict",
+  "seed": 20260902,
+  "prereg_document": "trackD/PREREG_BET_A_DRAFT.md sec.4 as corrected 2026-09-02 from bench/betA_arm0/PLAN.md sec.8-9",
+  "arm": "0 -- recipe unchanged; the 14 PHerc0139 representations (9 aligned + 5 native) removed from training; quotas renormalised {1667: 40, Paris4: 20, 0814: 4} of batch 64; 78,125 iterations; checkpoints every 5,000",
+  "anchor": {
+    "published_native5_mean_best_f1": 0.653,
+    "published_seeds": {"42": 0.627, "43": 0.653},
+    "floor_mean": 0.541,
+    "margin": 0.112,
+    "per_segment": {"w035": 0.679, "w039": 0.585, "w040": 0.652, "w041": 0.703, "w044": 0.646},
+    "gate": "PASS iff best-of-both-seeds native-5 mean best-F1 >= 0.603 AND mean-of-seeds margin over the same floors >= +0.06 AND the trajectory peaks at 10-30k with 75k below the peak on both seeds; else the recipe reproduction is wrong and arm comparisons are void",
+    "scorer": "khj1222 replica: prediction = infer uint8 TIFF (forward, centred 17-of-28 window); pixel positive iff score >= t, t swept 0..255 from 256-bin histograms over the supervision-mask region; best F1; floor = 2p/(1+p)"
+  },
+  "benchmark": "pixel AUC (tie-corrected, native grid, pos = ink & sup, neg = sup & ~ink) both directions on the best-of-grid checkpoint per seed; the arm-0 AUC and its seed spread become the baseline and noise floor for sec.5 of the prereg",
+  "harness_controls": "the p2a_v3 CTL arms with the RELEASED seed42 step-075000 checkpoint on the w035 crop: native forward >= 0.95 and reverse <= 0.80 (fatal), scale-fault x1.9504 and x0.5 reported",
+  "data_gates": "sha256 of every label-store metadata file and every source-volume .zarray/.zattrs against the embedded manifest; sparse level-2 chunk plan within [0.5x, 1.25x] of the manifest count per representation; absent-chunk fraction < 60% per store; pooled shape == label shape; 20 random supervised patches per representation non-zero after pooling; generator quotas exactly {1667: 40, Paris4: 20, 0814: 4} with 15 kept / 14 held out",
+  "smoke": "SMOKE_ONLY=1: seed 42 only, num_iterations 2000, save_every 1000; the 2,000-step checkpoint and the released checkpoint are scored on the five crops; no gate verdict is issued"
+}
