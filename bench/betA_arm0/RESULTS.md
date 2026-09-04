@@ -93,3 +93,138 @@ applies.
 Smoke launches 1–8 ≈ $6 (host/egress/pipeline faults, all fixed in the script and launcher); full run ≈ $4.7 (seed 42)
 + $3.4 (seed 43). Wall-clock from first smoke to verdict: 20 h. For arms 1/2: same script, ~$4–5 per seed on a
 community 5090 host from the good-host list; budget setup 2 h + train 5–7 h + evals 0.6 h; guard 13–15 h.
+
+# Bet A arms 1 and 2 (input-noise-matched training) — FULL RUN results and verdict (2026-09-04)
+
+Pre-registration: `trackD/PREREG_BET_A.md` (final v1, committed 9afc544 before launch; §2 calibration amendment
+committed before any arm-1 training). Code: fork `flummoxjr/villa-pin-37e300d3` branch `betA-arms`
+(arm-1 s42/s43 and arm-2 s43 at 4516bedd; the arm-2 s42 relaunch at 45d5e03 = 4516bedd + the trainer skips a
+non-finite-loss step instead of raising; the arm transforms are byte-identical across the two shas). Pod script v2e
+(`gist_raw_url.txt`, sha fa2c3fc09ae17cdc). Four pods, one seed each: arm-1 s42 `s3mtrgwu2fwnsq` (5090 community),
+arm-1 s43 `3zjbtmtn27dc9u` (5090 community, slow host), arm-2 s42 `8r68lpxrgcev1n` (A6000 secure), arm-2 s43
+`2kfrgrqpgxv2om` (A6000 secure). Results: `out/betA_arm0/arm{1,2}_s{42,43}/results_*.json` (+ pod status logs);
+verdict `out/betA_arm0/verdict_arms.json` from `arm_verdict.py`.
+
+## Verdict: KILLED (frozen rule, prereg §5)
+
+| arm | seed 42 best | seed 43 best | two-seed mean fwd AUC | gain vs arm 0 (0.7513) | threshold | |
+|---|---|---|---|---|---|---|
+| 0 (baseline) | 0.627 / 0.746 @ 20k | 0.631 / 0.757 @ 30k | 0.7513 | — | — | comparator |
+| 1 (per-crop degradation, calibrated) | 0.627 / 0.751 @ 10k | 0.641 / 0.768 @ 30k | **0.7592** | **+0.008** | ≥ +0.05 (AUC ≥ 0.8013) | ✗ |
+| 2 (per-volume PSD whitening, train + test) | 0.592 / 0.711 @ 20k | 0.587 / 0.698 @ 25k | **0.7045** | **−0.047** | ≥ +0.05 | ✗ |
+
+(cells: native-5 mean best-F1 / mean forward pixel AUC at the best-of-grid checkpoint; best-of-grid chosen by
+forward AUC, as registered.) Neither arm reaches the primary clause, so the 500p2a secondary clause is not
+triggered. Reverse-direction AUC at every best checkpoint stays at chance (0.50–0.54), so no depth-order flag.
+Arm 1's +0.008 is inside the arm-0 seed spread (0.011) and comes entirely from seed 43 (+0.011 over arm-0 s43; seed 42
+is −0.001). Arm 2 is worse than the baseline on both seeds by 0.035–0.059 AUC and never leaves the 0.56–0.59 F1 band.
+
+Positive controls on all four pods, unchanged from arm 0: released `ink_9um` on the native crops forward 0.9991 /
+reverse 0.512, ×1.95 scale fault 0.749 (FAULT_REPRODUCED), released reference native-5 F1 0.980 / AUC 0.9988.
+The harness is the same one that produced the arm-0 anchor PASS, so a +0.05 effect would have been seen.
+
+## Trajectories (native-5 mean best-F1 / mean forward AUC per checkpoint)
+
+| step | arm 0 s42 | arm 0 s43 | arm 1 s42 | arm 1 s43 | arm 2 s42 | arm 2 s43 |
+|---|---|---|---|---|---|---|
+| 5k | 0.586 / 0.700 | 0.563 / 0.651 | 0.588 / 0.698 | 0.553 / 0.625 | 0.584 / 0.697 | 0.541 / 0.568 |
+| 10k | 0.620 / 0.740 | 0.601 / 0.722 | **0.627 / 0.751** | 0.592 / 0.709 | 0.577 / 0.689 | 0.556 / 0.656 |
+| 15k | 0.627 / 0.751 | 0.625 / 0.751 | 0.616 / 0.737 | 0.623 / 0.747 | 0.583 / 0.692 | 0.561 / 0.666 |
+| 20k | **0.627 / 0.746** | 0.624 / 0.750 | 0.612 / 0.733 | 0.624 / 0.748 | **0.592 / 0.711** | 0.580 / 0.686 |
+| 25k | 0.612 / 0.738 | 0.621 / 0.746 | 0.604 / 0.723 | 0.630 / 0.756 | 0.591 / 0.709 | **0.587 / 0.698** |
+| 30k | 0.622 / 0.747 | **0.631 / 0.757** | 0.605 / 0.731 | **0.641 / 0.768** | 0.574 / 0.684 | 0.576 / 0.678 |
+| 35k | 0.604 / 0.727 | 0.597 / 0.715 | 0.606 / 0.721 | 0.604 / 0.721 | 0.583 / 0.691 | 0.582 / 0.688 |
+| 40k | 0.610 / 0.723 | 0.595 / 0.710 | 0.607 / 0.722 | 0.614 / 0.737 | 0.581 / 0.698 | 0.557 / 0.659 |
+| 45k | 0.601 / 0.719 | 0.596 / 0.712 | 0.582 / 0.694 | 0.594 / 0.716 | 0.565 / 0.673 | 0.585 / 0.691 |
+| 50k | 0.596 / 0.708 | 0.603 / 0.712 | 0.583 / 0.688 | 0.607 / 0.724 | 0.567 / 0.671 | 0.579 / 0.682 |
+| 55k | 0.598 / 0.720 | 0.613 / 0.731 | 0.581 / 0.696 | 0.602 / 0.721 | 0.577 / 0.687 | 0.579 / 0.674 |
+| 60k | 0.588 / 0.697 | 0.597 / 0.706 | 0.597 / 0.713 | 0.614 / 0.735 | 0.556 / 0.652 | 0.576 / 0.652 |
+| 65k | 0.585 / 0.685 | 0.617 / 0.737 | 0.579 / 0.695 | 0.601 / 0.718 | 0.560 / 0.656 | 0.574 / 0.658 |
+| 70k | 0.586 / 0.693 | 0.604 / 0.718 | 0.585 / 0.704 | 0.603 / 0.721 | 0.562 / 0.662 | 0.567 / 0.644 |
+| 75k | 0.585 / 0.691 | 0.603 / 0.717 | 0.588 / 0.704 | 0.601 / 0.717 | 0.562 / 0.663 | 0.565 / 0.645 |
+
+All six runs peak in 10–30k and decay by 75k (the arm-0 anchor shape). Arm 1 tracks arm 0 checkpoint for
+checkpoint; arm 2 runs ≈ 0.04–0.06 AUC below it from 10k onward on both seeds.
+
+## Per-segment at the best checkpoint (best-F1 / forward AUC)
+
+| pod (best ckpt) | w035 | w039 | w040 | w041 | w044 | mean fwd AUC | mean rev AUC |
+|---|---|---|---|---|---|---|---|
+| arm 0 s42 (20k) | 0.664 / 0.833 | 0.564 / 0.719 | 0.637 / 0.692 | 0.661 / 0.756 | 0.609 / 0.730 | 0.746 | 0.499 |
+| arm 0 s43 (30k) | 0.666 / 0.827 | 0.553 / 0.708 | 0.641 / 0.715 | 0.668 / 0.775 | 0.625 / 0.757 | 0.757 | 0.532 |
+| arm 1 s42 (10k) | 0.649 / 0.817 | 0.542 / 0.708 | 0.636 / 0.694 | 0.682 / 0.787 | 0.625 / 0.746 | 0.751 | 0.541 |
+| arm 1 s43 (30k) | 0.667 / 0.836 | 0.615 / 0.780 | 0.623 / 0.691 | 0.666 / 0.774 | 0.633 / 0.758 | 0.768 | 0.521 |
+| arm 2 s42 (20k) | 0.622 / 0.781 | 0.522 / 0.688 | 0.617 / 0.670 | 0.605 / 0.703 | 0.594 / 0.711 | 0.711 | 0.520 |
+| arm 2 s43 (25k) | 0.599 / 0.760 | 0.501 / 0.641 | 0.618 / 0.664 | 0.619 / 0.712 | 0.598 / 0.716 | 0.698 | 0.500 |
+
+Arm 1 seed 43's whole gain is w039 (0.708/0.719 → 0.780); the other four segments are within ±0.02 of arm 0.
+Arm 2 loses on every segment, most on w041 (−0.05 to −0.07) and w039 (s43: −0.07).
+
+## The input-statistics gate (prereg §2) — the premise is inverted
+
+The `measure` stage on every pod (`parts/measure_inputs.py`, 64 random 128² in-plane windows per store, the same
+2-D estimator arm 1 degrades with) gives, deterministically across the four pods:
+
+| store class | snr_q025 (median over stores; per-store medians) | bandwidth (cyc/px) | DN headroom (p99.5 − p0.5) |
+|---|---|---|---|
+| pooled 2.4 → 9.6 µm training volumes (15 stores: PHerc1667 ×6, PHercParis4 ×8, PHerc0814 ×1) | **6.3** (5.4–7.9) | 0.34 (0.335–0.352) | 116–175 (median 132) |
+| native 9.36 µm PHerc0139 crops (w035/w039/w040/w041/w044) | **≈ 30** (21–39) | 0.36–0.37 | 148–162 |
+| k2b index targets (14 scrolls, 55 ROIs, 3-D estimator) | 74.5 | 0.496 | — |
+
+By the estimator arm 1 uses, the pooled training inputs are **noisier and narrower-band than the native
+target class**, not cleaner: the claim under test (prereg §1) is wrong in the other direction. The 3-D index and
+the 2-D per-crop estimator disagree by ≈ 2–4× on the same native crops (index PHerc0139 snr 115.5 vs 2-D ≈ 30–51;
+bandwidth 0.386 vs 0.36), which is why targets were calibrated (`target_scale` = (bw 0.934, snr 0.265, headroom
+1.020), recorded in each arm-1 config). With calibrated targets the arm-1 transform could act as follows
+(recomputed locally from `parts/k2b_index.json` and the pods' `input_stats.json`, draw = uniform over scrolls then
+ROIs, as `draw_target` does):
+
+- **noise step**: active on **24 % of draws** (targets from PHerc0257/0268/0800/0826/1218/1447 fall below the
+  pooled crop SNR; calibrated target median 19.7, range 2.0–43.3, vs pooled 6.3) — the pre-registered gate
+  (uncalibrated) reads 0 %;
+- **blur step**: **0 %** (every calibrated bandwidth target is above the pooled 0.34);
+- **headroom step**: active on essentially every draw, and in the *amplifying* direction (calibrated target
+  median 221 DN vs pooled 132) — i.e. arm 1 in practice was mostly a ×1.5–1.7 contrast rescale plus occasional
+  added white noise. That such a transform neither helps nor hurts (+0.008) is consistent with the recipe's
+  existing intensity augmentation absorbing it.
+
+Caveats that keep this an estimator statement, not a physical one: the residual floor is estimated from the
+0.35–0.48 cyc/px band, so genuine high-frequency papyrus texture counts as "noise"; the pooled volumes are
+resampled (isotropic 21-slice from 2.4 µm) while the native crops are raw 9.36 µm reconstructions; the
+comparison is like-for-like across the two classes but is not a measurement of detector noise.
+
+## Reading (prereg §7)
+
+- **PASS** — no.
+- **KILLED with the degradation active** — partially: noise on 24 % of draws, blur never, headroom always.
+- **KILLED with the premise wrong in the other direction** — **this is the outcome.** Pooled 2.4 → 9.6 µm inputs
+  are not cleaner than native 9 µm by the arm's own estimator; matching them to the index makes no difference,
+  and canonicalising every volume by its own spectrum (arm 2) costs ≈ 0.05 AUC. Input noise, as defined and
+  measured here, is not the 9 µm transfer gap. Bet C (max-corpus native generalist) is October's only model bet,
+  as the plan already routed after the 500p2a finding.
+
+Arm 2's harm is informative on its own: with q_ref 0.02 and the gain clipped at 8×, the whitener boosts the
+0.3–0.5 cyc/px band of every volume by up to 8× before the network sees it, amplifying exactly the component the
+residual floor calls noise. Softer variants (lower clip, q_ref at the structural band, whitening only at test
+time) were not registered and are not run; the two seeds agree closely enough (0.711 vs 0.698) that a rerun is
+not warranted on this budget.
+
+## What ships
+
+- `degradation.py` (2-D k2b estimator, `degrade_crop`, `PSDWhitener`, `sample_inplane_windows`, `draw_target`),
+  the `input_degradation` / `input_whitening` config keys, dataset and inference hooks — fork branch `betA-arms`
+  @ 45d5e03, absent keys byte-identical to villa a3f2c29;
+- the pod harness (`bench/betA_arm0/`: measure stage, calibration, LOSO config generation, five-segment native
+  evaluation with positive controls) and the four `results.json` with per-checkpoint, per-segment, both-direction
+  numbers, the input statistics and the frozen prereg embedded;
+- this null, with the input-statistics table, as the record that the "pooled inputs are cleaner" premise fails.
+
+## Cost and timing
+
+Arms wall-clock: first launch 21:42 UTC Sept 3 → last harvest 12:50 UTC Sept 4 (15 h). Pod time on the four
+runs that finished: arm-1 s42 8.3 h ($5.7; labels 84 min, train 5.8 h at 3.8 it/s), arm-1 s43 13.0 h ($9.0; the
+…644115cd host ran at 1.7–3 it/s, train 10.4 h), arm-2 s42 9.6 h ($5.1; train 6.7 h at 3.3 it/s), arm-2 s43 9.4 h
+($5.0; train 6.5 h at 3.4 it/s). Lost to faults before that: four pods dead in the first `measure` stage (≈ $12),
+two trainer_check deaths, four no-CUDA hosts, one non-finite-loss abort (≈ $2 together). Balance $55 before the
+arm launches → $23.4 after (≈ $32 for arms 1/2 all-in, against the prereg's ≈ $20 clean estimate). Evals: 15
+checkpoints × 5 segments × 2 directions in 33–50 min per pod.

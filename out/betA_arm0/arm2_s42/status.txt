@@ -1,0 +1,1358 @@
+2026-09-04T03:01:42Z BOOT pod_betA_arm0 pid=13 host=58fbaaf4cc3d root=/workspace/betA -- status live; server next
+2026-09-04T03:01:42Z SERVE http.server pid=39 0.0.0.0:8000 dir=/workspace/betA/out external=https://8r68lpxrgcev1n-8000.proxy.runpod.net/status.txt local_probe=200
+2026-09-04T03:01:42Z PREREG locked prereg.json sha256=a5e9ff79b4dd -- decision rules recorded before any provisioning, download, or data
+2026-09-04T03:01:42Z scripts written to /workspace/betA/scripts (analysis code + manifest locked before provisioning)
+2026-09-04T03:01:42Z MODE SMOKE_ONLY=0 seeds='42' steps=78125 save_every=5000 fetch_threads=32 nproc=128
+2026-09-04T03:01:42Z === STAGE provision OPEN ===
+2026-09-04T03:01:52Z provision: villa @ 45d5e03 (villa-pin ref betA-arms, Bet A arm 2)
+2026-09-04T03:01:54Z provision: PREFLIGHT (index reachability + throughput before uv sync)
+2026-09-04T03:01:54Z PREFLIGHT pypi.nvidia.com: 54.08 MB/s on an 8 MB range of nvidia-curand
+2026-09-04T03:01:54Z PREFLIGHT https://pypi.org/simple/uv/ -> http 200
+2026-09-04T03:01:54Z PREFLIGHT https://huggingface.co/api/models/scrollprize/ink_9um -> http 200
+2026-09-04T03:01:55Z PREFLIGHT https://vesuvius-challenge-open-data.s3.amazonaws.com/ -> http 200
+2026-09-04T03:01:55Z provision: uv sync starting (full log at /provision.log on :8000)
+2026-09-04T03:02:42Z HEARTBEAT stage=provision up=60s free=113G
+2026-09-04T03:03:39Z === STAGE provision DONE (117s) ===
+2026-09-04T03:03:39Z === STAGE ckpt OPEN ===
+2026-09-04T03:03:42Z HEARTBEAT stage=ckpt up=120s free=96G
+2026-09-04T03:03:47Z ckpt verified: size exact, mode=flat crop=(17,128,128) norm=robust_mad
+2026-09-04T03:03:47Z === STAGE ckpt DONE (8s) ===
+2026-09-04T03:03:47Z === STAGE trainer_check OPEN ===
+2026-09-04T03:03:51Z trainer_check: TRAIN_IMPORT_OK
+2026-09-04T03:03:52Z HFSYNC pherc0814-46527/inklabels: 462 files listed, 422 all-zero skipped, 40 to fetch
+2026-09-04T03:03:53Z HFSYNC pherc0814-46527/inklabels: OK sha256 metadata; plane z=10 nonzero=187170 shape=[2130, 3455]
+2026-09-04T03:03:53Z HFSYNC pherc0814-46527/supervision_mask: 462 files listed, 420 all-zero skipped, 42 to fetch
+2026-09-04T03:03:54Z HFSYNC pherc0814-46527/supervision_mask: OK sha256 metadata; plane z=10 nonzero=428993 shape=[2130, 3455]
+2026-09-04T03:03:54Z HFSYNC pherc0814-46527/validation_mask: 462 files listed, 442 all-zero skipped, 20 to fetch
+2026-09-04T03:03:54Z HFSYNC pherc0814-46527/validation_mask: OK sha256 metadata; plane z=10 nonzero=161051 shape=[2130, 3455]
+2026-09-04T03:04:00Z CFG synthetic: pherc0814-46527 labels ((21, 2130, 3455)) + random volume, 30 iterations, batch 8, arm 2 -> /workspace/betA/out/cfg/syn.json
+2026-09-04T03:04:42Z HEARTBEAT stage=trainer_check up=180s free=95G
+2026-09-04T03:05:06Z trainer_check: synthetic flat inference OK (arm 2): 9.0M 1 whitening-fit lines
+2026-09-04T03:05:06Z trainer_check: 30 synthetic iterations OK; checkpoints: 1; log tail:   0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:05<?, ?it/s, loss=0.6958, lr=2.00e-03]  3%|â         | 1/30 [00:06<00:04,  7.02it/s, loss=0
+2026-09-04T03:05:06Z === STAGE trainer_check DONE (79s) ===
+2026-09-04T03:05:06Z === STAGE labels_fetch OPEN ===
+2026-09-04T03:05:08Z HFSYNC pherc1667-w013/inklabels: 12795 files listed, 12595 all-zero skipped, 200 to fetch
+2026-09-04T03:05:14Z HFSYNC pherc1667-w013/inklabels: OK sha256 metadata; plane z=10 nonzero=1012042 shape=[10400, 19900]
+2026-09-04T03:05:16Z HFSYNC pherc1667-w013/supervision_mask: 12795 files listed, 12476 all-zero skipped, 319 to fetch
+2026-09-04T03:05:23Z HFSYNC pherc1667-w013/supervision_mask: OK sha256 metadata; plane z=10 nonzero=3358655 shape=[10400, 19900]
+2026-09-04T03:05:25Z HFSYNC pherc1667-w018/inklabels: 15939 files listed, 15253 all-zero skipped, 686 to fetch
+2026-09-04T03:05:29Z HFSYNC pherc1667-w018/inklabels: 500/686
+2026-09-04T03:05:36Z HFSYNC pherc1667-w018/inklabels: OK sha256 metadata; plane z=10 nonzero=3580927 shape=[10595, 24525]
+2026-09-04T03:05:38Z HFSYNC pherc1667-w018/supervision_mask: 15939 files listed, 14688 all-zero skipped, 1251 to fetch
+2026-09-04T03:05:42Z HEARTBEAT stage=labels_fetch up=240s free=95G
+2026-09-04T03:05:42Z HFSYNC pherc1667-w018/supervision_mask: 500/1251
+2026-09-04T03:05:46Z HFSYNC pherc1667-w018/supervision_mask: 1000/1251
+2026-09-04T03:05:53Z HFSYNC pherc1667-w018/supervision_mask: OK sha256 metadata; plane z=10 nonzero=13899340 shape=[10595, 24525]
+2026-09-04T03:05:56Z HFSYNC pherc1667-w023/inklabels: 16403 files listed, 16141 all-zero skipped, 262 to fetch
+2026-09-04T03:06:03Z HFSYNC pherc1667-w023/inklabels: OK sha256 metadata; plane z=10 nonzero=1419591 shape=[10465, 25590]
+2026-09-04T03:06:05Z HFSYNC pherc1667-w023/supervision_mask: 16403 files listed, 15890 all-zero skipped, 513 to fetch
+2026-09-04T03:06:42Z HEARTBEAT stage=labels_fetch up=300s free=95G
+2026-09-04T03:07:42Z HEARTBEAT stage=labels_fetch up=360s free=95G
+2026-09-04T03:08:42Z HEARTBEAT stage=labels_fetch up=420s free=95G
+2026-09-04T03:09:42Z HEARTBEAT stage=labels_fetch up=480s free=95G
+2026-09-04T03:10:42Z HEARTBEAT stage=labels_fetch up=540s free=95G
+2026-09-04T03:11:02Z HFSYNC pherc1667-w023/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T03:11:34Z HFSYNC pherc1667-w023/supervision_mask: 500/513
+2026-09-04T03:11:39Z HFSYNC pherc1667-w023/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5404437 shape=[10465, 25590]
+2026-09-04T03:11:40Z HFSYNC pherc1667-w028/inklabels: 4443 files listed, 4370 all-zero skipped, 73 to fetch
+2026-09-04T03:11:42Z HEARTBEAT stage=labels_fetch up=600s free=95G
+2026-09-04T03:11:43Z HFSYNC pherc1667-w028/inklabels: OK sha256 metadata; plane z=10 nonzero=331857 shape=[9355, 7585]
+2026-09-04T03:11:43Z HFSYNC pherc1667-w028/supervision_mask: 4443 files listed, 4354 all-zero skipped, 89 to fetch
+2026-09-04T03:11:45Z HFSYNC pherc1667-w028/supervision_mask: OK sha256 metadata; plane z=10 nonzero=844786 shape=[9355, 7585]
+2026-09-04T03:11:46Z HFSYNC pherc1667-w029/inklabels: 4653 files listed, 4565 all-zero skipped, 88 to fetch
+2026-09-04T03:11:49Z HFSYNC pherc1667-w029/inklabels: OK sha256 metadata; plane z=10 nonzero=444385 shape=[9500, 7830]
+2026-09-04T03:11:50Z HFSYNC pherc1667-w029/supervision_mask: 4653 files listed, 4511 all-zero skipped, 142 to fetch
+2026-09-04T03:11:52Z HFSYNC pherc1667-w029/supervision_mask: OK sha256 metadata; plane z=10 nonzero=1213836 shape=[9500, 7830]
+2026-09-04T03:11:53Z HFSYNC pherc1667-w029/validation_mask: 4653 files listed, 4608 all-zero skipped, 45 to fetch
+2026-09-04T03:11:55Z HFSYNC pherc1667-w029/validation_mask: OK sha256 metadata; plane z=10 nonzero=382353 shape=[9500, 7830]
+2026-09-04T03:11:56Z HFSYNC pherc1667-w031/inklabels: 4665 files listed, 4514 all-zero skipped, 151 to fetch
+2026-09-04T03:11:59Z HFSYNC pherc1667-w031/inklabels: OK sha256 metadata; plane z=10 nonzero=778204 shape=[9370, 8045]
+2026-09-04T03:12:00Z HFSYNC pherc1667-w031/supervision_mask: 4665 files listed, 4415 all-zero skipped, 250 to fetch
+2026-09-04T03:12:03Z HFSYNC pherc1667-w031/supervision_mask: OK sha256 metadata; plane z=10 nonzero=2621780 shape=[9370, 8045]
+2026-09-04T03:12:04Z HFSYNC phercparis4-w00/inklabels: 6429 files listed, 6152 all-zero skipped, 277 to fetch
+2026-09-04T03:12:09Z HFSYNC phercparis4-w00/inklabels: OK sha256 metadata; plane z=10 nonzero=1335408 shape=[7990, 12990]
+2026-09-04T03:12:10Z HFSYNC phercparis4-w00/supervision_mask: 6429 files listed, 5896 all-zero skipped, 533 to fetch
+2026-09-04T03:12:14Z HFSYNC phercparis4-w00/supervision_mask: 500/533
+2026-09-04T03:12:17Z HFSYNC phercparis4-w00/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5798902 shape=[7990, 12990]
+2026-09-04T03:12:18Z HFSYNC phercparis4-w01/inklabels: 7131 files listed, 6689 all-zero skipped, 442 to fetch
+2026-09-04T03:12:25Z HFSYNC phercparis4-w01/inklabels: OK sha256 metadata; plane z=10 nonzero=2163941 shape=[12650, 9100]
+2026-09-04T03:12:25Z HFSYNC phercparis4-w01/supervision_mask: 7131 files listed, 6354 all-zero skipped, 777 to fetch
+2026-09-04T03:12:30Z HFSYNC phercparis4-w01/supervision_mask: 500/777
+2026-09-04T03:12:42Z HEARTBEAT stage=labels_fetch up=660s free=95G
+2026-09-04T03:13:42Z HEARTBEAT stage=labels_fetch up=720s free=95G
+2026-09-04T03:14:42Z HEARTBEAT stage=labels_fetch up=780s free=95G
+2026-09-04T03:15:42Z HEARTBEAT stage=labels_fetch up=840s free=95G
+2026-09-04T03:16:01Z HFSYNC phercparis4-w01/supervision_mask: OK sha256 metadata; plane z=10 nonzero=8268843 shape=[12650, 9100]
+2026-09-04T03:16:02Z HFSYNC phercparis4-w02/inklabels: 5765 files listed, 5527 all-zero skipped, 238 to fetch
+2026-09-04T03:16:06Z HFSYNC phercparis4-w02/inklabels: OK sha256 metadata; plane z=10 nonzero=1087282 shape=[8545, 11005]
+2026-09-04T03:16:07Z HFSYNC phercparis4-w02/supervision_mask: 5765 files listed, 5327 all-zero skipped, 438 to fetch
+2026-09-04T03:16:12Z HFSYNC phercparis4-w02/supervision_mask: OK sha256 metadata; plane z=10 nonzero=4647609 shape=[8545, 11005]
+2026-09-04T03:16:13Z HFSYNC phercparis4-w03/inklabels: 6770 files listed, 6365 all-zero skipped, 405 to fetch
+2026-09-04T03:16:20Z HFSYNC phercparis4-w03/inklabels: OK sha256 metadata; plane z=10 nonzero=2125255 shape=[8575, 12810]
+2026-09-04T03:16:21Z HFSYNC phercparis4-w03/supervision_mask: 6770 files listed, 6194 all-zero skipped, 576 to fetch
+2026-09-04T03:16:25Z HFSYNC phercparis4-w03/supervision_mask: 500/576
+2026-09-04T03:16:28Z HFSYNC phercparis4-w03/supervision_mask: OK sha256 metadata; plane z=10 nonzero=6169508 shape=[8575, 12810]
+2026-09-04T03:16:30Z HFSYNC phercparis4-w05/inklabels: 14803 files listed, 13609 all-zero skipped, 1194 to fetch
+2026-09-04T03:16:34Z HFSYNC phercparis4-w05/inklabels: 500/1194
+2026-09-04T03:16:38Z HFSYNC phercparis4-w05/inklabels: 1000/1194
+2026-09-04T03:16:42Z HEARTBEAT stage=labels_fetch up=900s free=95G
+2026-09-04T03:16:45Z HFSYNC phercparis4-w05/inklabels: OK sha256 metadata; plane z=10 nonzero=6737328 shape=[12700, 18930]
+2026-09-04T03:16:47Z HFSYNC phercparis4-w05/supervision_mask: 14803 files listed, 12480 all-zero skipped, 2323 to fetch
+2026-09-04T03:17:42Z HEARTBEAT stage=labels_fetch up=960s free=95G
+2026-09-04T03:18:42Z HEARTBEAT stage=labels_fetch up=1020s free=95G
+2026-09-04T03:19:42Z HEARTBEAT stage=labels_fetch up=1080s free=95G
+2026-09-04T03:20:18Z HFSYNC phercparis4-w05/supervision_mask: 500/2323
+2026-09-04T03:20:22Z HFSYNC phercparis4-w05/supervision_mask: 1000/2323
+2026-09-04T03:20:26Z HFSYNC phercparis4-w05/supervision_mask: 1500/2323
+2026-09-04T03:20:30Z HFSYNC phercparis4-w05/supervision_mask: 2000/2323
+2026-09-04T03:20:37Z HFSYNC phercparis4-w05/supervision_mask: OK sha256 metadata; plane z=10 nonzero=31930770 shape=[12700, 18930]
+2026-09-04T03:20:39Z HFSYNC phercparis4-w06/inklabels: 7903 files listed, 7233 all-zero skipped, 670 to fetch
+2026-09-04T03:20:42Z HEARTBEAT stage=labels_fetch up=1140s free=95G
+2026-09-04T03:20:43Z HFSYNC phercparis4-w06/inklabels: 500/670
+2026-09-04T03:20:47Z HFSYNC phercparis4-w06/inklabels: OK sha256 metadata; plane z=10 nonzero=3443040 shape=[12750, 9995]
+2026-09-04T03:20:48Z HFSYNC phercparis4-w06/supervision_mask: 7903 files listed, 6900 all-zero skipped, 1003 to fetch
+2026-09-04T03:21:42Z HEARTBEAT stage=labels_fetch up=1200s free=95G
+2026-09-04T03:22:42Z HEARTBEAT stage=labels_fetch up=1260s free=95G
+2026-09-04T03:23:43Z HEARTBEAT stage=labels_fetch up=1321s free=95G
+2026-09-04T03:24:43Z HEARTBEAT stage=labels_fetch up=1381s free=95G
+2026-09-04T03:25:43Z HEARTBEAT stage=labels_fetch up=1441s free=95G
+2026-09-04T03:25:45Z HFSYNC phercparis4-w06/supervision_mask: 500/1003
+2026-09-04T03:25:49Z HFSYNC phercparis4-w06/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T03:26:21Z HFSYNC phercparis4-w06/supervision_mask: 1000/1003
+2026-09-04T03:26:24Z HFSYNC phercparis4-w06/supervision_mask: OK sha256 metadata; plane z=10 nonzero=11074717 shape=[12750, 9995]
+2026-09-04T03:26:27Z HFSYNC phercparis4-w07/inklabels: 21627 files listed, 20653 all-zero skipped, 974 to fetch
+2026-09-04T03:26:32Z HFSYNC phercparis4-w07/inklabels: 500/974
+2026-09-04T03:26:43Z HEARTBEAT stage=labels_fetch up=1501s free=95G
+2026-09-04T03:26:43Z HFSYNC phercparis4-w07/inklabels: OK sha256 metadata; plane z=10 nonzero=5022838 shape=[13010, 27035]
+2026-09-04T03:26:45Z HFSYNC phercparis4-w07/supervision_mask: 21627 files listed, 20179 all-zero skipped, 1448 to fetch
+2026-09-04T03:26:49Z HFSYNC phercparis4-w07/supervision_mask: 500/1448
+2026-09-04T03:26:53Z HFSYNC phercparis4-w07/supervision_mask: 1000/1448
+2026-09-04T03:27:43Z HEARTBEAT stage=labels_fetch up=1561s free=95G
+2026-09-04T03:28:43Z HEARTBEAT stage=labels_fetch up=1621s free=95G
+2026-09-04T03:29:43Z HEARTBEAT stage=labels_fetch up=1681s free=95G
+2026-09-04T03:30:30Z HFSYNC phercparis4-w07/supervision_mask: OK sha256 metadata; plane z=10 nonzero=16003870 shape=[13010, 27035]
+2026-09-04T03:30:32Z HFSYNC phercparis4-w09/inklabels: 9390 files listed, 9099 all-zero skipped, 291 to fetch
+2026-09-04T03:30:38Z HFSYNC phercparis4-w09/inklabels: OK sha256 metadata; plane z=10 nonzero=1487875 shape=[8020, 18950]
+2026-09-04T03:30:39Z HFSYNC phercparis4-w09/supervision_mask: 9390 files listed, 8921 all-zero skipped, 469 to fetch
+2026-09-04T03:30:43Z HEARTBEAT stage=labels_fetch up=1741s free=95G
+2026-09-04T03:30:46Z HFSYNC phercparis4-w09/supervision_mask: OK sha256 metadata; plane z=10 nonzero=5238005 shape=[8020, 18950]
+2026-09-04T03:30:47Z HFSYNC w035/inklabels: 2564 files listed, 1190 all-zero skipped, 1374 to fetch
+2026-09-04T03:30:51Z HFSYNC w035/inklabels: 500/1374
+2026-09-04T03:30:55Z HFSYNC w035/inklabels: 1000/1374
+2026-09-04T03:30:59Z HFSYNC w035/inklabels: OK sha256 metadata; plane z=14 nonzero=396164 shape=[5820, 5240]
+2026-09-04T03:30:59Z HFSYNC w035/supervision_mask: 2564 files listed, 111 all-zero skipped, 2453 to fetch
+2026-09-04T03:31:43Z HEARTBEAT stage=labels_fetch up=1801s free=95G
+2026-09-04T03:32:43Z HEARTBEAT stage=labels_fetch up=1861s free=95G
+2026-09-04T03:33:43Z HEARTBEAT stage=labels_fetch up=1921s free=95G
+2026-09-04T03:34:30Z HFSYNC w035/supervision_mask: 500/2453
+2026-09-04T03:34:43Z HEARTBEAT stage=labels_fetch up=1981s free=95G
+2026-09-04T03:35:43Z HEARTBEAT stage=labels_fetch up=2041s free=95G
+2026-09-04T03:35:59Z HFSYNC w035/supervision_mask: 1000/2453
+2026-09-04T03:36:03Z HFSYNC w035/supervision_mask: 1500/2453
+2026-09-04T03:36:07Z HFSYNC w035/supervision_mask: 2000/2453
+2026-09-04T03:36:10Z HFSYNC w035/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T03:36:43Z HEARTBEAT stage=labels_fetch up=2101s free=95G
+2026-09-04T03:36:44Z HFSYNC w035/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1071121 shape=[5820, 5240]
+2026-09-04T03:36:45Z HFSYNC w039/inklabels: 5525 files listed, 200 all-zero skipped, 5325 to fetch
+2026-09-04T03:36:49Z HFSYNC w039/inklabels: 500/5325
+2026-09-04T03:36:53Z HFSYNC w039/inklabels: 1000/5325
+2026-09-04T03:37:43Z HEARTBEAT stage=labels_fetch up=2161s free=95G
+2026-09-04T03:38:43Z HEARTBEAT stage=labels_fetch up=2221s free=95G
+2026-09-04T03:39:43Z HEARTBEAT stage=labels_fetch up=2281s free=95G
+2026-09-04T03:40:23Z HFSYNC w039/inklabels: 1500/5325
+2026-09-04T03:40:27Z HFSYNC w039/inklabels: 2000/5325
+2026-09-04T03:40:31Z HFSYNC w039/inklabels: 2500/5325
+2026-09-04T03:40:35Z HFSYNC w039/inklabels: 3000/5325
+2026-09-04T03:40:39Z HFSYNC w039/inklabels: 3500/5325
+2026-09-04T03:40:42Z HFSYNC w039/inklabels: 4000/5325
+2026-09-04T03:40:43Z HEARTBEAT stage=labels_fetch up=2341s free=95G
+2026-09-04T03:41:43Z HEARTBEAT stage=labels_fetch up=2401s free=95G
+2026-09-04T03:42:43Z HEARTBEAT stage=labels_fetch up=2461s free=95G
+2026-09-04T03:43:43Z HEARTBEAT stage=labels_fetch up=2521s free=95G
+2026-09-04T03:44:43Z HEARTBEAT stage=labels_fetch up=2581s free=95G
+2026-09-04T03:45:39Z HFSYNC w039/inklabels: 4500/5325
+2026-09-04T03:45:43Z HFSYNC w039/inklabels: 5000/5325
+2026-09-04T03:45:43Z HEARTBEAT stage=labels_fetch up=2641s free=95G
+2026-09-04T03:45:45Z HFSYNC w039/inklabels: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T03:46:20Z HFSYNC w039/inklabels: OK sha256 metadata; plane z=14 nonzero=184948 shape=[8560, 7720]
+2026-09-04T03:46:21Z HFSYNC w039/supervision_mask: 5525 files listed, 910 all-zero skipped, 4615 to fetch
+2026-09-04T03:46:25Z HFSYNC w039/supervision_mask: 500/4615
+2026-09-04T03:46:30Z HFSYNC w039/supervision_mask: 1000/4615
+2026-09-04T03:46:33Z HFSYNC w039/supervision_mask: 1500/4615
+2026-09-04T03:46:43Z HEARTBEAT stage=labels_fetch up=2701s free=95G
+2026-09-04T03:47:43Z HEARTBEAT stage=labels_fetch up=2761s free=95G
+2026-09-04T03:48:43Z HEARTBEAT stage=labels_fetch up=2821s free=95G
+2026-09-04T03:49:43Z HEARTBEAT stage=labels_fetch up=2881s free=95G
+2026-09-04T03:50:10Z HFSYNC w039/supervision_mask: 2000/4615
+2026-09-04T03:50:13Z HFSYNC w039/supervision_mask: 2500/4615
+2026-09-04T03:50:17Z HFSYNC w039/supervision_mask: 3000/4615
+2026-09-04T03:50:21Z HFSYNC w039/supervision_mask: 3500/4615
+2026-09-04T03:50:25Z HFSYNC w039/supervision_mask: 4000/4615
+2026-09-04T03:50:28Z HFSYNC w039/supervision_mask: 4500/4615
+2026-09-04T03:50:29Z HFSYNC w039/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T03:50:43Z HEARTBEAT stage=labels_fetch up=2941s free=95G
+2026-09-04T03:51:04Z HFSYNC w039/supervision_mask: OK sha256 metadata; plane z=14 nonzero=576220 shape=[8560, 7720]
+2026-09-04T03:51:05Z HFSYNC w040/inklabels: 4248 files listed, 595 all-zero skipped, 3653 to fetch
+2026-09-04T03:51:43Z HEARTBEAT stage=labels_fetch up=3001s free=95G
+2026-09-04T03:52:43Z HEARTBEAT stage=labels_fetch up=3061s free=95G
+2026-09-04T03:53:43Z HEARTBEAT stage=labels_fetch up=3121s free=95G
+2026-09-04T03:54:43Z HEARTBEAT stage=labels_fetch up=3181s free=95G
+2026-09-04T03:55:43Z HEARTBEAT stage=labels_fetch up=3241s free=95G
+2026-09-04T03:56:01Z HFSYNC w040/inklabels: 500/3653
+2026-09-04T03:56:05Z HFSYNC w040/inklabels: 1000/3653
+2026-09-04T03:56:09Z HFSYNC w040/inklabels: 1500/3653
+2026-09-04T03:56:13Z HFSYNC w040/inklabels: 2000/3653
+2026-09-04T03:56:16Z HFSYNC w040/inklabels: 2500/3653
+2026-09-04T03:56:20Z HFSYNC w040/inklabels: 3000/3653
+2026-09-04T03:56:43Z HEARTBEAT stage=labels_fetch up=3301s free=95G
+2026-09-04T03:57:43Z HEARTBEAT stage=labels_fetch up=3361s free=95G
+2026-09-04T03:58:43Z HEARTBEAT stage=labels_fetch up=3421s free=95G
+2026-09-04T03:59:43Z HEARTBEAT stage=labels_fetch up=3481s free=95G
+2026-09-04T04:00:17Z HFSYNC w040/inklabels: 3500/3653
+2026-09-04T04:00:18Z HFSYNC w040/inklabels: 64 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T04:00:43Z HEARTBEAT stage=labels_fetch up=3541s free=95G
+2026-09-04T04:00:54Z HFSYNC w040/inklabels: OK sha256 metadata; plane z=14 nonzero=745657 shape=[6400, 7980]
+2026-09-04T04:00:55Z HFSYNC w040/supervision_mask: 4248 files listed, 198 all-zero skipped, 4050 to fetch
+2026-09-04T04:00:59Z HFSYNC w040/supervision_mask: 500/4050
+2026-09-04T04:01:03Z HFSYNC w040/supervision_mask: 1000/4050
+2026-09-04T04:01:06Z HFSYNC w040/supervision_mask: 1500/4050
+2026-09-04T04:01:10Z HFSYNC w040/supervision_mask: 2000/4050
+2026-09-04T04:01:43Z HEARTBEAT stage=labels_fetch up=3601s free=95G
+2026-09-04T04:02:43Z HEARTBEAT stage=labels_fetch up=3661s free=95G
+2026-09-04T04:03:43Z HEARTBEAT stage=labels_fetch up=3721s free=95G
+2026-09-04T04:04:43Z HEARTBEAT stage=labels_fetch up=3781s free=95G
+2026-09-04T04:05:06Z HFSYNC w040/supervision_mask: 2500/4050
+2026-09-04T04:05:10Z HFSYNC w040/supervision_mask: 3000/4050
+2026-09-04T04:05:14Z HFSYNC w040/supervision_mask: 3500/4050
+2026-09-04T04:05:18Z HFSYNC w040/supervision_mask: 4000/4050
+2026-09-04T04:05:18Z HFSYNC w040/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T04:05:43Z HEARTBEAT stage=labels_fetch up=3841s free=95G
+2026-09-04T04:05:53Z HFSYNC w040/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1629734 shape=[6400, 7980]
+2026-09-04T04:05:53Z HFSYNC w041/inklabels: 4185 files listed, 1219 all-zero skipped, 2966 to fetch
+2026-09-04T04:05:58Z HFSYNC w041/inklabels: 500/2966
+2026-09-04T04:06:02Z HFSYNC w041/inklabels: 1000/2966
+2026-09-04T04:06:43Z HEARTBEAT stage=labels_fetch up=3901s free=95G
+2026-09-04T04:07:43Z HEARTBEAT stage=labels_fetch up=3961s free=95G
+2026-09-04T04:08:43Z HEARTBEAT stage=labels_fetch up=4021s free=95G
+2026-09-04T04:09:43Z HEARTBEAT stage=labels_fetch up=4081s free=95G
+2026-09-04T04:10:43Z HEARTBEAT stage=labels_fetch up=4141s free=95G
+2026-09-04T04:11:09Z HFSYNC w041/inklabels: 1500/2966
+2026-09-04T04:11:42Z HFSYNC w041/inklabels: 2000/2966
+2026-09-04T04:11:43Z HEARTBEAT stage=labels_fetch up=4201s free=95G
+2026-09-04T04:11:46Z HFSYNC w041/inklabels: 2500/2966
+2026-09-04T04:11:50Z HFSYNC w041/inklabels: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T04:12:24Z HFSYNC w041/inklabels: OK sha256 metadata; plane z=14 nonzero=231421 shape=[6200, 8020]
+2026-09-04T04:12:24Z HFSYNC w041/supervision_mask: 4185 files listed, 426 all-zero skipped, 3759 to fetch
+2026-09-04T04:12:29Z HFSYNC w041/supervision_mask: 500/3759
+2026-09-04T04:12:33Z HFSYNC w041/supervision_mask: 1000/3759
+2026-09-04T04:12:43Z HEARTBEAT stage=labels_fetch up=4261s free=95G
+2026-09-04T04:13:43Z HEARTBEAT stage=labels_fetch up=4321s free=95G
+2026-09-04T04:14:43Z HEARTBEAT stage=labels_fetch up=4381s free=95G
+2026-09-04T04:15:43Z HEARTBEAT stage=labels_fetch up=4441s free=95G
+2026-09-04T04:16:03Z HFSYNC w041/supervision_mask: 1500/3759
+2026-09-04T04:16:07Z HFSYNC w041/supervision_mask: 2000/3759
+2026-09-04T04:16:11Z HFSYNC w041/supervision_mask: 2500/3759
+2026-09-04T04:16:15Z HFSYNC w041/supervision_mask: 3000/3759
+2026-09-04T04:16:19Z HFSYNC w041/supervision_mask: 3500/3759
+2026-09-04T04:16:22Z HFSYNC w041/supervision_mask: OK sha256 metadata; plane z=14 nonzero=555629 shape=[6200, 8020]
+2026-09-04T04:16:23Z HFSYNC w044/inklabels: 4110 files listed, 265 all-zero skipped, 3845 to fetch
+2026-09-04T04:16:27Z HFSYNC w044/inklabels: 500/3845
+2026-09-04T04:16:43Z HEARTBEAT stage=labels_fetch up=4501s free=95G
+2026-09-04T04:17:43Z HEARTBEAT stage=labels_fetch up=4561s free=95G
+2026-09-04T04:18:44Z HEARTBEAT stage=labels_fetch up=4622s free=95G
+2026-09-04T04:19:44Z HEARTBEAT stage=labels_fetch up=4682s free=95G
+2026-09-04T04:20:23Z HFSYNC w044/inklabels: 1000/3845
+2026-09-04T04:20:27Z HFSYNC w044/inklabels: 1500/3845
+2026-09-04T04:20:37Z HFSYNC w044/inklabels: 2000/3845
+2026-09-04T04:20:44Z HEARTBEAT stage=labels_fetch up=4742s free=95G
+2026-09-04T04:21:06Z HFSYNC w044/inklabels: 2500/3845
+2026-09-04T04:21:34Z HFSYNC w044/inklabels: 3000/3845
+2026-09-04T04:21:44Z HEARTBEAT stage=labels_fetch up=4802s free=95G
+2026-09-04T04:21:58Z HFSYNC w044/inklabels: 3500/3845
+2026-09-04T04:22:44Z HEARTBEAT stage=labels_fetch up=4862s free=95G
+2026-09-04T04:23:44Z HEARTBEAT stage=labels_fetch up=4922s free=95G
+2026-09-04T04:24:44Z HEARTBEAT stage=labels_fetch up=4982s free=95G
+2026-09-04T04:25:40Z HFSYNC w044/inklabels: 31 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T04:25:44Z HEARTBEAT stage=labels_fetch up=5042s free=95G
+2026-09-04T04:26:14Z HFSYNC w044/inklabels: OK sha256 metadata; plane z=14 nonzero=455469 shape=[6040, 8160]
+2026-09-04T04:26:14Z HFSYNC w044/supervision_mask: 4110 files listed, 842 all-zero skipped, 3268 to fetch
+2026-09-04T04:26:18Z HFSYNC w044/supervision_mask: 500/3268
+2026-09-04T04:26:22Z HFSYNC w044/supervision_mask: 1000/3268
+2026-09-04T04:26:25Z HFSYNC w044/supervision_mask: 1500/3268
+2026-09-04T04:26:29Z HFSYNC w044/supervision_mask: 2000/3268
+2026-09-04T04:26:33Z HFSYNC w044/supervision_mask: 2500/3268
+2026-09-04T04:26:44Z HEARTBEAT stage=labels_fetch up=5102s free=95G
+2026-09-04T04:27:44Z HEARTBEAT stage=labels_fetch up=5162s free=95G
+2026-09-04T04:28:44Z HEARTBEAT stage=labels_fetch up=5222s free=95G
+2026-09-04T04:29:44Z HEARTBEAT stage=labels_fetch up=5282s free=95G
+2026-09-04T04:30:09Z HFSYNC w044/supervision_mask: 3000/3268
+2026-09-04T04:30:11Z HFSYNC w044/supervision_mask: 32 files failed at 32 threads (first: HTTPError: HTTP Error 429: Too Many Requests); retrying them at 4 threads after 30 s
+2026-09-04T04:30:44Z HEARTBEAT stage=labels_fetch up=5342s free=95G
+2026-09-04T04:30:45Z HFSYNC w044/supervision_mask: OK sha256 metadata; plane z=14 nonzero=1190307 shape=[6040, 8160]
+2026-09-04T04:30:45Z === STAGE labels_fetch DONE (5139s) ===
+2026-09-04T04:30:45Z === STAGE sv_fetch OPEN ===
+2026-09-04T04:30:52Z SVPLAN pherc1667-w013: 3674 patch corners -> 660 chunk columns (manifest 565; OK)
+2026-09-04T04:31:11Z SVPLAN pherc1667-w018: 15107 patch corners -> 2628 chunk columns (manifest 2233; OK)
+2026-09-04T04:31:21Z SVPLAN pherc1667-w023: 5910 patch corners -> 1109 chunk columns (manifest 935; OK)
+2026-09-04T04:31:23Z SVPLAN pherc1667-w028: 963 patch corners -> 214 chunk columns (manifest 182; OK)
+2026-09-04T04:31:25Z SVPLAN pherc1667-w029: 1394 patch corners -> 377 chunk columns (manifest 299; OK)
+2026-09-04T04:31:29Z SVPLAN pherc1667-w031: 2866 patch corners -> 533 chunk columns (manifest 447; OK)
+2026-09-04T04:31:36Z SVPLAN phercparis4-w00: 6308 patch corners -> 1049 chunk columns (manifest 583; WARN out of the 0.5-1.6x band, ratio 1.80)
+2026-09-04T04:31:44Z HEARTBEAT stage=sv_fetch up=5402s free=95G
+2026-09-04T04:31:46Z SVPLAN phercparis4-w01: 9074 patch corners -> 1655 chunk columns (manifest 1407; OK)
+2026-09-04T04:31:52Z SVPLAN phercparis4-w02: 5075 patch corners -> 990 chunk columns (manifest 811; OK)
+2026-09-04T04:32:00Z SVPLAN phercparis4-w03: 6750 patch corners -> 1212 chunk columns (manifest 1033; OK)
+2026-09-04T04:32:39Z SVPLAN phercparis4-w05: 32553 patch corners -> 3295 chunk columns (manifest 3044; OK)
+2026-09-04T04:32:44Z HEARTBEAT stage=sv_fetch up=5462s free=95G
+2026-09-04T04:32:52Z SVPLAN phercparis4-w06: 12018 patch corners -> 2034 chunk columns (manifest 1748; OK)
+2026-09-04T04:33:15Z SVPLAN phercparis4-w07: 17348 patch corners -> 2907 chunk columns (manifest 2475; OK)
+2026-09-04T04:33:22Z SVPLAN phercparis4-w09: 5656 patch corners -> 930 chunk columns (manifest 645; OK)
+2026-09-04T04:33:23Z SVPLAN pherc0814-46527: 479 patch corners -> 89 chunk columns (manifest 75; OK)
+2026-09-04T04:33:23Z SVPLAN total 19682 chunks, ~35.0 GB (cap 45)
+2026-09-04T04:33:24Z SVFETCH pherc1667-w013: 660 planned, 660 to fetch, 0 known absent (sep '.')
+2026-09-04T04:33:28Z SVFETCH pherc1667-w013: 200/660
+2026-09-04T04:33:33Z SVFETCH pherc1667-w013: 400/660
+2026-09-04T04:33:38Z SVFETCH pherc1667-w013: 600/660
+2026-09-04T04:33:40Z SVFETCH pherc1667-w013: done; absent 0/660 = 0.0%
+2026-09-04T04:33:41Z SVFETCH pherc1667-w018: 2628 planned, 2628 to fetch, 0 known absent (sep '/')
+2026-09-04T04:33:44Z HEARTBEAT stage=sv_fetch up=5522s free=94G
+2026-09-04T04:33:46Z SVFETCH pherc1667-w018: 200/2628
+2026-09-04T04:33:51Z SVFETCH pherc1667-w018: 400/2628
+2026-09-04T04:33:55Z SVFETCH pherc1667-w018: 600/2628
+2026-09-04T04:34:00Z SVFETCH pherc1667-w018: 800/2628
+2026-09-04T04:34:05Z SVFETCH pherc1667-w018: 1000/2628
+2026-09-04T04:34:10Z SVFETCH pherc1667-w018: 1200/2628
+2026-09-04T04:34:14Z SVFETCH pherc1667-w018: 1400/2628
+2026-09-04T04:34:19Z SVFETCH pherc1667-w018: 1600/2628
+2026-09-04T04:34:24Z SVFETCH pherc1667-w018: 1800/2628
+2026-09-04T04:34:28Z SVFETCH pherc1667-w018: 2000/2628
+2026-09-04T04:34:33Z SVFETCH pherc1667-w018: 2200/2628
+2026-09-04T04:34:37Z SVFETCH pherc1667-w018: 2400/2628
+2026-09-04T04:34:42Z SVFETCH pherc1667-w018: 2600/2628
+2026-09-04T04:34:44Z HEARTBEAT stage=sv_fetch up=5582s free=90G
+2026-09-04T04:34:44Z SVFETCH pherc1667-w018: done; absent 28/2628 = 1.1%
+2026-09-04T04:34:45Z SVFETCH pherc1667-w023: 1109 planned, 1109 to fetch, 0 known absent (sep '/')
+2026-09-04T04:34:50Z SVFETCH pherc1667-w023: 200/1109
+2026-09-04T04:34:55Z SVFETCH pherc1667-w023: 400/1109
+2026-09-04T04:34:59Z SVFETCH pherc1667-w023: 600/1109
+2026-09-04T04:35:04Z SVFETCH pherc1667-w023: 800/1109
+2026-09-04T04:35:08Z SVFETCH pherc1667-w023: 1000/1109
+2026-09-04T04:35:14Z SVFETCH pherc1667-w023: done; absent 1/1109 = 0.1%
+2026-09-04T04:35:15Z SVFETCH pherc1667-w028: 214 planned, 214 to fetch, 0 known absent (sep '/')
+2026-09-04T04:35:19Z SVFETCH pherc1667-w028: 200/214
+2026-09-04T04:35:23Z SVFETCH pherc1667-w028: done; absent 8/214 = 3.7%
+2026-09-04T04:35:24Z SVFETCH pherc1667-w029: 377 planned, 377 to fetch, 0 known absent (sep '/')
+2026-09-04T04:35:28Z SVFETCH pherc1667-w029: 200/377
+2026-09-04T04:35:35Z SVFETCH pherc1667-w029: done; absent 0/377 = 0.0%
+2026-09-04T04:35:36Z SVFETCH pherc1667-w031: 533 planned, 533 to fetch, 0 known absent (sep '/')
+2026-09-04T04:35:40Z SVFETCH pherc1667-w031: 200/533
+2026-09-04T04:35:44Z HEARTBEAT stage=sv_fetch up=5642s free=86G
+2026-09-04T04:35:45Z SVFETCH pherc1667-w031: 400/533
+2026-09-04T04:35:52Z SVFETCH pherc1667-w031: done; absent 0/533 = 0.0%
+2026-09-04T04:35:53Z SVFETCH phercparis4-w00: 1049 planned, 1049 to fetch, 0 known absent (sep '/')
+2026-09-04T04:35:58Z SVFETCH phercparis4-w00: 200/1049
+2026-09-04T04:36:03Z SVFETCH phercparis4-w00: 400/1049
+2026-09-04T04:36:08Z SVFETCH phercparis4-w00: 600/1049
+2026-09-04T04:36:12Z SVFETCH phercparis4-w00: 800/1049
+2026-09-04T04:36:18Z SVFETCH phercparis4-w00: 1000/1049
+2026-09-04T04:36:21Z SVFETCH phercparis4-w00: done; absent 0/1049 = 0.0%
+2026-09-04T04:36:22Z SVFETCH phercparis4-w01: 1655 planned, 1655 to fetch, 0 known absent (sep '/')
+2026-09-04T04:36:27Z SVFETCH phercparis4-w01: 200/1655
+2026-09-04T04:36:32Z SVFETCH phercparis4-w01: 400/1655
+2026-09-04T04:36:37Z SVFETCH phercparis4-w01: 600/1655
+2026-09-04T04:36:42Z SVFETCH phercparis4-w01: 800/1655
+2026-09-04T04:36:44Z HEARTBEAT stage=sv_fetch up=5702s free=83G
+2026-09-04T04:36:46Z SVFETCH phercparis4-w01: 1000/1655
+2026-09-04T04:36:52Z SVFETCH phercparis4-w01: 1200/1655
+2026-09-04T04:36:56Z SVFETCH phercparis4-w01: 1400/1655
+2026-09-04T04:37:01Z SVFETCH phercparis4-w01: 1600/1655
+2026-09-04T04:37:06Z SVFETCH phercparis4-w01: done; absent 8/1655 = 0.5%
+2026-09-04T04:37:06Z SVFETCH phercparis4-w02: 990 planned, 990 to fetch, 0 known absent (sep '/')
+2026-09-04T04:37:11Z SVFETCH phercparis4-w02: 200/990
+2026-09-04T04:37:16Z SVFETCH phercparis4-w02: 400/990
+2026-09-04T04:37:21Z SVFETCH phercparis4-w02: 600/990
+2026-09-04T04:37:26Z SVFETCH phercparis4-w02: 800/990
+2026-09-04T04:37:32Z SVFETCH phercparis4-w02: done; absent 27/990 = 2.7%
+2026-09-04T04:37:33Z SVFETCH phercparis4-w03: 1212 planned, 1212 to fetch, 0 known absent (sep '/')
+2026-09-04T04:37:37Z SVFETCH phercparis4-w03: 200/1212
+2026-09-04T04:37:42Z SVFETCH phercparis4-w03: 400/1212
+2026-09-04T04:37:44Z HEARTBEAT stage=sv_fetch up=5762s free=79G
+2026-09-04T04:37:47Z SVFETCH phercparis4-w03: 600/1212
+2026-09-04T04:37:51Z SVFETCH phercparis4-w03: 800/1212
+2026-09-04T04:37:56Z SVFETCH phercparis4-w03: 1000/1212
+2026-09-04T04:38:01Z SVFETCH phercparis4-w03: 1200/1212
+2026-09-04T04:38:04Z SVFETCH phercparis4-w03: done; absent 0/1212 = 0.0%
+2026-09-04T04:38:05Z SVFETCH phercparis4-w05: 3295 planned, 3295 to fetch, 0 known absent (sep '/')
+2026-09-04T04:38:10Z SVFETCH phercparis4-w05: 200/3295
+2026-09-04T04:38:15Z SVFETCH phercparis4-w05: 400/3295
+2026-09-04T04:38:19Z SVFETCH phercparis4-w05: 600/3295
+2026-09-04T04:38:24Z SVFETCH phercparis4-w05: 800/3295
+2026-09-04T04:38:29Z SVFETCH phercparis4-w05: 1000/3295
+2026-09-04T04:38:34Z SVFETCH phercparis4-w05: 1200/3295
+2026-09-04T04:38:38Z SVFETCH phercparis4-w05: 1400/3295
+2026-09-04T04:38:43Z SVFETCH phercparis4-w05: 1600/3295
+2026-09-04T04:38:44Z HEARTBEAT stage=sv_fetch up=5822s free=75G
+2026-09-04T04:38:47Z SVFETCH phercparis4-w05: 1800/3295
+2026-09-04T04:38:52Z SVFETCH phercparis4-w05: 2000/3295
+2026-09-04T04:38:57Z SVFETCH phercparis4-w05: 2200/3295
+2026-09-04T04:39:02Z SVFETCH phercparis4-w05: 2400/3295
+2026-09-04T04:39:08Z SVFETCH phercparis4-w05: 2600/3295
+2026-09-04T04:39:21Z SVFETCH phercparis4-w05: 2800/3295
+2026-09-04T04:39:29Z SVFETCH phercparis4-w05: 3000/3295
+2026-09-04T04:39:37Z SVFETCH phercparis4-w05: 3200/3295
+2026-09-04T04:39:43Z SVFETCH phercparis4-w05: done; absent 10/3295 = 0.3%
+2026-09-04T04:39:43Z SVFETCH phercparis4-w06: 2034 planned, 2034 to fetch, 0 known absent (sep '/')
+2026-09-04T04:39:44Z HEARTBEAT stage=sv_fetch up=5882s free=72G
+2026-09-04T04:39:54Z SVFETCH phercparis4-w06: 200/2034
+2026-09-04T04:40:00Z SVFETCH phercparis4-w06: 400/2034
+2026-09-04T04:40:08Z SVFETCH phercparis4-w06: 600/2034
+2026-09-04T04:40:18Z SVFETCH phercparis4-w06: 800/2034
+2026-09-04T04:40:25Z SVFETCH phercparis4-w06: 1000/2034
+2026-09-04T04:40:31Z SVFETCH phercparis4-w06: 1200/2034
+2026-09-04T04:40:37Z SVFETCH phercparis4-w06: 1400/2034
+2026-09-04T04:40:44Z HEARTBEAT stage=sv_fetch up=5942s free=70G
+2026-09-04T04:40:45Z SVFETCH phercparis4-w06: 1600/2034
+2026-09-04T04:40:51Z SVFETCH phercparis4-w06: 1800/2034
+2026-09-04T04:40:57Z SVFETCH phercparis4-w06: 2000/2034
+2026-09-04T04:40:59Z SVFETCH phercparis4-w06: done; absent 37/2034 = 1.8%
+2026-09-04T04:41:00Z SVFETCH phercparis4-w07: 2907 planned, 2907 to fetch, 0 known absent (sep '/')
+2026-09-04T04:41:06Z SVFETCH phercparis4-w07: 200/2907
+2026-09-04T04:41:13Z SVFETCH phercparis4-w07: 400/2907
+2026-09-04T04:41:18Z SVFETCH phercparis4-w07: 600/2907
+2026-09-04T04:41:24Z SVFETCH phercparis4-w07: 800/2907
+2026-09-04T04:41:31Z SVFETCH phercparis4-w07: 1000/2907
+2026-09-04T04:41:37Z SVFETCH phercparis4-w07: 1200/2907
+2026-09-04T04:41:43Z SVFETCH phercparis4-w07: 1400/2907
+2026-09-04T04:41:44Z HEARTBEAT stage=sv_fetch up=6002s free=67G
+2026-09-04T04:41:49Z SVFETCH phercparis4-w07: 1600/2907
+2026-09-04T04:41:55Z SVFETCH phercparis4-w07: 1800/2907
+2026-09-04T04:42:02Z SVFETCH phercparis4-w07: 2000/2907
+2026-09-04T04:42:10Z SVFETCH phercparis4-w07: 2200/2907
+2026-09-04T04:42:16Z SVFETCH phercparis4-w07: 2400/2907
+2026-09-04T04:42:24Z SVFETCH phercparis4-w07: 2600/2907
+2026-09-04T04:42:30Z SVFETCH phercparis4-w07: 2800/2907
+2026-09-04T04:42:36Z SVFETCH phercparis4-w07: done; absent 0/2907 = 0.0%
+2026-09-04T04:42:37Z SVFETCH phercparis4-w09: 930 planned, 930 to fetch, 0 known absent (sep '/')
+2026-09-04T04:42:43Z SVFETCH phercparis4-w09: 200/930
+2026-09-04T04:42:44Z HEARTBEAT stage=sv_fetch up=6062s free=64G
+2026-09-04T04:42:49Z SVFETCH phercparis4-w09: 400/930
+2026-09-04T04:42:55Z SVFETCH phercparis4-w09: 600/930
+2026-09-04T04:43:01Z SVFETCH phercparis4-w09: 800/930
+2026-09-04T04:43:06Z SVFETCH phercparis4-w09: done; absent 0/930 = 0.0%
+2026-09-04T04:43:07Z SVFETCH pherc0814-46527: 89 planned, 89 to fetch, 0 known absent (sep '/')
+2026-09-04T04:43:09Z SVFETCH pherc0814-46527: done; absent 0/89 = 0.0%
+2026-09-04T04:43:10Z sv_fetch: level2 on disk 33G
+2026-09-04T04:43:10Z === STAGE sv_fetch DONE (745s) ===
+2026-09-04T04:43:10Z === STAGE pool OPEN ===
+2026-09-04T04:43:41Z pool: batch done (4/15 pooled)
+2026-09-04T04:43:44Z HEARTBEAT stage=pool up=6122s free=61G
+2026-09-04T04:43:58Z pool: batch done (8/15 pooled)
+2026-09-04T04:44:28Z pool: batch done (12/15 pooled)
+2026-09-04T04:44:44Z HEARTBEAT stage=pool up=6182s free=58G
+2026-09-04T04:45:10Z SVCHECK pherc1667-w013: pooled shape OK [21, 10400, 19900]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:16Z SVCHECK pherc1667-w018: pooled shape OK [21, 10595, 24525]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:23Z SVCHECK pherc1667-w023: pooled shape OK [21, 10465, 25590]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:26Z SVCHECK pherc1667-w028: pooled shape OK [21, 9355, 7585]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:28Z SVCHECK pherc1667-w029: pooled shape OK [21, 9500, 7830]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:31Z SVCHECK pherc1667-w031: pooled shape OK [21, 9370, 8045]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:33Z SVCHECK phercparis4-w00: pooled shape OK [21, 7990, 12990]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:37Z SVCHECK phercparis4-w01: pooled shape OK [21, 12650, 9100]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:41Z SVCHECK phercparis4-w02: pooled shape OK [21, 8545, 11005]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:44Z HEARTBEAT stage=pool up=6242s free=73G
+2026-09-04T04:45:44Z SVCHECK phercparis4-w03: pooled shape OK [21, 8575, 12810]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:51Z SVCHECK phercparis4-w05: pooled shape OK [21, 12700, 18930]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:45:56Z SVCHECK phercparis4-w06: pooled shape OK [21, 12750, 9995]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:46:05Z SVCHECK phercparis4-w07: pooled shape OK [21, 13010, 27035]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:46:10Z SVCHECK phercparis4-w09: pooled shape OK [21, 8020, 18950]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:46:11Z SVCHECK pherc0814-46527: pooled shape OK [21, 2130, 3455]; 0/20 sampled supervised patches all-zero
+2026-09-04T04:46:11Z pool: 15 volumes ready (5.0G); level2 deleted
+2026-09-04T04:46:11Z === STAGE pool DONE (181s) ===
+2026-09-04T04:46:11Z === STAGE native_fetch OPEN ===
+2026-09-04T04:46:14Z NATIVE w035: crop rows 512:2944 cols 384:3072 (2432x2688), 399 chunks, 399 to fetch
+2026-09-04T04:46:22Z NATIVE w035: zarr ready [28, 2432, 2688], pos=334035 neg=737086 zero_frac=0.000
+2026-09-04T04:46:27Z NATIVE w039: crop rows 3584:4992 cols 2304:5376 (1408x3072), 264 chunks, 264 to fetch
+2026-09-04T04:46:31Z NATIVE w039: zarr ready [28, 1408, 3072], pos=182429 neg=393791 zero_frac=0.000
+2026-09-04T04:46:35Z NATIVE w040: crop rows 512:6144 cols 1408:7936 (5632x6528), 2244 chunks, 2244 to fetch
+2026-09-04T04:46:44Z HEARTBEAT stage=native_fetch up=6302s free=89G
+2026-09-04T04:47:12Z NATIVE w040: zarr ready [28, 5632, 6528], pos=716725 neg=913009 zero_frac=0.056
+2026-09-04T04:47:16Z NATIVE w041: crop rows 1664:5760 cols 384:4736 (4096x4352), 1088 chunks, 1088 to fetch
+2026-09-04T04:47:44Z HEARTBEAT stage=native_fetch up=6362s free=87G
+2026-09-04T04:47:45Z NATIVE w041: zarr ready [28, 4096, 4352], pos=229884 neg=325745 zero_frac=0.000
+2026-09-04T04:47:48Z NATIVE w044: crop rows 3584:4992 cols 1664:4608 (1408x2944), 253 chunks, 253 to fetch
+2026-09-04T04:47:53Z NATIVE w044: zarr ready [28, 1408, 2944], pos=451297 neg=739010 zero_frac=0.000
+2026-09-04T04:47:53Z === STAGE native_fetch DONE (102s) ===
+2026-09-04T04:47:53Z === STAGE measure OPEN ===
+2026-09-04T04:47:57Z INPUTSTAT pooled pherc0814-46527: snr25 7.9 [6.7,9.2] bw 0.352 head 160 (n=64)
+2026-09-04T04:47:58Z INPUTSTAT pooled pherc1667-w013: snr25 6.2 [5.7,8.4] bw 0.339 head 154 (n=24)
+2026-09-04T04:47:59Z INPUTSTAT pooled pherc1667-w018: snr25 6.3 [5.0,7.8] bw 0.343 head 158 (n=63)
+2026-09-04T04:48:01Z INPUTSTAT pooled pherc1667-w023: snr25 7.3 [6.1,7.9] bw 0.343 head 152 (n=22)
+2026-09-04T04:48:02Z INPUTSTAT pooled pherc1667-w028: snr25 6.6 [5.7,8.1] bw 0.343 head 162 (n=20)
+2026-09-04T04:48:03Z INPUTSTAT pooled pherc1667-w029: snr25 6.9 [6.0,8.3] bw 0.343 head 160 (n=42)
+2026-09-04T04:48:04Z INPUTSTAT pooled pherc1667-w031: snr25 7.0 [6.2,8.3] bw 0.343 head 175 (n=49)
+2026-09-04T04:48:05Z INPUTSTAT pooled phercparis4-w00: snr25 6.1 [5.1,7.7] bw 0.343 head 132 (n=64)
+2026-09-04T04:48:06Z INPUTSTAT pooled phercparis4-w01: snr25 5.4 [4.9,6.8] bw 0.343 head 129 (n=64)
+2026-09-04T04:48:07Z INPUTSTAT pooled phercparis4-w02: snr25 5.7 [5.0,6.9] bw 0.343 head 125 (n=64)
+2026-09-04T04:48:08Z INPUTSTAT pooled phercparis4-w03: snr25 6.9 [5.5,7.9] bw 0.343 head 131 (n=64)
+2026-09-04T04:48:09Z INPUTSTAT pooled phercparis4-w05: snr25 5.8 [4.9,7.4] bw 0.343 head 127 (n=64)
+2026-09-04T04:48:09Z INPUTSTAT pooled phercparis4-w06: snr25 5.6 [4.6,7.4] bw 0.339 head 125 (n=64)
+2026-09-04T04:48:11Z INPUTSTAT pooled phercparis4-w07: snr25 5.7 [4.6,7.0] bw 0.335 head 116 (n=64)
+2026-09-04T04:48:12Z INPUTSTAT pooled phercparis4-w09: snr25 6.3 [5.3,7.3] bw 0.343 head 124 (n=49)
+2026-09-04T04:48:12Z INPUTSTAT native w035_crop: snr25 21.3 [15.7,36.9] bw 0.356 head 162 (n=64)
+2026-09-04T04:48:13Z INPUTSTAT native w039_crop: snr25 28.5 [19.4,47.1] bw 0.360 head 154 (n=64)
+2026-09-04T04:48:13Z INPUTSTAT native w040_crop: snr25 30.6 [20.8,47.6] bw 0.360 head 148 (n=64)
+2026-09-04T04:48:14Z INPUTSTAT native w041_crop: snr25 35.3 [22.4,57.3] bw 0.360 head 152 (n=64)
+2026-09-04T04:48:14Z INPUTSTAT native w044_crop: snr25 39.4 [26.3,61.7] bw 0.369 head 154 (n=64)
+2026-09-04T04:48:14Z INPUTSTAT summary: pooled snr25 median 6.3 vs index-target median 74.5; pooled bw median 0.343 vs target median 0.496; fraction of pooled stores where arm-1 noise / blur is active: {'noise': 0.0, 'blur': 0.0}
+2026-09-04T04:48:15Z === STAGE measure DONE (22s) ===
+2026-09-04T04:48:15Z === STAGE config_gen OPEN ===
+2026-09-04T04:48:15Z CFG generator: wrote /workspace/betA/out/cfg/loso_s42.json | representations : 15 kept, 14 held out | held out        : pherc0139-w016, pherc0139-w017, pherc0139-w028, pherc0139-w029, pherc0139-w035, pherc0139-w039, pherc0139-w040, pherc0139-w041, pherc0139-w043, w035, w039, w040, w041, w044 | quotas          : {'1667': 40, 'Paris4': 20, '0814': 4} (batch 64) | dataset entries : 3
+2026-09-04T04:48:15Z CFG loso seed 42: 15 kept, quotas {'1667': 40, 'Paris4': 20, '0814': 4}, 78125 iterations, save every 5000, workers 12, ARM 2 (input_whitening) -> /workspace/betA/out/cfg/loso_s42.json
+2026-09-04T04:48:15Z === STAGE config_gen DONE (0s) ===
+2026-09-04T04:48:16Z === STAGE ctl OPEN ===
+2026-09-04T04:48:16Z CTL_FETCH .zarray parsed and matches embedded expectation (shape/chunks/dtype/raw/separator)
+2026-09-04T04:48:16Z CTL_FETCH 399 chunks total, 399 to fetch (8 threads, resumable)
+2026-09-04T04:48:20Z CTL_FETCH progress 100/399
+2026-09-04T04:48:24Z CTL_FETCH progress 200/399
+2026-09-04T04:48:29Z CTL_FETCH progress 300/399
+2026-09-04T04:48:33Z CTL_FETCH complete: 399 chunks on disk (0 absent-on-server = all-zero)
+2026-09-04T04:48:33Z CTL_BUILD embedded labels verified: pos=334035 neg=737086 crop=2432x2688
+2026-09-04T04:48:33Z CTL_BUILD crop stats mean=75.97 sd=42.26 zero_frac=0.0001 max=255
+2026-09-04T04:48:37Z CTL_BUILD ctl_native.zarr ready (28x2432x2688)
+2026-09-04T04:48:37Z CTL_BUILD ctl_scalefault: x1.9503 -> (55, 4743, 5243)
+2026-09-04T04:48:44Z HEARTBEAT stage=ctl up=6422s free=86G
+2026-09-04T04:48:55Z resample ctl_scalefault slice 1/55
+2026-09-04T04:49:00Z resample ctl_scalefault slice 9/55
+2026-09-04T04:49:05Z resample ctl_scalefault slice 17/55
+2026-09-04T04:49:11Z resample ctl_scalefault slice 25/55
+2026-09-04T04:49:17Z resample ctl_scalefault slice 33/55
+2026-09-04T04:49:22Z resample ctl_scalefault slice 41/55
+2026-09-04T04:49:28Z resample ctl_scalefault slice 49/55
+2026-09-04T04:49:44Z HEARTBEAT stage=ctl up=6482s free=86G
+2026-09-04T04:49:45Z CTL_BUILD ctl_scalefault.zarr ready (55, 4743, 5243)
+2026-09-04T04:49:45Z CTL_BUILD ctl_half: x0.5000 -> (14, 1216, 1344)
+2026-09-04T04:49:51Z resample ctl_half slice 1/14
+2026-09-04T04:49:52Z resample ctl_half slice 9/14
+2026-09-04T04:49:53Z CTL_BUILD ctl_half.zarr ready (14, 1216, 1344)
+2026-09-04T04:49:54Z infer OPEN ctl_native.zarr -> ctl_native.tif [both]
+2026-09-04T04:50:28Z infer DONE ctl_native.tif [both] (34s)
+2026-09-04T04:50:28Z infer OPEN ctl_scalefault.zarr -> ctl_scalefault.tif [both]
+2026-09-04T04:50:44Z HEARTBEAT stage=ctl up=6542s free=86G
+2026-09-04T04:51:44Z HEARTBEAT stage=ctl up=6602s free=86G
+2026-09-04T04:52:30Z infer DONE ctl_scalefault.tif [both] (122s)
+2026-09-04T04:52:30Z infer OPEN ctl_half.zarr -> ctl_half.tif [both]
+2026-09-04T04:52:44Z HEARTBEAT stage=ctl up=6662s free=85G
+2026-09-04T04:52:53Z infer DONE ctl_half.tif [both] (23s)
+2026-09-04T04:52:54Z CTL_SCORE ctl_native forward: AUC=0.9991 (map (2432, 2688))
+2026-09-04T04:52:54Z CTL_SCORE ctl_native reverse: AUC=0.5118 (map (2432, 2688))
+2026-09-04T04:52:57Z CTL_SCORE ctl_scalefault forward: AUC=0.7488 (map (4743, 5243))
+2026-09-04T04:52:58Z CTL_SCORE ctl_scalefault reverse: AUC=0.5381 (map (4743, 5243))
+2026-09-04T04:52:59Z CTL_SCORE ctl_half forward: AUC=0.5227 (map (1216, 1344))
+2026-09-04T04:52:59Z CTL_SCORE ctl_half reverse: AUC=0.4846 (map (1216, 1344))
+2026-09-04T04:52:59Z CTL GATES PASSED: native fwd=0.9991 rev=0.5118; scale-fault best=0.7488 -> FAULT_REPRODUCED; half-scale best=0.5227
+2026-09-04T04:52:59Z === STAGE ctl DONE (283s) ===
+2026-09-04T04:52:59Z === STAGE train_s42 OPEN ===
+2026-09-04T04:53:44Z HEARTBEAT stage=train_s42 up=6722s free=85G
+2026-09-04T04:54:44Z HEARTBEAT stage=train_s42 up=6782s free=85G
+2026-09-04T04:54:59Z TRAIN s42:  | ckpts=0
+2026-09-04T04:55:44Z HEARTBEAT stage=train_s42 up=6842s free=85G
+2026-09-04T04:56:44Z HEARTBEAT stage=train_s42 up=6902s free=85G
+2026-09-04T04:56:59Z TRAIN s42:  | ckpts=0
+2026-09-04T04:57:44Z HEARTBEAT stage=train_s42 up=6962s free=85G
+2026-09-04T04:58:44Z HEARTBEAT stage=train_s42 up=7022s free=85G
+2026-09-04T04:58:59Z TRAIN s42:  | ckpts=0
+2026-09-04T04:59:44Z HEARTBEAT stage=train_s42 up=7082s free=85G
+2026-09-04T05:00:44Z HEARTBEAT stage=train_s42 up=7142s free=85G
+2026-09-04T05:00:59Z TRAIN s42:  | ckpts=0
+2026-09-04T05:01:44Z HEARTBEAT stage=train_s42 up=7202s free=85G
+2026-09-04T05:02:44Z HEARTBEAT stage=train_s42 up=7262s free=85G
+2026-09-04T05:02:59Z TRAIN s42:  | ckpts=0
+2026-09-04T05:03:44Z HEARTBEAT stage=train_s42 up=7322s free=85G
+2026-09-04T05:04:44Z HEARTBEAT stage=train_s42 up=7383s free=85G
+2026-09-04T05:04:59Z TRAIN s42:   0%|          | 0/78125 [00:00<?, ?it/s] | ckpts=0
+2026-09-04T05:05:45Z HEARTBEAT stage=train_s42 up=7443s free=85G
+2026-09-04T05:06:45Z HEARTBEAT stage=train_s42 up=7503s free=85G
+2026-09-04T05:06:59Z TRAIN s42:   0%|          | 356/78125 [02:52<6:29:36,  3.33it/s, loss=0.6080, lr=3.56e-03] | ckpts=0
+2026-09-04T05:07:45Z HEARTBEAT stage=train_s42 up=7563s free=85G
+2026-09-04T05:08:45Z HEARTBEAT stage=train_s42 up=7623s free=85G
+2026-09-04T05:08:59Z TRAIN s42:   1%|          | 786/78125 [04:52<6:35:10,  3.26it/s, loss=0.6136, lr=7.86e-03] | ckpts=0
+2026-09-04T05:09:45Z HEARTBEAT stage=train_s42 up=7683s free=85G
+2026-09-04T05:10:45Z HEARTBEAT stage=train_s42 up=7743s free=85G
+2026-09-04T05:10:59Z TRAIN s42:   2%|â         | 1224/78125 [06:52<5:53:24,  3.63it/s, loss=0.6125, lr=1.00e-02] | ckpts=0
+2026-09-04T05:11:45Z HEARTBEAT stage=train_s42 up=7803s free=85G
+2026-09-04T05:12:45Z HEARTBEAT stage=train_s42 up=7863s free=85G
+2026-09-04T05:12:59Z TRAIN s42:   2%|â         | 1667/78125 [08:52<5:57:08,  3.57it/s, loss=0.6025, lr=1.00e-02] | ckpts=0
+2026-09-04T05:13:45Z HEARTBEAT stage=train_s42 up=7923s free=85G
+2026-09-04T05:14:45Z HEARTBEAT stage=train_s42 up=7983s free=85G
+2026-09-04T05:14:59Z TRAIN s42:   3%|â         | 2094/78125 [10:52<5:22:11,  3.93it/s, loss=0.6143, lr=1.00e-02] | ckpts=0
+2026-09-04T05:15:45Z HEARTBEAT stage=train_s42 up=8043s free=85G
+2026-09-04T05:16:45Z HEARTBEAT stage=train_s42 up=8103s free=85G
+2026-09-04T05:16:59Z TRAIN s42:   3%|â         | 2527/78125 [12:52<5:43:46,  3.67it/s, loss=0.6107, lr=9.99e-03] | ckpts=0
+2026-09-04T05:17:45Z HEARTBEAT stage=train_s42 up=8163s free=85G
+2026-09-04T05:18:45Z HEARTBEAT stage=train_s42 up=8223s free=85G
+2026-09-04T05:18:59Z TRAIN s42:   4%|â         | 2964/78125 [14:52<5:50:26,  3.57it/s, loss=0.6101, lr=9.98e-03] | ckpts=0
+2026-09-04T05:19:45Z HEARTBEAT stage=train_s42 up=8283s free=85G
+2026-09-04T05:20:45Z HEARTBEAT stage=train_s42 up=8343s free=85G
+2026-09-04T05:20:59Z TRAIN s42:   4%|â         | 3396/78125 [16:52<5:43:46,  3.62it/s, loss=0.5972, lr=9.98e-03] | ckpts=0
+2026-09-04T05:21:45Z HEARTBEAT stage=train_s42 up=8403s free=85G
+2026-09-04T05:22:45Z HEARTBEAT stage=train_s42 up=8463s free=85G
+2026-09-04T05:22:59Z TRAIN s42:   5%|â         | 3829/78125 [18:52<5:44:09,  3.60it/s, loss=0.5975, lr=9.97e-03] | ckpts=0
+2026-09-04T05:23:45Z HEARTBEAT stage=train_s42 up=8523s free=85G
+2026-09-04T05:24:45Z HEARTBEAT stage=train_s42 up=8583s free=85G
+2026-09-04T05:24:59Z TRAIN s42:   5%|â         | 4250/78125 [20:52<5:42:16,  3.60it/s, loss=0.6004, lr=9.96e-03] | ckpts=0
+2026-09-04T05:25:45Z HEARTBEAT stage=train_s42 up=8643s free=85G
+2026-09-04T05:26:45Z HEARTBEAT stage=train_s42 up=8703s free=85G
+2026-09-04T05:26:59Z TRAIN s42:   6%|â         | 4684/78125 [22:52<5:24:38,  3.77it/s, loss=0.5868, lr=9.94e-03] | ckpts=0
+2026-09-04T05:27:45Z HEARTBEAT stage=train_s42 up=8763s free=85G
+2026-09-04T05:28:45Z HEARTBEAT stage=train_s42 up=8823s free=85G
+2026-09-04T05:28:59Z TRAIN s42:   6%|â         | 5059/78125 [24:52<6:24:24,  3.17it/s, loss=0.5820, lr=9.93e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:29:45Z HEARTBEAT stage=train_s42 up=8883s free=85G
+2026-09-04T05:30:45Z HEARTBEAT stage=train_s42 up=8943s free=85G
+2026-09-04T05:30:59Z TRAIN s42:   7%|â         | 5486/78125 [26:52<5:48:42,  3.47it/s, loss=0.5842, lr=9.92e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:31:45Z HEARTBEAT stage=train_s42 up=9003s free=85G
+2026-09-04T05:32:45Z HEARTBEAT stage=train_s42 up=9063s free=85G
+2026-09-04T05:32:59Z TRAIN s42:   8%|â         | 5902/78125 [28:52<5:47:08,  3.47it/s, loss=0.5700, lr=9.90e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:33:45Z HEARTBEAT stage=train_s42 up=9123s free=85G
+2026-09-04T05:34:45Z HEARTBEAT stage=train_s42 up=9183s free=85G
+2026-09-04T05:34:59Z TRAIN s42:   8%|â         | 6330/78125 [30:52<5:25:25,  3.68it/s, loss=0.5840, lr=9.88e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:35:45Z HEARTBEAT stage=train_s42 up=9243s free=85G
+2026-09-04T05:36:45Z HEARTBEAT stage=train_s42 up=9303s free=85G
+2026-09-04T05:36:59Z TRAIN s42:   9%|â         | 6755/78125 [32:52<6:03:50,  3.27it/s, loss=0.5630, lr=9.86e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:37:45Z HEARTBEAT stage=train_s42 up=9363s free=85G
+2026-09-04T05:38:45Z HEARTBEAT stage=train_s42 up=9423s free=85G
+2026-09-04T05:38:59Z TRAIN s42:   9%|â         | 7178/78125 [34:52<5:19:30,  3.70it/s, loss=0.5650, lr=9.84e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:39:45Z HEARTBEAT stage=train_s42 up=9483s free=85G
+2026-09-04T05:40:45Z HEARTBEAT stage=train_s42 up=9543s free=85G
+2026-09-04T05:40:59Z TRAIN s42:  10%|â         | 7609/78125 [36:52<5:32:21,  3.54it/s, loss=0.5638, lr=9.82e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:41:45Z HEARTBEAT stage=train_s42 up=9603s free=85G
+2026-09-04T05:42:45Z HEARTBEAT stage=train_s42 up=9663s free=85G
+2026-09-04T05:43:00Z TRAIN s42:  10%|â         | 8028/78125 [38:52<5:35:08,  3.49it/s, loss=0.5929, lr=9.80e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:43:45Z HEARTBEAT stage=train_s42 up=9723s free=85G
+2026-09-04T05:44:45Z HEARTBEAT stage=train_s42 up=9783s free=85G
+2026-09-04T05:45:00Z TRAIN s42:  11%|â         | 8451/78125 [40:52<5:46:12,  3.35it/s, loss=0.5738, lr=9.77e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:45:45Z HEARTBEAT stage=train_s42 up=9843s free=85G
+2026-09-04T05:46:45Z HEARTBEAT stage=train_s42 up=9903s free=85G
+2026-09-04T05:47:00Z TRAIN s42:  11%|ââ        | 8878/78125 [42:52<5:13:24,  3.68it/s, loss=0.5813, lr=9.74e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:47:45Z HEARTBEAT stage=train_s42 up=9963s free=85G
+2026-09-04T05:48:45Z HEARTBEAT stage=train_s42 up=10023s free=85G
+2026-09-04T05:49:00Z TRAIN s42:  12%|ââ        | 9317/78125 [44:52<5:09:52,  3.70it/s, loss=0.5634, lr=9.72e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:49:45Z HEARTBEAT stage=train_s42 up=10083s free=85G
+2026-09-04T05:50:45Z HEARTBEAT stage=train_s42 up=10143s free=85G
+2026-09-04T05:51:00Z TRAIN s42:  12%|ââ        | 9753/78125 [46:52<5:09:19,  3.68it/s, loss=0.5711, lr=9.69e-03, val_loss=0.5995] | ckpts=1
+2026-09-04T05:51:45Z HEARTBEAT stage=train_s42 up=10203s free=85G
+2026-09-04T05:52:45Z HEARTBEAT stage=train_s42 up=10263s free=85G
+2026-09-04T05:53:00Z TRAIN s42:  13%|ââ        | 10153/78125 [48:52<5:19:55,  3.54it/s, loss=0.5598, lr=9.66e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T05:53:45Z HEARTBEAT stage=train_s42 up=10323s free=85G
+2026-09-04T05:54:45Z HEARTBEAT stage=train_s42 up=10383s free=85G
+2026-09-04T05:55:00Z TRAIN s42:  14%|ââ        | 10594/78125 [50:52<4:58:55,  3.77it/s, loss=0.5600, lr=9.62e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T05:55:45Z HEARTBEAT stage=train_s42 up=10443s free=85G
+2026-09-04T05:56:45Z HEARTBEAT stage=train_s42 up=10503s free=85G
+2026-09-04T05:57:00Z TRAIN s42:  14%|ââ        | 11029/78125 [52:52<5:50:51,  3.19it/s, loss=0.5719, lr=9.59e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T05:57:45Z HEARTBEAT stage=train_s42 up=10563s free=85G
+2026-09-04T05:58:45Z HEARTBEAT stage=train_s42 up=10623s free=85G
+2026-09-04T05:59:00Z TRAIN s42:  15%|ââ        | 11467/78125 [54:52<5:09:51,  3.59it/s, loss=0.5557, lr=9.55e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T05:59:45Z HEARTBEAT stage=train_s42 up=10683s free=85G
+2026-09-04T06:00:46Z HEARTBEAT stage=train_s42 up=10744s free=85G
+2026-09-04T06:01:00Z TRAIN s42:  15%|ââ        | 11887/78125 [56:52<5:13:25,  3.52it/s, loss=0.5733, lr=9.52e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:01:46Z HEARTBEAT stage=train_s42 up=10804s free=85G
+2026-09-04T06:02:46Z HEARTBEAT stage=train_s42 up=10864s free=85G
+2026-09-04T06:03:00Z TRAIN s42:  16%|ââ        | 12324/78125 [58:52<4:59:47,  3.66it/s, loss=0.5588, lr=9.48e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:03:46Z HEARTBEAT stage=train_s42 up=10924s free=85G
+2026-09-04T06:04:46Z HEARTBEAT stage=train_s42 up=10984s free=85G
+2026-09-04T06:05:00Z TRAIN s42:  16%|ââ        | 12758/78125 [1:00:52<5:12:58,  3.48it/s, loss=0.5567, lr=9.44e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:05:46Z HEARTBEAT stage=train_s42 up=11044s free=85G
+2026-09-04T06:06:46Z HEARTBEAT stage=train_s42 up=11104s free=85G
+2026-09-04T06:07:00Z TRAIN s42:  17%|ââ        | 13172/78125 [1:02:52<4:37:30,  3.90it/s, loss=0.5790, lr=9.40e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:07:46Z HEARTBEAT stage=train_s42 up=11164s free=85G
+2026-09-04T06:08:46Z HEARTBEAT stage=train_s42 up=11224s free=85G
+2026-09-04T06:09:00Z TRAIN s42:  17%|ââ        | 13589/78125 [1:04:52<5:06:14,  3.51it/s, loss=0.5537, lr=9.36e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:09:46Z HEARTBEAT stage=train_s42 up=11284s free=85G
+2026-09-04T06:10:46Z HEARTBEAT stage=train_s42 up=11344s free=85G
+2026-09-04T06:11:00Z TRAIN s42:  18%|ââ        | 14002/78125 [1:06:52<5:13:47,  3.41it/s, loss=0.5529, lr=9.32e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:11:46Z HEARTBEAT stage=train_s42 up=11404s free=85G
+2026-09-04T06:12:46Z HEARTBEAT stage=train_s42 up=11464s free=85G
+2026-09-04T06:13:00Z TRAIN s42:  18%|ââ        | 14414/78125 [1:08:52<4:43:16,  3.75it/s, loss=0.5629, lr=9.27e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:13:46Z HEARTBEAT stage=train_s42 up=11524s free=85G
+2026-09-04T06:14:46Z HEARTBEAT stage=train_s42 up=11584s free=85G
+2026-09-04T06:15:00Z TRAIN s42:  19%|ââ        | 14830/78125 [1:10:52<5:02:14,  3.49it/s, loss=0.5410, lr=9.23e-03, val_loss=0.6153] | ckpts=2
+2026-09-04T06:15:46Z HEARTBEAT stage=train_s42 up=11644s free=85G
+2026-09-04T06:16:46Z HEARTBEAT stage=train_s42 up=11704s free=84G
+2026-09-04T06:17:00Z TRAIN s42:  20%|ââ        | 15238/78125 [1:12:52<5:29:03,  3.19it/s, loss=0.5490, lr=9.18e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:17:46Z HEARTBEAT stage=train_s42 up=11764s free=84G
+2026-09-04T06:18:46Z HEARTBEAT stage=train_s42 up=11824s free=84G
+2026-09-04T06:19:00Z TRAIN s42:  20%|ââ        | 15656/78125 [1:14:52<4:41:33,  3.70it/s, loss=0.5547, lr=9.14e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:19:46Z HEARTBEAT stage=train_s42 up=11884s free=84G
+2026-09-04T06:20:46Z HEARTBEAT stage=train_s42 up=11944s free=84G
+2026-09-04T06:21:00Z TRAIN s42:  21%|ââ        | 16077/78125 [1:16:53<4:53:51,  3.52it/s, loss=0.5465, lr=9.09e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:21:46Z HEARTBEAT stage=train_s42 up=12004s free=84G
+2026-09-04T06:22:46Z HEARTBEAT stage=train_s42 up=12064s free=84G
+2026-09-04T06:23:00Z TRAIN s42:  21%|ââ        | 16498/78125 [1:18:53<5:33:45,  3.08it/s, loss=0.5384, lr=9.04e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:23:46Z HEARTBEAT stage=train_s42 up=12124s free=84G
+2026-09-04T06:24:46Z HEARTBEAT stage=train_s42 up=12184s free=84G
+2026-09-04T06:25:00Z TRAIN s42:  22%|âââ       | 16913/78125 [1:20:53<5:07:33,  3.32it/s, loss=0.5695, lr=8.99e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:25:46Z HEARTBEAT stage=train_s42 up=12244s free=84G
+2026-09-04T06:26:46Z HEARTBEAT stage=train_s42 up=12304s free=84G
+2026-09-04T06:27:00Z TRAIN s42:  22%|âââ       | 17330/78125 [1:22:53<4:38:51,  3.63it/s, loss=0.5424, lr=8.93e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:27:46Z HEARTBEAT stage=train_s42 up=12364s free=84G
+2026-09-04T06:28:46Z HEARTBEAT stage=train_s42 up=12424s free=84G
+2026-09-04T06:29:00Z TRAIN s42:  23%|âââ       | 17744/78125 [1:24:52<5:02:12,  3.33it/s, loss=0.5576, lr=8.88e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:29:46Z HEARTBEAT stage=train_s42 up=12484s free=84G
+2026-09-04T06:30:46Z HEARTBEAT stage=train_s42 up=12544s free=84G
+2026-09-04T06:31:00Z TRAIN s42:  23%|âââ       | 18169/78125 [1:26:52<5:24:34,  3.08it/s, loss=0.5439, lr=8.83e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:31:46Z HEARTBEAT stage=train_s42 up=12604s free=84G
+2026-09-04T06:32:46Z HEARTBEAT stage=train_s42 up=12664s free=84G
+2026-09-04T06:33:00Z TRAIN s42:  24%|âââ       | 18585/78125 [1:28:53<4:44:26,  3.49it/s, loss=0.5469, lr=8.77e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:33:46Z HEARTBEAT stage=train_s42 up=12724s free=84G
+2026-09-04T06:34:46Z HEARTBEAT stage=train_s42 up=12784s free=84G
+2026-09-04T06:35:00Z TRAIN s42:  24%|âââ       | 19006/78125 [1:30:53<4:59:31,  3.29it/s, loss=0.5533, lr=8.71e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:35:46Z HEARTBEAT stage=train_s42 up=12844s free=84G
+2026-09-04T06:36:46Z HEARTBEAT stage=train_s42 up=12904s free=84G
+2026-09-04T06:37:00Z TRAIN s42:  25%|âââ       | 19429/78125 [1:32:53<4:42:47,  3.46it/s, loss=0.5556, lr=8.66e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:37:46Z HEARTBEAT stage=train_s42 up=12964s free=84G
+2026-09-04T06:38:46Z HEARTBEAT stage=train_s42 up=13024s free=84G
+2026-09-04T06:39:00Z TRAIN s42:  25%|âââ       | 19842/78125 [1:34:53<4:12:45,  3.84it/s, loss=0.5456, lr=8.60e-03, val_loss=0.6080] | ckpts=3
+2026-09-04T06:39:46Z HEARTBEAT stage=train_s42 up=13084s free=84G
+2026-09-04T06:40:46Z HEARTBEAT stage=train_s42 up=13144s free=84G
+2026-09-04T06:41:00Z TRAIN s42:  26%|âââ       | 20241/78125 [1:36:53<4:01:52,  3.99it/s, loss=0.5665, lr=8.54e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:41:46Z HEARTBEAT stage=train_s42 up=13204s free=84G
+2026-09-04T06:42:46Z HEARTBEAT stage=train_s42 up=13264s free=84G
+2026-09-04T06:43:00Z TRAIN s42:  26%|âââ       | 20661/78125 [1:38:53<4:32:54,  3.51it/s, loss=0.5518, lr=8.48e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:43:46Z HEARTBEAT stage=train_s42 up=13324s free=84G
+2026-09-04T06:44:46Z HEARTBEAT stage=train_s42 up=13384s free=84G
+2026-09-04T06:45:00Z TRAIN s42:  27%|âââ       | 21081/78125 [1:40:53<4:35:20,  3.45it/s, loss=0.5556, lr=8.42e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:45:46Z HEARTBEAT stage=train_s42 up=13444s free=84G
+2026-09-04T06:46:46Z HEARTBEAT stage=train_s42 up=13504s free=84G
+2026-09-04T06:47:00Z TRAIN s42:  28%|âââ       | 21496/78125 [1:42:53<3:52:22,  4.06it/s, loss=0.5331, lr=8.36e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:47:46Z HEARTBEAT stage=train_s42 up=13564s free=84G
+2026-09-04T06:48:46Z HEARTBEAT stage=train_s42 up=13624s free=84G
+2026-09-04T06:49:00Z TRAIN s42:  28%|âââ       | 21906/78125 [1:44:53<4:36:01,  3.39it/s, loss=0.5451, lr=8.29e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:49:46Z HEARTBEAT stage=train_s42 up=13684s free=84G
+2026-09-04T06:50:46Z HEARTBEAT stage=train_s42 up=13744s free=84G
+2026-09-04T06:51:00Z TRAIN s42:  29%|âââ       | 22327/78125 [1:46:53<5:02:47,  3.07it/s, loss=0.5501, lr=8.23e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:51:46Z HEARTBEAT stage=train_s42 up=13804s free=84G
+2026-09-04T06:52:46Z HEARTBEAT stage=train_s42 up=13864s free=84G
+2026-09-04T06:53:00Z TRAIN s42:  29%|âââ       | 22751/78125 [1:48:53<4:22:21,  3.52it/s, loss=0.5553, lr=8.16e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:53:46Z HEARTBEAT stage=train_s42 up=13924s free=84G
+2026-09-04T06:54:46Z HEARTBEAT stage=train_s42 up=13984s free=84G
+2026-09-04T06:55:00Z TRAIN s42:  30%|âââ       | 23170/78125 [1:50:53<3:55:00,  3.90it/s, loss=0.5398, lr=8.10e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:55:46Z HEARTBEAT stage=train_s42 up=14044s free=84G
+2026-09-04T06:56:46Z HEARTBEAT stage=train_s42 up=14104s free=84G
+2026-09-04T06:57:00Z TRAIN s42:  30%|âââ       | 23582/78125 [1:52:53<4:12:26,  3.60it/s, loss=0.5276, lr=8.03e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:57:47Z HEARTBEAT stage=train_s42 up=14165s free=84G
+2026-09-04T06:58:47Z HEARTBEAT stage=train_s42 up=14225s free=84G
+2026-09-04T06:59:00Z TRAIN s42:  31%|âââ       | 23998/78125 [1:54:53<4:21:25,  3.45it/s, loss=0.5456, lr=7.96e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T06:59:47Z HEARTBEAT stage=train_s42 up=14285s free=84G
+2026-09-04T07:00:47Z HEARTBEAT stage=train_s42 up=14345s free=84G
+2026-09-04T07:01:00Z TRAIN s42:  31%|ââââ      | 24415/78125 [1:56:53<3:58:39,  3.75it/s, loss=0.5321, lr=7.89e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T07:01:47Z HEARTBEAT stage=train_s42 up=14405s free=84G
+2026-09-04T07:02:47Z HEARTBEAT stage=train_s42 up=14465s free=84G
+2026-09-04T07:03:00Z TRAIN s42:  32%|ââââ      | 24831/78125 [1:58:53<3:53:21,  3.81it/s, loss=0.5523, lr=7.82e-03, val_loss=0.6388] | ckpts=4
+2026-09-04T07:03:47Z HEARTBEAT stage=train_s42 up=14525s free=84G
+2026-09-04T07:04:47Z HEARTBEAT stage=train_s42 up=14585s free=84G
+2026-09-04T07:05:00Z TRAIN s42:  32%|ââââ      | 25233/78125 [2:00:53<4:09:19,  3.54it/s, loss=0.5256, lr=7.76e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:05:47Z HEARTBEAT stage=train_s42 up=14645s free=84G
+2026-09-04T07:06:47Z HEARTBEAT stage=train_s42 up=14705s free=84G
+2026-09-04T07:07:00Z TRAIN s42:  33%|ââââ      | 25640/78125 [2:02:53<4:27:04,  3.28it/s, loss=0.5387, lr=7.69e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:07:47Z HEARTBEAT stage=train_s42 up=14765s free=84G
+2026-09-04T07:08:47Z HEARTBEAT stage=train_s42 up=14825s free=84G
+2026-09-04T07:09:00Z TRAIN s42:  33%|ââââ      | 26062/78125 [2:04:53<5:03:13,  2.86it/s, loss=0.5283, lr=7.61e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:09:47Z HEARTBEAT stage=train_s42 up=14885s free=84G
+2026-09-04T07:10:47Z HEARTBEAT stage=train_s42 up=14945s free=84G
+2026-09-04T07:11:00Z TRAIN s42:  34%|ââââ      | 26472/78125 [2:06:53<4:09:09,  3.46it/s, loss=0.5510, lr=7.54e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:11:47Z HEARTBEAT stage=train_s42 up=15005s free=84G
+2026-09-04T07:12:47Z HEARTBEAT stage=train_s42 up=15065s free=84G
+2026-09-04T07:13:00Z TRAIN s42:  34%|ââââ      | 26893/78125 [2:08:53<4:01:28,  3.54it/s, loss=0.5377, lr=7.47e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:13:47Z HEARTBEAT stage=train_s42 up=15125s free=84G
+2026-09-04T07:14:47Z HEARTBEAT stage=train_s42 up=15185s free=84G
+2026-09-04T07:15:00Z TRAIN s42:  35%|ââââ      | 27309/78125 [2:10:53<4:07:57,  3.42it/s, loss=0.5437, lr=7.39e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:15:47Z HEARTBEAT stage=train_s42 up=15245s free=84G
+2026-09-04T07:16:47Z HEARTBEAT stage=train_s42 up=15305s free=84G
+2026-09-04T07:17:01Z TRAIN s42:  35%|ââââ      | 27709/78125 [2:12:53<4:13:48,  3.31it/s, loss=0.5410, lr=7.32e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:17:47Z HEARTBEAT stage=train_s42 up=15365s free=84G
+2026-09-04T07:18:47Z HEARTBEAT stage=train_s42 up=15425s free=84G
+2026-09-04T07:19:01Z TRAIN s42:  36%|ââââ      | 28139/78125 [2:14:53<4:11:10,  3.32it/s, loss=0.5274, lr=7.24e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:19:47Z HEARTBEAT stage=train_s42 up=15485s free=84G
+2026-09-04T07:20:47Z HEARTBEAT stage=train_s42 up=15545s free=84G
+2026-09-04T07:21:01Z TRAIN s42:  37%|ââââ      | 28572/78125 [2:16:53<3:38:27,  3.78it/s, loss=0.5355, lr=7.16e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:21:47Z HEARTBEAT stage=train_s42 up=15605s free=84G
+2026-09-04T07:22:47Z HEARTBEAT stage=train_s42 up=15665s free=84G
+2026-09-04T07:23:01Z TRAIN s42:  37%|ââââ      | 29015/78125 [2:18:53<3:33:42,  3.83it/s, loss=0.5361, lr=7.08e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:23:47Z HEARTBEAT stage=train_s42 up=15725s free=84G
+2026-09-04T07:24:47Z HEARTBEAT stage=train_s42 up=15785s free=84G
+2026-09-04T07:25:01Z TRAIN s42:  38%|ââââ      | 29446/78125 [2:20:53<3:45:38,  3.60it/s, loss=0.5328, lr=7.00e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:25:47Z HEARTBEAT stage=train_s42 up=15845s free=84G
+2026-09-04T07:26:47Z HEARTBEAT stage=train_s42 up=15905s free=84G
+2026-09-04T07:27:01Z TRAIN s42:  38%|ââââ      | 29885/78125 [2:22:53<3:44:00,  3.59it/s, loss=0.5486, lr=6.92e-03, val_loss=0.6330] | ckpts=5
+2026-09-04T07:27:47Z HEARTBEAT stage=train_s42 up=15965s free=84G
+2026-09-04T07:28:47Z HEARTBEAT stage=train_s42 up=16025s free=84G
+2026-09-04T07:29:01Z TRAIN s42:  39%|ââââ      | 30312/78125 [2:24:53<3:43:55,  3.56it/s, loss=0.5242, lr=6.84e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:29:47Z HEARTBEAT stage=train_s42 up=16085s free=84G
+2026-09-04T07:30:47Z HEARTBEAT stage=train_s42 up=16145s free=84G
+2026-09-04T07:31:01Z TRAIN s42:  39%|ââââ      | 30757/78125 [2:26:53<3:34:12,  3.69it/s, loss=0.5434, lr=6.76e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:31:47Z HEARTBEAT stage=train_s42 up=16205s free=84G
+2026-09-04T07:32:47Z HEARTBEAT stage=train_s42 up=16265s free=84G
+2026-09-04T07:33:01Z TRAIN s42:  40%|ââââ      | 31200/78125 [2:28:53<3:27:48,  3.76it/s, loss=0.5268, lr=6.67e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:33:47Z HEARTBEAT stage=train_s42 up=16325s free=84G
+2026-09-04T07:34:47Z HEARTBEAT stage=train_s42 up=16385s free=84G
+2026-09-04T07:35:01Z TRAIN s42:  40%|ââââ      | 31631/78125 [2:30:53<3:47:08,  3.41it/s, loss=0.5146, lr=6.59e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:35:47Z HEARTBEAT stage=train_s42 up=16445s free=84G
+2026-09-04T07:36:47Z HEARTBEAT stage=train_s42 up=16505s free=84G
+2026-09-04T07:37:01Z TRAIN s42:  41%|ââââ      | 32074/78125 [2:32:53<3:31:51,  3.62it/s, loss=0.5234, lr=6.50e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:37:47Z HEARTBEAT stage=train_s42 up=16565s free=84G
+2026-09-04T07:38:47Z HEARTBEAT stage=train_s42 up=16625s free=84G
+2026-09-04T07:39:01Z TRAIN s42:  42%|âââââ     | 32513/78125 [2:34:53<3:16:55,  3.86it/s, loss=0.5159, lr=6.42e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:39:47Z HEARTBEAT stage=train_s42 up=16685s free=84G
+2026-09-04T07:40:47Z HEARTBEAT stage=train_s42 up=16745s free=84G
+2026-09-04T07:41:01Z TRAIN s42:  42%|âââââ     | 32955/78125 [2:36:53<3:21:53,  3.73it/s, loss=0.5400, lr=6.33e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:41:47Z HEARTBEAT stage=train_s42 up=16805s free=84G
+2026-09-04T07:42:47Z HEARTBEAT stage=train_s42 up=16865s free=84G
+2026-09-04T07:43:01Z TRAIN s42:  43%|âââââ     | 33385/78125 [2:38:53<3:18:36,  3.75it/s, loss=0.5194, lr=6.25e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:43:47Z HEARTBEAT stage=train_s42 up=16925s free=84G
+2026-09-04T07:44:47Z HEARTBEAT stage=train_s42 up=16985s free=84G
+2026-09-04T07:45:01Z TRAIN s42:  43%|âââââ     | 33830/78125 [2:40:53<3:26:44,  3.57it/s, loss=0.5201, lr=6.16e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:45:47Z HEARTBEAT stage=train_s42 up=17045s free=84G
+2026-09-04T07:46:47Z HEARTBEAT stage=train_s42 up=17105s free=84G
+2026-09-04T07:47:01Z TRAIN s42:  44%|âââââ     | 34272/78125 [2:42:53<3:21:07,  3.63it/s, loss=0.5097, lr=6.07e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:47:47Z HEARTBEAT stage=train_s42 up=17165s free=84G
+2026-09-04T07:48:47Z HEARTBEAT stage=train_s42 up=17225s free=84G
+2026-09-04T07:49:01Z TRAIN s42:  44%|âââââ     | 34715/78125 [2:44:53<3:02:08,  3.97it/s, loss=0.5248, lr=5.98e-03, val_loss=0.5989] | ckpts=6
+2026-09-04T07:49:47Z HEARTBEAT stage=train_s42 up=17285s free=84G
+2026-09-04T07:50:47Z HEARTBEAT stage=train_s42 up=17345s free=83G
+2026-09-04T07:51:01Z TRAIN s42:  45%|âââââ     | 35141/78125 [2:46:53<3:05:18,  3.87it/s, loss=0.5092, lr=5.90e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T07:51:47Z HEARTBEAT stage=train_s42 up=17405s free=83G
+2026-09-04T07:52:47Z HEARTBEAT stage=train_s42 up=17465s free=83G
+2026-09-04T07:53:01Z TRAIN s42:  46%|âââââ     | 35573/78125 [2:48:53<3:11:17,  3.71it/s, loss=0.5293, lr=5.81e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T07:53:47Z HEARTBEAT stage=train_s42 up=17525s free=83G
+2026-09-04T07:54:47Z HEARTBEAT stage=train_s42 up=17585s free=83G
+2026-09-04T07:55:01Z TRAIN s42:  46%|âââââ     | 36017/78125 [2:50:53<3:02:13,  3.85it/s, loss=0.5221, lr=5.72e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T07:55:47Z HEARTBEAT stage=train_s42 up=17645s free=83G
+2026-09-04T07:56:48Z HEARTBEAT stage=train_s42 up=17706s free=83G
+2026-09-04T07:57:01Z TRAIN s42:  47%|âââââ     | 36461/78125 [2:52:53<3:02:47,  3.80it/s, loss=0.5163, lr=5.63e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T07:57:48Z HEARTBEAT stage=train_s42 up=17766s free=83G
+2026-09-04T07:58:48Z HEARTBEAT stage=train_s42 up=17826s free=83G
+2026-09-04T07:59:01Z TRAIN s42:  47%|âââââ     | 36901/78125 [2:54:54<3:06:52,  3.68it/s, loss=0.5189, lr=5.54e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T07:59:48Z HEARTBEAT stage=train_s42 up=17886s free=83G
+2026-09-04T08:00:48Z HEARTBEAT stage=train_s42 up=17946s free=83G
+2026-09-04T08:01:01Z TRAIN s42:  48%|âââââ     | 37331/78125 [2:56:54<3:06:23,  3.65it/s, loss=0.5200, lr=5.45e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:01:48Z HEARTBEAT stage=train_s42 up=18006s free=83G
+2026-09-04T08:02:48Z HEARTBEAT stage=train_s42 up=18066s free=83G
+2026-09-04T08:03:01Z TRAIN s42:  48%|âââââ     | 37768/78125 [2:58:54<2:56:17,  3.82it/s, loss=0.5039, lr=5.37e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:03:48Z HEARTBEAT stage=train_s42 up=18126s free=83G
+2026-09-04T08:04:48Z HEARTBEAT stage=train_s42 up=18186s free=83G
+2026-09-04T08:05:01Z TRAIN s42:  49%|âââââ     | 38194/78125 [3:00:53<3:20:57,  3.31it/s, loss=0.5281, lr=5.28e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:05:48Z HEARTBEAT stage=train_s42 up=18246s free=83G
+2026-09-04T08:06:48Z HEARTBEAT stage=train_s42 up=18306s free=83G
+2026-09-04T08:07:01Z TRAIN s42:  49%|âââââ     | 38611/78125 [3:02:54<3:05:58,  3.54it/s, loss=0.5233, lr=5.19e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:07:48Z HEARTBEAT stage=train_s42 up=18366s free=83G
+2026-09-04T08:08:48Z HEARTBEAT stage=train_s42 up=18426s free=83G
+2026-09-04T08:09:01Z TRAIN s42:  50%|âââââ     | 39023/78125 [3:04:54<3:06:28,  3.49it/s, loss=0.4910, lr=5.11e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:09:48Z HEARTBEAT stage=train_s42 up=18486s free=83G
+2026-09-04T08:10:48Z HEARTBEAT stage=train_s42 up=18546s free=83G
+2026-09-04T08:11:01Z TRAIN s42:  50%|âââââ     | 39413/78125 [3:06:54<3:27:55,  3.10it/s, loss=0.5177, lr=5.03e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:11:48Z HEARTBEAT stage=train_s42 up=18606s free=83G
+2026-09-04T08:12:48Z HEARTBEAT stage=train_s42 up=18666s free=83G
+2026-09-04T08:13:01Z TRAIN s42:  51%|âââââ     | 39808/78125 [3:08:53<3:20:24,  3.19it/s, loss=0.5376, lr=4.95e-03, val_loss=0.6557] | ckpts=7
+2026-09-04T08:13:48Z HEARTBEAT stage=train_s42 up=18726s free=83G
+2026-09-04T08:14:48Z HEARTBEAT stage=train_s42 up=18786s free=83G
+2026-09-04T08:15:01Z TRAIN s42:  51%|ââââââ    | 40181/78125 [3:10:54<3:26:24,  3.06it/s, loss=0.5319, lr=4.87e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:15:48Z HEARTBEAT stage=train_s42 up=18846s free=83G
+2026-09-04T08:16:48Z HEARTBEAT stage=train_s42 up=18906s free=83G
+2026-09-04T08:17:01Z TRAIN s42:  52%|ââââââ    | 40552/78125 [3:12:54<3:48:51,  2.74it/s, loss=0.5209, lr=4.80e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:17:48Z HEARTBEAT stage=train_s42 up=18966s free=83G
+2026-09-04T08:18:48Z HEARTBEAT stage=train_s42 up=19026s free=83G
+2026-09-04T08:19:01Z TRAIN s42:  52%|ââââââ    | 40924/78125 [3:14:54<3:53:13,  2.66it/s, loss=0.5226, lr=4.72e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:19:48Z HEARTBEAT stage=train_s42 up=19086s free=83G
+2026-09-04T08:20:48Z HEARTBEAT stage=train_s42 up=19146s free=83G
+2026-09-04T08:21:01Z TRAIN s42:  53%|ââââââ    | 41302/78125 [3:16:54<3:10:38,  3.22it/s, loss=0.5093, lr=4.65e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:21:48Z HEARTBEAT stage=train_s42 up=19206s free=83G
+2026-09-04T08:22:48Z HEARTBEAT stage=train_s42 up=19266s free=83G
+2026-09-04T08:23:01Z TRAIN s42:  53%|ââââââ    | 41695/78125 [3:18:54<2:47:33,  3.62it/s, loss=0.5027, lr=4.57e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:23:48Z HEARTBEAT stage=train_s42 up=19326s free=83G
+2026-09-04T08:24:48Z HEARTBEAT stage=train_s42 up=19386s free=83G
+2026-09-04T08:25:01Z TRAIN s42:  54%|ââââââ    | 42076/78125 [3:20:54<3:23:08,  2.96it/s, loss=0.5198, lr=4.49e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:25:48Z HEARTBEAT stage=train_s42 up=19446s free=83G
+2026-09-04T08:26:48Z HEARTBEAT stage=train_s42 up=19506s free=83G
+2026-09-04T08:27:01Z TRAIN s42:  54%|ââââââ    | 42463/78125 [3:22:54<2:51:49,  3.46it/s, loss=0.5256, lr=4.41e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:27:48Z HEARTBEAT stage=train_s42 up=19566s free=83G
+2026-09-04T08:28:48Z HEARTBEAT stage=train_s42 up=19626s free=83G
+2026-09-04T08:29:01Z TRAIN s42:  55%|ââââââ    | 42835/78125 [3:24:54<2:36:56,  3.75it/s, loss=0.5192, lr=4.34e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:29:48Z HEARTBEAT stage=train_s42 up=19686s free=83G
+2026-09-04T08:30:48Z HEARTBEAT stage=train_s42 up=19746s free=83G
+2026-09-04T08:31:01Z TRAIN s42:  55%|ââââââ    | 43211/78125 [3:26:54<3:08:58,  3.08it/s, loss=0.5110, lr=4.26e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:31:48Z HEARTBEAT stage=train_s42 up=19806s free=83G
+2026-09-04T08:32:48Z HEARTBEAT stage=train_s42 up=19866s free=83G
+2026-09-04T08:33:01Z TRAIN s42:  56%|ââââââ    | 43599/78125 [3:28:54<3:16:06,  2.93it/s, loss=0.5098, lr=4.18e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:33:48Z HEARTBEAT stage=train_s42 up=19926s free=83G
+2026-09-04T08:34:48Z HEARTBEAT stage=train_s42 up=19986s free=83G
+2026-09-04T08:35:01Z TRAIN s42:  56%|ââââââ    | 43994/78125 [3:30:54<2:41:25,  3.52it/s, loss=0.5082, lr=4.10e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:35:48Z HEARTBEAT stage=train_s42 up=20046s free=83G
+2026-09-04T08:36:48Z HEARTBEAT stage=train_s42 up=20106s free=83G
+2026-09-04T08:37:01Z TRAIN s42:  57%|ââââââ    | 44370/78125 [3:32:54<3:04:58,  3.04it/s, loss=0.5025, lr=4.03e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:37:48Z HEARTBEAT stage=train_s42 up=20166s free=83G
+2026-09-04T08:38:48Z HEARTBEAT stage=train_s42 up=20226s free=83G
+2026-09-04T08:39:01Z TRAIN s42:  57%|ââââââ    | 44763/78125 [3:34:54<2:44:41,  3.38it/s, loss=0.5172, lr=3.95e-03, val_loss=0.6494] | ckpts=8
+2026-09-04T08:39:48Z HEARTBEAT stage=train_s42 up=20286s free=83G
+2026-09-04T08:40:48Z HEARTBEAT stage=train_s42 up=20346s free=83G
+2026-09-04T08:41:01Z TRAIN s42:  58%|ââââââ    | 45114/78125 [3:36:54<2:51:33,  3.21it/s, loss=0.5223, lr=3.88e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:41:48Z HEARTBEAT stage=train_s42 up=20406s free=83G
+2026-09-04T08:42:48Z HEARTBEAT stage=train_s42 up=20466s free=83G
+2026-09-04T08:43:01Z TRAIN s42:  58%|ââââââ    | 45504/78125 [3:38:54<2:53:30,  3.13it/s, loss=0.5147, lr=3.80e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:43:48Z HEARTBEAT stage=train_s42 up=20526s free=83G
+2026-09-04T08:44:48Z HEARTBEAT stage=train_s42 up=20586s free=83G
+2026-09-04T08:45:01Z TRAIN s42:  59%|ââââââ    | 45909/78125 [3:40:54<2:43:42,  3.28it/s, loss=0.5250, lr=3.72e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:45:48Z HEARTBEAT stage=train_s42 up=20646s free=83G
+2026-09-04T08:46:48Z HEARTBEAT stage=train_s42 up=20706s free=83G
+2026-09-04T08:47:01Z TRAIN s42:  59%|ââââââ    | 46308/78125 [3:42:54<2:48:02,  3.16it/s, loss=0.5110, lr=3.64e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:47:48Z HEARTBEAT stage=train_s42 up=20766s free=83G
+2026-09-04T08:48:48Z HEARTBEAT stage=train_s42 up=20826s free=83G
+2026-09-04T08:49:01Z TRAIN s42:  60%|ââââââ    | 46706/78125 [3:44:54<2:22:01,  3.69it/s, loss=0.5118, lr=3.57e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:49:48Z HEARTBEAT stage=train_s42 up=20886s free=83G
+2026-09-04T08:50:48Z HEARTBEAT stage=train_s42 up=20946s free=83G
+2026-09-04T08:51:01Z TRAIN s42:  60%|ââââââ    | 47080/78125 [3:46:54<2:25:40,  3.55it/s, loss=0.4931, lr=3.49e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:51:48Z HEARTBEAT stage=train_s42 up=21006s free=83G
+2026-09-04T08:52:48Z HEARTBEAT stage=train_s42 up=21066s free=83G
+2026-09-04T08:53:02Z TRAIN s42:  61%|ââââââ    | 47467/78125 [3:48:54<2:30:15,  3.40it/s, loss=0.5046, lr=3.42e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:53:48Z HEARTBEAT stage=train_s42 up=21126s free=83G
+2026-09-04T08:54:48Z HEARTBEAT stage=train_s42 up=21186s free=83G
+2026-09-04T08:55:02Z TRAIN s42:  61%|ââââââ    | 47843/78125 [3:50:54<2:36:53,  3.22it/s, loss=0.5211, lr=3.35e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:55:48Z HEARTBEAT stage=train_s42 up=21246s free=83G
+2026-09-04T08:56:48Z HEARTBEAT stage=train_s42 up=21306s free=83G
+2026-09-04T08:57:02Z TRAIN s42:  62%|âââââââ   | 48233/78125 [3:52:54<2:32:06,  3.28it/s, loss=0.5279, lr=3.27e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:57:49Z HEARTBEAT stage=train_s42 up=21367s free=83G
+2026-09-04T08:58:49Z HEARTBEAT stage=train_s42 up=21427s free=83G
+2026-09-04T08:59:02Z TRAIN s42:  62%|âââââââ   | 48628/78125 [3:54:54<2:41:02,  3.05it/s, loss=0.5112, lr=3.20e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T08:59:49Z HEARTBEAT stage=train_s42 up=21487s free=83G
+2026-09-04T09:00:49Z HEARTBEAT stage=train_s42 up=21547s free=83G
+2026-09-04T09:01:02Z TRAIN s42:  63%|âââââââ   | 49011/78125 [3:56:54<2:14:00,  3.62it/s, loss=0.5195, lr=3.12e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T09:01:49Z HEARTBEAT stage=train_s42 up=21607s free=83G
+2026-09-04T09:02:49Z HEARTBEAT stage=train_s42 up=21667s free=83G
+2026-09-04T09:03:02Z TRAIN s42:  63%|âââââââ   | 49403/78125 [3:58:54<2:12:50,  3.60it/s, loss=0.5029, lr=3.05e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T09:03:49Z HEARTBEAT stage=train_s42 up=21727s free=83G
+2026-09-04T09:04:49Z HEARTBEAT stage=train_s42 up=21787s free=83G
+2026-09-04T09:05:02Z TRAIN s42:  64%|âââââââ   | 49779/78125 [4:00:54<2:04:35,  3.79it/s, loss=0.5167, lr=2.98e-03, val_loss=0.6596] | ckpts=9
+2026-09-04T09:05:49Z HEARTBEAT stage=train_s42 up=21847s free=83G
+2026-09-04T09:06:49Z HEARTBEAT stage=train_s42 up=21907s free=83G
+2026-09-04T09:07:02Z TRAIN s42:  64%|âââââââ   | 50146/78125 [4:02:54<2:32:36,  3.06it/s, loss=0.5068, lr=2.91e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:07:49Z HEARTBEAT stage=train_s42 up=21967s free=83G
+2026-09-04T09:08:49Z HEARTBEAT stage=train_s42 up=22027s free=83G
+2026-09-04T09:09:02Z TRAIN s42:  65%|âââââââ   | 50539/78125 [4:04:54<2:28:41,  3.09it/s, loss=0.4995, lr=2.84e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:09:49Z HEARTBEAT stage=train_s42 up=22087s free=83G
+2026-09-04T09:10:49Z HEARTBEAT stage=train_s42 up=22147s free=83G
+2026-09-04T09:11:02Z TRAIN s42:  65%|âââââââ   | 50924/78125 [4:06:54<2:22:15,  3.19it/s, loss=0.5124, lr=2.77e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:11:49Z HEARTBEAT stage=train_s42 up=22207s free=83G
+2026-09-04T09:12:49Z HEARTBEAT stage=train_s42 up=22267s free=83G
+2026-09-04T09:13:02Z TRAIN s42:  66%|âââââââ   | 51321/78125 [4:08:54<2:13:18,  3.35it/s, loss=0.5110, lr=2.70e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:13:49Z HEARTBEAT stage=train_s42 up=22327s free=83G
+2026-09-04T09:14:49Z HEARTBEAT stage=train_s42 up=22387s free=83G
+2026-09-04T09:15:02Z TRAIN s42:  66%|âââââââ   | 51711/78125 [4:10:54<2:29:09,  2.95it/s, loss=0.5003, lr=2.63e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:15:49Z HEARTBEAT stage=train_s42 up=22447s free=83G
+2026-09-04T09:16:49Z HEARTBEAT stage=train_s42 up=22507s free=83G
+2026-09-04T09:17:02Z TRAIN s42:  67%|âââââââ   | 52105/78125 [4:12:54<2:07:33,  3.40it/s, loss=0.5296, lr=2.56e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:17:49Z HEARTBEAT stage=train_s42 up=22567s free=83G
+2026-09-04T09:18:49Z HEARTBEAT stage=train_s42 up=22627s free=83G
+2026-09-04T09:19:02Z TRAIN s42:  67%|âââââââ   | 52508/78125 [4:14:54<2:08:32,  3.32it/s, loss=0.4973, lr=2.48e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:19:49Z HEARTBEAT stage=train_s42 up=22687s free=83G
+2026-09-04T09:20:49Z HEARTBEAT stage=train_s42 up=22747s free=83G
+2026-09-04T09:21:02Z TRAIN s42:  68%|âââââââ   | 52887/78125 [4:16:54<1:55:26,  3.64it/s, loss=0.5343, lr=2.42e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:21:49Z HEARTBEAT stage=train_s42 up=22807s free=83G
+2026-09-04T09:22:49Z HEARTBEAT stage=train_s42 up=22867s free=83G
+2026-09-04T09:23:02Z TRAIN s42:  68%|âââââââ   | 53275/78125 [4:18:54<1:49:47,  3.77it/s, loss=0.5027, lr=2.35e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:23:49Z HEARTBEAT stage=train_s42 up=22927s free=83G
+2026-09-04T09:24:49Z HEARTBEAT stage=train_s42 up=22987s free=83G
+2026-09-04T09:25:02Z TRAIN s42:  69%|âââââââ   | 53661/78125 [4:20:54<1:51:05,  3.67it/s, loss=0.5183, lr=2.28e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:25:49Z HEARTBEAT stage=train_s42 up=23047s free=83G
+2026-09-04T09:26:49Z HEARTBEAT stage=train_s42 up=23107s free=83G
+2026-09-04T09:27:02Z TRAIN s42:  69%|âââââââ   | 54050/78125 [4:22:54<2:08:48,  3.12it/s, loss=0.5075, lr=2.22e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:27:49Z HEARTBEAT stage=train_s42 up=23167s free=83G
+2026-09-04T09:28:49Z HEARTBEAT stage=train_s42 up=23227s free=83G
+2026-09-04T09:29:02Z TRAIN s42:  70%|âââââââ   | 54436/78125 [4:24:54<1:55:39,  3.41it/s, loss=0.5116, lr=2.15e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:29:49Z HEARTBEAT stage=train_s42 up=23287s free=83G
+2026-09-04T09:30:49Z HEARTBEAT stage=train_s42 up=23347s free=83G
+2026-09-04T09:31:02Z TRAIN s42:  70%|âââââââ   | 54814/78125 [4:26:54<2:00:20,  3.23it/s, loss=0.5124, lr=2.09e-03, val_loss=0.6493] | ckpts=10
+2026-09-04T09:31:49Z HEARTBEAT stage=train_s42 up=23407s free=83G
+2026-09-04T09:32:49Z HEARTBEAT stage=train_s42 up=23467s free=82G
+2026-09-04T09:33:02Z TRAIN s42:  71%|âââââââ   | 55186/78125 [4:28:54<2:04:44,  3.06it/s, loss=0.5015, lr=2.03e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:33:49Z HEARTBEAT stage=train_s42 up=23527s free=82G
+2026-09-04T09:34:49Z HEARTBEAT stage=train_s42 up=23587s free=82G
+2026-09-04T09:35:02Z TRAIN s42:  71%|âââââââ   | 55566/78125 [4:30:55<1:55:20,  3.26it/s, loss=0.5027, lr=1.97e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:35:49Z HEARTBEAT stage=train_s42 up=23647s free=82G
+2026-09-04T09:36:49Z HEARTBEAT stage=train_s42 up=23707s free=82G
+2026-09-04T09:37:02Z TRAIN s42:  72%|ââââââââ  | 55950/78125 [4:32:55<1:57:24,  3.15it/s, loss=0.4993, lr=1.90e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:37:49Z HEARTBEAT stage=train_s42 up=23767s free=82G
+2026-09-04T09:38:49Z HEARTBEAT stage=train_s42 up=23827s free=82G
+2026-09-04T09:39:02Z TRAIN s42:  72%|ââââââââ  | 56324/78125 [4:34:54<2:05:52,  2.89it/s, loss=0.4993, lr=1.85e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:39:49Z HEARTBEAT stage=train_s42 up=23887s free=82G
+2026-09-04T09:40:49Z HEARTBEAT stage=train_s42 up=23947s free=82G
+2026-09-04T09:41:02Z TRAIN s42:  73%|ââââââââ  | 56699/78125 [4:36:55<4:58:42,  1.20it/s, loss=0.4982, lr=1.79e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:41:49Z HEARTBEAT stage=train_s42 up=24007s free=82G
+2026-09-04T09:42:49Z HEARTBEAT stage=train_s42 up=24067s free=82G
+2026-09-04T09:43:02Z TRAIN s42:  73%|ââââââââ  | 57092/78125 [4:38:54<1:49:02,  3.22it/s, loss=0.4887, lr=1.73e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:43:49Z HEARTBEAT stage=train_s42 up=24127s free=82G
+2026-09-04T09:44:49Z HEARTBEAT stage=train_s42 up=24187s free=82G
+2026-09-04T09:45:02Z TRAIN s42:  74%|ââââââââ  | 57480/78125 [4:40:55<1:30:30,  3.80it/s, loss=0.4898, lr=1.67e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:45:49Z HEARTBEAT stage=train_s42 up=24247s free=82G
+2026-09-04T09:46:49Z HEARTBEAT stage=train_s42 up=24307s free=82G
+2026-09-04T09:47:02Z TRAIN s42:  74%|ââââââââ  | 57857/78125 [4:42:55<1:28:43,  3.81it/s, loss=0.5103, lr=1.61e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:47:49Z HEARTBEAT stage=train_s42 up=24367s free=82G
+2026-09-04T09:48:49Z HEARTBEAT stage=train_s42 up=24427s free=82G
+2026-09-04T09:49:02Z TRAIN s42:  75%|ââââââââ  | 58234/78125 [4:44:55<1:45:55,  3.13it/s, loss=0.5124, lr=1.55e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:49:49Z HEARTBEAT stage=train_s42 up=24487s free=82G
+2026-09-04T09:50:49Z HEARTBEAT stage=train_s42 up=24547s free=82G
+2026-09-04T09:51:02Z TRAIN s42:  75%|ââââââââ  | 58619/78125 [4:46:54<1:57:12,  2.77it/s, loss=0.4945, lr=1.50e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:51:49Z HEARTBEAT stage=train_s42 up=24607s free=82G
+2026-09-04T09:52:49Z HEARTBEAT stage=train_s42 up=24667s free=82G
+2026-09-04T09:53:02Z TRAIN s42:  76%|ââââââââ  | 58991/78125 [4:48:55<1:34:56,  3.36it/s, loss=0.5178, lr=1.44e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:53:49Z HEARTBEAT stage=train_s42 up=24727s free=82G
+2026-09-04T09:54:49Z HEARTBEAT stage=train_s42 up=24788s free=82G
+2026-09-04T09:55:02Z TRAIN s42:  76%|ââââââââ  | 59378/78125 [4:50:55<1:49:16,  2.86it/s, loss=0.5113, lr=1.39e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:55:50Z HEARTBEAT stage=train_s42 up=24848s free=82G
+2026-09-04T09:56:50Z HEARTBEAT stage=train_s42 up=24908s free=82G
+2026-09-04T09:57:02Z TRAIN s42:  76%|ââââââââ  | 59762/78125 [4:52:55<1:37:11,  3.15it/s, loss=0.5187, lr=1.33e-03, val_loss=0.6401] | ckpts=11
+2026-09-04T09:57:50Z HEARTBEAT stage=train_s42 up=24968s free=82G
+2026-09-04T09:58:50Z HEARTBEAT stage=train_s42 up=25028s free=82G
+2026-09-04T09:59:02Z TRAIN s42:  77%|ââââââââ  | 60131/78125 [4:54:55<1:42:01,  2.94it/s, loss=0.4944, lr=1.28e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T09:59:50Z HEARTBEAT stage=train_s42 up=25088s free=82G
+2026-09-04T10:00:50Z HEARTBEAT stage=train_s42 up=25148s free=82G
+2026-09-04T10:01:02Z TRAIN s42:  77%|ââââââââ  | 60511/78125 [4:56:55<1:28:17,  3.33it/s, loss=0.5056, lr=1.23e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T10:01:50Z HEARTBEAT stage=train_s42 up=25208s free=82G
+2026-09-04T10:02:50Z HEARTBEAT stage=train_s42 up=25268s free=82G
+2026-09-04T10:03:02Z TRAIN s42:  78%|ââââââââ  | 60875/78125 [4:58:55<1:24:48,  3.39it/s, loss=0.5127, lr=1.18e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T10:03:50Z HEARTBEAT stage=train_s42 up=25328s free=82G
+2026-09-04T10:04:50Z HEARTBEAT stage=train_s42 up=25388s free=82G
+2026-09-04T10:05:02Z TRAIN s42:  78%|ââââââââ  | 61257/78125 [5:00:55<1:24:25,  3.33it/s, loss=0.4946, lr=1.13e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T10:05:50Z HEARTBEAT stage=train_s42 up=25448s free=82G
+2026-09-04T10:06:50Z HEARTBEAT stage=train_s42 up=25508s free=82G
+2026-09-04T10:07:02Z TRAIN s42:  79%|ââââââââ  | 61647/78125 [5:02:55<1:25:21,  3.22it/s, loss=0.5060, lr=1.08e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T10:07:50Z HEARTBEAT stage=train_s42 up=25568s free=82G
+2026-09-04T10:08:50Z HEARTBEAT stage=train_s42 up=25628s free=82G
+2026-09-04T10:09:02Z TRAIN s42:  79%|ââââââââ  | 62030/78125 [5:04:55<1:20:33,  3.33it/s, loss=0.5083, lr=1.04e-03, val_loss=0.6211] | ckpts=12
+2026-09-04T10:09:50Z HEARTBEAT stage=train_s42 up=25688s free=82G
+2026-09-04T10:10:50Z HEARTBEAT stage=train_s42 up=25748s free=82G
+2026-09-04T10:11:02Z TRAIN s42:  80%|ââââââââ  | 62413/78125 [5:06:55<1:28:13,  2.97it/s, loss=0.5302, lr=9.90e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:11:50Z HEARTBEAT stage=train_s42 up=25808s free=82G
+2026-09-04T10:12:50Z HEARTBEAT stage=train_s42 up=25868s free=82G
+2026-09-04T10:13:02Z TRAIN s42:  80%|ââââââââ  | 62787/78125 [5:08:55<1:17:13,  3.31it/s, loss=0.5013, lr=9.45e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:13:50Z HEARTBEAT stage=train_s42 up=25928s free=82G
+2026-09-04T10:14:50Z HEARTBEAT stage=train_s42 up=25988s free=82G
+2026-09-04T10:15:02Z TRAIN s42:  81%|ââââââââ  | 63157/78125 [5:10:55<1:04:43,  3.85it/s, loss=0.5089, lr=9.01e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:15:50Z HEARTBEAT stage=train_s42 up=26048s free=82G
+2026-09-04T10:16:50Z HEARTBEAT stage=train_s42 up=26108s free=82G
+2026-09-04T10:17:02Z TRAIN s42:  81%|âââââââââ | 63530/78125 [5:12:55<1:20:48,  3.01it/s, loss=0.5051, lr=8.58e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:17:50Z HEARTBEAT stage=train_s42 up=26168s free=82G
+2026-09-04T10:18:50Z HEARTBEAT stage=train_s42 up=26228s free=82G
+2026-09-04T10:19:02Z TRAIN s42:  82%|âââââââââ | 63915/78125 [5:14:55<1:19:25,  2.98it/s, loss=0.5024, lr=8.15e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:19:50Z HEARTBEAT stage=train_s42 up=26288s free=82G
+2026-09-04T10:20:50Z HEARTBEAT stage=train_s42 up=26348s free=82G
+2026-09-04T10:21:02Z TRAIN s42:  82%|âââââââââ | 64304/78125 [5:16:55<1:18:06,  2.95it/s, loss=0.4958, lr=7.72e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:21:50Z HEARTBEAT stage=train_s42 up=26408s free=82G
+2026-09-04T10:22:50Z HEARTBEAT stage=train_s42 up=26468s free=82G
+2026-09-04T10:23:03Z TRAIN s42:  83%|âââââââââ | 64687/78125 [5:18:55<1:11:20,  3.14it/s, loss=0.5037, lr=7.31e-04, val_loss=0.6211] | ckpts=12
+2026-09-04T10:23:50Z HEARTBEAT stage=train_s42 up=26528s free=82G
+2026-09-04T10:24:50Z HEARTBEAT stage=train_s42 up=26588s free=82G
+2026-09-04T10:25:03Z TRAIN s42:  83%|âââââââââ | 65055/78125 [5:20:55<1:04:42,  3.37it/s, loss=0.4881, lr=6.92e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:25:50Z HEARTBEAT stage=train_s42 up=26648s free=82G
+2026-09-04T10:26:50Z HEARTBEAT stage=train_s42 up=26708s free=82G
+2026-09-04T10:27:03Z TRAIN s42:  84%|âââââââââ | 65441/78125 [5:22:55<1:12:21,  2.92it/s, loss=0.5028, lr=6.53e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:27:50Z HEARTBEAT stage=train_s42 up=26768s free=82G
+2026-09-04T10:28:50Z HEARTBEAT stage=train_s42 up=26828s free=82G
+2026-09-04T10:29:03Z TRAIN s42:  84%|âââââââââ | 65817/78125 [5:24:55<59:35,  3.44it/s, loss=0.5033, lr=6.15e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:29:50Z HEARTBEAT stage=train_s42 up=26888s free=82G
+2026-09-04T10:30:50Z HEARTBEAT stage=train_s42 up=26948s free=82G
+2026-09-04T10:31:03Z TRAIN s42:  85%|âââââââââ | 66189/78125 [5:26:55<1:02:55,  3.16it/s, loss=0.5021, lr=5.80e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:31:50Z HEARTBEAT stage=train_s42 up=27008s free=82G
+2026-09-04T10:32:50Z HEARTBEAT stage=train_s42 up=27068s free=82G
+2026-09-04T10:33:03Z TRAIN s42:  85%|âââââââââ | 66566/78125 [5:28:55<1:02:43,  3.07it/s, loss=0.5072, lr=5.44e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:33:50Z HEARTBEAT stage=train_s42 up=27128s free=82G
+2026-09-04T10:34:50Z HEARTBEAT stage=train_s42 up=27188s free=82G
+2026-09-04T10:35:03Z TRAIN s42:  86%|âââââââââ | 66952/78125 [5:30:55<52:39,  3.54it/s, loss=0.5238, lr=5.09e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:35:50Z HEARTBEAT stage=train_s42 up=27248s free=82G
+2026-09-04T10:36:50Z HEARTBEAT stage=train_s42 up=27308s free=82G
+2026-09-04T10:37:03Z TRAIN s42:  86%|âââââââââ | 67337/78125 [5:32:55<1:00:15,  2.98it/s, loss=0.5002, lr=4.75e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:37:50Z HEARTBEAT stage=train_s42 up=27368s free=82G
+2026-09-04T10:38:50Z HEARTBEAT stage=train_s42 up=27428s free=82G
+2026-09-04T10:39:03Z TRAIN s42:  87%|âââââââââ | 67726/78125 [5:34:55<53:34,  3.24it/s, loss=0.4986, lr=4.42e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:39:50Z HEARTBEAT stage=train_s42 up=27488s free=82G
+2026-09-04T10:40:50Z HEARTBEAT stage=train_s42 up=27548s free=82G
+2026-09-04T10:41:03Z TRAIN s42:  87%|âââââââââ | 68115/78125 [5:36:55<48:46,  3.42it/s, loss=0.5145, lr=4.10e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:41:50Z HEARTBEAT stage=train_s42 up=27608s free=82G
+2026-09-04T10:42:50Z HEARTBEAT stage=train_s42 up=27668s free=82G
+2026-09-04T10:43:03Z TRAIN s42:  88%|âââââââââ | 68483/78125 [5:38:55<43:07,  3.73it/s, loss=0.5090, lr=3.81e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:43:50Z HEARTBEAT stage=train_s42 up=27728s free=82G
+2026-09-04T10:44:50Z HEARTBEAT stage=train_s42 up=27788s free=82G
+2026-09-04T10:45:03Z TRAIN s42:  88%|âââââââââ | 68861/78125 [5:40:55<43:47,  3.53it/s, loss=0.4901, lr=3.52e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:45:50Z HEARTBEAT stage=train_s42 up=27848s free=82G
+2026-09-04T10:46:50Z HEARTBEAT stage=train_s42 up=27908s free=82G
+2026-09-04T10:47:03Z TRAIN s42:  89%|âââââââââ | 69248/78125 [5:42:55<49:01,  3.02it/s, loss=0.4997, lr=3.23e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:47:50Z HEARTBEAT stage=train_s42 up=27968s free=82G
+2026-09-04T10:48:50Z HEARTBEAT stage=train_s42 up=28028s free=82G
+2026-09-04T10:49:03Z TRAIN s42:  89%|âââââââââ | 69635/78125 [5:44:55<46:26,  3.05it/s, loss=0.4863, lr=2.96e-04, val_loss=0.6661] | ckpts=13
+2026-09-04T10:49:50Z HEARTBEAT stage=train_s42 up=28088s free=82G
+2026-09-04T10:50:51Z HEARTBEAT stage=train_s42 up=28149s free=82G
+2026-09-04T10:51:03Z TRAIN s42:  90%|âââââââââ | 70018/78125 [5:46:55<48:39,  2.78it/s, loss=0.4978, lr=2.70e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T10:51:51Z HEARTBEAT stage=train_s42 up=28209s free=81G
+2026-09-04T10:52:51Z HEARTBEAT stage=train_s42 up=28269s free=81G
+2026-09-04T10:53:03Z TRAIN s42:  90%|âââââââââ | 70390/78125 [5:48:55<59:38,  2.16it/s, loss=0.5106, lr=2.46e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T10:53:51Z HEARTBEAT stage=train_s42 up=28329s free=81G
+2026-09-04T10:54:51Z HEARTBEAT stage=train_s42 up=28389s free=81G
+2026-09-04T10:55:03Z TRAIN s42:  91%|âââââââââ | 70775/78125 [5:50:55<37:29,  3.27it/s, loss=0.4904, lr=2.22e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T10:55:51Z HEARTBEAT stage=train_s42 up=28449s free=81G
+2026-09-04T10:56:51Z HEARTBEAT stage=train_s42 up=28509s free=81G
+2026-09-04T10:57:03Z TRAIN s42:  91%|âââââââââ | 71165/78125 [5:52:55<37:19,  3.11it/s, loss=0.5046, lr=2.00e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T10:57:51Z HEARTBEAT stage=train_s42 up=28569s free=81G
+2026-09-04T10:58:51Z HEARTBEAT stage=train_s42 up=28629s free=81G
+2026-09-04T10:59:03Z TRAIN s42:  92%|ââââââââââ| 71554/78125 [5:54:56<31:46,  3.45it/s, loss=0.5042, lr=1.78e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T10:59:51Z HEARTBEAT stage=train_s42 up=28689s free=81G
+2026-09-04T11:00:51Z HEARTBEAT stage=train_s42 up=28749s free=81G
+2026-09-04T11:01:03Z TRAIN s42:  92%|ââââââââââ| 71932/78125 [5:56:55<30:58,  3.33it/s, loss=0.5072, lr=1.58e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T11:01:51Z HEARTBEAT stage=train_s42 up=28809s free=81G
+2026-09-04T11:02:51Z HEARTBEAT stage=train_s42 up=28869s free=81G
+2026-09-04T11:03:03Z TRAIN s42:  93%|ââââââââââ| 72310/78125 [5:58:56<32:04,  3.02it/s, loss=0.4981, lr=1.40e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T11:03:51Z HEARTBEAT stage=train_s42 up=28929s free=81G
+2026-09-04T11:04:51Z HEARTBEAT stage=train_s42 up=28989s free=81G
+2026-09-04T11:05:03Z TRAIN s42:  93%|ââââââââââ| 72694/78125 [6:00:56<27:49,  3.25it/s, loss=0.5037, lr=1.22e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T11:05:51Z HEARTBEAT stage=train_s42 up=29049s free=81G
+2026-09-04T11:06:51Z HEARTBEAT stage=train_s42 up=29109s free=81G
+2026-09-04T11:07:03Z TRAIN s42:  94%|ââââââââââ| 73085/78125 [6:02:56<32:32,  2.58it/s, loss=0.5097, lr=1.05e-04, val_loss=0.6608] | ckpts=14
+2026-09-04T11:07:51Z HEARTBEAT stage=train_s42 up=29169s free=81G
+2026-09-04T11:08:51Z HEARTBEAT stage=train_s42 up=29229s free=81G
+2026-09-04T11:09:03Z TRAIN s42:  94%|ââââââââââ| 73468/78125 [6:04:56<26:14,  2.96it/s, loss=0.5206, lr=8.97e-05, val_loss=0.6608] | ckpts=14
+2026-09-04T11:09:51Z HEARTBEAT stage=train_s42 up=29289s free=81G
+2026-09-04T11:10:51Z HEARTBEAT stage=train_s42 up=29349s free=81G
+2026-09-04T11:11:03Z TRAIN s42:  95%|ââââââââââ| 73851/78125 [6:06:55<20:19,  3.51it/s, loss=0.4939, lr=7.56e-05, val_loss=0.6608] | ckpts=14
+2026-09-04T11:11:51Z HEARTBEAT stage=train_s42 up=29409s free=81G
+2026-09-04T11:12:51Z HEARTBEAT stage=train_s42 up=29469s free=81G
+2026-09-04T11:13:03Z TRAIN s42:  95%|ââââââââââ| 74226/78125 [6:08:55<17:28,  3.72it/s, loss=0.4882, lr=6.30e-05, val_loss=0.6608] | ckpts=14
+2026-09-04T11:13:51Z HEARTBEAT stage=train_s42 up=29529s free=81G
+2026-09-04T11:14:51Z HEARTBEAT stage=train_s42 up=29589s free=81G
+2026-09-04T11:15:03Z TRAIN s42:  95%|ââââââââââ| 74596/78125 [6:10:56<20:55,  2.81it/s, loss=0.5087, lr=5.16e-05, val_loss=0.6608] | ckpts=14
+2026-09-04T11:15:51Z HEARTBEAT stage=train_s42 up=29649s free=81G
+2026-09-04T11:16:51Z HEARTBEAT stage=train_s42 up=29709s free=81G
+2026-09-04T11:17:03Z TRAIN s42:  96%|ââââââââââ| 74983/78125 [6:12:56<17:40,  2.96it/s, loss=0.5124, lr=4.09e-05, val_loss=0.6608] | ckpts=14
+2026-09-04T11:17:51Z HEARTBEAT stage=train_s42 up=29769s free=81G
+2026-09-04T11:18:51Z HEARTBEAT stage=train_s42 up=29829s free=81G
+2026-09-04T11:19:03Z TRAIN s42:  96%|ââââââââââ| 75349/78125 [6:14:56<13:28,  3.43it/s, loss=0.4974, lr=3.20e-05, val_loss=0.6648] | ckpts=15
+2026-09-04T11:19:51Z HEARTBEAT stage=train_s42 up=29889s free=81G
+2026-09-04T11:20:51Z HEARTBEAT stage=train_s42 up=29949s free=81G
+2026-09-04T11:21:03Z TRAIN s42:  97%|ââââââââââ| 75735/78125 [6:16:56<12:50,  3.10it/s, loss=0.4943, lr=2.37e-05, val_loss=0.6648] | ckpts=15
+2026-09-04T11:21:51Z HEARTBEAT stage=train_s42 up=30009s free=81G
+2026-09-04T11:22:51Z HEARTBEAT stage=train_s42 up=30069s free=81G
+2026-09-04T11:23:03Z TRAIN s42:  97%|ââââââââââ| 76110/78125 [6:18:56<09:17,  3.61it/s, loss=0.5068, lr=1.68e-05, val_loss=0.6648] | ckpts=15
+2026-09-04T11:23:51Z HEARTBEAT stage=train_s42 up=30129s free=81G
+2026-09-04T11:24:51Z HEARTBEAT stage=train_s42 up=30189s free=81G
+2026-09-04T11:25:03Z TRAIN s42:  98%|ââââââââââ| 76466/78125 [6:20:56<07:59,  3.46it/s, loss=0.4841, lr=1.14e-05, val_loss=0.6648] | ckpts=15
+2026-09-04T11:25:51Z HEARTBEAT stage=train_s42 up=30249s free=81G
+2026-09-04T11:26:51Z HEARTBEAT stage=train_s42 up=30309s free=81G
+2026-09-04T11:27:03Z TRAIN s42:  98%|ââââââââââ| 76851/78125 [6:22:56<06:34,  3.23it/s, loss=0.4971, lr=6.74e-06, val_loss=0.6648] | ckpts=15
+2026-09-04T11:27:51Z HEARTBEAT stage=train_s42 up=30369s free=81G
+2026-09-04T11:28:51Z HEARTBEAT stage=train_s42 up=30429s free=81G
+2026-09-04T11:29:03Z TRAIN s42:  99%|ââââââââââ| 77237/78125 [6:24:56<04:41,  3.16it/s, loss=0.5231, lr=3.28e-06, val_loss=0.6648] | ckpts=15
+2026-09-04T11:29:51Z HEARTBEAT stage=train_s42 up=30489s free=81G
+2026-09-04T11:30:51Z HEARTBEAT stage=train_s42 up=30549s free=81G
+2026-09-04T11:31:03Z TRAIN s42:  99%|ââââââââââ| 77613/78125 [6:26:56<02:45,  3.09it/s, loss=0.4978, lr=1.09e-06, val_loss=0.6648] | ckpts=15
+2026-09-04T11:31:51Z HEARTBEAT stage=train_s42 up=30609s free=81G
+2026-09-04T11:32:51Z HEARTBEAT stage=train_s42 up=30669s free=81G
+2026-09-04T11:33:03Z TRAIN s42: 100%|ââââââââââ| 77996/78125 [6:28:56<00:44,  2.93it/s, loss=0.5067, lr=7.01e-08, val_loss=0.6648] | ckpts=15
+2026-09-04T11:33:51Z HEARTBEAT stage=train_s42 up=30729s free=81G
+2026-09-04T11:34:51Z HEARTBEAT stage=train_s42 up=30789s free=81G
+2026-09-04T11:35:03Z TRAIN s42: 100%|ââââââââââ| 78125/78125 [6:29:39<00:00,  3.34it/s, loss=0.5110, lr=4.15e-12, val_loss=0.6648] | ckpts=15
+2026-09-04T11:35:03Z train_s42: done; checkpoints ckpt_005000.pth ckpt_010000.pth ckpt_015000.pth ckpt_020000.pth ckpt_025000.pth ckpt_030000.pth ckpt_035000.pth ckpt_040000.pth ckpt_045000.pth ckpt_050000.pth ckpt_055000.pth ckpt_060000.pth ckpt_065000.pth ckpt_070000.pth ckpt_075000.pth 
+2026-09-04T11:35:03Z === STAGE train_s42 DONE (24124s) ===
+2026-09-04T11:35:03Z === STAGE eval_s42 OPEN ===
+2026-09-04T11:35:29Z EVAL s42_5000 w035 forward: bestF1=0.5819@98 floor=0.475 margin=+0.106 AUC=0.7409
+2026-09-04T11:35:49Z EVAL s42_5000 w039 forward: bestF1=0.5138@92 floor=0.481 margin=+0.033 AUC=0.6678
+2026-09-04T11:35:51Z HEARTBEAT stage=eval_s42 up=30849s free=81G
+2026-09-04T11:36:51Z HEARTBEAT stage=eval_s42 up=30909s free=81G
+2026-09-04T11:37:12Z EVAL s42_5000 w040 forward: bestF1=0.6229@86 floor=0.611 margin=+0.012 AUC=0.6800
+2026-09-04T11:37:51Z HEARTBEAT stage=eval_s42 up=30969s free=81G
+2026-09-04T11:37:52Z EVAL s42_5000 w041 forward: bestF1=0.5968@87 floor=0.585 margin=+0.011 AUC=0.6753
+2026-09-04T11:38:14Z EVAL s42_5000 w044 forward: bestF1=0.6024@91 floor=0.550 margin=+0.053 AUC=0.7232
+2026-09-04T11:38:14Z EVAL s42_5000: native-5 mean bestF1=0.5835 (floor 0.540, margin +0.043); mean AUC fwd=0.6974
+2026-09-04T11:38:38Z EVAL s42_10000 w035 forward: bestF1=0.5839@85 floor=0.475 margin=+0.108 AUC=0.7505
+2026-09-04T11:38:51Z HEARTBEAT stage=eval_s42 up=31029s free=81G
+2026-09-04T11:38:59Z EVAL s42_10000 w039 forward: bestF1=0.4968@79 floor=0.481 margin=+0.016 AUC=0.6451
+2026-09-04T11:39:51Z HEARTBEAT stage=eval_s42 up=31089s free=81G
+2026-09-04T11:40:24Z EVAL s42_10000 w040 forward: bestF1=0.6247@76 floor=0.611 margin=+0.014 AUC=0.6876
+2026-09-04T11:40:51Z HEARTBEAT stage=eval_s42 up=31149s free=81G
+2026-09-04T11:41:04Z EVAL s42_10000 w041 forward: bestF1=0.5929@74 floor=0.585 margin=+0.008 AUC=0.6568
+2026-09-04T11:41:24Z EVAL s42_10000 w044 forward: bestF1=0.5891@79 floor=0.550 margin=+0.039 AUC=0.7068
+2026-09-04T11:41:24Z EVAL s42_10000: native-5 mean bestF1=0.5775 (floor 0.540, margin +0.037); mean AUC fwd=0.6894
+2026-09-04T11:41:49Z EVAL s42_15000 w035 forward: bestF1=0.6057@83 floor=0.475 margin=+0.130 AUC=0.7685
+2026-09-04T11:41:51Z HEARTBEAT stage=eval_s42 up=31209s free=81G
+2026-09-04T11:42:09Z EVAL s42_15000 w039 forward: bestF1=0.5110@78 floor=0.481 margin=+0.030 AUC=0.6707
+2026-09-04T11:42:52Z HEARTBEAT stage=eval_s42 up=31270s free=81G
+2026-09-04T11:43:32Z EVAL s42_15000 w040 forward: bestF1=0.6123@70 floor=0.611 margin=+0.001 AUC=0.6508
+2026-09-04T11:43:52Z HEARTBEAT stage=eval_s42 up=31330s free=81G
+2026-09-04T11:44:12Z EVAL s42_15000 w041 forward: bestF1=0.5876@69 floor=0.585 margin=+0.002 AUC=0.6592
+2026-09-04T11:44:32Z EVAL s42_15000 w044 forward: bestF1=0.5976@77 floor=0.550 margin=+0.048 AUC=0.7105
+2026-09-04T11:44:32Z EVAL s42_15000: native-5 mean bestF1=0.5829 (floor 0.540, margin +0.042); mean AUC fwd=0.6920
+2026-09-04T11:44:52Z HEARTBEAT stage=eval_s42 up=31390s free=81G
+2026-09-04T11:44:56Z EVAL s42_20000 w035 forward: bestF1=0.6218@74 floor=0.475 margin=+0.146 AUC=0.7806
+2026-09-04T11:45:16Z EVAL s42_20000 w039 forward: bestF1=0.5223@75 floor=0.481 margin=+0.041 AUC=0.6878
+2026-09-04T11:45:52Z HEARTBEAT stage=eval_s42 up=31450s free=81G
+2026-09-04T11:46:40Z EVAL s42_20000 w040 forward: bestF1=0.6170@67 floor=0.611 margin=+0.006 AUC=0.6703
+2026-09-04T11:46:52Z HEARTBEAT stage=eval_s42 up=31510s free=81G
+2026-09-04T11:47:20Z EVAL s42_20000 w041 forward: bestF1=0.6051@67 floor=0.585 margin=+0.020 AUC=0.7034
+2026-09-04T11:47:40Z EVAL s42_20000 w044 forward: bestF1=0.5943@72 floor=0.550 margin=+0.044 AUC=0.7108
+2026-09-04T11:47:40Z EVAL s42_20000: native-5 mean bestF1=0.5921 (floor 0.540, margin +0.052); mean AUC fwd=0.7106
+2026-09-04T11:47:52Z HEARTBEAT stage=eval_s42 up=31570s free=81G
+2026-09-04T11:48:04Z EVAL s42_25000 w035 forward: bestF1=0.5945@74 floor=0.475 margin=+0.119 AUC=0.7570
+2026-09-04T11:48:25Z EVAL s42_25000 w039 forward: bestF1=0.5560@74 floor=0.481 margin=+0.075 AUC=0.7178
+2026-09-04T11:48:52Z HEARTBEAT stage=eval_s42 up=31630s free=81G
+2026-09-04T11:49:47Z EVAL s42_25000 w040 forward: bestF1=0.6156@67 floor=0.611 margin=+0.005 AUC=0.6636
+2026-09-04T11:49:52Z HEARTBEAT stage=eval_s42 up=31690s free=81G
+2026-09-04T11:50:28Z EVAL s42_25000 w041 forward: bestF1=0.5954@65 floor=0.585 margin=+0.010 AUC=0.6904
+2026-09-04T11:50:49Z EVAL s42_25000 w044 forward: bestF1=0.5945@75 floor=0.550 margin=+0.045 AUC=0.7182
+2026-09-04T11:50:49Z EVAL s42_25000: native-5 mean bestF1=0.5912 (floor 0.540, margin +0.051); mean AUC fwd=0.7094
+2026-09-04T11:50:52Z HEARTBEAT stage=eval_s42 up=31750s free=81G
+2026-09-04T11:51:13Z EVAL s42_30000 w035 forward: bestF1=0.5722@69 floor=0.475 margin=+0.097 AUC=0.7371
+2026-09-04T11:51:33Z EVAL s42_30000 w039 forward: bestF1=0.5067@68 floor=0.481 margin=+0.026 AUC=0.6490
+2026-09-04T11:51:52Z HEARTBEAT stage=eval_s42 up=31810s free=81G
+2026-09-04T11:52:52Z HEARTBEAT stage=eval_s42 up=31870s free=81G
+2026-09-04T11:52:57Z EVAL s42_30000 w040 forward: bestF1=0.6195@65 floor=0.611 margin=+0.009 AUC=0.6801
+2026-09-04T11:53:37Z EVAL s42_30000 w041 forward: bestF1=0.5885@63 floor=0.585 margin=+0.003 AUC=0.6502
+2026-09-04T11:53:52Z HEARTBEAT stage=eval_s42 up=31930s free=81G
+2026-09-04T11:53:58Z EVAL s42_30000 w044 forward: bestF1=0.5838@67 floor=0.550 margin=+0.034 AUC=0.7043
+2026-09-04T11:53:58Z EVAL s42_30000: native-5 mean bestF1=0.5741 (floor 0.540, margin +0.034); mean AUC fwd=0.6841
+2026-09-04T11:54:22Z EVAL s42_35000 w035 forward: bestF1=0.5801@72 floor=0.475 margin=+0.105 AUC=0.7418
+2026-09-04T11:54:43Z EVAL s42_35000 w039 forward: bestF1=0.4951@64 floor=0.481 margin=+0.014 AUC=0.6123
+2026-09-04T11:54:52Z HEARTBEAT stage=eval_s42 up=31990s free=81G
+2026-09-04T11:55:52Z HEARTBEAT stage=eval_s42 up=32050s free=81G
+2026-09-04T11:56:08Z EVAL s42_35000 w040 forward: bestF1=0.6134@63 floor=0.611 margin=+0.002 AUC=0.6519
+2026-09-04T11:56:49Z EVAL s42_35000 w041 forward: bestF1=0.6151@65 floor=0.585 margin=+0.030 AUC=0.7162
+2026-09-04T11:56:52Z HEARTBEAT stage=eval_s42 up=32110s free=81G
+2026-09-04T11:57:10Z EVAL s42_35000 w044 forward: bestF1=0.6130@72 floor=0.550 margin=+0.063 AUC=0.7323
+2026-09-04T11:57:10Z EVAL s42_35000: native-5 mean bestF1=0.5833 (floor 0.540, margin +0.043); mean AUC fwd=0.6909
+2026-09-04T11:57:34Z EVAL s42_40000 w035 forward: bestF1=0.5451@68 floor=0.475 margin=+0.070 AUC=0.6993
+2026-09-04T11:57:52Z HEARTBEAT stage=eval_s42 up=32170s free=81G
+2026-09-04T11:57:56Z EVAL s42_40000 w039 forward: bestF1=0.5002@65 floor=0.481 margin=+0.019 AUC=0.6474
+2026-09-04T11:58:52Z HEARTBEAT stage=eval_s42 up=32230s free=81G
+2026-09-04T11:59:19Z EVAL s42_40000 w040 forward: bestF1=0.6199@64 floor=0.611 margin=+0.009 AUC=0.6788
+2026-09-04T11:59:52Z HEARTBEAT stage=eval_s42 up=32290s free=81G
+2026-09-04T11:59:58Z EVAL s42_40000 w041 forward: bestF1=0.6338@64 floor=0.585 margin=+0.048 AUC=0.7373
+2026-09-04T12:00:20Z EVAL s42_40000 w044 forward: bestF1=0.6060@67 floor=0.550 margin=+0.056 AUC=0.7277
+2026-09-04T12:00:20Z EVAL s42_40000: native-5 mean bestF1=0.5810 (floor 0.540, margin +0.040); mean AUC fwd=0.6981
+2026-09-04T12:00:44Z EVAL s42_45000 w035 forward: bestF1=0.5357@67 floor=0.475 margin=+0.060 AUC=0.7026
+2026-09-04T12:00:52Z HEARTBEAT stage=eval_s42 up=32350s free=81G
+2026-09-04T12:01:05Z EVAL s42_45000 w039 forward: bestF1=0.4858@62 floor=0.481 margin=+0.005 AUC=0.6324
+2026-09-04T12:01:52Z HEARTBEAT stage=eval_s42 up=32410s free=81G
+2026-09-04T12:02:28Z EVAL s42_45000 w040 forward: bestF1=0.6240@64 floor=0.611 margin=+0.013 AUC=0.6870
+2026-09-04T12:02:52Z HEARTBEAT stage=eval_s42 up=32470s free=81G
+2026-09-04T12:03:07Z EVAL s42_45000 w041 forward: bestF1=0.5987@62 floor=0.585 margin=+0.013 AUC=0.6802
+2026-09-04T12:03:28Z EVAL s42_45000 w044 forward: bestF1=0.5796@64 floor=0.550 margin=+0.030 AUC=0.6618
+2026-09-04T12:03:28Z EVAL s42_45000: native-5 mean bestF1=0.5647 (floor 0.540, margin +0.024); mean AUC fwd=0.6728
+2026-09-04T12:03:52Z HEARTBEAT stage=eval_s42 up=32530s free=81G
+2026-09-04T12:03:53Z EVAL s42_50000 w035 forward: bestF1=0.5558@67 floor=0.475 margin=+0.080 AUC=0.7100
+2026-09-04T12:04:12Z EVAL s42_50000 w039 forward: bestF1=0.4852@61 floor=0.481 margin=+0.004 AUC=0.6027
+2026-09-04T12:04:52Z HEARTBEAT stage=eval_s42 up=32590s free=81G
+2026-09-04T12:05:33Z EVAL s42_50000 w040 forward: bestF1=0.6159@63 floor=0.611 margin=+0.005 AUC=0.6739
+2026-09-04T12:05:52Z HEARTBEAT stage=eval_s42 up=32650s free=81G
+2026-09-04T12:06:14Z EVAL s42_50000 w041 forward: bestF1=0.5962@62 floor=0.585 margin=+0.011 AUC=0.6837
+2026-09-04T12:06:35Z EVAL s42_50000 w044 forward: bestF1=0.5835@65 floor=0.550 margin=+0.034 AUC=0.6865
+2026-09-04T12:06:35Z EVAL s42_50000: native-5 mean bestF1=0.5673 (floor 0.540, margin +0.027); mean AUC fwd=0.6713
+2026-09-04T12:06:52Z HEARTBEAT stage=eval_s42 up=32710s free=81G
+2026-09-04T12:07:00Z EVAL s42_55000 w035 forward: bestF1=0.5638@71 floor=0.475 margin=+0.088 AUC=0.7194
+2026-09-04T12:07:21Z EVAL s42_55000 w039 forward: bestF1=0.4810@54 floor=0.481 margin=+0.000 AUC=0.6057
+2026-09-04T12:07:52Z HEARTBEAT stage=eval_s42 up=32770s free=81G
+2026-09-04T12:08:42Z EVAL s42_55000 w040 forward: bestF1=0.6176@63 floor=0.611 margin=+0.007 AUC=0.6660
+2026-09-04T12:08:52Z HEARTBEAT stage=eval_s42 up=32830s free=81G
+2026-09-04T12:09:21Z EVAL s42_55000 w041 forward: bestF1=0.6185@67 floor=0.585 margin=+0.033 AUC=0.7254
+2026-09-04T12:09:41Z EVAL s42_55000 w044 forward: bestF1=0.6048@68 floor=0.550 margin=+0.055 AUC=0.7196
+2026-09-04T12:09:41Z EVAL s42_55000: native-5 mean bestF1=0.5771 (floor 0.540, margin +0.037); mean AUC fwd=0.6872
+2026-09-04T12:09:52Z HEARTBEAT stage=eval_s42 up=32890s free=81G
+2026-09-04T12:10:04Z EVAL s42_60000 w035 forward: bestF1=0.5119@67 floor=0.475 margin=+0.036 AUC=0.6679
+2026-09-04T12:10:24Z EVAL s42_60000 w039 forward: bestF1=0.4837@60 floor=0.481 margin=+0.003 AUC=0.6131
+2026-09-04T12:10:52Z HEARTBEAT stage=eval_s42 up=32950s free=81G
+2026-09-04T12:11:47Z EVAL s42_60000 w040 forward: bestF1=0.6112@60 floor=0.611 margin=+0.000 AUC=0.6395
+2026-09-04T12:11:52Z HEARTBEAT stage=eval_s42 up=33010s free=81G
+2026-09-04T12:12:26Z EVAL s42_60000 w041 forward: bestF1=0.5853@55 floor=0.585 margin=+0.000 AUC=0.6529
+2026-09-04T12:12:47Z EVAL s42_60000 w044 forward: bestF1=0.5863@64 floor=0.550 margin=+0.036 AUC=0.6874
+2026-09-04T12:12:47Z EVAL s42_60000: native-5 mean bestF1=0.5557 (floor 0.540, margin +0.015); mean AUC fwd=0.6522
+2026-09-04T12:12:52Z HEARTBEAT stage=eval_s42 up=33070s free=81G
+2026-09-04T12:13:11Z EVAL s42_65000 w035 forward: bestF1=0.5117@66 floor=0.475 margin=+0.036 AUC=0.6706
+2026-09-04T12:13:31Z EVAL s42_65000 w039 forward: bestF1=0.4809@52 floor=0.481 margin=+0.000 AUC=0.5918
+2026-09-04T12:13:52Z HEARTBEAT stage=eval_s42 up=33130s free=81G
+2026-09-04T12:14:52Z HEARTBEAT stage=eval_s42 up=33190s free=81G
+2026-09-04T12:14:53Z EVAL s42_65000 w040 forward: bestF1=0.6109@0 floor=0.611 margin=-0.000 AUC=0.6378
+2026-09-04T12:15:34Z EVAL s42_65000 w041 forward: bestF1=0.6184@63 floor=0.585 margin=+0.033 AUC=0.7086
+2026-09-04T12:15:52Z HEARTBEAT stage=eval_s42 up=33250s free=81G
+2026-09-04T12:15:54Z EVAL s42_65000 w044 forward: bestF1=0.5786@63 floor=0.550 margin=+0.029 AUC=0.6724
+2026-09-04T12:15:54Z EVAL s42_65000: native-5 mean bestF1=0.5601 (floor 0.540, margin +0.020); mean AUC fwd=0.6563
+2026-09-04T12:16:17Z EVAL s42_70000 w035 forward: bestF1=0.5134@66 floor=0.475 margin=+0.038 AUC=0.6743
+2026-09-04T12:16:37Z EVAL s42_70000 w039 forward: bestF1=0.4809@47 floor=0.481 margin=+0.000 AUC=0.6055
+2026-09-04T12:16:53Z HEARTBEAT stage=eval_s42 up=33311s free=81G
+2026-09-04T12:17:53Z HEARTBEAT stage=eval_s42 up=33371s free=81G
+2026-09-04T12:18:00Z EVAL s42_70000 w040 forward: bestF1=0.6109@54 floor=0.611 margin=+0.000 AUC=0.6295
+2026-09-04T12:18:40Z EVAL s42_70000 w041 forward: bestF1=0.6180@64 floor=0.585 margin=+0.033 AUC=0.7106
+2026-09-04T12:18:53Z HEARTBEAT stage=eval_s42 up=33431s free=81G
+2026-09-04T12:19:00Z EVAL s42_70000 w044 forward: bestF1=0.5876@64 floor=0.550 margin=+0.038 AUC=0.6877
+2026-09-04T12:19:00Z EVAL s42_70000: native-5 mean bestF1=0.5622 (floor 0.540, margin +0.022); mean AUC fwd=0.6615
+2026-09-04T12:19:24Z EVAL s42_75000 w035 forward: bestF1=0.5251@66 floor=0.475 margin=+0.050 AUC=0.6829
+2026-09-04T12:19:45Z EVAL s42_75000 w039 forward: bestF1=0.4809@46 floor=0.481 margin=+0.000 AUC=0.6024
+2026-09-04T12:19:53Z HEARTBEAT stage=eval_s42 up=33491s free=81G
+2026-09-04T12:20:53Z HEARTBEAT stage=eval_s42 up=33551s free=81G
+2026-09-04T12:21:06Z EVAL s42_75000 w040 forward: bestF1=0.6109@56 floor=0.611 margin=+0.000 AUC=0.6407
+2026-09-04T12:21:46Z EVAL s42_75000 w041 forward: bestF1=0.6062@64 floor=0.585 margin=+0.021 AUC=0.7027
+2026-09-04T12:21:53Z HEARTBEAT stage=eval_s42 up=33611s free=81G
+2026-09-04T12:22:06Z EVAL s42_75000 w044 forward: bestF1=0.5862@64 floor=0.550 margin=+0.036 AUC=0.6868
+2026-09-04T12:22:06Z EVAL s42_75000: native-5 mean bestF1=0.5619 (floor 0.540, margin +0.021); mean AUC fwd=0.6631
+2026-09-04T12:22:06Z eval s42: best-of-grid = s42_20000 -> reverse pass
+2026-09-04T12:22:07Z EVAL s42_20000 w035 forward: bestF1=0.6218@74 floor=0.475 margin=+0.146 AUC=0.7806
+2026-09-04T12:22:30Z EVAL s42_20000 w035 reverse: bestF1=0.4754@56 floor=0.475 margin=+0.000 AUC=0.4923
+2026-09-04T12:22:31Z EVAL s42_20000 w039 forward: bestF1=0.5223@75 floor=0.481 margin=+0.041 AUC=0.6878
+2026-09-04T12:22:51Z EVAL s42_20000 w039 reverse: bestF1=0.4809@55 floor=0.481 margin=+0.000 AUC=0.5034
+2026-09-04T12:22:52Z EVAL s42_20000 w040 forward: bestF1=0.6170@67 floor=0.611 margin=+0.006 AUC=0.6703
+2026-09-04T12:22:53Z HEARTBEAT stage=eval_s42 up=33671s free=81G
+2026-09-04T12:23:53Z HEARTBEAT stage=eval_s42 up=33731s free=81G
+2026-09-04T12:24:16Z EVAL s42_20000 w040 reverse: bestF1=0.6109@56 floor=0.611 margin=+0.000 AUC=0.5283
+2026-09-04T12:24:16Z EVAL s42_20000 w041 forward: bestF1=0.6051@67 floor=0.585 margin=+0.020 AUC=0.7034
+2026-09-04T12:24:53Z HEARTBEAT stage=eval_s42 up=33791s free=81G
+2026-09-04T12:24:56Z EVAL s42_20000 w041 reverse: bestF1=0.5853@58 floor=0.585 margin=+0.000 AUC=0.5313
+2026-09-04T12:24:56Z EVAL s42_20000 w044 forward: bestF1=0.5943@72 floor=0.550 margin=+0.044 AUC=0.7108
+2026-09-04T12:25:17Z EVAL s42_20000 w044 reverse: bestF1=0.5498@57 floor=0.550 margin=+0.000 AUC=0.5456
+2026-09-04T12:25:17Z EVAL s42_20000: native-5 mean bestF1=0.5921 (floor 0.540, margin +0.052); mean AUC fwd=0.7106
+2026-09-04T12:25:17Z === STAGE eval_s42 DONE (3014s) ===
+2026-09-04T12:25:17Z === STAGE ref OPEN ===
+2026-09-04T12:25:39Z EVAL ref_released w035 forward: bestF1=0.9785@124 floor=0.475 margin=+0.503 AUC=0.9991
+2026-09-04T12:25:53Z HEARTBEAT stage=ref up=33851s free=81G
+2026-09-04T12:26:01Z EVAL ref_released w035 reverse: bestF1=0.4754@54 floor=0.475 margin=+0.000 AUC=0.5118
+2026-09-04T12:26:20Z EVAL ref_released w039 forward: bestF1=0.9833@138 floor=0.481 margin=+0.502 AUC=0.9995
+2026-09-04T12:26:40Z EVAL ref_released w039 reverse: bestF1=0.4810@57 floor=0.481 margin=+0.000 AUC=0.4501
+2026-09-04T12:26:53Z HEARTBEAT stage=ref up=33911s free=81G
+2026-09-04T12:27:53Z HEARTBEAT stage=ref up=33971s free=80G
+2026-09-04T12:27:57Z EVAL ref_released w040 forward: bestF1=0.9663@133 floor=0.611 margin=+0.355 AUC=0.9966
+2026-09-04T12:28:53Z HEARTBEAT stage=ref up=34031s free=81G
+2026-09-04T12:29:15Z EVAL ref_released w040 reverse: bestF1=0.6110@57 floor=0.611 margin=+0.000 AUC=0.4963
+2026-09-04T12:29:51Z EVAL ref_released w041 forward: bestF1=0.9862@134 floor=0.585 margin=+0.401 AUC=0.9995
+2026-09-04T12:29:53Z HEARTBEAT stage=ref up=34091s free=81G
+2026-09-04T12:30:28Z EVAL ref_released w041 reverse: bestF1=0.5853@55 floor=0.585 margin=+0.000 AUC=0.5303
+2026-09-04T12:30:47Z EVAL ref_released w044 forward: bestF1=0.9853@127 floor=0.550 margin=+0.435 AUC=0.9995
+2026-09-04T12:30:53Z HEARTBEAT stage=ref up=34151s free=81G
+2026-09-04T12:31:06Z EVAL ref_released w044 reverse: bestF1=0.5563@62 floor=0.550 margin=+0.007 AUC=0.5949
+2026-09-04T12:31:06Z EVAL ref_released: native-5 mean bestF1=0.9799 (floor 0.540, margin +0.439); mean AUC fwd=0.9988
+2026-09-04T12:31:06Z === STAGE ref DONE (349s) ===
+2026-09-04T12:31:06Z === STAGE finalize OPEN ===
+2026-09-04T12:31:06Z SUMMARY ctl (released ckpt): native fwd=0.9991 rev=0.5118; scale-fault 0.7488 -> FAULT_REPRODUCED
+2026-09-04T12:31:06Z SUMMARY s42_5000: native-5 bestF1 0.5835 (margin +0.043), AUC fwd 0.6974
+2026-09-04T12:31:06Z SUMMARY s42_10000: native-5 bestF1 0.5775 (margin +0.037), AUC fwd 0.6894
+2026-09-04T12:31:06Z SUMMARY s42_15000: native-5 bestF1 0.5829 (margin +0.042), AUC fwd 0.6920
+2026-09-04T12:31:06Z SUMMARY s42_20000: native-5 bestF1 0.5921 (margin +0.052), AUC fwd 0.7106
+2026-09-04T12:31:06Z SUMMARY s42_25000: native-5 bestF1 0.5912 (margin +0.051), AUC fwd 0.7094
+2026-09-04T12:31:06Z SUMMARY s42_30000: native-5 bestF1 0.5741 (margin +0.034), AUC fwd 0.6841
+2026-09-04T12:31:06Z SUMMARY s42_35000: native-5 bestF1 0.5833 (margin +0.043), AUC fwd 0.6909
+2026-09-04T12:31:06Z SUMMARY s42_40000: native-5 bestF1 0.5810 (margin +0.040), AUC fwd 0.6981
+2026-09-04T12:31:06Z SUMMARY s42_45000: native-5 bestF1 0.5647 (margin +0.024), AUC fwd 0.6728
+2026-09-04T12:31:06Z SUMMARY s42_50000: native-5 bestF1 0.5673 (margin +0.027), AUC fwd 0.6713
+2026-09-04T12:31:06Z SUMMARY s42_55000: native-5 bestF1 0.5771 (margin +0.037), AUC fwd 0.6872
+2026-09-04T12:31:06Z SUMMARY s42_60000: native-5 bestF1 0.5557 (margin +0.015), AUC fwd 0.6522
+2026-09-04T12:31:06Z SUMMARY s42_65000: native-5 bestF1 0.5601 (margin +0.020), AUC fwd 0.6563
+2026-09-04T12:31:06Z SUMMARY s42_70000: native-5 bestF1 0.5622 (margin +0.022), AUC fwd 0.6615
+2026-09-04T12:31:06Z SUMMARY s42_75000: native-5 bestF1 0.5619 (margin +0.021), AUC fwd 0.6631
+2026-09-04T12:31:06Z SUMMARY ref_released: native-5 bestF1 0.9799 (margin +0.439), AUC fwd 0.9988
+2026-09-04T12:31:06Z SUMMARY train s42: last step 7814, 3.34 it/s, ckpts ['ckpt_005000.pth', 'ckpt_010000.pth', 'ckpt_015000.pth', 'ckpt_020000.pth', 'ckpt_025000.pth', 'ckpt_030000.pth', 'ckpt_035000.pth', 'ckpt_040000.pth', 'ckpt_045000.pth', 'ckpt_050000.pth', 'ckpt_055000.pth', 'ckpt_060000.pth', 'ckpt_065000.pth', 'ckpt_070000.pth', 'ckpt_075000.pth']
+2026-09-04T12:31:06Z SUMMARY verdict: {"best_of_both": 0.5920992448890825, "mean_margin": 0.051618045517768295, "peak_rule": true, "PASS": false, "rule": "best-of-both >= 0.603 AND mean margin >= +0.06 AND peak at 10-30k with 75k below", "per_seed": {"42": {"best_tag": "s42_20000", "best_f1": 0.5920992448890825, "margin": 0.051618045517
+2026-09-04T12:31:53Z HEARTBEAT stage=finalize up=34211s free=80G
+2026-09-04T12:32:54Z HEARTBEAT stage=finalize up=34272s free=78G
+2026-09-04T12:33:54Z HEARTBEAT stage=finalize up=34332s free=76G
+2026-09-04T12:34:35Z bundle: 660M results+preds; ckpts_keep.tgz 3.6G
+2026-09-04T12:34:35Z === STAGE finalize DONE (209s) ===
+2026-09-04T12:34:35Z ALL DONE -- results.json, bundle.tgz, ckpts_keep.tgz served on :8000; the laptop guard harvests and TERMINATES.
+2026-09-04T12:34:54Z HEARTBEAT stage=IDLE up=34392s free=76G
