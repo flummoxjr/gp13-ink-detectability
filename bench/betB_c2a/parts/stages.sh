@@ -164,8 +164,10 @@ if stage_done meshes; then
   say "=== STAGE meshes already done, skipping ==="
 else
   stage_open meshes
+  # c2a_meshes.py appends its own MESH lines to $STATUS (say()); no grep relay here -- a no-match grep
+  # under the ERR trap killed pod 0slxw1vdgyexdp on 2026-09-08 after a successful mesh stage.
   pyrun "$SCRIPTS/c2a_meshes.py" "$SCRIPTS/selection.json" "$MESHES" > "$OUT/logs/meshes.log" 2>&1 || { tail -20 "$OUT/logs/meshes.log" | while read -r L; do say "meshes: $L"; done; die "mesh preparation failed"; }
-  grep -E "^MESH " "$OUT/logs/meshes.log" | while read -r L; do say "$L"; done
+  [ -s "$MESHES/meshes.json" ] || die "mesh preparation wrote no meshes.json"
   stage_close meshes
 fi
 
