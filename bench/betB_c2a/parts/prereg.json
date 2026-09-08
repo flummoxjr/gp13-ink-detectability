@@ -1,0 +1,23 @@
+{
+ "name": "Bet B C2a -- canonical 2um model on the in-band PHerc1203 surface, rendered by us from the 2.403um band",
+ "locked_before": "any provisioning, download, or data contact (sha logged on the pod before stage provision)",
+ "date": "2026-09-08",
+ "plan": "SEPTEMBER_PLAN.md 2.2 step 3 (C2a); C0 PASSED 2026-09-03 (r 0.9999997); C1 DONE 2026-09-08 (out/bet_b/c1_rank.md)",
+ "model": {"repo": "scrollprize/ink_canonical_2um", "type": "resnet3d-152-3d-decoder", "tile": 256, "stride": 128, "window_layers": 62, "window_start_candidates": [8, 0, 16], "directions": ["forward", "reverse"]},
+ "render": {"renderer": "runpod/render_tifxyz_sv.py (validated at 9.362um r=0.813; validated at 2.4um by the ctl of this run)", "slices": 78, "slice_step_vox": 1.0, "mesh_transform": "hunt/tifxyz_transform.py (published on-2.399 w035 mesh reproduced to median 1 px along z / 7 px in-plane)"},
+ "ctl": {"mesh": "PHerc0139 w035 published 9.362um mesh -> 2.399um volume 20260102150214 via the catalogue matrix (inverse)", "region": "9.362 canvas rows 1024:2432, cols 896:2560 (middle 1408x1664 of the harness CTL_CROP)", "reference": "published w035 new_canon_autoresearch_recipe tile256/stride128 map", "labels": "curvelib.load_ctl_labels() sub-crop",
+         "gate_C": {"r_ds4_joint_min": 0.90, "auc_fwd_min": 0.95, "auc_rev_max": 0.80, "on_fail": "CONTRACT_UNVERIFIED: 1203 numbers reported, not read"},
+         "gate_T": {"tripwire_on_ink_min": 1, "on_fail": "tripwire readout INCONCLUSIVE; fraction statistics still reported"}},
+ "c2a": {"volume": "PHerc1203/volumes/20260319130212-2.403um-0.2m-77keV-masked.zarr", "transform": "hunt/pherc1203_2403um_to_9362um.json (derived; translation + nominal scale; residual 22/16/10 um)",
+         "set_H": "all C1 tiles with along-normal contrast >= 0.24 (w035 p10), cap 100 -> 48 tiles, 1.36 cm2", "set_L": "the same number of lowest-contrast tiles (merged-stack control) -> 48 tiles", "tile": "9x9 stored cells = 1.685 mm, +1 cell margin",
+         "tripwire": {"threshold": "blank_p99 of the ctl forward map on labelled blank", "area_mm2_min": 0.876, "width_mm_min": 0.28, "origin": "0358 screen rule 1e4 px / 30 px at 9.362um"},
+         "per_tile": ["p50/p99 fwd+rev", "frac > blank_p99 fwd+rev", "tripwire components fwd+rev", "fwd/rev Pearson r ds4 joint"],
+         "escalation_candidate": "trip_fwd > 0 AND trip_rev == 0 AND frac_fwd > 3 * frac_rev (covered > 0.5)",
+         "ESCALATE_iff": ["(a) >= 1 escalation candidate in H", "(b) L has 0 tripwire tiles, or one-sided Fisher exact H vs L p < 0.05", "(c) median per-tile fwd/rev r over H < 0.20"],
+         "ESCALATE_action": "human look at previews (Ben); robustness re-render at window +-8 before any mention outside the repo; rules question first",
+         "NULL": "otherwise: no evidence at the ctl-bounded sensitivity; Bet B 2.4um route closed for September; C1 ranking + validated renderer + null ship",
+         "not_run": "PROTOCOL_V2 periodicity battery (1.7 mm tiles cannot hold ruling cycles)"},
+ "language": "escalation only; no letter language on the pod, in the results, or in any post",
+ "cost": {"cap_usd": 3, "guard_hours": 5, "balance_before_usd": 23},
+ "seed": 20260908
+}
